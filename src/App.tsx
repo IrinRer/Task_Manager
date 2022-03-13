@@ -34,10 +34,10 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>GROUP_3</p>
+        <p>Стажировка по фронтенду (группа 3)</p>
         <button type={"button"} onClick={authHandler}>
           {" "}
-          СДЕЛАТЬ ЗАПРОС НА АТОРИЗАЦИЮ ПОЛЬЗОВАТЕЛЯ С ID=1
+          СДЕЛАТЬ ЗАПРОС НА АВТОРИЗАЦИЮ ПОЛЬЗОВАТЕЛЯ С ID=1
         </button>
         <br />
         <br />
