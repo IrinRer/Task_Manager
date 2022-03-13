@@ -36,7 +36,6 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <p>Стажировка по фронтенду (группа 3)</p>
         <button type={"button"} onClick={authHandler}>
-          {" "}
           СДЕЛАТЬ ЗАПРОС НА АВТОРИЗАЦИЮ ПОЛЬЗОВАТЕЛЯ С ID=1
         </button>
         <br />
