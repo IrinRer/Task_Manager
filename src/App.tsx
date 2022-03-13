@@ -34,7 +34,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>Стажировка по фронтенду (группа 3)	&#128293;</p>
+        <p>&#128293; Стажировка по фронтенду (группа 3)	&#128293;</p>
         <button type={"button"} onClick={authHandler}>
           СДЕЛАТЬ ЗАПРОС НА АВТОРИЗАЦИЮ ПОЛЬЗОВАТЕЛЯ С ID=1
         </button>
