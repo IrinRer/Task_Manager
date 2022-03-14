@@ -1,0 +1,28 @@
+@import "mixins";
+@import "colors.css";
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.ant-form-item-explain {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.ant-input-affix-wrapper-lg {
+  padding: 6.5px 11px;
+}
+
+.ant-input-lg {
+  padding: 6.5px 11px;
+}
+
+.ant-picker-large {
+  padding: 6.5px 11px 6.5px;
+}
+
+.ant-tooltip-inner a {
+  color: #fff !important;
+}
