@@ -1,46 +1,43 @@
-# Getting Started with Create React App
+# Проект "Трекер задач" в рамках весенней стажировки 2022 (группа 3)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Установка проекта
 
-## Available Scripts
+```bash
+git clone
+npm i
+```
 
-In the project directory, you can run:
+## Запуск проекта в режиме разработки
 
-### `npm start`
+```bash
+npm run start
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Общая информация
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+В файле `.env` хранятся переменные окружения, необходимые для разработки
 
-### `npm test`
+| Переменная | Предназначение |
+| ------ | ------ |
+| REACT_APP_BACKEND_URL | URL бэкенда |
+| HOST_URL | URL нашего контура |
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Gitflow & code-review
 
-### `npm run build`
+- От ветки `develop` создаем свою ветку с наименованием `feature/...` или `bugfix/...`, где ... - номер задачи
+- Пишем в ней код, заливаем его в гит по мере необходимости
+- По мере реализации задачи - мержим к себе в ветку актуальный `develop` (находясь в своей ветке с закоммиченными изменениями пишем `git merge origin/develop`)
+- Создаем МР в `develop`
+- Скидываем МР в группу `group-3_code-review`, с кратким описанием что было сделано в задаче
+- Другие разработчики смотрят МР, при необходимости комментируют его предлагая альтернативные решения, если по их мнению код можно реализовать более оптимальным путем. Мнение со стороны - не последняя инстанция, его нужно обсуждать
+- Если у вас нет вопросов по МРу - реакцией на сообщение ставьте :+1: . Если есть какие-то вопросы или предложения - временно можете поставить :question:, чтобы автор увидел вашу реакцию и посмотрел в гитлабе ваш комментарий
+- После обсуждения необходимо убрать вопрос и поставить лайк
+- МР принимает @vlad.polyukhov после того, как будет минимум 2 лайка от стажеров. Просьба быть максимально вовлеченными в кросс-ревью, это поможет вместе поддерживать порядок в коде и перенимать знания друг у друга.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Необходимые расширения для разработки
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- [ESLint]
+- [Prettier]
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+[ESLint]: https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
+[Prettier]: https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
