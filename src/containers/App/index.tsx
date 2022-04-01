@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import Hello from 'components/Hello';
 import { getBackendURL } from 'helpers/common';
+import Task from 'components/Task';
 
 const App: React.FC = () => {
   // Токен не должен храниться в state !!!
@@ -22,8 +23,8 @@ const App: React.FC = () => {
   useEffect(() => {
     auth();
   }, []);
-  
-  return <Hello token={token} />;
+
+  return <Task />;
 };
 
 export default App;

@@ -6,7 +6,7 @@ import Tasks from './Tasks';
 import styles from './index.module.scss';
 
 interface IProps {
-  token: string
+  token: string;
 }
 const Hello: React.FC<IProps> = ({ token }) => {
   return (
