@@ -6,9 +6,9 @@ import {
   ContainerOutlined,
 } from '@ant-design/icons';
 import styles from './index.module.scss';
-import TaskHistory from '../TaskHistory';
+import History from '../History';
 
-const TaskMain: React.FC = () => {
+const Main: React.FC = () => {
   return (
     <div className={styles.taskMain}>
       <TextArea
@@ -46,11 +46,11 @@ const TaskMain: React.FC = () => {
         <ContainerOutlined />
         <div className={styles.wrapper}>
           Действия
-          <TaskHistory />
+          <History />
         </div>
       </div>
     </div>
   );
 };
 
-export default TaskMain;
+export default Main;

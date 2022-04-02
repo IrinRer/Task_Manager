@@ -1,8 +1,8 @@
 import React from 'react';
 import { Modal, Button } from 'antd';
 import styles from './index.module.scss';
-import TaskMain from './TaskMain';
-import TaskInfo from './TaskInfo';
+import Info from './Info';
+import Main from './Main';
 
 const Task: React.FC = () => {
   const [visible, setVisible] = React.useState(false);
@@ -48,8 +48,8 @@ const Task: React.FC = () => {
         footer={[]}
       >
         <div className={styles.taskContainer}>
-          <TaskMain />
-          <TaskInfo />
+          <Main />
+          <Info />
         </div>
         <Button
           className={styles.save}

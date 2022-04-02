@@ -1,0 +1,43 @@
+.taskInfo {
+  width: 40%;
+  padding: 24px;
+  display: inline-block;
+  background-color: #F1F1F5;
+  border-top-right-radius: 16px;
+
+    :global([data-theme='compact'] .site-collapse-custom-collapse .site-collapse-custom-panel),
+    :global(.site-collapse-custom-collapse .site-collapse-custom-panel) {
+    margin-bottom: 24px;
+    overflow: hidden;
+    background: none;
+    border: none;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  :global(.site-collapse-custom-collapse .ant-collapse-content-box){
+      padding: 12px 39px;
+  }
+  :global(.ant-select){
+      width: 44%;
+      border: none;
+      background: none;
+  }
+  .infoLine{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-size: 14px;
+    padding-bottom: 22px;
+    font-weight: normal;
+    text-transform: none;
+    
+    span{
+      width: 44%;
+      text-align: center;
+    }
+    span:first-of-type{
+      text-align: left;
+    }    
+  }
+}

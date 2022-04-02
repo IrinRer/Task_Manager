@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './index.module.scss';
 
-const TaskHistory: React.FC = () => {
+const History: React.FC = () => {
   return (
     <div className={styles.history}>
       <p>
@@ -20,4 +20,4 @@ const TaskHistory: React.FC = () => {
   );
 };
 
-export default TaskHistory;
+export default History;

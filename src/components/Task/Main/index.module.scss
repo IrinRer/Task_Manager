@@ -1,0 +1,85 @@
+.taskMain {
+    width: 60%;
+    padding: 24px;
+    display: inline-block;
+}
+    :global(.ant-modal-content) {
+      height: 100%;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+      color: black;
+    }
+    :global(.ant-modal-header) {
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+    }
+    :global(.ant-modal-close-icon) {
+      font-size: 14px;
+    }
+    :global(.ant-modal-body) {
+      height: 100%;
+      padding: 0 !important;
+    }
+    :global(.ant-input).name {
+      font-size: 22px;
+      line-height: 32px;
+      color: black;
+      box-shadow: none;
+      border: none;
+      overflow: hidden;
+      padding: 0;
+      margin-bottom: 20px;
+    }
+    :global(.ant-input).name:focus,
+    :global(.ant-input).name:hover,
+    :global(.ant-input).name:focus-visible {
+      border: none;
+      box-shadow: none;
+      border-bottom: 1px solid #0062ff;
+    }
+    .border {
+      border-bottom: 1px solid #e2e2ea;
+    }
+    .section {
+      font-size: 16px;
+      padding: 25px 0;
+      display: flex;
+      justify-content: left;
+      align-items: start;
+    }
+    .section span {
+      padding-top: 4px;
+    }
+    .wrapper{
+      padding-left: 10px;
+      width: 100%;
+    }
+    :global(textarea.ant-input){
+      font-size: 14px;
+      line-height: 20px;
+      color: #696974;
+      box-shadow: none;
+      overflow: hidden;
+      margin-top: 16px;
+    }
+    :global(.ant-input).desc{
+      border: none;   
+      padding: 0;
+    }
+    :global(.ant-input).desc:focus,
+    :global(.ant-input).desc:hover,
+    :global(.ant-input).desc:focus-visible {
+      border: none;
+      box-shadow: none;
+      color: black;
+    }
+    :global(.ant-input).comm{
+      padding: 5px 11px 3px;
+      border-radius: 8px;
+    }
+    :global(.ant-input).comm:focus,
+    :global(.ant-input).comm:hover,
+    :global(.ant-input).comm:focus-visible {
+      box-shadow: none;
+      color: black;
+    }
