@@ -23,14 +23,19 @@ div#root {
     background-color: #f1f1f5;
     border-top-right-radius: 16px;
   }
-  :global(.ant-btn).save {
+  :global(.ant-btn).saveTask, :global(.ant-btn).saveTask:focus {
     border-radius: 8px;
     background-color: #0062ff;
     color: white;
     font-size: 14px;
     border: none;
+    position: absolute;
+    top: 12px;
+    right: 60px;
+    z-index: 10;
   }
-  :global(.ant-btn).save:hover {
+  :global(.ant-btn).saveTask:hover {
     background-color: #3b85fc;
+    color: white;
   }
 }

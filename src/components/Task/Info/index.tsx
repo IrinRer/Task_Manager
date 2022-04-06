@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Collapse, Select } from 'antd';
 import { CaretRightOutlined } from '@ant-design/icons';
+import { useDispatch } from 'react-redux';
+import { fetchAllStatuses } from 'store/task/thunk';
+import { useAppSelector } from 'customHooks/redux/useAppSelector';
+import { getDefaultStatusName } from 'store/task/selectors';
 import styles from './index.module.scss';
 
 const { Option } = Select;
@@ -13,6 +17,14 @@ const Info: React.FC<IProps> = ( { a } ) => {
   const { a } = props; */
 
 const Info: React.FC = () => {
+  const dispatch = useDispatch();
+  const defaultStatusName = useAppSelector(getDefaultStatusName);
+  const idTask = '2e5f852b-a603-440a-8c4f-1f2f20ddc90f';
+
+  useEffect(() => {
+    dispatch(fetchAllStatuses());
+  }, [dispatch]);
+
   const onChange = (value: any) => {
     console.log(`selected ${value}`);
   };
@@ -43,7 +55,7 @@ const Info: React.FC = () => {
           // className={styles.details}
         >
           <div className={styles.infoLine}>
-            <span>Статус</span> <span>Ожидает</span>
+            <span>Статус</span> <span>{defaultStatusName || ''}</span>
           </div>
           <div className={styles.infoLine}>
             <span>Ответственный</span>
