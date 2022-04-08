@@ -7,10 +7,7 @@ import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { fetchTasksAction } from 'store/tasks/thunk';
 import { getTasks, getTasksLoading } from 'store/tasks/selectors';
 
-interface IProps {
-  token: string;
-}
-const Tasks: React.FC<IProps> = ({ token }) => {
+const Tasks: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const tasks = useAppSelector(getTasks);
@@ -19,12 +16,11 @@ const Tasks: React.FC<IProps> = ({ token }) => {
   const getTasksHandler = () => {
     dispatch(fetchTasksAction());
   };
-
   return (
     <>
       <Button
         type="primary"
-        disabled={!token || loading}
+        disabled={false}
         loading={loading}
         onClick={getTasksHandler}
       >
