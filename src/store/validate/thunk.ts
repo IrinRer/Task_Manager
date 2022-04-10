@@ -13,7 +13,6 @@ export const fetchValidAction = createAsyncThunk(
       });
       return response.data.data.verify.id;
     } catch (error) {
-      // notification.error({ message: 'Ошибка авторизации, проверьте логин!' });
       return rejectWithValue(error.message);
     }
   },

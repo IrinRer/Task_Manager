@@ -4,7 +4,7 @@ import { IValidReducer, VALID_SLICE_ALIAS } from 'store/validate/types';
 import { fetchValidAction } from 'store/validate/thunk';
 
 const initialState: IValidReducer = {
-  userID: null,
+  userID: 'loading',
   error: null,
 };
 
@@ -14,8 +14,7 @@ export const validSlice = createSlice({
   reducers: {},
   extraReducers: {
     [fetchValidAction.pending.type]: (state: IValidReducer) => {
-      state.userID = null;
-      state.error = null;
+      state = initialState;
     },
     [fetchValidAction.fulfilled.type]: (
       state: IValidReducer,

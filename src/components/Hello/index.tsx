@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import logo from 'assets/logo.svg';
 import Cookies from 'universal-cookie';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { fetchValidAction } from 'store/validate/thunk';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { getValidateError, getValidateIdUser } from 'store/validate/selectors';
-import Auth from 'pages/Auth';
+import { getValidateIdUser } from 'store/validate/selectors';
+import { Navigate } from 'react-router-dom';
+import Preloader from 'components/Preloader';
 import Tasks from './Tasks';
 import styles from './index.module.scss';
 
@@ -13,18 +14,15 @@ const Hello: React.FC = () => {
   const cookies = new Cookies();
   const dispatch = useAppDispatch();
 
-  const isTokenValid = () => {
-    dispatch(fetchValidAction(cookies.get('token')));
-  };
-
+  dispatch(fetchValidAction(cookies.get('token')));
   const userID = useAppSelector(getValidateIdUser);
-  const error = useAppSelector(getValidateError);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(isTokenValid, []);
-
-  return !userID || error ? (
-    <Auth />
+  return !userID ? (
+    <Navigate to="/auth" />
+  ) : userID === 'loading' ? (
+    <div className={styles.wrapper}>
+      <Preloader />
+    </div>
   ) : (
     <div className={styles.wrapper}>
       <img src={logo} className={styles.logo} alt="logo" />

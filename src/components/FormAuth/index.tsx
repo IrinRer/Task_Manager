@@ -1,35 +1,36 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Cookies from 'universal-cookie';
 import { Navigate } from 'react-router-dom';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, notification } from 'antd';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { fetchAuthAction } from 'store/auth/thunk';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { getValidateIdUser } from 'store/validate/selectors';
 import { fetchValidAction } from 'store/validate/thunk';
+import Preloader from 'components/Preloader';
 import styles from './style.module.scss';
 
 const FormAuth: React.FC = () => {
   const dispatch = useAppDispatch();
   const cookies = new Cookies();
+
   const onFinish = ({ id }: { id: string }) => {
     dispatch(fetchAuthAction(id));
   };
-  const isTokenValid = () => {
-    dispatch(fetchValidAction(cookies.get('token')));
-  };
+
+  dispatch(fetchValidAction(cookies.get('token')));
 
   const userID = useAppSelector(getValidateIdUser);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(isTokenValid, []);
 
   const onFinishFailed = (errorInfo: any) => {
-    throw new Error(errorInfo);
+    notification.error({ message: 'Отправка формы не удалась!' });
   };
-  if (userID) {
-    return <Navigate to="/" />;
-  }
-  return (
+
+  return !!userID && userID !== 'loading' ? (
+    <Navigate to="/" />
+  ) : userID === 'loading' ? (
+    <Preloader />
+  ) : (
     <Form
       name="basic"
       layout="vertical"
