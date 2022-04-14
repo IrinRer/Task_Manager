@@ -4,8 +4,15 @@ import { CaretRightOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { fetchAllStatuses } from 'store/task/thunk';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { getDefaultStatusName } from 'store/task/selectors';
+import {
+  getDefaultStatusName,
+  getTask,
+  getTaskAuthor,
+  getTaskResponsible,
+  getTaskWatchers,
+} from 'store/task/selectors';
 import styles from './index.module.scss';
+import AddMemberButton from './AddMemberButton';
 
 const { Option } = Select;
 const { Panel } = Collapse;
@@ -19,7 +26,11 @@ const Info: React.FC<IProps> = ( { a } ) => {
 const Info: React.FC = () => {
   const dispatch = useDispatch();
   const defaultStatusName = useAppSelector(getDefaultStatusName);
-  const idTask = '2e5f852b-a603-440a-8c4f-1f2f20ddc90f';
+  const data = useAppSelector(getTask);
+  const author = useAppSelector(getTaskAuthor);
+  // const watchers = useAppSelector(getTaskWatchers);
+  const responsible = useAppSelector(getTaskResponsible);
+  const watchers = [];
 
   useEffect(() => {
     dispatch(fetchAllStatuses());
@@ -55,34 +66,11 @@ const Info: React.FC = () => {
           // className={styles.details}
         >
           <div className={styles.infoLine}>
-            <span>Статус</span> <span>{defaultStatusName || ''}</span>
+            <span>Статус</span> <span>{data.status.name}</span>
           </div>
           <div className={styles.infoLine}>
             <span>Ответственный</span>
-            <span>Артем Мединский</span>
-            {/* <Select<string | number, { value: string; children: string }>
-              showSearch
-              style={{ width: 200 }}
-              placeholder="Выбрать участника"
-              optionFilterProp="children"
-              onChange={onChange}
-              filterOption={(input, option) =>
-                option!.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-              }
-              filterSort={(optionA, optionB) =>
-                optionA!.children
-                  .toLowerCase()
-                  .localeCompare(optionB!.children.toLowerCase())
-              }
-            >
-              {children}
-              <Option value="1">Not Identified</Option>
-              <Option value="2">Closed</Option>
-              <Option value="3">Communicated</Option>
-              <Option value="4">Identified</Option>
-              <Option value="5">Resolved</Option>
-              <Option value="6">Cancelled</Option>
-            </Select> */}
+            <span>{responsible ? responsible.name : ''}</span>
           </div>
         </Panel>
         <Panel
@@ -92,7 +80,26 @@ const Info: React.FC = () => {
           // className={styles.members}
         >
           <div className={styles.infoLine}>
-            <span>Автор</span> <span>Артем Мединский</span>
+            <span>Автор</span>{' '}
+            <span className={styles.members}>{author ? author.name : ''}</span>
+          </div>
+          <div className={styles.infoLine}>
+            <span>Ответственный</span>
+            <span className={styles.members}>
+              {responsible ? responsible.name : ''}
+            </span>
+          </div>
+          <div className={styles.infoLine}>
+            <span>Наблюдатель</span>
+            <div className={styles.watchers}>
+              {watchers.length !== 0 ? (
+                watchers.map((el) => (
+                  <span className={styles.members}>{el}</span>
+                ))
+              ) : (
+                <AddMemberButton multi />
+              )}
+            </div>
           </div>
         </Panel>
       </Collapse>

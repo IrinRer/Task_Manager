@@ -5,8 +5,8 @@
 }
     :global(.ant-modal-content) {
       height: 100%;
-      border-top-left-radius: 16px;
-      border-top-right-radius: 16px;
+      border-top-left-radius: 16px !important;
+      border-top-right-radius: 16px !important;
       color: black;
     }
     :global(.ant-modal-header) {
@@ -39,21 +39,7 @@
     }
     .border {
       border-bottom: 1px solid #e2e2ea;
-    }
-    .section {
-      font-size: 16px;
-      padding: 25px 0;
-      display: flex;
-      justify-content: left;
-      align-items: start;
-    }
-    .section span {
-      padding-top: 4px;
-    }
-    .wrapper{
-      padding-left: 10px;
-      width: 100%;
-    }
+    }  
     :global(textarea.ant-input){
       font-size: 14px;
       line-height: 20px;
@@ -66,13 +52,16 @@
     :global(.ant-input).desc{
       border: none;   
       padding: 0;
+      color: black;
+    }
+    :global(.ant-input).readonly{
+      color: #92929D;
     }
     :global(.ant-input).desc:focus,
     :global(.ant-input).desc:hover,
     :global(.ant-input).desc:focus-visible {
       border: none;
       box-shadow: none;
-      color: black;
     }
     :global(.ant-input).comm{
       padding: 5px 11px 3px;
@@ -113,4 +102,25 @@
       background-color: #F1F1F5;
       color: #696974;
       border: 1px solid #D5D5DC;
+    }
+
+
+
+    :global(.ant-btn).change,:global(.ant-btn).change:focus {
+      border-radius: 8px;
+      background-color: #F1F1F5;
+      font-size: 13px;
+      color: #92929D;
+      border: 1px solid #F1F1F5;
+      margin-left: 14px;
+      padding: 1px 8px;
+      height: 24px;
+    }
+    :global(.ant-btn).change span {
+        padding-top:0;
+    }
+    :global(.ant-btn).change:hover, :global(.ant-btn).change:active {
+      background-color: #e3e3e5;
+      color: #92929D;
+      border: 1px solid #e3e3e5;
     }

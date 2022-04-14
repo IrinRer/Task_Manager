@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import { getBackendURL } from 'helpers/common';
 
-import { ONETASK_SLICE_ALIAS, ONETASK_SLICE_CREATE, ONETASK_SLICE_STATUSES, ONETASK_SLICE_USER } from 'store/task/types';
+import { ONETASK_SLICE_ALIAS, ONETASK_SLICE_CREATE, ONETASK_SLICE_STATUSES, ONETASK_SLICE_USER, ONETASK_SLICE_MEMBERS } from 'store/task/types';
 
 // TODO: Доставать token необходимо из cookie
 // const token =
@@ -64,3 +64,23 @@ export const fetchAllStatuses = createAsyncThunk(
     }
   },
 );
+
+export const fetchAllMembers = createAsyncThunk(
+  `${ONETASK_SLICE_MEMBERS}/fetchAll`,
+  async (_, { rejectWithValue }) => {
+    try {     
+      const axiosInstance = axios.create({
+        baseURL: getBackendURL(),
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const response = await axiosInstance.get(`/api/v1.0/external/users?page=1&per_page=50`);
+      return response.data.data;
+    } catch (error) {
+      notification.error({ message: error.message });
+      return rejectWithValue(JSON.parse(JSON.stringify(error)));
+    }
+  },
+);
+
+// setTaskWatchers
+

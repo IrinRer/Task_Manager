@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { ITaskReducer, ONETASK_SLICE_ALIAS } from 'store/task/types';
-import { createTaskAction, fetchAllStatuses, fetchTaskAction} from 'store/task/thunk';
+import { createTaskAction, fetchAllMembers, fetchAllStatuses, fetchTaskAction} from 'store/task/thunk';
 
 const initialState: ITaskReducer = {
   response: null,
@@ -9,7 +9,40 @@ const initialState: ITaskReducer = {
   loading: false,
   error: null,
   statuses: null,
-  data: {title: "", description: "", task_status_id: ""},
+  members: [{
+    user_id:"",
+    name:"",
+    logo: "",
+    permissions: [""]
+  }],
+
+  data: {
+    task_id: "", 
+    title: "", 
+    description: "", 
+    status: {task_status_id:"", name:""},
+    roles: [
+      {
+      task_to_role_id: "",
+      task: {
+        task_id: ""
+      },
+      task_role: {
+        task_role_id: "",
+        name: "",
+        name_group: "",
+        max_user_assigned: 1,
+        is_author: true,
+        created: new Date(3600 * 24 * 1000),
+        updated: new Date(3600 * 24 * 1000)
+      },
+      assign_user: {
+        user_id: "",
+        name: "",
+        logo: ""
+      }}
+    ],
+  },
 };
 
 export const onetaskSlice = createSlice({
@@ -27,7 +60,10 @@ export const onetaskSlice = createSlice({
       state.data.description = action.payload;
     },
     createStatusId: (state: ITaskReducer, action: PayloadAction<string>) => {
-      state.data.task_status_id = action.payload;
+      state.data.status.task_status_id = action.payload;
+    },
+    setTaskId: (state: ITaskReducer, action: PayloadAction<string>) => {
+      state.data.task_id = action.payload;
     },
   },
   extraReducers: {
@@ -41,6 +77,7 @@ export const onetaskSlice = createSlice({
       { payload }: PayloadAction<any>,
     ) => {
       state.response = payload;
+      state.data = payload;
       state.loading = false;
     },
     [fetchTaskAction.rejected.type]: (
@@ -49,6 +86,7 @@ export const onetaskSlice = createSlice({
       { payload }: PayloadAction<any>,
     ) => {
       state.response = null;
+      state.data = initialState.data;
       state.loading = false;
       state.error = payload;
     },
@@ -78,6 +116,7 @@ export const onetaskSlice = createSlice({
     },
 
 
+
     [fetchAllStatuses.pending.type]: (state: ITaskReducer) => {
       state.error = null;
     },
@@ -98,10 +137,30 @@ export const onetaskSlice = createSlice({
     },
 
 
+    [fetchAllMembers.pending.type]: (state: ITaskReducer) => {
+      state.error = null;
+    },
+    [fetchAllMembers.fulfilled.type]: (
+      state: ITaskReducer,
+      // TODO: Добавить типизацию
+      { payload }: PayloadAction<any>,
+    ) => {
+      state.members = payload;
+    },
+    [fetchAllMembers.rejected.type]: (
+      state: ITaskReducer,
+      // TODO: Добавить типизацию
+      { payload }: PayloadAction<any>,
+    ) => {
+      state.members = initialState.members;
+      state.error = payload;
+    },
+
 
   },
 });
 
+export const {setTaskId} = onetaskSlice.actions;
 export const {clearDataTask} = onetaskSlice.actions;
 export const { createTitle } = onetaskSlice.actions;
 export const { createDescription} = onetaskSlice.actions;
