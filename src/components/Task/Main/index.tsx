@@ -6,7 +6,7 @@ import {
   ContainerOutlined,
 } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
-import { createDescription, createTitle } from 'store/task/slice';
+import { createTitle, setDescription } from 'store/task/slice';
 import { Button } from 'antd';
 import {
   getDataCreate,
@@ -16,25 +16,28 @@ import {
   getTitle,
 } from 'store/task/selectors';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
+import { setTaskDescription, setTaskTitle } from 'store/task/thunk';
 import styles from './index.module.scss';
 import History from '../History';
 import InputWrapper from './InputWrapper';
 
 const Main: React.FC = () => {
   const dispatch = useDispatch();
+  const title = useAppSelector(getTitle);
   const description = useAppSelector(getDescription);
   const [isReadonly, setIsReadonly] = useState<boolean>(true);
-  // const data = useAppSelector(getDataCreate);
-  // const fetchdata = useAppSelector(getTask);
-  const data = {
-    title: useAppSelector(getTitle),
-    description: useAppSelector(getDescription),
-  };
-  const [newDesc, setNewDesc] = useState<string>(data.description);
-  // const taskId = useAppSelector(getTaskId);
+  const taskId = useAppSelector(getTaskId);
+
+  const [newDesc, setNewDesc] = useState<string | undefined>(
+    useAppSelector(getDescription),
+  );
 
   const changeTitle = (e) => {
     dispatch(createTitle(e.target.value));
+  };
+
+  const onBlur = () => {
+    dispatch(setTaskTitle({ task_id: taskId, title }));
   };
 
   const changeDescription = (e) => {
@@ -42,17 +45,13 @@ const Main: React.FC = () => {
   };
 
   const handleSave = (e) => {
-    dispatch(
-      createDescription(
-        e.target.closest('div').querySelector('textarea').value,
-      ),
-    );
+    dispatch(setDescription(newDesc || ''));
+    dispatch(setTaskDescription({ task_id: taskId, description: newDesc }));
     setIsReadonly(true);
   };
 
   const handleCancel = (e) => {
-    e.target.closest('div').querySelector('textarea').value = data.description;
-    setNewDesc(data.description);
+    setNewDesc(description);
     setIsReadonly(true);
   };
 
@@ -68,7 +67,8 @@ const Main: React.FC = () => {
         placeholder="Введите название"
         className={styles.name}
         onChange={changeTitle}
-        value={data.title}
+        onBlur={onBlur}
+        value={title}
       />
       <div className={styles.border} />
 
@@ -88,7 +88,7 @@ const Main: React.FC = () => {
             isReadonly ? `${styles.desc} ${styles.readonly}` : styles.desc
           }
           onChange={changeDescription}
-          value={newDesc}
+          value={newDesc || description}
           readOnly={isReadonly}
         />
         {!isReadonly ? (
@@ -104,7 +104,9 @@ const Main: React.FC = () => {
           ''
         )}
       </InputWrapper>
-
+      {
+        // map
+      }
       <InputWrapper labelText="Комментарии" icon={<CommentOutlined />}>
         <TextArea
           autoSize

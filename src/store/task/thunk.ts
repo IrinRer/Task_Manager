@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import { getBackendURL } from 'helpers/common';
 
-import { ONETASK_SLICE_ALIAS, ONETASK_SLICE_CREATE, ONETASK_SLICE_STATUSES, ONETASK_SLICE_USER, ONETASK_SLICE_MEMBERS } from 'store/task/types';
+import { ONETASK_SLICE_ALIAS, ONETASK_SLICE_CREATE, ONETASK_SLICE_STATUSES, ONETASK_SLICE_USER, ONETASK_SLICE_MEMBERS, ONETASK_SLICE_WATCHERS, ONETASK_SLICE_ROLES } from 'store/task/types';
 
 // TODO: Доставать token необходимо из cookie
 // const token =
@@ -42,7 +42,43 @@ export const createTaskAction = createAsyncThunk(
       return response.data.data;
     } catch (error) {
       notification.error({ message: error.message });
-      return rejectWithValue(JSON.parse(JSON.stringify(error)));
+      return rejectWithValue(error);
+    }
+  },
+);
+
+
+export const setTaskDescription = createAsyncThunk(
+  `${ONETASK_SLICE_CREATE}/setDescription`,
+  async (data:{task_id, description}, { rejectWithValue }) => {
+    try {     
+      const axiosInstance = axios.create({
+        baseURL: getBackendURL(),
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const response = await axiosInstance.post(`/api/v1.0/task/tasks/${data.task_id}/description-change`, {"description": data.description});
+      return response.data.data;
+    } catch (error) {
+      notification.error({ message: error.message });
+      return rejectWithValue(error);
+    }
+  },
+);
+
+
+export const setTaskTitle = createAsyncThunk(
+  `${ONETASK_SLICE_CREATE}/setTitle`,
+  async (data:{task_id, title}, { rejectWithValue }) => {
+    try {     
+      const axiosInstance = axios.create({
+        baseURL: getBackendURL(),
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const response = await axiosInstance.post(`/api/v1.0/task/tasks/${data.task_id}/title-change`, {"title": data.title});
+      return response.data.data;
+    } catch (error) {
+      notification.error({ message: error.message });
+      return rejectWithValue(error);
     }
   },
 );
@@ -60,7 +96,7 @@ export const fetchAllStatuses = createAsyncThunk(
       return response.data.data;
     } catch (error) {
       notification.error({ message: error.message });
-      return rejectWithValue(JSON.parse(JSON.stringify(error)));
+      return rejectWithValue(error);
     }
   },
 );
@@ -77,10 +113,59 @@ export const fetchAllMembers = createAsyncThunk(
       return response.data.data;
     } catch (error) {
       notification.error({ message: error.message });
+      return rejectWithValue(error);
+    }
+  },
+);
+
+export const setTaskWatchersAction = createAsyncThunk(
+  `${ONETASK_SLICE_WATCHERS}/fetchAll`,
+  async (data:{task_id, assign_user_id , task_role_id}, { rejectWithValue }) => {
+    try {     
+      const axiosInstance = axios.create({
+        baseURL: getBackendURL(),
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const response = await axiosInstance.post(`/api/v1.0/task/tasks/${data.task_id}/role-assign`, {assign_user_id: data.assign_user_id, task_role_id: data.task_role_id});
+      return response.data.data;
+    } catch (error) {
+      notification.error({ message: error.message });
+      return rejectWithValue(JSON.parse(JSON.stringify(error)));
+    }
+  },
+); 
+
+
+export const deleteTaskWatchersAction = createAsyncThunk(
+  `${ONETASK_SLICE_WATCHERS}/deleteWatcher`,
+  async (data:{task_id, assign_user_id , task_role_id}, { rejectWithValue }) => {
+    try {     
+      const axiosInstance = axios.create({
+        baseURL: getBackendURL(),
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const response = await axiosInstance.post(`/api/v1.0/task/tasks/${data.task_id}/role-unassign`, {assign_user_id: data.assign_user_id, task_role_id: data.task_role_id});
+      return response.data.data;
+    } catch (error) {
+      notification.error({ message: error.message });
       return rejectWithValue(JSON.parse(JSON.stringify(error)));
     }
   },
 );
 
-// setTaskWatchers
-
+export const fetchAllRoles = createAsyncThunk(
+  `${ONETASK_SLICE_ROLES}/fetchAll`,
+  async (_, { rejectWithValue }) => {
+    try {     
+      const axiosInstance = axios.create({
+        baseURL: getBackendURL(),
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const response = await axiosInstance.get(`/api/v1.0/task/roles?page=1&per_page=50`);
+      return response.data.data;
+    } catch (error) {
+      notification.error({ message: error.message });
+      return rejectWithValue(error);
+    }
+  },
+);

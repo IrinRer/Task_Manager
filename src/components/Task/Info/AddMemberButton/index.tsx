@@ -4,8 +4,22 @@ import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import React, { FC, useEffect, useState } from 'react';
 
 import { useDispatch } from 'react-redux';
-import { getMembers } from 'store/task/selectors';
-import { fetchAllMembers } from 'store/task/thunk';
+import {
+  getMembers,
+  getNewSelectedMembers,
+  getTaskId,
+  getTaskWatchersID,
+  getUnselectedMembers,
+  getWatcherRoleID,
+} from 'store/task/selectors';
+import {
+  deleteTaskWatchersAction,
+  fetchAllMembers,
+  fetchAllRoles,
+  setTaskWatchersAction,
+} from 'store/task/thunk';
+import { setNewSelectedMembers, setUnselectedMembers } from 'store/task/slice';
+import { ITaskMembers } from 'store/task/types';
 import styles from './index.module.scss';
 
 type TProps = {
@@ -17,42 +31,84 @@ const AddMemberButton: FC<TProps> = (props: TProps) => {
   const dispatch = useDispatch();
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const { multi } = props;
-  const members = useAppSelector(getMembers);
+  const members: ITaskMembers[] = useAppSelector(getMembers);
+  const taskId = useAppSelector(getTaskId);
+  const watchersID = useAppSelector(getTaskWatchersID);
+  const watcherRoleID = useAppSelector(getWatcherRoleID);
+  const roleAssign = useAppSelector(getNewSelectedMembers);
+  const roleUnassign = useAppSelector(getUnselectedMembers);
 
   useEffect(() => {
     dispatch(fetchAllMembers());
+    dispatch(fetchAllRoles());
   }, [dispatch]);
 
   const showMemberModal = (e) => {
     setIsVisible(true);
-    // dispatch(createTitle(e.target.value));
   };
 
-  function onChange(value) {
-    console.log(`selected ${value}`);
-    dispatch(createTitle(e.target.value));
-  }
+  const onChange = (value) => {
+    dispatch(
+      setNewSelectedMembers(
+        value.filter((elem: string) => watchersID.indexOf(elem) === -1),
+      ),
+    );
+    dispatch(
+      setUnselectedMembers(
+        watchersID.filter((elem: string) => value.indexOf(elem) === -1),
+      ),
+    );
+  };
 
-  function onSearch(val) {
-    //console.log('search:', val);
-  }
+  const onSearch = (val) => {
+    // console.log('search:', val);
+  };
 
-  function onBlur() {
+  const onBlur = () => {
     setIsVisible(!isVisible);
-  }
+    roleAssign?.forEach((element) => {
+      dispatch(
+        setTaskWatchersAction({
+          task_id: taskId,
+          assign_user_id: element,
+          task_role_id: watcherRoleID,
+        }),
+      );
+    });
+    roleUnassign?.forEach((element) => {
+      dispatch(
+        deleteTaskWatchersAction({
+          task_id: taskId,
+          assign_user_id: element,
+          task_role_id: watcherRoleID,
+        }),
+      );
+    });
+  };
+
+  const filterOption = (input, option) => {
+    return option!.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+  };
+  const filterSort = (optionA, optionB) => {
+    return optionA!.children
+      .toLowerCase()
+      .localeCompare(optionB!.children.toLowerCase());
+  };
 
   const children = (
     <>
       {members.length !== 0
         ? members.map((el, index) => (
-            <Option value={el.user_id}>{el.name}</Option>
+            <Option key={el.user_id} value={el.user_id}>
+              {el.name}
+            </Option>
           ))
         : ''}
     </>
   );
 
   return (
-    <>
+    <div className={styles.addmemberWrapper}>
       {!isVisible ? (
         <Button className={styles.addmember} onClick={showMemberModal}>
           + добавить участника
@@ -62,9 +118,16 @@ const AddMemberButton: FC<TProps> = (props: TProps) => {
       )}
 
       {isVisible ? (
-        <Select<string | number, { value: string; children: string }>
+        <Select<string[] | number, { value: string; children: string }>
           mode={multi ? 'multiple' : undefined}
           className={styles.members}
+          defaultValue={watchersID
+            .concat(roleAssign || [])
+            .filter((elem: string) =>
+              roleUnassign ? roleUnassign.indexOf(elem) === -1 : true,
+            )}
+          maxTagCount={1}
+          listHeight={118}
           showSearch
           autoFocus
           open
@@ -80,27 +143,18 @@ const AddMemberButton: FC<TProps> = (props: TProps) => {
               <SearchOutlined />
             </span>
           }
-          // eslint-disable-next-line react/jsx-no-bind
           onChange={onChange}
-          // eslint-disable-next-line react/jsx-no-bind
           onBlur={onBlur}
-          // eslint-disable-next-line react/jsx-no-bind
           onSearch={onSearch}
-          filterOption={(input, option) =>
-            option!.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-          }
-          filterSort={(optionA, optionB) =>
-            optionA!.children
-              .toLowerCase()
-              .localeCompare(optionB!.children.toLowerCase())
-          }
+          filterOption={filterOption}
+          filterSort={filterSort}
         >
           {children}
         </Select>
       ) : (
         ''
       )}
-    </>
+    </div>
   );
 };
 

@@ -2,24 +2,7 @@
     width: 60%;
     padding: 24px;
     display: inline-block;
-}
-    :global(.ant-modal-content) {
-      height: 100%;
-      border-top-left-radius: 16px !important;
-      border-top-right-radius: 16px !important;
-      color: black;
-    }
-    :global(.ant-modal-header) {
-      border-top-left-radius: 16px;
-      border-top-right-radius: 16px;
-    }
-    :global(.ant-modal-close-icon) {
-      font-size: 14px;
-    }
-    :global(.ant-modal-body) {
-      height: 100%;
-      padding: 0 !important;
-    }
+
     :global(.ant-input).name {
       font-size: 22px;
       line-height: 32px;
@@ -124,3 +107,4 @@
       color: #92929D;
       border: 1px solid #e3e3e5;
     }
+  }

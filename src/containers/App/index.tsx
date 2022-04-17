@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import Hello from 'components/Hello';
 import { getBackendURL } from 'helpers/common';
-import Task from 'components/Task';
+import Task from 'pages/Tasks/Task';
 
 const App: React.FC = () => {
   // Токен не должен храниться в state !!!

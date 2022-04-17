@@ -1,20 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { ITaskReducer, ONETASK_SLICE_ALIAS } from 'store/task/types';
-import { createTaskAction, fetchAllMembers, fetchAllStatuses, fetchTaskAction} from 'store/task/thunk';
+import { createTaskAction, deleteTaskWatchersAction, fetchAllMembers, fetchAllRoles, fetchAllStatuses, fetchTaskAction, setTaskDescription, setTaskTitle, setTaskWatchersAction} from 'store/task/thunk';
 
 const initialState: ITaskReducer = {
   response: null,
   createdTask: null,
+  changeWatchers: null,
   loading: false,
   error: null,
   statuses: null,
-  members: [{
-    user_id:"",
-    name:"",
-    logo: "",
-    permissions: [""]
-  }],
+  allroles: null,
+  members: null,
+  selectedMembers: null,
+  unselectedMembers: null,
 
   data: {
     task_id: "", 
@@ -42,6 +41,7 @@ const initialState: ITaskReducer = {
         logo: ""
       }}
     ],
+    watchers: [{task_id: "", assign_user_id: "", task_role_id:""}],
   },
 };
 
@@ -56,7 +56,7 @@ export const onetaskSlice = createSlice({
     createTitle: (state: ITaskReducer, action: PayloadAction<string>) => {
       state.data.title = action.payload;
     },
-    createDescription: (state: ITaskReducer, action: PayloadAction<string>) => {
+    setDescription: (state: ITaskReducer, action: PayloadAction<string>) => {
       state.data.description = action.payload;
     },
     createStatusId: (state: ITaskReducer, action: PayloadAction<string>) => {
@@ -64,6 +64,12 @@ export const onetaskSlice = createSlice({
     },
     setTaskId: (state: ITaskReducer, action: PayloadAction<string>) => {
       state.data.task_id = action.payload;
+    },
+    setNewSelectedMembers: (state: ITaskReducer, action: PayloadAction<any>) => {
+      state.selectedMembers = action.payload;
+    },
+    setUnselectedMembers: (state: ITaskReducer, action: PayloadAction<any>) => {
+      state.unselectedMembers = action.payload;
     },
   },
   extraReducers: {
@@ -76,7 +82,6 @@ export const onetaskSlice = createSlice({
       // TODO: Добавить типизацию
       { payload }: PayloadAction<any>,
     ) => {
-      state.response = payload;
       state.data = payload;
       state.loading = false;
     },
@@ -85,11 +90,60 @@ export const onetaskSlice = createSlice({
       // TODO: Добавить типизацию
       { payload }: PayloadAction<any>,
     ) => {
-      state.response = null;
       state.data = initialState.data;
       state.loading = false;
       state.error = payload;
     },
+
+
+    [setTaskWatchersAction.pending.type]: (state: ITaskReducer) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [setTaskWatchersAction.fulfilled.type]: (
+      state: ITaskReducer,
+      // TODO: Добавить типизацию
+      { payload }: PayloadAction<any>,
+    ) => {
+      state.changeWatchers = payload;
+      state.loading = false;
+    },
+    [setTaskWatchersAction.rejected.type]: (
+      state: ITaskReducer,
+      // TODO: Добавить типизацию
+      { payload }: PayloadAction<any>,
+    // eslint-disable-next-line sonarjs/no-identical-functions
+    ) => {
+      state.changeWatchers = null;
+      state.loading = false;
+      state.error = payload;
+    },
+
+
+
+    [deleteTaskWatchersAction.pending.type]: (state: ITaskReducer) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [deleteTaskWatchersAction.fulfilled.type]: (
+      state: ITaskReducer,
+      // TODO: Добавить типизацию
+      { payload }: PayloadAction<any>,
+    ) => {
+      state.response = payload;
+      state.loading = false;
+    },
+    [deleteTaskWatchersAction.rejected.type]: (
+      state: ITaskReducer,
+      // TODO: Добавить типизацию
+      { payload }: PayloadAction<any>,
+    // eslint-disable-next-line sonarjs/no-identical-functions
+    ) => {
+      state.response = null;
+      state.loading = false;
+      state.error = payload;
+    },
+
 
 
     [createTaskAction.pending.type]: (state: ITaskReducer) => {
@@ -111,6 +165,54 @@ export const onetaskSlice = createSlice({
     // eslint-disable-next-line sonarjs/no-identical-functions
     ) => {
       state.createdTask = null;
+      state.loading = false;
+      state.error = payload;
+    },
+
+
+    [setTaskDescription.pending.type]: (state: ITaskReducer) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [setTaskDescription.fulfilled.type]: (
+      state: ITaskReducer,
+      // TODO: Добавить типизацию
+      { payload }: PayloadAction<any>,
+    ) => {
+      state.response = payload;
+      state.loading = false;
+    },
+    [setTaskDescription.rejected.type]: (
+      state: ITaskReducer,
+      // TODO: Добавить типизацию
+      { payload }: PayloadAction<any>,
+    // eslint-disable-next-line sonarjs/no-identical-functions
+    ) => {
+      state.response = null;
+      state.loading = false;
+      state.error = payload;
+    },
+
+
+    [setTaskTitle.pending.type]: (state: ITaskReducer) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [setTaskTitle.fulfilled.type]: (
+      state: ITaskReducer,
+      // TODO: Добавить типизацию
+      { payload }: PayloadAction<any>,
+    ) => {
+      state.response = payload;
+      state.loading = false;
+    },
+    [setTaskTitle.rejected.type]: (
+      state: ITaskReducer,
+      // TODO: Добавить типизацию
+      { payload }: PayloadAction<any>,
+    // eslint-disable-next-line sonarjs/no-identical-functions
+    ) => {
+      state.response = null;
       state.loading = false;
       state.error = payload;
     },
@@ -157,12 +259,28 @@ export const onetaskSlice = createSlice({
     },
 
 
+    [fetchAllRoles.pending.type]: (state: ITaskReducer) => {
+      state.error = null;
+    },
+    [fetchAllRoles.fulfilled.type]: (
+      state: ITaskReducer,
+      // TODO: Добавить типизацию
+      { payload }: PayloadAction<any>,
+    ) => {
+      state.allroles = payload;
+    },
+    [fetchAllRoles.rejected.type]: (
+      state: ITaskReducer,
+      // TODO: Добавить типизацию
+      { payload }: PayloadAction<any>,
+    ) => {
+      state.allroles = initialState.allroles;
+      state.error = payload;
+    },
+
+
   },
 });
 
-export const {setTaskId} = onetaskSlice.actions;
-export const {clearDataTask} = onetaskSlice.actions;
-export const { createTitle } = onetaskSlice.actions;
-export const { createDescription} = onetaskSlice.actions;
-export const {createStatusId} = onetaskSlice.actions;
+export const { setNewSelectedMembers, setUnselectedMembers, setTaskId, clearDataTask, createTitle, setDescription,  createStatusId } = onetaskSlice.actions;
 export default onetaskSlice.reducer;

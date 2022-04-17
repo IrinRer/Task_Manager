@@ -1,43 +1,26 @@
 import React, { useEffect } from 'react';
-import { Modal, Button } from 'antd';
+import { Modal } from 'antd';
 import { useDispatch } from 'react-redux';
-import { createTaskAction, fetchTaskAction } from 'store/task/thunk';
-import {
-  clearDataTask,
-  createStatusId,
-  createTitle,
-  onetaskSlice,
-  setTaskId,
-} from 'store/task/slice';
+import { fetchTaskAction } from 'store/task/thunk';
+import { clearDataTask } from 'store/task/slice';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import {
-  getDataCreate,
-  getDefaultStatusId,
-  getDescription,
-  getTask,
-  getTaskId,
-  getTitle,
-} from 'store/task/selectors';
+import { getTaskId } from 'store/task/selectors';
+import Main from 'components/Task/Main';
+import Info from 'components/Task/Info';
 import styles from './index.module.scss';
-import Info from './Info';
-import Main from './Main';
 
 const Task: React.FC = () => {
   const [visible, setVisible] = React.useState(/* false */ true);
   const [confirmLoading, setConfirmLoading] = React.useState(false);
   const dispatch = useDispatch();
-  // const data = useAppSelector(getDataCreate);
-  const data = useAppSelector(getTask);
-  const defaultStatus = useAppSelector(getDefaultStatusId);
   const taskId = useAppSelector(getTaskId);
 
   useEffect(() => {
     // dispatch(fetchTaskAction('11191e21-f578-4ce1-8bff-88c8f733abf1'));
     dispatch(fetchTaskAction('bc55eb8e-05fc-4ca9-823d-23839bcf4b55'));
-    // dispatch(fetchTaskAction('cbb7199e-cb25-4dce-bf4e-24a8a5e07ef2'));
   }, [dispatch]);
 
-  const showModal = () => {
+  /* const showModal = () => {
     setVisible(true);
   };
 
@@ -45,7 +28,7 @@ const Task: React.FC = () => {
     if (taskId) {
       setVisible(true);
     }
-  };
+  }; */
 
   /* const handleSaveTask = () => {
     setConfirmLoading(true);
@@ -84,35 +67,19 @@ const Task: React.FC = () => {
   };
 
   return (
-    <>
-      {/* <Button type="primary" onClick={showModal}>
-        Create Task
-      </Button>
-      <br />
-      <br />
-      <Button type="primary" onClick={changeTask}>
-        Change Task
-  </Button> */}
-
-      <Modal
-        visible={visible}
-        // onOk={handleSaveTask}
-        confirmLoading={confirmLoading}
-        onCancel={handleCancel}
-        className={styles.task}
-        footer={[]}
-      >
-        <div className={styles.taskContainer}>
-          <Main />
-          <Info />
-        </div>
-        {/*
-        <Button className={styles.saveTask} onClick={handleSaveTask}>
-          Сохранить
-        </Button>
-  */}
-      </Modal>
-    </>
+    <Modal
+      visible={visible}
+      // onOk={handleSaveTask}
+      confirmLoading={confirmLoading}
+      onCancel={handleCancel}
+      className={styles.task}
+      footer={[]}
+    >
+      <div className={styles.taskContainer}>
+        <Main />
+        <Info />
+      </div>
+    </Modal>
   );
 };
 
