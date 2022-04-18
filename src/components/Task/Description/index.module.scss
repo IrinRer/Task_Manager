@@ -1,0 +1,73 @@
+.description{
+    display: inline;
+
+    :global(.ant-input).desc{
+      font-size: 14px;
+      line-height: 20px;
+      color: #696974;
+      box-shadow: none;
+      overflow: hidden;
+      margin-top: 16px;
+      margin-bottom: 14px;
+      border: none;   
+      padding: 0;
+      color: black;
+    }
+    :global(.ant-input).readonly{
+      color: #92929D;
+    }
+    :global(.ant-input).desc:focus,
+    :global(.ant-input).desc:hover,
+    :global(.ant-input).desc:focus-visible {
+      border: none;
+      box-shadow: none;
+    }
+    :global(.ant-btn).save, :global(.ant-btn).save:focus {
+      border-radius: 8px;
+      background-color: #0062ff;
+      color: white;
+      font-size: 14px;
+      border: none;
+    }
+    :global(.ant-btn).save span {
+        padding-top:0;
+    }
+    :global(.ant-btn).save:hover {
+      background-color: #3b85fc;
+      color: white;
+    }
+    :global(.ant-btn).cancel,:global(.ant-btn).cancel:focus {
+      border-radius: 8px;
+      background-color: #ffffff;
+      font-size: 14px;
+      color: #696974;
+      border: 1px solid #D5D5DC;
+      margin-left: 8px;
+    }
+    :global(.ant-btn).cancel span {
+        padding-top:0;
+    }
+    :global(.ant-btn).cancel:hover, :global(.ant-btn).cancel:active {
+      background-color: #F1F1F5;
+      color: #696974;
+      border: 1px solid #D5D5DC;
+    }
+    :global(.ant-btn).change,:global(.ant-btn).change:focus {
+      border-radius: 8px;
+      background-color: #F1F1F5;
+      font-size: 13px;
+      color: #92929D;
+      border: 1px solid #F1F1F5;
+      margin-left: 14px;
+      padding: 1px 8px;
+      height: 24px;
+    }
+    :global(.ant-btn).change span {
+        padding-top:0;
+    }
+    :global(.ant-btn).change:hover, :global(.ant-btn).change:active {
+      background-color: #e3e3e5;
+      color: #92929D;
+      border: 1px solid #e3e3e5;
+    }
+  }

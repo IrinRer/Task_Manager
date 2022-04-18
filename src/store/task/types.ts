@@ -3,7 +3,6 @@ import { AxiosError } from 'axios';
 export const ONETASK_SLICE_ALIAS = 'onetask';
 export const ONETASK_SLICE_CREATE = 'createTask';
 export const ONETASK_SLICE_STATUSES = 'statuses';
-export const ONETASK_SLICE_USER = 'user';
 export const ONETASK_SLICE_MEMBERS = 'members';
 export const ONETASK_SLICE_WATCHERS = 'watchers';
 export const ONETASK_SLICE_ROLES = 'roles';

@@ -1,0 +1,16 @@
+.infoLine {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-size: 14px;
+  padding-bottom: 22px;
+  font-weight: normal;
+  text-transform: none;
+
+  span {
+    width: 56%;
+  }
+  span:first-of-type {
+    text-align: left;
+  }
+}

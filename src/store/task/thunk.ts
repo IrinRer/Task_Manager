@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import { getBackendURL } from 'helpers/common';
 
-import { ONETASK_SLICE_ALIAS, ONETASK_SLICE_CREATE, ONETASK_SLICE_STATUSES, ONETASK_SLICE_USER, ONETASK_SLICE_MEMBERS, ONETASK_SLICE_WATCHERS, ONETASK_SLICE_ROLES } from 'store/task/types';
+import { ONETASK_SLICE_ALIAS, ONETASK_SLICE_CREATE, ONETASK_SLICE_STATUSES, ONETASK_SLICE_MEMBERS, ONETASK_SLICE_WATCHERS, ONETASK_SLICE_ROLES } from 'store/task/types';
 
 // TODO: Доставать token необходимо из cookie
 // const token =

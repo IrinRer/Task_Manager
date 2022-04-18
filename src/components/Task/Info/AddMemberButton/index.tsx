@@ -1,7 +1,7 @@
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Select } from 'antd';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 
 import { useDispatch } from 'react-redux';
 import {
@@ -14,8 +14,6 @@ import {
 } from 'store/task/selectors';
 import {
   deleteTaskWatchersAction,
-  fetchAllMembers,
-  fetchAllRoles,
   setTaskWatchersAction,
 } from 'store/task/thunk';
 import { setNewSelectedMembers, setUnselectedMembers } from 'store/task/slice';
@@ -37,11 +35,6 @@ const AddMemberButton: FC<TProps> = (props: TProps) => {
   const watcherRoleID = useAppSelector(getWatcherRoleID);
   const roleAssign = useAppSelector(getNewSelectedMembers);
   const roleUnassign = useAppSelector(getUnselectedMembers);
-
-  useEffect(() => {
-    dispatch(fetchAllMembers());
-    dispatch(fetchAllRoles());
-  }, [dispatch]);
 
   const showMemberModal = (e) => {
     setIsVisible(true);
@@ -98,7 +91,7 @@ const AddMemberButton: FC<TProps> = (props: TProps) => {
   const children = (
     <>
       {members.length !== 0
-        ? members.map((el, index) => (
+        ? members.map((el) => (
             <Option key={el.user_id} value={el.user_id}>
               {el.name}
             </Option>
