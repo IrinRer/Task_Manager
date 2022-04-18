@@ -1,16 +1,16 @@
 import React from 'react';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { getTask, getTaskResponsible } from 'store/task/selectors';
+import { getTaskResponsible, getTaskStatus } from 'store/task/selectors';
 import styles from './index.module.scss';
 
 const Info: React.FC = () => {
-  const data = useAppSelector(getTask);
   const responsible = useAppSelector(getTaskResponsible);
+  const status = useAppSelector(getTaskStatus);
 
   return (
     <>
       <div className={styles.infoLine}>
-        <span>Статус</span> <span>{data?.status.name}</span>
+        <span>Статус</span> <span>{status}</span>
       </div>
       <div className={styles.infoLine}>
         <span>Ответственный</span>

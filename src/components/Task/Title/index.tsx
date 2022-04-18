@@ -1,7 +1,7 @@
 import React from 'react';
 import TextArea from 'antd/lib/input/TextArea';
 import { useDispatch } from 'react-redux';
-import { createTitle } from 'store/task/slice';
+import { setTitle } from 'store/task/slice';
 import { getTaskId, getTitle } from 'store/task/selectors';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { setTaskTitle } from 'store/task/thunk';
@@ -13,7 +13,7 @@ const Title: React.FC = () => {
   const taskId = useAppSelector(getTaskId);
 
   const changeTitle = (e) => {
-    dispatch(createTitle(e.target.value));
+    dispatch(setTitle(e.target.value));
   };
 
   const onBlur = () => {

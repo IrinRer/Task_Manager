@@ -1,12 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { ITaskReducer, ONETASK_SLICE_ALIAS } from 'store/task/types';
-import { createTaskAction, deleteTaskWatchersAction, fetchAllMembers, fetchAllRoles, fetchAllStatuses, fetchTaskAction, setTaskDescription, setTaskTitle, setTaskWatchersAction} from 'store/task/thunk';
+import { IResponseTask, IRoles, IStatuses, ITaskMembers, ITaskReducer, ONETASK_SLICE_ALIAS } from 'store/task/types';
+import { deleteTaskWatchersAction, fetchAllMembers, fetchAllRoles, fetchAllStatuses, fetchTaskAction, setTaskDescription, setTaskTitle, setTaskWatchersAction} from 'store/task/thunk';
+import { AxiosError } from 'axios';
 
 const initialState: ITaskReducer = {
   response: null,
-  createdTask: null,
-  changeWatchers: null,
   loading: false,
   error: null,
   statuses: null,
@@ -41,7 +40,7 @@ const initialState: ITaskReducer = {
         logo: ""
       }}
     ],
-    watchers: [{task_id: "", assign_user_id: "", task_role_id:""}],
+    // watchers: [{task_id: "", assign_user_id: "", task_role_id:""}],
   },
 };
 
@@ -53,22 +52,22 @@ export const onetaskSlice = createSlice({
     clearDataTask: (state: ITaskReducer) => {
       state.data = initialState.data;
     },
-    createTitle: (state: ITaskReducer, action: PayloadAction<string>) => {
+    setTitle: (state: ITaskReducer, action: PayloadAction<string>) => {
       state.data.title = action.payload;
     },
     setDescription: (state: ITaskReducer, action: PayloadAction<string>) => {
       state.data.description = action.payload;
     },
-    createStatusId: (state: ITaskReducer, action: PayloadAction<string>) => {
+    /* createStatusId: (state: ITaskReducer, action: PayloadAction<string>) => {
       state.data.status.task_status_id = action.payload;
-    },
-    setTaskId: (state: ITaskReducer, action: PayloadAction<string>) => {
+    }, */
+    /* setTaskId: (state: ITaskReducer, action: PayloadAction<string>) => {
       state.data.task_id = action.payload;
-    },
-    setNewSelectedMembers: (state: ITaskReducer, action: PayloadAction<any>) => {
+    }, */
+    setNewSelectedMembers: (state: ITaskReducer, action: PayloadAction<string[]>) => {
       state.selectedMembers = action.payload;
     },
-    setUnselectedMembers: (state: ITaskReducer, action: PayloadAction<any>) => {
+    setUnselectedMembers: (state: ITaskReducer, action: PayloadAction<string[]>) => {
       state.unselectedMembers = action.payload;
     },
   },
@@ -79,16 +78,14 @@ export const onetaskSlice = createSlice({
     },
     [fetchTaskAction.fulfilled.type]: (
       state: ITaskReducer,
-      // TODO: Добавить типизацию
-      { payload }: PayloadAction<any>,
+      { payload }: PayloadAction<ITaskReducer["data"]>,
     ) => {
       state.data = payload;
       state.loading = false;
     },
     [fetchTaskAction.rejected.type]: (
       state: ITaskReducer,
-      // TODO: Добавить типизацию
-      { payload }: PayloadAction<any>,
+      { payload }: PayloadAction<AxiosError>,
     ) => {
       state.data = initialState.data;
       state.loading = false;
@@ -102,19 +99,16 @@ export const onetaskSlice = createSlice({
     },
     [setTaskWatchersAction.fulfilled.type]: (
       state: ITaskReducer,
-      // TODO: Добавить типизацию
-      { payload }: PayloadAction<any>,
+      { payload }: PayloadAction<IResponseTask>,
     ) => {
-      state.changeWatchers = payload;
+      state.response= payload;
       state.loading = false;
     },
     [setTaskWatchersAction.rejected.type]: (
       state: ITaskReducer,
-      // TODO: Добавить типизацию
-      { payload }: PayloadAction<any>,
-    // eslint-disable-next-line sonarjs/no-identical-functions
+      { payload }: PayloadAction<AxiosError>,
     ) => {
-      state.changeWatchers = null;
+      state.response = null;
       state.loading = false;
       state.error = payload;
     },
@@ -127,16 +121,14 @@ export const onetaskSlice = createSlice({
     },
     [deleteTaskWatchersAction.fulfilled.type]: (
       state: ITaskReducer,
-      // TODO: Добавить типизацию
-      { payload }: PayloadAction<any>,
+      { payload }: PayloadAction<IResponseTask>,
     ) => {
       state.response = payload;
       state.loading = false;
     },
     [deleteTaskWatchersAction.rejected.type]: (
       state: ITaskReducer,
-      // TODO: Добавить типизацию
-      { payload }: PayloadAction<any>,
+      { payload }: PayloadAction<AxiosError>,
     // eslint-disable-next-line sonarjs/no-identical-functions
     ) => {
       state.response = null;
@@ -146,7 +138,7 @@ export const onetaskSlice = createSlice({
 
 
 
-    [createTaskAction.pending.type]: (state: ITaskReducer) => {
+    /* [createTaskAction.pending.type]: (state: ITaskReducer) => {
       state.loading = true;
       state.error = null;
     },
@@ -161,13 +153,12 @@ export const onetaskSlice = createSlice({
     [createTaskAction.rejected.type]: (
       state: ITaskReducer,
       // TODO: Добавить типизацию
-      { payload }: PayloadAction<any>,
-    // eslint-disable-next-line sonarjs/no-identical-functions
+      { payload }: PayloadAction<AxiosError>,
     ) => {
       state.createdTask = null;
       state.loading = false;
       state.error = payload;
-    },
+    }, */
 
 
     [setTaskDescription.pending.type]: (state: ITaskReducer) => {
@@ -176,16 +167,14 @@ export const onetaskSlice = createSlice({
     },
     [setTaskDescription.fulfilled.type]: (
       state: ITaskReducer,
-      // TODO: Добавить типизацию
-      { payload }: PayloadAction<any>,
+      { payload }: PayloadAction<IResponseTask>,
     ) => {
       state.response = payload;
       state.loading = false;
     },
     [setTaskDescription.rejected.type]: (
       state: ITaskReducer,
-      // TODO: Добавить типизацию
-      { payload }: PayloadAction<any>,
+      { payload }: PayloadAction<AxiosError>,
     // eslint-disable-next-line sonarjs/no-identical-functions
     ) => {
       state.response = null;
@@ -200,16 +189,14 @@ export const onetaskSlice = createSlice({
     },
     [setTaskTitle.fulfilled.type]: (
       state: ITaskReducer,
-      // TODO: Добавить типизацию
-      { payload }: PayloadAction<any>,
+      { payload }: PayloadAction<IResponseTask>,
     ) => {
       state.response = payload;
       state.loading = false;
     },
     [setTaskTitle.rejected.type]: (
       state: ITaskReducer,
-      // TODO: Добавить типизацию
-      { payload }: PayloadAction<any>,
+      { payload }: PayloadAction<AxiosError>,
     // eslint-disable-next-line sonarjs/no-identical-functions
     ) => {
       state.response = null;
@@ -224,15 +211,13 @@ export const onetaskSlice = createSlice({
     },
     [fetchAllStatuses.fulfilled.type]: (
       state: ITaskReducer,
-      // TODO: Добавить типизацию
-      { payload }: PayloadAction<any>,
+      { payload }: PayloadAction<IStatuses[]>,
     ) => {
       state.statuses = payload;
     },
     [fetchAllStatuses.rejected.type]: (
       state: ITaskReducer,
-      // TODO: Добавить типизацию
-      { payload }: PayloadAction<any>,
+      { payload }: PayloadAction<AxiosError>,
     ) => {
       state.statuses = null;
       state.error = payload;
@@ -244,15 +229,13 @@ export const onetaskSlice = createSlice({
     },
     [fetchAllMembers.fulfilled.type]: (
       state: ITaskReducer,
-      // TODO: Добавить типизацию
-      { payload }: PayloadAction<any>,
+      { payload }: PayloadAction<ITaskMembers[]>,
     ) => {
       state.members = payload;
     },
     [fetchAllMembers.rejected.type]: (
       state: ITaskReducer,
-      // TODO: Добавить типизацию
-      { payload }: PayloadAction<any>,
+      { payload }: PayloadAction<AxiosError>,
     ) => {
       state.members = initialState.members;
       state.error = payload;
@@ -264,15 +247,13 @@ export const onetaskSlice = createSlice({
     },
     [fetchAllRoles.fulfilled.type]: (
       state: ITaskReducer,
-      // TODO: Добавить типизацию
-      { payload }: PayloadAction<any>,
+      { payload }: PayloadAction<IRoles[]>,
     ) => {
       state.allroles = payload;
     },
     [fetchAllRoles.rejected.type]: (
       state: ITaskReducer,
-      // TODO: Добавить типизацию
-      { payload }: PayloadAction<any>,
+      { payload }: PayloadAction<AxiosError>,
     ) => {
       state.allroles = initialState.allroles;
       state.error = payload;
@@ -282,5 +263,5 @@ export const onetaskSlice = createSlice({
   },
 });
 
-export const { setNewSelectedMembers, setUnselectedMembers, setTaskId, clearDataTask, createTitle, setDescription,  createStatusId } = onetaskSlice.actions;
+export const { setNewSelectedMembers, setUnselectedMembers, clearDataTask, setTitle, setDescription} = onetaskSlice.actions;
 export default onetaskSlice.reducer;

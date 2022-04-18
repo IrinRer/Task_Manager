@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal } from 'antd';
 import { useDispatch } from 'react-redux';
 import {
@@ -15,10 +15,10 @@ import Info from 'components/Task/Info';
 import styles from './index.module.scss';
 
 const Task: React.FC = () => {
-  const [visible, setVisible] = React.useState(/* false */ true);
-  const [confirmLoading, setConfirmLoading] = React.useState(false);
+  const [visible, setVisible] = useState<boolean>(/* false */ true);
+  const [confirmLoading, setConfirmLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const taskId = useAppSelector(getTaskId);
+  const taskId: string | undefined = useAppSelector(getTaskId);
 
   useEffect(() => {
     // dispatch(fetchTaskAction('11191e21-f578-4ce1-8bff-88c8f733abf1'));

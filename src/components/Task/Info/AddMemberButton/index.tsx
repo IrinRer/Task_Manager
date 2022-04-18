@@ -29,14 +29,14 @@ const AddMemberButton: FC<TProps> = (props: TProps) => {
   const dispatch = useDispatch();
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const { multi } = props;
-  const members: ITaskMembers[] = useAppSelector(getMembers);
+  const members = useAppSelector(getMembers);
   const taskId = useAppSelector(getTaskId);
   const watchersID = useAppSelector(getTaskWatchersID);
   const watcherRoleID = useAppSelector(getWatcherRoleID);
   const roleAssign = useAppSelector(getNewSelectedMembers);
   const roleUnassign = useAppSelector(getUnselectedMembers);
 
-  const showMemberModal = (e) => {
+  const showMemberModal = () => {
     setIsVisible(true);
   };
 
@@ -64,7 +64,7 @@ const AddMemberButton: FC<TProps> = (props: TProps) => {
         setTaskWatchersAction({
           task_id: taskId,
           assign_user_id: element,
-          task_role_id: watcherRoleID,
+          task_role_id: watcherRoleID || '',
         }),
       );
     });
@@ -73,7 +73,7 @@ const AddMemberButton: FC<TProps> = (props: TProps) => {
         deleteTaskWatchersAction({
           task_id: taskId,
           assign_user_id: element,
-          task_role_id: watcherRoleID,
+          task_role_id: watcherRoleID || '',
         }),
       );
     });
@@ -90,8 +90,8 @@ const AddMemberButton: FC<TProps> = (props: TProps) => {
 
   const children = (
     <>
-      {members.length !== 0
-        ? members.map((el) => (
+      {members?.length !== 0
+        ? members?.map((el) => (
             <Option key={el.user_id} value={el.user_id}>
               {el.name}
             </Option>

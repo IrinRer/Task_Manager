@@ -22,13 +22,15 @@ const Description: React.FC = () => {
     setNewDesc(e.target.value);
   };
 
-  const handleSave = (e) => {
+  const handleSave = () => {
     dispatch(setDescription(newDesc || ''));
-    dispatch(setTaskDescription({ task_id: taskId, description: newDesc }));
+    dispatch(
+      setTaskDescription({ task_id: taskId, description: newDesc || '' }),
+    );
     setIsReadonly(true);
   };
 
-  const handleCancel = (e) => {
+  const handleCancel = () => {
     setNewDesc(description);
     setIsReadonly(true);
   };
