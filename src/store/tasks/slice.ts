@@ -1,11 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {AxiosError } from 'axios';
+import { ITasksReducer, TASKS_SLICE_ALIAS, TTasksResponse } from 'store/tasks/types';
+import { fetchTasksAction } from 'store/tasks/thunk'; 
 
-import { ITasksReducer, TASKS_SLICE_ALIAS } from 'store/tasks/types';
-import { fetchTasksAction } from 'store/tasks/thunk';
 
-const initialState: ITasksReducer = {
+const initialState: ITasksReducer = { 
   response: null,
   loading: false,
+  // auth временное свойство, необходимое на данном этапе для корректной работы роута
+  auth: true,  
   error: null,
 };
 
@@ -22,7 +25,7 @@ export const tasksSlice = createSlice({
     [fetchTasksAction.fulfilled.type]: (
       state: ITasksReducer,
       // TODO: Добавить типизацию
-      { payload }: PayloadAction<any>,
+      { payload }: PayloadAction<TTasksResponse>,
     ) => {
       state.response = payload;
       state.loading = false;
@@ -30,7 +33,7 @@ export const tasksSlice = createSlice({
     [fetchTasksAction.rejected.type]: (
       state: ITasksReducer,
       // TODO: Добавить типизацию
-      { payload }: PayloadAction<any>,
+      { payload }: PayloadAction<AxiosError>, 
     ) => {
       state.response = null;
       state.loading = false;

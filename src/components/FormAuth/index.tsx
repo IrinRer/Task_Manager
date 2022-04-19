@@ -1,5 +1,4 @@
 import React from 'react';
-import Cookies from 'universal-cookie';
 import { Navigate } from 'react-router-dom';
 import { Form, Input, Button, notification } from 'antd';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
@@ -9,27 +8,28 @@ import { getVerifyIdUser } from 'store/verify/selectors';
 import { fetchVerifyAction } from 'store/verify/thunk';
 import Preloader from 'components/Preloader';
 import { getAuthLoading } from 'store/auth/selectors';
+import { getToken } from 'helpers/usersInfo';
+import { ROUTES } from 'constants/routes';
 import styles from './style.module.scss';
 
 const FormAuth: React.FC = () => {
   const dispatch = useAppDispatch();
-  const cookies = new Cookies();
 
   const onFinish = ({ id }: { id: string }) => {
     dispatch(fetchAuthAction(id));
   };
 
-  if (cookies.get('token')) dispatch(fetchVerifyAction(cookies.get('token')));
+  if (getToken()) dispatch(fetchVerifyAction(getToken()));
 
   const userID = useAppSelector(getVerifyIdUser);
   const sendFormLoading = useAppSelector(getAuthLoading);
 
-  const onFinishFailed = (errorInfo: any) => {
+  const onFinishFailed = () => {
     notification.error({ message: 'Отправка формы не удалась!' });
   };
 
-  return !!userID && userID !== 'loading' ? (
-    <Navigate to="/" />
+  return getToken() && userID ? (
+    <Navigate to={ROUTES.tasks.path} />
   ) : sendFormLoading === true ? (
     <Preloader />
   ) : (

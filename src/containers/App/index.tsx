@@ -1,13 +1,9 @@
 import React from 'react';
 
-// import Hello from 'components/Hello';
-// import { getBackendURL } from 'helpers/common';
-// import { BrowserRouter, Route, Routes } from 'react-router-dom';
-// import Auth from 'pages/Auth';
-import CreateAppRoutes from 'containers/routes';
+import CreateRoutes from 'containers/Routes';
 
 const App: React.FC = () => {
-  return <CreateAppRoutes />;
+  return <CreateRoutes />;
 };
 
 export default App;
