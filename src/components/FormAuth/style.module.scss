@@ -1,4 +1,4 @@
-// .wrapper {
+@import '../../styles/mixins.scss';
 
 .auth,
 .ant-form {
@@ -11,6 +11,11 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  @include media-breakpoint-down(sm) {
+    width: 300px;
+    padding: 10px 20px !important;
+  }
+
   h2 {
     text-align: left;
     font-weight: 500;
@@ -22,6 +27,11 @@
       > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
       font-size: 0px;
       content: '';
+    }
+    .ant-form-item {
+      @include media-breakpoint-down(sm) {
+        flex-direction: row !important;
+      }
     }
     .ant-form-item-label {
       font-weight: 400;

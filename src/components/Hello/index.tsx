@@ -2,9 +2,9 @@ import React from 'react';
 import logo from 'assets/logo.svg';
 import Cookies from 'universal-cookie';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import { fetchValidAction } from 'store/validate/thunk';
+import { fetchVerifyAction } from 'store/verify/thunk';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { getValidateIdUser } from 'store/validate/selectors';
+import { getVerifyIdUser } from 'store/verify/selectors';
 import { Navigate } from 'react-router-dom';
 import Preloader from 'components/Preloader';
 import Tasks from './Tasks';
@@ -14,10 +14,10 @@ const Hello: React.FC = () => {
   const cookies = new Cookies();
   const dispatch = useAppDispatch();
 
-  dispatch(fetchValidAction(cookies.get('token')));
-  const userID = useAppSelector(getValidateIdUser);
+  if (cookies.get('token')) dispatch(fetchVerifyAction(cookies.get('token')));
+  const userID = useAppSelector(getVerifyIdUser);
 
-  return !userID ? (
+  return !userID || !cookies.get('token') ? (
     <Navigate to="/auth" />
   ) : userID === 'loading' ? (
     <div className={styles.wrapper}>

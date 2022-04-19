@@ -5,9 +5,10 @@ import { Form, Input, Button, notification } from 'antd';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { fetchAuthAction } from 'store/auth/thunk';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { getValidateIdUser } from 'store/validate/selectors';
-import { fetchValidAction } from 'store/validate/thunk';
+import { getVerifyIdUser } from 'store/verify/selectors';
+import { fetchVerifyAction } from 'store/verify/thunk';
 import Preloader from 'components/Preloader';
+import { getAuthLoading } from 'store/auth/selectors';
 import styles from './style.module.scss';
 
 const FormAuth: React.FC = () => {
@@ -18,9 +19,10 @@ const FormAuth: React.FC = () => {
     dispatch(fetchAuthAction(id));
   };
 
-  dispatch(fetchValidAction(cookies.get('token')));
+  if (cookies.get('token')) dispatch(fetchVerifyAction(cookies.get('token')));
 
-  const userID = useAppSelector(getValidateIdUser);
+  const userID = useAppSelector(getVerifyIdUser);
+  const sendFormLoading = useAppSelector(getAuthLoading);
 
   const onFinishFailed = (errorInfo: any) => {
     notification.error({ message: 'Отправка формы не удалась!' });
@@ -28,7 +30,7 @@ const FormAuth: React.FC = () => {
 
   return !!userID && userID !== 'loading' ? (
     <Navigate to="/" />
-  ) : userID === 'loading' ? (
+  ) : sendFormLoading === true ? (
     <Preloader />
   ) : (
     <Form
@@ -48,7 +50,7 @@ const FormAuth: React.FC = () => {
         rules={[
           {
             required: true,
-            message: 'Логин - число, количество цифр от 1 до 6!',
+            message: 'Неверный формат данных',
             pattern: /^[0-9]{1,6}$/gm,
           },
         ]}
@@ -63,8 +65,7 @@ const FormAuth: React.FC = () => {
         rules={[
           {
             required: true,
-            message:
-              'Пароль не менее 8 символов, из них латинские буквы, не менее 1 цифры и 1 заглавной буквы',
+            message: 'Неверный пароль',
             pattern: /^.*(?=.{8,})(?=.*[0-9]+)(?=.*[A-Z]+)(?=.*[a-z]+).*$/gm,
           },
         ]}

@@ -2,13 +2,13 @@ import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 
 import tasksReducer from 'store/tasks/slice';
 import authReducer from 'store/auth/slice';
-import validReducer from 'store/validate/slice';
+import verifyReducer from 'store/verify/slice';
 
 export const store = configureStore({
   reducer: {
     tasks: tasksReducer,
     auth: authReducer,
-    valide: validReducer,
+    verify: verifyReducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
 });

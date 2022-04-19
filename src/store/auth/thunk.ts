@@ -16,7 +16,7 @@ export const fetchAuthAction = createAsyncThunk(
       cookies.set('token', response.data.token, { path: '/' });
       return response.data.token;
     } catch (error) {
-      notification.error({ message: 'Ошибка авторизации, проверьте логин!' });
+      notification.error({ message: 'Пользователь с указанным id не найден' });
       return rejectWithValue(error.message);
     }
   },

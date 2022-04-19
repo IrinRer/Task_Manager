@@ -1,8 +1,8 @@
 import { AxiosError } from 'axios';
 
-export const VALID_SLICE_ALIAS = 'valid';
+export const VERIFY_SLICE_ALIAS = 'verify';
 
-export interface IValidReducer {
+export interface IVerifyReducer {
   userID: string | null;
   error: AxiosError | null;
 }

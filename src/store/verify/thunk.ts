@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 // import { notification } from 'antd';
 
-import { VALID_SLICE_ALIAS } from 'store/validate/types';
+import { VERIFY_SLICE_ALIAS } from 'store/verify/types';
 import { axiosInstance } from 'network';
 
-export const fetchValidAction = createAsyncThunk(
-  `${VALID_SLICE_ALIAS}/fetchAll`,
+export const fetchVerifyAction = createAsyncThunk(
+  `${VERIFY_SLICE_ALIAS}/fetchAll`,
   async (id: string, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post('/ladum/token/verify', {
