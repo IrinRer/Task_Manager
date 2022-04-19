@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-import Hello from 'components/Hello';
 import { getBackendURL } from 'helpers/common';
-import Task from 'pages/Tasks/Task';
+import CreateRoutes from 'containers/Routes';
 
 const App: React.FC = () => {
   // Токен не должен храниться в state !!!
@@ -23,8 +22,7 @@ const App: React.FC = () => {
   useEffect(() => {
     auth();
   }, []);
-
-  return <Task />;
+  return <CreateRoutes />;
 };
 
 export default App;
