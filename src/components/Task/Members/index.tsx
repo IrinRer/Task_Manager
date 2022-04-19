@@ -29,7 +29,7 @@ const Info: React.FC = () => {
   return (
     <>
       <div className={styles.infoLine}>
-        <span>Автор</span>{' '}
+        <span>Автор </span>{' '}
         <span className={styles.members}>{author ? author.name : ''}</span>
       </div>
 
