@@ -1,15 +1,17 @@
 import React from 'react';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import {
-  getImplementerRoleID,
-  getResponsibleRoleID,
   getTaskAuthor,
   getTaskImplementer,
   getTaskResponsible,
   getTaskWatchers,
   getTaskWatchersID,
-  getWatcherRoleID,
 } from 'store/task/selectors';
+import {
+  getImplementerRoleID,
+  getResponsibleRoleID,
+  getWatcherRoleID,
+} from 'store/common/roles/selectors';
 import styles from './index.module.scss';
 import AddMemberButton from '../Info/AddMemberButton';
 import MembersWrapper from './MembersWrapper';

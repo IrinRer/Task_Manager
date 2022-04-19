@@ -1,6 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from 'store';
-import { IAssignUser, IRoles, ITaskRoles } from './types';
+import { IAssignUser } from 'store/members/types';
+import { ITaskRoles } from './types';
 
 function isAuthor(element:ITaskRoles) {
     if (element.task_role.name!== "Автор задачи") {
@@ -35,30 +36,6 @@ function isResponsible(element:ITaskRoles) {
 
 
 
-
-
-function isWatcherFromRoles(element:IRoles) {
-  if (element.name!== "Наблюдатель") {
-    return false;
-  }
-  return element;
-}
-
-function isResponsibleFromRoles(element:IRoles) {
-  if (element.name!== "Ответственный") {
-    return false;
-  }
-  return element;
-}
-function isImplementerFromRoles(element:IRoles) {
-  if (element.name!== "Исполнитель") {
-    return false;
-  }
-  return element;
-}
-
-
-
 function getUsersFromRoles(obj:Array<ITaskRoles>|undefined){
   // eslint-disable-next-line prefer-const
   let arr:IAssignUser[] = [];
@@ -75,34 +52,8 @@ function getUsersIdFromRoles(obj:Array<ITaskRoles>|undefined){
   return arr;
 }
 
-/* function getNameFromMembers(obj:Array<ITaskMembers>|null){
-  // eslint-disable-next-line prefer-const
-  let arr:IAssignUser[] = [];
-  obj?.forEach (element => arr.push( {
-    user_id:element.user_id,
-    name:element.name,
-    logo: element.logo,
-  }));
-  return arr;
-} */
-
-const allroles = (state: RootState) => state.onetask.allroles;
 const taskData = (state: RootState) => state.onetask.data;
 const taskRoles = (state: RootState) => state.onetask.data.roles;
-
-export const getWatcherRoleID = createSelector(
-  allroles,
-  roles => roles?.find(isWatcherFromRoles)?.task_role_id
-);
-export const getResponsibleRoleID = createSelector(
-  allroles,
-  roles => roles?.find(isResponsibleFromRoles)?.task_role_id
-);
-export const getImplementerRoleID = createSelector(
-  allroles,
-  roles => roles?.find(isImplementerFromRoles)?.task_role_id
-);
-
 
 export const getTaskId = createSelector(
   taskData,
@@ -120,7 +71,6 @@ export const getTaskStatus = createSelector(
   taskData,
   data => data.status.name
 );
-
 
 
 export const getTaskAuthor = createSelector(
@@ -145,12 +95,8 @@ export const getTaskWatchersID = createSelector(
 );
 
 
-export const getMembers = (state: RootState) => state.onetask?.members;
 export const getTaskLoading = (state: RootState) => state.onetask.loading;
 export const getTaskError = (state: RootState) => state.onetask.error;
-export const getNewSelectedMembers = (state: RootState) => state.onetask?.selectedMembers; 
-export const getUnselectedMembers = (state: RootState) => state.onetask?.unselectedMembers;
-
 
 
 // export const getTask = (state: RootState) => state.onetask.data;

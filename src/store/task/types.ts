@@ -1,28 +1,19 @@
 import { AxiosError } from 'axios';
+import { IRoles } from 'store/common/roles/types';
+import { IAssignUser } from 'store/members/types';
 
 export const ONETASK_SLICE_ALIAS = 'onetask';
-export const ONETASK_SLICE_CREATE = 'createTask';
-export const ONETASK_SLICE_STATUSES = 'statuses';
-export const ONETASK_SLICE_MEMBERS = 'members';
-export const ONETASK_SLICE_WATCHERS = 'watchers';
-export const ONETASK_SLICE_ROLES = 'roles';
 
 export interface ITaskReducer{
-  response: any | null;
+  response: IResponseTask | null;
   loading: boolean;
   error: AxiosError | null;
-  statuses: Array<IStatuses> | null;
-  allroles: Array<IRoles> | null;
-  members: Array<ITaskMembers> | null;  
-  selectedMembers: Array<string> | string | null; 
-  unselectedMembers: Array<string> | string | null; 
   data: {
     task_id: string, 
     title:string, 
     description:string, 
     status: {task_status_id:string, name:string},
     roles: Array<ITaskRoles> | null,
-    // watchers: Array<ITaskWatchers> | null,
   };
 }
 
@@ -33,44 +24,6 @@ export interface ITaskRoles {
     },
     task_role: IRoles,
     assign_user: IAssignUser
-}
-
-export interface IAssignUser {
-  user_id:string,
-  name:string,
-  logo: string,
-}
-
-export interface ITaskMembers {
-    user_id:string,
-    name:string,
-    logo: string,
-    permissions: Array<string>
-}
-
-export interface ITaskWatchers {
-  task_id: string, 
-  assign_user_id: string, 
-  task_role_id:string
-}
-
-export interface IStatuses{
-    task_status_id:string,
-    name:string,
-    name_group:string,
-    form_result_required:boolean,
-    created:Date,
-    updated:Date
-}
-
-export interface IRoles{
-  task_role_id: string,
-  name: string,
-  name_group: string,
-  max_user_assigned: number,
-  is_author: boolean,
-  created: Date,
-  updated: Date
 }
 
 export interface IResponseTask{

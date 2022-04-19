@@ -7,14 +7,17 @@ import { useDispatch } from 'react-redux';
 import {
   getMembers,
   getNewSelectedMembers,
-  getTaskId,
   getUnselectedMembers,
-} from 'store/task/selectors';
+} from 'store/members/selectors';
 import {
-  deleteTaskWatchersAction,
-  setTaskWatchersAction,
-} from 'store/task/thunk';
-import { setNewSelectedMembers, setUnselectedMembers } from 'store/task/slice';
+  deleteTaskMemberAction,
+  setTaskMemberAction,
+} from 'store/members/thunk';
+import {
+  setNewSelectedMembers,
+  setUnselectedMembers,
+} from 'store/members/slice';
+import { getTaskId } from 'store/task/selectors';
 import styles from './index.module.scss';
 
 type TProps = {
@@ -65,7 +68,7 @@ const AddMemberButton: FC<TProps> = (props: TProps) => {
     if (multi && Array.isArray(roleAssign) && Array.isArray(roleUnassign)) {
       roleAssign?.forEach((element) => {
         dispatch(
-          setTaskWatchersAction({
+          setTaskMemberAction({
             task_id: taskId,
             assign_user_id: element,
             task_role_id: roleId || '',
@@ -74,7 +77,7 @@ const AddMemberButton: FC<TProps> = (props: TProps) => {
       });
       roleUnassign?.forEach((element) => {
         dispatch(
-          deleteTaskWatchersAction({
+          deleteTaskMemberAction({
             task_id: taskId,
             assign_user_id: element,
             task_role_id: roleId || '',
@@ -84,7 +87,7 @@ const AddMemberButton: FC<TProps> = (props: TProps) => {
     }
     if (!multi && typeof roleAssign === 'string') {
       dispatch(
-        setTaskWatchersAction({
+        setTaskMemberAction({
           task_id: taskId,
           assign_user_id: roleAssign,
           task_role_id: roleId || '',

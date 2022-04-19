@@ -1,18 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { IResponseTask, IRoles, IStatuses, ITaskMembers, ITaskReducer, ONETASK_SLICE_ALIAS } from 'store/task/types';
-import { deleteTaskWatchersAction, fetchAllMembers, fetchAllRoles, fetchAllStatuses, fetchTaskAction, setTaskDescription, setTaskTitle, setTaskWatchersAction} from 'store/task/thunk';
+import { IResponseTask, ITaskReducer, ONETASK_SLICE_ALIAS } from 'store/task/types';
+import { fetchTaskAction, setTaskDescription, setTaskTitle} from 'store/task/thunk';
 import { AxiosError } from 'axios';
 
 const initialState: ITaskReducer = {
   response: null,
   loading: false,
   error: null,
-  statuses: null,
-  allroles: null,
-  members: null,
-  selectedMembers: null,
-  unselectedMembers: null,
 
   data: {
     task_id: "", 
@@ -40,7 +35,6 @@ const initialState: ITaskReducer = {
         logo: ""
       }}
     ],
-    // watchers: [{task_id: "", assign_user_id: "", task_role_id:""}],
   },
 };
 
@@ -64,12 +58,6 @@ export const onetaskSlice = createSlice({
     /* setTaskId: (state: ITaskReducer, action: PayloadAction<string>) => {
       state.data.task_id = action.payload;
     }, */
-    setNewSelectedMembers: (state: ITaskReducer, action: PayloadAction<string[]>) => {
-      state.selectedMembers = action.payload;
-    },
-    setUnselectedMembers: (state: ITaskReducer, action: PayloadAction<string[]>) => {
-      state.unselectedMembers = action.payload;
-    },
   },
   extraReducers: {
     [fetchTaskAction.pending.type]: (state: ITaskReducer) => {
@@ -91,52 +79,6 @@ export const onetaskSlice = createSlice({
       state.loading = false;
       state.error = payload;
     },
-
-
-    [setTaskWatchersAction.pending.type]: (state: ITaskReducer) => {
-      state.loading = true;
-      state.error = null;
-    },
-    [setTaskWatchersAction.fulfilled.type]: (
-      state: ITaskReducer,
-      { payload }: PayloadAction<IResponseTask>,
-    ) => {
-      state.response= payload;
-      state.loading = false;
-    },
-    [setTaskWatchersAction.rejected.type]: (
-      state: ITaskReducer,
-      { payload }: PayloadAction<AxiosError>,
-    ) => {
-      state.response = null;
-      state.loading = false;
-      state.error = payload;
-    },
-
-
-
-    [deleteTaskWatchersAction.pending.type]: (state: ITaskReducer) => {
-      state.loading = true;
-      state.error = null;
-    },
-    [deleteTaskWatchersAction.fulfilled.type]: (
-      state: ITaskReducer,
-      { payload }: PayloadAction<IResponseTask>,
-    ) => {
-      state.response = payload;
-      state.loading = false;
-    },
-    [deleteTaskWatchersAction.rejected.type]: (
-      state: ITaskReducer,
-      { payload }: PayloadAction<AxiosError>,
-    // eslint-disable-next-line sonarjs/no-identical-functions
-    ) => {
-      state.response = null;
-      state.loading = false;
-      state.error = payload;
-    },
-
-
 
     /* [createTaskAction.pending.type]: (state: ITaskReducer) => {
       state.loading = true;
@@ -204,64 +146,8 @@ export const onetaskSlice = createSlice({
       state.error = payload;
     },
 
-
-
-    [fetchAllStatuses.pending.type]: (state: ITaskReducer) => {
-      state.error = null;
-    },
-    [fetchAllStatuses.fulfilled.type]: (
-      state: ITaskReducer,
-      { payload }: PayloadAction<IStatuses[]>,
-    ) => {
-      state.statuses = payload;
-    },
-    [fetchAllStatuses.rejected.type]: (
-      state: ITaskReducer,
-      { payload }: PayloadAction<AxiosError>,
-    ) => {
-      state.statuses = null;
-      state.error = payload;
-    },
-
-
-    [fetchAllMembers.pending.type]: (state: ITaskReducer) => {
-      state.error = null;
-    },
-    [fetchAllMembers.fulfilled.type]: (
-      state: ITaskReducer,
-      { payload }: PayloadAction<ITaskMembers[]>,
-    ) => {
-      state.members = payload;
-    },
-    [fetchAllMembers.rejected.type]: (
-      state: ITaskReducer,
-      { payload }: PayloadAction<AxiosError>,
-    ) => {
-      state.members = initialState.members;
-      state.error = payload;
-    },
-
-
-    [fetchAllRoles.pending.type]: (state: ITaskReducer) => {
-      state.error = null;
-    },
-    [fetchAllRoles.fulfilled.type]: (
-      state: ITaskReducer,
-      { payload }: PayloadAction<IRoles[]>,
-    ) => {
-      state.allroles = payload;
-    },
-    [fetchAllRoles.rejected.type]: (
-      state: ITaskReducer,
-      { payload }: PayloadAction<AxiosError>,
-    ) => {
-      state.allroles = initialState.allroles;
-      state.error = payload;
-    },
-
-
   },
 });
 
-export const { setNewSelectedMembers, setUnselectedMembers, clearDataTask, setTitle, setDescription} = onetaskSlice.actions;
+export const { clearDataTask, setTitle, setDescription} = onetaskSlice.actions;
 export default onetaskSlice.reducer;
