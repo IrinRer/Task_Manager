@@ -12,6 +12,7 @@ import {
 } from 'store/task/selectors';
 import styles from './index.module.scss';
 import AddMemberButton from '../Info/AddMemberButton';
+import MembersWrapper from './MembersWrapper';
 
 const Info: React.FC = () => {
   const author = useAppSelector(getTaskAuthor);
@@ -28,13 +29,11 @@ const Info: React.FC = () => {
 
   return (
     <>
-      <div className={styles.infoLine}>
-        <span>Автор </span>{' '}
+      <MembersWrapper roleName="Автор">
         <span className={styles.members}>{author ? author.name : ''}</span>
-      </div>
+      </MembersWrapper>
 
-      <div className={styles.infoLine}>
-        <span>Ответственный</span>
+      <MembersWrapper roleName="Ответственный">
         <span className={styles.members}>
           {responsible ? (
             responsible.name
@@ -42,10 +41,9 @@ const Info: React.FC = () => {
             <AddMemberButton multi={false} roleId={responsibleRoleID || ''} />
           )}
         </span>
-      </div>
+      </MembersWrapper>
 
-      <div className={styles.infoLine}>
-        <span>Исполнитель</span>
+      <MembersWrapper roleName="Исполнитель">
         <span className={styles.members}>
           {implementer ? (
             implementer.name
@@ -53,10 +51,9 @@ const Info: React.FC = () => {
             <AddMemberButton multi={false} roleId={implementerRoleID || ''} />
           )}
         </span>
-      </div>
+      </MembersWrapper>
 
-      <div className={styles.infoLine}>
-        <span>Наблюдатель</span>
+      <MembersWrapper roleName="Наблюдатель">
         <div className={styles.watchers}>
           {watchers.length !== 0
             ? watchers.map((el) => (
@@ -69,7 +66,7 @@ const Info: React.FC = () => {
             roleId={watcherRoleID || ''}
           />
         </div>
-      </div>
+      </MembersWrapper>
     </>
   );
 };
