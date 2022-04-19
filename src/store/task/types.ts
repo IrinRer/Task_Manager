@@ -14,8 +14,8 @@ export interface ITaskReducer{
   statuses: Array<IStatuses> | null;
   allroles: Array<IRoles> | null;
   members: Array<ITaskMembers> | null;  
-  selectedMembers: Array<string> | null; 
-  unselectedMembers: Array<string> | null; 
+  selectedMembers: Array<string> | string | null; 
+  unselectedMembers: Array<string> | string | null; 
   data: {
     task_id: string, 
     title:string, 

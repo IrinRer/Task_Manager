@@ -43,6 +43,19 @@ function isWatcherFromRoles(element:IRoles) {
   return element;
 }
 
+function isResponsibleFromRoles(element:IRoles) {
+  if (element.name!== "Ответственный") {
+    return false;
+  }
+  return element;
+}
+function isImplementerFromRoles(element:IRoles) {
+  if (element.name!== "Исполнитель") {
+    return false;
+  }
+  return element;
+}
+
 
 
 function getUsersFromRoles(obj:Array<ITaskRoles>|undefined){
@@ -75,6 +88,8 @@ function getUsersIdFromRoles(obj:Array<ITaskRoles>|undefined){
 
 // export const getTask = (state: RootState) => state.onetask.data;
 export const getWatcherRoleID = (state: RootState) =>state.onetask.allroles?.find(isWatcherFromRoles)?.task_role_id;
+export const getResponsibleRoleID = (state: RootState) =>state.onetask.allroles?.find(isResponsibleFromRoles)?.task_role_id;
+export const getImplementerRoleID = (state: RootState) =>state.onetask.allroles?.find(isImplementerFromRoles)?.task_role_id;
 export const getMembers = (state: RootState) => state.onetask?.members;
 export const getTaskLoading = (state: RootState) => state.onetask.loading;
 export const getTaskError = (state: RootState) => state.onetask.error;
@@ -92,6 +107,8 @@ export const getTaskResponsible = (state: RootState) => state.onetask.data?.role
 export const getTaskImplementer = (state: RootState) => state.onetask.data?.roles?.find(isImplementer)?.assign_user;
 export const getTaskWatchers = (state: RootState) => getUsersFromRoles(state.onetask.data?.roles?.filter(isWatcher));
 export const getTaskWatchersID = (state: RootState) =>getUsersIdFromRoles(state.onetask.data?.roles?.filter(isWatcher));
+// export const getTaskResponsibleID = (state: RootState) => state.onetask.data?.roles?.find(isResponsible)?.assign_user.user_id;
+// export const getTaskImplementerID = (state: RootState) => state.onetask.data?.roles?.find(isImplementer)?.assign_user.user_id;
 
 
 /* function isCreate(element) {

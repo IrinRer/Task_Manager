@@ -8,31 +8,29 @@ import {
   getMembers,
   getNewSelectedMembers,
   getTaskId,
-  getTaskWatchersID,
   getUnselectedMembers,
-  getWatcherRoleID,
 } from 'store/task/selectors';
 import {
   deleteTaskWatchersAction,
   setTaskWatchersAction,
 } from 'store/task/thunk';
 import { setNewSelectedMembers, setUnselectedMembers } from 'store/task/slice';
-import { ITaskMembers } from 'store/task/types';
 import styles from './index.module.scss';
 
 type TProps = {
   multi: boolean;
+  selectedMembers?: string[];
+  roleId: string;
 };
 const { Option } = Select;
 
 const AddMemberButton: FC<TProps> = (props: TProps) => {
   const dispatch = useDispatch();
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const { multi } = props;
+  const { multi, selectedMembers, roleId } = props;
   const members = useAppSelector(getMembers);
   const taskId = useAppSelector(getTaskId);
-  const watchersID = useAppSelector(getTaskWatchersID);
-  const watcherRoleID = useAppSelector(getWatcherRoleID);
+
   const roleAssign = useAppSelector(getNewSelectedMembers);
   const roleUnassign = useAppSelector(getUnselectedMembers);
 
@@ -41,16 +39,21 @@ const AddMemberButton: FC<TProps> = (props: TProps) => {
   };
 
   const onChange = (value) => {
-    dispatch(
-      setNewSelectedMembers(
-        value.filter((elem: string) => watchersID.indexOf(elem) === -1),
-      ),
-    );
-    dispatch(
-      setUnselectedMembers(
-        watchersID.filter((elem: string) => value.indexOf(elem) === -1),
-      ),
-    );
+    if (multi && selectedMembers) {
+      dispatch(
+        setNewSelectedMembers(
+          value.filter((elem: string) => selectedMembers?.indexOf(elem) === -1),
+        ),
+      );
+      dispatch(
+        setUnselectedMembers(
+          selectedMembers.filter((elem: string) => value.indexOf(elem) === -1),
+        ),
+      );
+    }
+    if (!multi) {
+      dispatch(setNewSelectedMembers(value));
+    }
   };
 
   const onSearch = (val) => {
@@ -59,24 +62,35 @@ const AddMemberButton: FC<TProps> = (props: TProps) => {
 
   const onBlur = () => {
     setIsVisible(!isVisible);
-    roleAssign?.forEach((element) => {
+    if (multi && Array.isArray(roleAssign) && Array.isArray(roleUnassign)) {
+      roleAssign?.forEach((element) => {
+        dispatch(
+          setTaskWatchersAction({
+            task_id: taskId,
+            assign_user_id: element,
+            task_role_id: roleId || '',
+          }),
+        );
+      });
+      roleUnassign?.forEach((element) => {
+        dispatch(
+          deleteTaskWatchersAction({
+            task_id: taskId,
+            assign_user_id: element,
+            task_role_id: roleId || '',
+          }),
+        );
+      });
+    }
+    if (!multi && typeof roleAssign === 'string') {
       dispatch(
         setTaskWatchersAction({
           task_id: taskId,
-          assign_user_id: element,
-          task_role_id: watcherRoleID || '',
+          assign_user_id: roleAssign,
+          task_role_id: roleId || '',
         }),
       );
-    });
-    roleUnassign?.forEach((element) => {
-      dispatch(
-        deleteTaskWatchersAction({
-          task_id: taskId,
-          assign_user_id: element,
-          task_role_id: watcherRoleID || '',
-        }),
-      );
-    });
+    }
   };
 
   const filterOption = (input, option) => {
@@ -86,6 +100,20 @@ const AddMemberButton: FC<TProps> = (props: TProps) => {
     return optionA!.children
       .toLowerCase()
       .localeCompare(optionB!.children.toLowerCase());
+  };
+
+  const generateValue = () => {
+    if (multi && selectedMembers) {
+      return selectedMembers
+        .concat(roleAssign || [])
+        .filter((elem: string) =>
+          roleUnassign ? roleUnassign.indexOf(elem) === -1 : true,
+        );
+    }
+    if (!multi && typeof roleAssign === 'string') {
+      return roleAssign;
+    }
+    return null;
   };
 
   const children = (
@@ -111,14 +139,10 @@ const AddMemberButton: FC<TProps> = (props: TProps) => {
       )}
 
       {isVisible ? (
-        <Select<string[] | number, { value: string; children: string }>
+        <Select<string[] | number | string, { value: string; children: string }>
           mode={multi ? 'multiple' : undefined}
           className={styles.members}
-          defaultValue={watchersID
-            .concat(roleAssign || [])
-            .filter((elem: string) =>
-              roleUnassign ? roleUnassign.indexOf(elem) === -1 : true,
-            )}
+          defaultValue={generateValue()}
           maxTagCount={1}
           listHeight={118}
           showSearch
