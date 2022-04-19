@@ -6,27 +6,39 @@ import Spinner from 'components/Common/Spinner';
 import ErrorBoundary from 'containers/ErrorBoundary';
 import Error from 'components/Common/Error';
 
-
 const CreateRoutes: React.FC = () => {
-  const Tasks = lazy(() => import('components/Task'));
-  
+  // const Tasks = lazy(() => import('components/Tasks'));
+  const Task = lazy(() => import('pages/Tasks/Task'));
+
   return (
     <BrowserRouter>
       <Suspense fallback={<Spinner />}>
         <ErrorBoundary>
           <Routes>
-            <Route index element={
+            <Route
+              index
+              element={
                 <PrivateRoute>
-                  <Tasks />
+                  <div>{ROUTES.tasks.name}</div>
                 </PrivateRoute>
-              }/>
-            <Route path={ROUTES.editTask.path} element={
+              }
+            />
+            <Route
+              path={ROUTES.editTask.path}
+              element={
                 <PrivateRoute>
-                  <div>{ROUTES.editTask.name}</div>
+                  <Task />
                 </PrivateRoute>
-              }/>
-            <Route path={ROUTES.login.path} element={<div>{ROUTES.login.name}</div>}/>
-            <Route path={ROUTES.notFound.path} element={<Error text='Страница не найдена'/>} />
+              }
+            />
+            <Route
+              path={ROUTES.login.path}
+              element={<div>{ROUTES.login.name}</div>}
+            />
+            <Route
+              path={ROUTES.notFound.path}
+              element={<Error text="Страница не найдена" />}
+            />
           </Routes>
         </ErrorBoundary>
       </Suspense>
