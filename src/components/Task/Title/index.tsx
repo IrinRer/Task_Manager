@@ -1,18 +1,18 @@
 import React from 'react';
 import TextArea from 'antd/lib/input/TextArea';
-import { useDispatch } from 'react-redux';
 import { setTitle } from 'store/task/slice';
 import { getTaskId, getTitle } from 'store/task/selectors';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { setTaskTitle } from 'store/task/thunk';
+import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import styles from './index.module.scss';
 
 const Title: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const title = useAppSelector(getTitle);
   const taskId = useAppSelector(getTaskId);
 
-  const changeTitle = (e) => {
+  const changeTitle = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     dispatch(setTitle(e.target.value));
   };
 

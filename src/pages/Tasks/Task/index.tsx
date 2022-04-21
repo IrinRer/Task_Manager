@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Modal } from 'antd';
-import { useDispatch } from 'react-redux';
 import { fetchTaskAction } from 'store/task/thunk';
 import { clearDataTask } from 'store/task/slice';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
@@ -10,12 +9,13 @@ import Info from 'components/Task/Info';
 import { fetchAllMembers } from 'store/members/thunk';
 import { fetchAllStatuses } from 'store/common/statuses/thunk';
 import { fetchAllRoles } from 'store/common/roles/thunk';
+import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import styles from './index.module.scss';
 
 const Task: React.FC = () => {
   const [visible, setVisible] = useState<boolean>(/* false */ true);
   const [confirmLoading, setConfirmLoading] = useState<boolean>(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const taskId: string | undefined = useAppSelector(getTaskId);
 
   useEffect(() => {

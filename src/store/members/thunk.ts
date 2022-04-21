@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import { getBackendURL } from 'helpers/common';
 
-import { ONETASK_SLICE_MEMBERS} from 'store/members/types';
+import { ITaskWatchers, ONETASK_SLICE_MEMBERS} from 'store/members/types';
 
 // TODO: Доставать token необходимо из cookie
 const token =
@@ -47,7 +47,7 @@ export const setTaskMemberAction = createAsyncThunk(
 
 export const deleteTaskMemberAction = createAsyncThunk(
   `${ONETASK_SLICE_MEMBERS}/deleteMember`,
-  async (data:{task_id:string, assign_user_id:string , task_role_id:string}, { rejectWithValue }) => {
+  async (data:ITaskWatchers, { rejectWithValue }) => {
     try {     
       const axiosInstance = axios.create({
         baseURL: getBackendURL(),

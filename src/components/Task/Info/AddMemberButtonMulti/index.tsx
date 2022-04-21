@@ -35,7 +35,7 @@ type TOption = {
 
 const { Option } = Select;
 
-const AddMemberButton: FC<TProps> = (props: TProps) => {
+const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
   const options = useSelectOptions();
   const dispatch = useAppDispatch();
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -178,4 +178,4 @@ const AddMemberButton: FC<TProps> = (props: TProps) => {
   );
 };
 
-export default AddMemberButton;
+export default AddMemberButtonMulti;

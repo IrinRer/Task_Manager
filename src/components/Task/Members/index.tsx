@@ -13,8 +13,9 @@ import {
   getWatcherRoleID,
 } from 'store/common/roles/selectors';
 import styles from './index.module.scss';
-import AddMemberButton from '../Info/AddMemberButton';
+import AddMemberButtonMulti from '../Info/AddMemberButtonMulti';
 import MembersWrapper from './MembersWrapper';
+import AddMemberButton from '../Info/AddMemberButton';
 
 const Info: React.FC = () => {
   const author = useAppSelector(getTaskAuthor);
@@ -62,7 +63,7 @@ const Info: React.FC = () => {
                 <span className={styles.members}>{el.name}</span>
               ))
             : ''}
-          <AddMemberButton
+          <AddMemberButtonMulti
             multi
             selectedMembers={watchersID}
             roleId={watcherRoleID || ''}
