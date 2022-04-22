@@ -1,0 +1,25 @@
+.editMembers {
+  background: #f1f1f5;
+  padding: 3px 10px;
+  border: 1px solid #e2e2ea;
+  border-radius: 16px;
+  text-align: center;
+  width: max-content;
+  display: block;
+  margin-bottom: 8px;
+  span {
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .delete {
+    font-size: 12px;
+    width: 11px;
+    margin-left: 11px;
+    color: #92929d;
+    cursor: pointer;
+  }
+}

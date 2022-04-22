@@ -2,8 +2,9 @@
   width: 40%;
   padding: 68px 12px;
   display: inline-block;
-  background-color: #f1f1f5;
+  background-color: #fafafb;
   border-top-right-radius: 16px;
+  border-left: 1px solid #f1f1f5;
 
   :global([data-theme='compact']
       .site-collapse-custom-collapse

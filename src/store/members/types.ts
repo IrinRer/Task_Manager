@@ -8,8 +8,8 @@ export interface IMembersReducer{
   loading: boolean;
   error: AxiosError | null;
   members: Array<ITaskMembers> | null;  
-  selectedMembers: Array<string> | null; 
-  unselectedMembers: Array<string> | null; 
+  selectedMembers: Array<string> | string | null; 
+  unselectedMembers: Array<string> | string | null; 
 }
 
 

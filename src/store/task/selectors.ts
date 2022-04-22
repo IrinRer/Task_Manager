@@ -86,7 +86,7 @@ export const getTaskImplementer = createSelector(
   roles => roles?.find(isImplementer)?.assign_user
 );
 export const getTaskWatchers = createSelector(
-  taskRoles,
+  taskRoles,// селектор вотчеров
   roles => getUsersFromRoles(roles?.filter(isWatcher))
 );
 export const getTaskWatchersID = createSelector(
