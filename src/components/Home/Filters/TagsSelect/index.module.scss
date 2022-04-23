@@ -1,0 +1,21 @@
+@import 'src/styles/color-variables';
+@import 'src/styles/font-variables';
+
+.tagSelect {
+  :global {
+      font-weight: 300;
+      font-size: $font-size-m;
+      line-height: $line-height-m;
+      border-bottom: 1px solid $dark-secondary;
+
+    .ant-select-selection-item {
+      display: none;
+    }
+  }
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}

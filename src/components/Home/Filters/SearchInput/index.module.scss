@@ -1,0 +1,21 @@
+@import 'src/styles/color-variables';
+@import 'src/styles/font-variables';
+
+.search {
+  :global {
+    border-color: $dark-secondary;
+    background-color: $bg-primary;
+    color: $dark-primary;
+    border-radius: 8px;
+
+    .ant-input-prefix {
+      margin-right: 10px;
+    }
+
+    .ant-input {
+      background-color: $bg-primary;
+      font-size: $font-size-m;
+      line-height: $line-height-m;
+    }
+  }
+}

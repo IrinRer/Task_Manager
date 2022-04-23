@@ -3,17 +3,28 @@ import { AxiosError } from 'axios';
 export const TASKS_SLICE_ALIAS = 'tasks';
 
 export interface ITasksReducer {
-  // TODO: Добавить типизацию
-  response: TTasksResponse | null;
+  tasks: Array<TTask> | null;
+  itemsTotal: number;
   loading: boolean;
   auth: boolean;
   error: AxiosError | null;
 }
 
-type TTasksResponseItem = {
+export type TTask = {
   task_id: string;
   title: string;
   description: string;
 };
 
-export type TTasksResponse = TTasksResponseItem[];
+export interface ITasksResponse {
+  data: Array<TTask>;
+  pagination: IPagination;
+}
+
+export interface IPagination {
+  items_count: number;
+  items_total: number;
+  page_current: number;
+  page_total: number;
+  per_page: number;
+}

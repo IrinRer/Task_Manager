@@ -1,0 +1,19 @@
+@import 'src/styles/color-variables';
+@import 'src/styles/font-variables';
+@import 'src/styles/mixins';
+
+.button {
+  :global {
+    display: none;
+  }
+
+  @include media-breakpoint-down($size: md) {
+    display: block;
+    background-color: $button-main;
+    border-color: $button-main;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: $font-size-m;
+    line-height: $line-height-m;
+  }
+}
