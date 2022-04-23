@@ -6,10 +6,9 @@ import Spinner from 'components/Common/Spinner';
 import ErrorBoundary from 'containers/ErrorBoundary';
 import Error from 'components/Common/Error';
 
-
 const CreateRoutes: React.FC = () => {
-  const Tasks = lazy(() => import('components/Task'));
-  
+  const Home = lazy(() => import('pages/Home'));
+
   return (
     <BrowserRouter>
       <Suspense fallback={<Spinner />}>
@@ -17,7 +16,7 @@ const CreateRoutes: React.FC = () => {
           <Routes>
             <Route index element={
                 <PrivateRoute>
-                  <Tasks />
+                  <Home />
                 </PrivateRoute>
               }/>
             <Route path={ROUTES.editTask.path} element={
