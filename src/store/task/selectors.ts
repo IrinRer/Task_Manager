@@ -86,18 +86,19 @@ export const getTaskImplementer = createSelector(
   roles => roles?.find(isImplementer)?.assign_user
 );
 export const getTaskWatchers = createSelector(
-  taskRoles,// селектор вотчеров
+  taskRoles,
   roles => getUsersFromRoles(roles?.filter(isWatcher))
 );
 export const getTaskWatchersID = createSelector(
   taskRoles,
   roles => getUsersIdFromRoles(roles?.filter(isWatcher))
-);
+); 
 
+export const getNewSelectedMembers = (state: RootState) => state.onetask.selectedMembers; 
+export const getUnselectedMembers = (state: RootState) => state.onetask.unselectedMembers;
 
 export const getTaskLoading = (state: RootState) => state.onetask.loading;
-export const getTaskError = (state: RootState) => state.onetask.error;
-
+export const getTaskError = (state: RootState) => state.onetask.error.task;
 
 // export const getTask = (state: RootState) => state.onetask.data;
 // export const getWatcherRoleID = (state: RootState) =>state.onetask.allroles?.find(isWatcherFromRoles)?.task_role_id;
@@ -112,8 +113,9 @@ export const getTaskError = (state: RootState) => state.onetask.error;
 // export const getTaskAuthor = (state: RootState) => state.onetask.data?.roles?.find(isAuthor)?.assign_user;
 // export const getTaskResponsible = (state: RootState) => state.onetask.data?.roles?.find(isResponsible)?.assign_user;
 // export const getTaskImplementer = (state: RootState) => state.onetask.data?.roles?.find(isImplementer)?.assign_user;
-// export const getTaskWatchers = (state: RootState) => getUsersFromRoles(state.onetask.data?.roles?.filter(isWatcher));
-// export const getTaskWatchersID = (state: RootState) =>getUsersIdFromRoles(state.onetask.data?.roles?.filter(isWatcher));
+ // export const getTaskWatchers = (state: RootState) => getUsersFromRoles(state.onetask.data?.roles?.filter(isWatcher));
+ // export const getTaskWatchersID = (state: RootState) =>getUsersIdFromRoles(state.onetask.data?.roles?.filter(isWatcher));
+
 // export const getTaskResponsibleID = (state: RootState) => state.onetask.data?.roles?.find(isResponsible)?.assign_user.user_id;
 // export const getTaskImplementerID = (state: RootState) => state.onetask.data?.roles?.find(isImplementer)?.assign_user.user_id;
 

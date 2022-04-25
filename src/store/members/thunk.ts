@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import { getBackendURL } from 'helpers/common';
 
-import { ITaskWatchers, ONETASK_SLICE_MEMBERS} from 'store/members/types';
+import { ONETASK_SLICE_MEMBERS} from 'store/members/types';
 
 // TODO: Доставать token необходимо из cookie
 const token =
@@ -20,40 +20,6 @@ export const fetchAllMembers = createAsyncThunk(
         headers: { Authorization: `Bearer ${token}` },
       });
       const response = await axiosInstance.get(`/api/v1.0/external/users?page=1&per_page=50`);
-      return response.data.data;
-    } catch (error) {
-      notification.error({ message: error.message });
-      return rejectWithValue(error);
-    }
-  },
-);
-
-export const setTaskMemberAction = createAsyncThunk(
-  `${ONETASK_SLICE_MEMBERS}/setMember`,
-  async (data:{task_id:string, assign_user_id:string, task_role_id:string}, { rejectWithValue }) => {
-    try {     
-      const axiosInstance = axios.create({
-        baseURL: getBackendURL(),
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const response = await axiosInstance.post(`/api/v1.0/task/tasks/${data.task_id}/role-assign`, {assign_user_id: data.assign_user_id, task_role_id: data.task_role_id});
-      return response.data.data;
-    } catch (error) {
-      notification.error({ message: error.message });
-      return rejectWithValue(error);
-    }
-  },
-); 
-
-export const deleteTaskMemberAction = createAsyncThunk(
-  `${ONETASK_SLICE_MEMBERS}/deleteMember`,
-  async (data:ITaskWatchers, { rejectWithValue }) => {
-    try {     
-      const axiosInstance = axios.create({
-        baseURL: getBackendURL(),
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const response = await axiosInstance.post(`/api/v1.0/task/tasks/${data.task_id}/role-unassign`, {assign_user_id: data.assign_user_id, task_role_id: data.task_role_id});
       return response.data.data;
     } catch (error) {
       notification.error({ message: error.message });

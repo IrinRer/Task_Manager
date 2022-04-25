@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { getTaskResponsible, getTaskStatus } from 'store/task/selectors';
+import { getTaskStatus, getTaskResponsible } from 'store/task/selectors';
+
 import styles from './index.module.scss';
 
 const Info: React.FC = () => {

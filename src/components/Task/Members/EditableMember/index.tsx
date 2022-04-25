@@ -2,7 +2,7 @@ import { CloseOutlined } from '@ant-design/icons';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import React, { FC } from 'react';
-import { deleteTaskMemberAction } from 'store/members/thunk';
+import { deleteTaskMemberAction } from 'store/task/thunk';
 import { IAssignUser } from 'store/members/types';
 import { getTaskId } from 'store/task/selectors';
 import styles from './index.module.scss';

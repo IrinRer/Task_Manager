@@ -14,5 +14,3 @@ import { RootState } from 'store';
 export const getMembersLoading = (state: RootState) => state.members.loading;
 export const getMembersError = (state: RootState) => state.members.error;
 export const getMembers = (state: RootState) => state.members.members;
-export const getNewSelectedMembers = (state: RootState) => state.members.selectedMembers; 
-export const getUnselectedMembers = (state: RootState) => state.members.unselectedMembers;

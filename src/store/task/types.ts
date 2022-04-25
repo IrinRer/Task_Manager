@@ -7,7 +7,22 @@ export const ONETASK_SLICE_ALIAS = 'onetask';
 export interface ITaskReducer{
   response: IResponseTask | null;
   loading: boolean;
-  error: AxiosError | null;
+  selectedMembers: Array<string> | string | null; 
+  unselectedMembers: Array<string> | string | null; 
+  error: {
+    task: AxiosError | null;
+    title: AxiosError | null;
+    desc: AxiosError | null;
+    setMembers: AxiosError | null;
+    delMembers: AxiosError | null;
+  };
+  prevData:{
+    task_id: string, 
+    title:string, 
+    description:string, 
+    status: {task_status_id:string, name:string},
+    roles: Array<ITaskRoles> | null,
+  } | null;
   data: {
     task_id: string, 
     title:string, 
@@ -26,8 +41,14 @@ export interface ITaskRoles {
     assign_user: IAssignUser
 }
 
+export interface ITaskWatchers {
+  task_id: string, 
+  assign_user_id: string, 
+  task_role_id:string
+}
+
 export interface IResponseTask{
-    relation: {
+    /* relation: {
       task_to_role_id: string,
       task_id: string,
       assign_user_id: string,
@@ -35,7 +56,7 @@ export interface IResponseTask{
       created: Date,
       updated: Date,
     },
-    data: {
+    data: { */
       task_id: string,
       title: string,
       description: string,
@@ -61,5 +82,5 @@ export interface IResponseTask{
         total: number
       },
       permissions: Array<string>
-    }
+    /* } */
   }

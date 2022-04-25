@@ -3,24 +3,29 @@ import { Modal } from 'antd';
 import { fetchTaskAction } from 'store/task/thunk';
 import { clearDataTask } from 'store/task/slice';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { getTaskId } from 'store/task/selectors';
+import { getTaskError, getTaskId, getTaskLoading } from 'store/task/selectors';
 import Main from 'components/Task/Main';
 import Info from 'components/Task/Info';
 import { fetchAllMembers } from 'store/members/thunk';
 import { fetchAllStatuses } from 'store/common/statuses/thunk';
 import { fetchAllRoles } from 'store/common/roles/thunk';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
+import Preloader from 'components/Common/Preloader';
+import { Navigate } from 'react-router-dom';
+import { ROUTES } from 'constants/routes';
 import styles from './index.module.scss';
 
 const Task: React.FC = () => {
   const [visible, setVisible] = useState<boolean>(/* false */ true);
   const [confirmLoading, setConfirmLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  const taskId: string | undefined = useAppSelector(getTaskId);
+  const taskId: string | undefined =
+    'bc55eb8e-05fc-4ca9-823d-23839bcf4b55'; /* useAppSelector(getTaskId) */
+  const errorTask = useAppSelector(getTaskError);
 
   useEffect(() => {
     // dispatch(fetchTaskAction('11191e21-f578-4ce1-8bff-88c8f733abf1'));
-    dispatch(fetchTaskAction('bc55eb8e-05fc-4ca9-823d-23839bcf4b55'));
+    dispatch(fetchTaskAction(taskId));
     dispatch(fetchAllStatuses());
     dispatch(fetchAllMembers());
     dispatch(fetchAllRoles());
@@ -30,6 +35,16 @@ const Task: React.FC = () => {
     setVisible(false);
     dispatch(clearDataTask());
   };
+
+  const loading = useAppSelector(getTaskLoading);
+
+  if (loading) {
+    return <Preloader />;
+  }
+
+  if (errorTask) {
+    return <Navigate to={ROUTES.tasks.path} />;
+  }
 
   return (
     <Modal

@@ -3,12 +3,12 @@ import { Button, Select } from 'antd';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import React, { FC, useState } from 'react';
 
-import { getMembers, getNewSelectedMembers } from 'store/members/selectors';
-import { setTaskMemberAction } from 'store/members/thunk';
-import { setNewSelectedMembers } from 'store/members/slice';
-import { getTaskId } from 'store/task/selectors';
+import { getMembers } from 'store/members/selectors';
+import { getNewSelectedMembers, getTaskId } from 'store/task/selectors';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import useSelectOptions from 'customHooks/Task/useSelectOptions';
+import { setNewSelectedMembers } from 'store/task/slice';
+import { setTaskMemberAction } from 'store/task/thunk';
 import styles from './index.module.scss';
 
 type TProps = {
@@ -48,6 +48,7 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
           task_role_id: roleId || '',
         }),
       );
+      dispatch(setNewSelectedMembers([]));
     }
   };
 

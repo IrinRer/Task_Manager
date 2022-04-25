@@ -3,22 +3,16 @@ import { Button, Select } from 'antd';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import React, { FC, useState } from 'react';
 
+import { getMembers } from 'store/members/selectors';
 import {
-  getMembers,
   getNewSelectedMembers,
+  getTaskId,
   getUnselectedMembers,
-} from 'store/members/selectors';
-import {
-  deleteTaskMemberAction,
-  setTaskMemberAction,
-} from 'store/members/thunk';
-import {
-  setNewSelectedMembers,
-  setUnselectedMembers,
-} from 'store/members/slice';
-import { getTaskId } from 'store/task/selectors';
+} from 'store/task/selectors';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import useSelectOptions from 'customHooks/Task/useSelectOptions';
+import { setNewSelectedMembers, setUnselectedMembers } from 'store/task/slice';
+import { deleteTaskMemberAction, setTaskMemberAction } from 'store/task/thunk';
 import styles from '../AddMemberButton/index.module.scss';
 
 type TProps = {
@@ -83,6 +77,8 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
           }),
         );
       });
+      dispatch(setNewSelectedMembers([]));
+      dispatch(setUnselectedMembers([]));
     }
   };
 
