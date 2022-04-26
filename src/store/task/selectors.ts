@@ -1,17 +1,18 @@
 import { createSelector } from '@reduxjs/toolkit';
+import { ROLES } from 'constants/task';
 import { RootState } from 'store';
 import { IAssignUser } from 'store/members/types';
 import { ITaskRoles } from './types';
 
 function isAuthor(element:ITaskRoles) {
-    if (element.task_role.name!== "Автор задачи") {
+    if (element.task_role.task_role_id!== ROLES.author.id) {
       return false;
     }
   return {element};
 }
 
 function isWatcher(element:ITaskRoles) {
-  if (element.task_role.name!== "Наблюдатель") {
+  if (element.task_role.task_role_id!== ROLES.watcher.id) {
     return false;
   }
   const el = element.assign_user.name;
@@ -19,7 +20,7 @@ function isWatcher(element:ITaskRoles) {
 }
 
 function isImplementer(element:ITaskRoles) {
-  if (element.task_role.name!== "Исполнитель") {
+  if (element.task_role.task_role_id!== ROLES.implementer.id) {
     return false;
   }
   const el = element.assign_user.name;
@@ -27,7 +28,7 @@ function isImplementer(element:ITaskRoles) {
 }
 
 function isResponsible(element:ITaskRoles) {
-  if (element.task_role.name!== "Ответственный") {
+  if (element.task_role.task_role_id!== ROLES.responsible.id) {
     return false;
   }
   const el = element.assign_user.name;

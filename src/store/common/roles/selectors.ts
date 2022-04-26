@@ -1,23 +1,24 @@
 import { createSelector } from '@reduxjs/toolkit';
+import { ROLES } from 'constants/task';
 import { RootState } from 'store';
 import { IRoles } from './types';
 
 
 function isWatcherFromRoles(element:IRoles) {
-    if (element.name!== "Наблюдатель") {
+    if (element.task_role_id!== ROLES.watcher.id) {
       return false;
     }
     return element;
   }
   
   function isResponsibleFromRoles(element:IRoles) {
-    if (element.name!== "Ответственный") {
+    if (element.task_role_id!== ROLES.responsible.id) {
       return false;
     }
     return element;
   }
   function isImplementerFromRoles(element:IRoles) {
-    if (element.name!== "Исполнитель") {
+    if (element.task_role_id!== ROLES.implementer.id) {
       return false;
     }
     return element;
