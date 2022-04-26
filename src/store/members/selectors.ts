@@ -1,13 +1,12 @@
 import { RootState } from 'store';
 
-/* function getNameFromMembers(obj:Array<ITaskMembers>|null){
-  // eslint-disable-next-line prefer-const
-  let arr:IAssignUser[] = [];
-  obj?.forEach (element => arr.push( {
+/* function getNameFromMembers(users:Array<ITaskMembers>|null){
+
+  const arr:IAssignUser[] = users?.map(element => {
     user_id:element.user_id,
     name:element.name,
     logo: element.logo,
-  }));
+  }) || [];
   return arr;
 } */
 

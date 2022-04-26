@@ -36,19 +36,13 @@ function isResponsible(element:ITaskRoles) {
 
 
 
-function getUsersFromRoles(obj:Array<ITaskRoles>|undefined){
-  // eslint-disable-next-line prefer-const
-  let arr:IAssignUser[] = [];
-  obj?.forEach(element => arr.push( element.assign_user));
+function getUsersFromRoles(roles:Array<ITaskRoles>|undefined){
+  const arr:IAssignUser[] = roles?.map(element => element.assign_user) || [];
   return arr;
 }
 
-function getUsersIdFromRoles(obj:Array<ITaskRoles>|undefined){
-  // eslint-disable-next-line prefer-const
-  let arr:Array<string>= [];
-  obj?.forEach(element => {
-    arr.push(element.assign_user.user_id);
-  });
+function getUsersIdFromRoles(roles:Array<ITaskRoles>|undefined){
+  const arr:Array<string> = roles?.map(element => element.assign_user.user_id) || [];
   return arr;
 }
 
