@@ -7,7 +7,7 @@ import { getTaskError, getTaskId, getTaskLoading } from 'store/task/selectors';
 import Main from 'components/Task/Main';
 import Info from 'components/Task/Info';
 import { fetchAllMembers } from 'store/members/thunk';
-import { fetchAllStatuses } from 'store/common/statuses/thunk';
+import { fetchStatusesAction } from 'store/common/statuses/thunk';
 import { fetchAllRoles } from 'store/common/roles/thunk';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import Preloader from 'components/Common/Preloader';
@@ -26,7 +26,7 @@ const Task: React.FC = () => {
   useEffect(() => {
     // dispatch(fetchTaskAction('11191e21-f578-4ce1-8bff-88c8f733abf1'));
     dispatch(fetchTaskAction(taskId));
-    dispatch(fetchAllStatuses());
+    dispatch(fetchStatusesAction());
     dispatch(fetchAllMembers());
     dispatch(fetchAllRoles());
   }, [dispatch]);
