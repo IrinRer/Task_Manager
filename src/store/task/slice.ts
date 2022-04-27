@@ -1,7 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { IResponseTask, ITaskReducer, ONETASK_SLICE_ALIAS } from 'store/task/types';
-import { deleteTaskMemberAction, fetchTaskAction, setTaskDescription, setTaskMemberAction, setTaskTitle} from 'store/task/thunk';
+import {
+  IResponseTask,
+  ITaskReducer,
+  ONETASK_SLICE_ALIAS,
+} from 'store/task/types';
+import {
+  deleteTaskMemberAction,
+  fetchTaskAction,
+  setTaskDescription,
+  setTaskMemberAction,
+  setTaskTitle,
+} from 'store/task/thunk';
 import { AxiosError } from 'axios';
 
 const initialState: ITaskReducer = {
@@ -15,34 +25,36 @@ const initialState: ITaskReducer = {
     title: null,
     desc: null,
     setMembers: null,
-    delMembers: null
+    delMembers: null,
   },
 
   data: {
-    task_id: "", 
-    title: "", 
-    description: "", 
-    status: {task_status_id:"", name:""},
+    task_id: '',
+    title: '',
+    description: '',
+    status: { task_status_id: '', name: '' },
     roles: [
       {
-      task_to_role_id: "",
-      task: {
-        task_id: ""
+        task_to_role_id: '',
+        task: {
+          task_id: '',
+        },
+        task_role: {
+          task_role_id: '',
+          name: '',
+          name_group: '',
+          max_user_assigned: 1,
+          is_author: true,
+          created: new Date(3600 * 24 * 1000),
+          updated: new Date(3600 * 24 * 1000),
+        },
+        assign_user: {
+          user_id: '',
+          name: '',
+          logo: '',
+          permissions: [],
+        },
       },
-      task_role: {
-        task_role_id: "",
-        name: "",
-        name_group: "",
-        max_user_assigned: 1,
-        is_author: true,
-        created: new Date(3600 * 24 * 1000),
-        updated: new Date(3600 * 24 * 1000)
-      },
-      assign_user: {
-        user_id: "",
-        name: "",
-        logo: ""
-      }}
     ],
   },
 };
@@ -52,7 +64,7 @@ export const onetaskSlice = createSlice({
   name: ONETASK_SLICE_ALIAS,
   initialState,
   reducers: {
-    clearDataTask: (state:ITaskReducer) => {
+    clearDataTask: (state: ITaskReducer) => {
       state.data = initialState.data;
       state.response = initialState.response;
       state.loading = initialState.loading;
@@ -64,10 +76,16 @@ export const onetaskSlice = createSlice({
     setDescription: (state: ITaskReducer, action: PayloadAction<string>) => {
       state.data.description = action.payload;
     },
-    setNewSelectedMembers: (state: ITaskReducer, action: PayloadAction<string[]>) => {
+    setNewSelectedMembers: (
+      state: ITaskReducer,
+      action: PayloadAction<string[]>,
+    ) => {
       state.selectedMembers = action.payload;
     },
-    setUnselectedMembers: (state: ITaskReducer, action: PayloadAction<string[]>) => {
+    setUnselectedMembers: (
+      state: ITaskReducer,
+      action: PayloadAction<string[]>,
+    ) => {
       state.unselectedMembers = action.payload;
     },
     /* createStatusId: (state: ITaskReducer, action: PayloadAction<string>) => {
@@ -78,13 +96,13 @@ export const onetaskSlice = createSlice({
     }, */
   },
   extraReducers: {
-    [fetchTaskAction.pending.type]: (state:ITaskReducer) => {
+    [fetchTaskAction.pending.type]: (state: ITaskReducer) => {
       state.loading = true;
       state.error.task = null;
     },
     [fetchTaskAction.fulfilled.type]: (
-      state:ITaskReducer,
-      { payload }: PayloadAction<ITaskReducer["data"]>,
+      state: ITaskReducer,
+      { payload }: PayloadAction<ITaskReducer['data']>,
     ) => {
       state.data = payload;
       state.prevData = payload;
@@ -121,7 +139,6 @@ export const onetaskSlice = createSlice({
       state.error = payload;
     }, */
 
-
     [setTaskDescription.pending.type]: (state: ITaskReducer) => {
       state.loading = true;
       state.error.desc = null;
@@ -136,14 +153,15 @@ export const onetaskSlice = createSlice({
     [setTaskDescription.rejected.type]: (
       state: ITaskReducer,
       { payload }: PayloadAction<AxiosError>,
-    // eslint-disable-next-line sonarjs/no-identical-functions
-    ) => {
-      state.response = null;
-      state.loading = false;
-      state.error.desc = payload;
-      state.data.description= state.prevData?.description || initialState.data.description;
-    },
-
+    ) =>
+      // eslint-disable-next-line sonarjs/no-identical-functions
+      {
+        state.response = null;
+        state.loading = false;
+        state.error.desc = payload;
+        state.data.description =
+          state.prevData?.description || initialState.data.description;
+      },
 
     [setTaskTitle.pending.type]: (state: ITaskReducer) => {
       state.loading = true;
@@ -159,15 +177,14 @@ export const onetaskSlice = createSlice({
     [setTaskTitle.rejected.type]: (
       state: ITaskReducer,
       { payload }: PayloadAction<AxiosError>,
-    // eslint-disable-next-line sonarjs/no-identical-functions
-    ) => {
-      state.response = null;
-      state.loading = false;
-      state.error.title = payload;
-      state.data.title = state.prevData?.title || initialState.data.title;
-    },
-
-
+    ) =>
+      // eslint-disable-next-line sonarjs/no-identical-functions
+      {
+        state.response = null;
+        state.loading = false;
+        state.error.title = payload;
+        state.data.title = state.prevData?.title || initialState.data.title;
+      },
 
     [setTaskMemberAction.pending.type]: (state: ITaskReducer) => {
       state.error.setMembers = null;
@@ -188,31 +205,36 @@ export const onetaskSlice = createSlice({
       state.selectedMembers = null;
     },
 
-
-
     [deleteTaskMemberAction.pending.type]: (state: ITaskReducer) => {
       state.error.delMembers = null;
     },
     [deleteTaskMemberAction.fulfilled.type]: (
       state: ITaskReducer,
       { payload }: PayloadAction<IResponseTask>,
-    // eslint-disable-next-line sonarjs/no-identical-functions
-    ) => {
-      state.response = payload;
-      state.data.roles = payload.roles;
-    },
+    ) =>
+      // eslint-disable-next-line sonarjs/no-identical-functions
+      {
+        state.response = payload;
+        state.data.roles = payload.roles;
+      },
     [deleteTaskMemberAction.rejected.type]: (
       state: ITaskReducer,
       { payload }: PayloadAction<AxiosError>,
-    // eslint-disable-next-line sonarjs/no-identical-functions
-    ) => {
-      state.response = null;
-      state.error.delMembers = payload;
-      state.unselectedMembers = null;
-    },
-
+    ) =>
+      // eslint-disable-next-line sonarjs/no-identical-functions
+      {
+        state.response = null;
+        state.error.delMembers = payload;
+        state.unselectedMembers = null;
+      },
   },
 });
 
-export const { clearDataTask, setTitle, setDescription, setNewSelectedMembers, setUnselectedMembers} = onetaskSlice.actions;
+export const {
+  clearDataTask,
+  setTitle,
+  setDescription,
+  setNewSelectedMembers,
+  setUnselectedMembers,
+} = onetaskSlice.actions;
 export default onetaskSlice.reducer;
