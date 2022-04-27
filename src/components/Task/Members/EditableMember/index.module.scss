@@ -1,7 +1,10 @@
+@import 'src/styles/font-variables';
+@import 'src/styles/color-variables';
+
 .editMembers {
-  background: #f1f1f5;
+  background: $border-secondary;
   padding: 3px 10px;
-  border: 1px solid #e2e2ea;
+  border: 1px solid $dark-secondary;
   border-radius: 16px;
   text-align: center;
   width: max-content;
@@ -16,10 +19,10 @@
     vertical-align: middle;
   }
   .delete {
-    font-size: 12px;
+    font-size: $font-size-s;
     width: 11px;
     margin-left: 11px;
-    color: #92929d;
+    color: $dark-primary;
     cursor: pointer;
   }
 }

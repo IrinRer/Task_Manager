@@ -82,5 +82,4 @@ export interface IResponseTask{
         total: number
       },
       permissions: Array<string>
-    /* } */
   }

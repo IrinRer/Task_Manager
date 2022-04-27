@@ -22,7 +22,7 @@ export const fetchTaskAction = createAsyncThunk(
       const response = await axiosInstance.get(`/api/v1.0/task/tasks/${task_id}`);
       return response.data.data;
     } catch (error) {
-      notification.error({ message: "Ошибка открытия задачи" /* error.message */ });
+      notification.error({ message: "Ошибка открытия задачи"});
       return rejectWithValue(error);
     }
   },
@@ -57,7 +57,7 @@ export const setTaskDescription = createAsyncThunk(
       const response = await axiosInstance.post(`/api/v1.0/task/tasks/${data.task_id}/description-change`, {"description": data.description});
       return response.data.data;
     } catch (error) {
-      notification.error({ message: "Ошибка смены описания" /* error.message */ });
+      notification.error({ message: "Ошибка смены описания"});
       return rejectWithValue(error);
     }
   },
@@ -75,7 +75,7 @@ export const setTaskTitle = createAsyncThunk(
       const response = await axiosInstance.post(`/api/v1.0/task/tasks/${data.task_id}/title-change`, {"title": data.title});
       return response.data.data;
     } catch (error) {
-    notification.error({ message: "Ошибка смены названия" /* error.message */ });
+    notification.error({ message: "Ошибка смены названия"});
       return rejectWithValue(error);
     }
   },
@@ -92,7 +92,7 @@ export const setTaskMemberAction = createAsyncThunk(
       const response = await axiosInstance.post(`/api/v1.0/task/tasks/${data.task_id}/role-assign`, {assign_user_id: data.assign_user_id, task_role_id: data.task_role_id});
       return response.data.data;
     } catch (error) {
-      notification.error({ message: "Ошибка назначения участника" /* error.message */ });
+      notification.error({ message: "Ошибка назначения участника"});
       return rejectWithValue(error);
     }
   },
@@ -109,7 +109,7 @@ export const deleteTaskMemberAction = createAsyncThunk(
       const response = await axiosInstance.post(`/api/v1.0/task/tasks/${data.task_id}/role-unassign`, {assign_user_id: data.assign_user_id, task_role_id: data.task_role_id});
       return response.data.data;
     } catch (error) {
-      notification.error({ message: "Ошибка удаления участника"/* error.message */ });
+      notification.error({ message: "Ошибка удаления участника"});
       return rejectWithValue(error);
     }
   },

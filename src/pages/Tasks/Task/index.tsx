@@ -24,7 +24,6 @@ const Task: React.FC = () => {
   const errorTask = useAppSelector(getTaskError);
 
   useEffect(() => {
-    // dispatch(fetchTaskAction('11191e21-f578-4ce1-8bff-88c8f733abf1'));
     dispatch(fetchTaskAction(taskId));
     dispatch(fetchStatusesAction());
     dispatch(fetchAllMembers());

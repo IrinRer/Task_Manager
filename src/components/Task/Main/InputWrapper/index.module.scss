@@ -1,5 +1,7 @@
+@import 'src/styles/font-variables';
+
 .section {
-  font-size: 16px;
+  font-size: $font-size-l;
   padding: 25px 0;
   display: flex;
   justify-content: left;

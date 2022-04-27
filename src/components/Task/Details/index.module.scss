@@ -1,8 +1,10 @@
+@import 'src/styles/font-variables';
+
 .infoLine {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  font-size: 14px;
+  font-size: $font-size-m;
   padding-bottom: 22px;
   font-weight: normal;
   text-transform: none;
