@@ -1,26 +1,36 @@
 import { AxiosError } from 'axios';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IVerifyReducer, VERIFY_SLICE_ALIAS } from 'store/verify/types';
-import { fetchVerifyAction } from 'store/verify/thunk';
+import { IVerifyReducer, VERIFY_SLICE_ALIAS } from 'store/auth/verify/types';
+import { fetchVerifyAction } from 'store/auth/verify/thunk';
 
 const initialState: IVerifyReducer = {
-  userID: 'loading',
+  userID: null,
+  loading: null,
   error: null,
+  verifyToken: null,
 };
 
 export const verifySlice = createSlice({
   name: VERIFY_SLICE_ALIAS,
   initialState,
-  reducers: {},
+  reducers: {
+    addVerifyToken: (
+      state: IVerifyReducer,
+      { payload }: PayloadAction<string>,
+    ) => {
+      state.verifyToken = payload;
+    },
+  },
   extraReducers: {
     [fetchVerifyAction.pending.type]: (state: IVerifyReducer) => {
-      state = initialState;
+      state.loading = true;
     },
     [fetchVerifyAction.fulfilled.type]: (
       state: IVerifyReducer,
       { payload }: PayloadAction<string>,
     ) => {
       state.userID = payload;
+      state.loading = false;
     },
     [fetchVerifyAction.rejected.type]: (
       state: IVerifyReducer,
@@ -28,8 +38,10 @@ export const verifySlice = createSlice({
     ) => {
       state.userID = null;
       state.error = payload;
+      state.loading = false;
     },
   },
 });
 
+export const { addVerifyToken } = verifySlice.actions;
 export default verifySlice.reducer;

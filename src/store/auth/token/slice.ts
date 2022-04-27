@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IAuthReducer, AUTH_SLICE_ALIAS } from 'store/auth/types';
-import { fetchAuthAction } from 'store/auth/thunk';
+import { IAuthReducer, AUTH_SLICE_ALIAS } from './types';
+import { fetchAuthAction } from './thunk';
 
 const initialState: IAuthReducer = {
   token: null,

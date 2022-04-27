@@ -1,7 +1,7 @@
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
 import React from 'react';
-import style from './style.module.scss';
+import style from './index.module.scss';
 
 const Preloader: React.FC = () => {
   const antIcon = <LoadingOutlined spin />;

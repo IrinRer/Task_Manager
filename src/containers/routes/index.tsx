@@ -9,7 +9,6 @@ import Preloader from 'components/Preloader';
 
 const CreateRoutes: React.FC = () => {
   const Hello = lazy(() => import('components/Hello'));
-
   return (
     <BrowserRouter>
       <Suspense fallback={<Preloader />}>
