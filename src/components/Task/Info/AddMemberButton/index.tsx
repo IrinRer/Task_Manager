@@ -3,12 +3,13 @@ import { Button, Select } from 'antd';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import React, { FC, useState } from 'react';
 
-import { getMembers } from 'store/members/selectors';
 import { getNewSelectedMembers, getTaskId } from 'store/task/selectors';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import useSelectOptions from 'customHooks/Task/useSelectOptions';
 import { setNewSelectedMembers } from 'store/task/slice';
 import { setTaskMemberAction } from 'store/task/thunk';
+import { selectPopulatedUsers } from 'store/users/selectors';
+import { IPopulatedUser } from 'store/users/types';
 import styles from './index.module.scss';
 
 type TProps = {
@@ -21,7 +22,7 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
   const options = useSelectOptions();
   const dispatch = useAppDispatch();
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const members = useAppSelector(getMembers);
+  const allUsers: Array<IPopulatedUser> = useAppSelector(selectPopulatedUsers);
   const taskId = useAppSelector(getTaskId);
 
   const roleAssign = useAppSelector(getNewSelectedMembers);
@@ -54,7 +55,7 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
 
   const children = (
     <>
-      {members?.map((el) => (
+      {allUsers?.map((el) => (
         <Option value={el.user_id}>{el.name}</Option>
       ))}
     </>

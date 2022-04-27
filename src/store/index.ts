@@ -3,7 +3,6 @@ import { configureStore, ThunkAction, Action, combineReducers } from '@reduxjs/t
 
 import tasksReducer from './tasks/slice';
 import onetaskReducer from './task/slice';
-import membersReducer from './members/slice';
 import commonRolesReducer from './common/roles/slice';
 
 import filtersReducer from './filters/slice';
@@ -17,7 +16,6 @@ export const store = configureStore({
   reducer: {
     tasks: tasksReducer,
     onetask: onetaskReducer,
-    members: membersReducer,
     users: usersReducer,
     filters: filtersReducer,
     common: combineReducers({

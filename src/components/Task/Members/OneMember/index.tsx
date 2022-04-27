@@ -1,11 +1,11 @@
 import AddMemberButton from 'components/Task/Info/AddMemberButton';
 import React, { FC } from 'react';
-import { IAssignUser } from 'store/members/types';
+import { IUser } from 'store/users/types';
 import EditableMember from '../EditableMember';
 import styles from './index.module.scss';
 
 type TProps = {
-  user: IAssignUser | null;
+  user: IUser | null;
   roleId: string;
   editable?: true;
 };

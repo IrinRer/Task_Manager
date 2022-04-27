@@ -6,9 +6,6 @@ import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { getTaskError, getTaskId, getTaskLoading } from 'store/task/selectors';
 import Main from 'components/Task/Main';
 import Info from 'components/Task/Info';
-import { fetchAllMembers } from 'store/members/thunk';
-import { fetchStatusesAction } from 'store/common/statuses/thunk';
-import { fetchAllRoles } from 'store/common/roles/thunk';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import Preloader from 'components/Common/Preloader';
 import { Navigate } from 'react-router-dom';
@@ -17,7 +14,6 @@ import styles from './index.module.scss';
 
 const Task: React.FC = () => {
   const [visible, setVisible] = useState<boolean>(/* false */ true);
-  const [confirmLoading, setConfirmLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const taskId: string | undefined =
     'dedfb4d3-5ba0-45bd-9623-24b76c16dc2c'; /* useAppSelector(getTaskId) */
@@ -25,9 +21,8 @@ const Task: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchTaskAction(taskId));
-    dispatch(fetchStatusesAction());
-    dispatch(fetchAllMembers());
-    dispatch(fetchAllRoles());
+    // dispatch(fetchStatusesAction());
+    // dispatch(fetchAllMembers());
   }, [dispatch]);
 
   const handleCancel = () => {
@@ -48,7 +43,7 @@ const Task: React.FC = () => {
   return (
     <Modal
       visible={visible}
-      confirmLoading={confirmLoading}
+      confirmLoading={loading}
       onCancel={handleCancel}
       className={styles.task}
       footer={[]}

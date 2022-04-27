@@ -3,12 +3,12 @@ import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import React, { FC } from 'react';
 import { deleteTaskMemberAction } from 'store/task/thunk';
-import { IAssignUser } from 'store/members/types';
 import { getTaskId } from 'store/task/selectors';
+import { IUser } from 'store/users/types';
 import styles from './index.module.scss';
 
 type TProps = {
-  user: IAssignUser;
+  user: IUser;
   roleId: string;
 };
 

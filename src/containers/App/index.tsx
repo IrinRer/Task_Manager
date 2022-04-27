@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 
+import { fetchAllRoles } from 'store/common/roles/thunk';
 import CreateRoutes from '../Routes';
 import { fetchUsersAction } from '../../store/users/thunk';
 import { fetchTagsAction } from '../../store/common/tags/thunk';
@@ -18,6 +19,7 @@ const App: React.FC = () => {
     dispatch(fetchTasksAction());
     dispatch(fetchPrioritiesAction());
     dispatch(fetchStatusesAction());
+    dispatch(fetchAllRoles());
   }, [dispatch]);
 
   return <CreateRoutes />;

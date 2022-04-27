@@ -5,6 +5,7 @@ import { getTaskId, getTitle } from 'store/task/selectors';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { setTaskTitle } from 'store/task/thunk';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
+import { EditOutlined } from '@ant-design/icons';
 import styles from './index.module.scss';
 
 const Title: React.FC = () => {
@@ -22,15 +23,18 @@ const Title: React.FC = () => {
 
   return (
     <>
-      <TextArea
-        autoSize
-        maxLength={150}
-        placeholder="Введите название"
-        className={styles.name}
-        onChange={changeTitle}
-        onBlur={onBlur}
-        value={title}
-      />
+      <div className={styles.wrapname}>
+        <TextArea
+          autoSize
+          maxLength={150}
+          placeholder="Введите название"
+          className={styles.name}
+          onChange={changeTitle}
+          onBlur={onBlur}
+          value={title}
+        />
+        <EditOutlined />
+      </div>
       <div className={styles.border} />
     </>
   );

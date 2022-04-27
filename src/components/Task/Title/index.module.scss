@@ -1,23 +1,37 @@
 @import 'src/styles/font-variables';
 @import 'src/styles/color-variables';
 
-:global(textarea.ant-input).name {
-  font-size: $font-size-xxl;
-  line-height: $line-height-l;
-  color: $text-color;
-  box-shadow: none;
-  border: none;
-  overflow: hidden;
-  padding: 0;
-  margin-top: 16px;
-  margin-bottom: 20px;
-}
-:global(.ant-input).name:focus,
-:global(.ant-input).name:hover,
-:global(.ant-input).name:focus-visible {
-  border: none;
-  box-shadow: none;
-  border-bottom: 1px solid $button-main;
+.wrapname {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+
+  span {
+    font-size: $font-size-xxl;
+    line-height: $line-height-xxxl;
+    margin-top: 16px;
+    margin-bottom: 20px;
+    color: $text-light;
+  }
+
+  :global(textarea.ant-input).name {
+    font-size: $font-size-xxl;
+    line-height: $line-height-l;
+    color: $text-color;
+    box-shadow: none;
+    border: none;
+    overflow: hidden;
+    padding: 0;
+    margin-top: 16px;
+    margin-bottom: 20px;
+  }
+  :global(.ant-input).name:focus,
+  :global(.ant-input).name:active,
+  :global(.ant-input).name:focus-visible {
+    border: none;
+    box-shadow: none;
+    border-bottom: 1px solid $button-main;
+  }
 }
 .border {
   border-bottom: 1px solid $dark-secondary;
