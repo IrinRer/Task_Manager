@@ -1,40 +1,43 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-import { IStatuses, IStatusesReducer, ONETASK_SLICE_STATUSES } from 'store/common/statuses/types';
+import {
+  COMMON_STATUSES_SLICE_ALIAS,
+  ICommonStatusesReducer,
+  IStatus,
+} from 'store/common/statuses/types';
 import { AxiosError } from 'axios';
-import { fetchAllStatuses } from './thunk';
+import { fetchStatusesAction } from './thunk';
 
-const initialState: IStatusesReducer = {
-  response: null,
+const initialState: ICommonStatusesReducer = {
+  statuses: [],
   loading: false,
   error: null,
-  statuses: null,
 };
 
-export const statusesSlice = createSlice({
-  name: ONETASK_SLICE_STATUSES,
+export const commonStatusesSlice = createSlice({
+  name: COMMON_STATUSES_SLICE_ALIAS,
   initialState,
-  reducers: {
-  },
+  reducers: {},
   extraReducers: {
-    [fetchAllStatuses.pending.type]: (state: IStatusesReducer) => {
+    [fetchStatusesAction.pending.type]: (state: ICommonStatusesReducer) => {
+      state.loading = true;
       state.error = null;
     },
-    [fetchAllStatuses.fulfilled.type]: (
-      state: IStatusesReducer,
-      { payload }: PayloadAction<IStatuses[]>,
+    [fetchStatusesAction.fulfilled.type]: (
+      state: ICommonStatusesReducer,
+      { payload }: PayloadAction<Array<IStatus>>,
     ) => {
       state.statuses = payload;
+      state.loading = false;
     },
-    [fetchAllStatuses.rejected.type]: (
-      state: IStatusesReducer,
+    [fetchStatusesAction.rejected.type]: (
+      state: ICommonStatusesReducer,
       { payload }: PayloadAction<AxiosError>,
     ) => {
-      state.statuses = null;
+      state.statuses = [];
+      state.loading = false;
       state.error = payload;
     },
-
   },
 });
 
-export default statusesSlice.reducer;
+export default commonStatusesSlice.reducer;

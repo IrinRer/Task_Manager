@@ -7,6 +7,7 @@ import ErrorBoundary from 'containers/ErrorBoundary';
 import Error from 'components/Common/Error';
 
 const CreateRoutes: React.FC = () => {
+  const Home = lazy(() => import('pages/Home'));
   // const Tasks = lazy(() => import('components/Tasks'));
   const Task = lazy(() => import('pages/Tasks/Task'));
 
@@ -19,7 +20,7 @@ const CreateRoutes: React.FC = () => {
               index
               element={
                 <PrivateRoute>
-                  <div>{ROUTES.tasks.name}</div>
+                  <Home />
                 </PrivateRoute>
               }
             />

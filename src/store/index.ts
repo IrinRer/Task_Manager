@@ -1,19 +1,30 @@
+
 import { configureStore, ThunkAction, Action, combineReducers } from '@reduxjs/toolkit';
 
-import tasksReducer from 'store/tasks/slice';
-import onetaskReducer from 'store/task/slice';
-import membersReducer from 'store/members/slice';
-import commonStatusesReducer from 'store/common/statuses/slice';
-import commonRolesReducer from 'store/common/roles/slice';
+import tasksReducer from './tasks/slice';
+import onetaskReducer from './task/slice';
+import membersReducer from './members/slice';
+import commonRolesReducer from './common/roles/slice';
 
+import filtersReducer from './filters/slice';
+import usersReducer from './users/slice';
+import commonTagsReducer from './common/tags/slice';
+import commonProgressesReducer from './common/progresses/slice';
+import commonPrioritiesReducer from './common/priorities/slice';
+import commonStatusesReducer from './common/statuses/slice';
 
 export const store = configureStore({
   reducer: {
     tasks: tasksReducer,
     onetask: onetaskReducer,
     members: membersReducer,
+    users: usersReducer,
+    filters: filtersReducer,
     common: combineReducers({
       statuses: commonStatusesReducer,
+      priorities: commonPrioritiesReducer,
+      progresses: commonProgressesReducer,
+      tags: commonTagsReducer,
       roles: commonRolesReducer,
     }),
   },
@@ -21,6 +32,7 @@ export const store = configureStore({
 });
 
 export type AppDispatch = typeof store.dispatch;
+// @ts-ignore
 export type RootState = ReturnType<typeof store.getState>;
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,

@@ -1,27 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
-import { getBackendURL } from 'helpers/common';
-import CreateRoutes from 'containers/Routes';
+import CreateRoutes from '../Routes';
+import { fetchUsersAction } from '../../store/users/thunk';
+import { fetchTagsAction } from '../../store/common/tags/thunk';
+import { fetchTasksAction } from '../../store/tasks/thunk';
+import { fetchPrioritiesAction } from '../../store/common/priorities/thunk';
+import { fetchStatusesAction } from '../../store/common/statuses/thunk';
+import { useAppDispatch } from '../../customHooks/redux/useAppDispatch';
 
 const App: React.FC = () => {
-  // Токен не должен храниться в state !!!
-  const [token, setToken] = useState('');
-
-  const auth = () => {
-    fetch(`${getBackendURL(true)}/ladum/token/generate`, {
-      method: 'POST',
-      body: JSON.stringify({ user_id: '1' }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => response.json())
-      .then(({ token }) => setToken(token));
-  };
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    auth();
-  }, []);
+    // auth();
+    dispatch(fetchUsersAction());
+    dispatch(fetchTagsAction());
+    dispatch(fetchTasksAction());
+    dispatch(fetchPrioritiesAction());
+    dispatch(fetchStatusesAction());
+  }, [dispatch]);
+
   return <CreateRoutes />;
 };
 

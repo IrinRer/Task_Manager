@@ -9,12 +9,11 @@ interface IRouteProps {
 }
 
 const PrivateRoute: React.FC = ({ children: Component }: IRouteProps) => {
-  const isAuthenticated = useAppSelector(getTasksAuth); 
-  if(isAuthenticated) {
-    return Component
+  const isAuthenticated = useAppSelector(getTasksAuth);
+  if (isAuthenticated) {
+    return Component;
   }
-  return <Navigate to={ROUTES.login.path}/>
-}
-
+  return <Navigate to={ROUTES.login.path} />;
+};
 
 export default PrivateRoute;
