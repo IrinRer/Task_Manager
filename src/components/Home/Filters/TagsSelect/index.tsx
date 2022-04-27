@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { Select } from 'antd';
 import { PlusSquareTwoTone } from '@ant-design/icons';
 import { tagsUpdated } from 'store/filters/slice';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
+import { DEBOUNCE_TIMEOUT } from 'constants/common';
+import { debounce } from 'lodash';
 import { selectPopulatedTags } from 'store/common/tags/selectors';
 import { fetchTagsAction } from 'store/common/tags/thunk';
 import { fetchTasksAction } from 'store/tasks/thunk';
@@ -30,9 +32,13 @@ const TagsInput: React.FC = () => {
     dispatch(fetchTasksAction());
   };
 
-  const handleSearch = (query: string) => {
-    dispatch(fetchTagsAction(query));
-  };
+  const debouncedHandleSearch = useMemo(() => {
+    function handleSearch(query: string) {
+      dispatch(fetchTagsAction(query));
+    }
+
+    return debounce(handleSearch, DEBOUNCE_TIMEOUT);
+  }, [dispatch]);
 
   return (
     <FilterWrapper header="МЕТКА">
@@ -47,7 +53,7 @@ const TagsInput: React.FC = () => {
         notFoundContent="Ничего не найдено"
         showArrow
         onChange={handleChange}
-        onSearch={handleSearch}
+        onSearch={debouncedHandleSearch}
       />
       <div className={styles.tags}>
         {selectedTags.map((tag) => (

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { Select } from 'antd';
 
@@ -7,6 +7,7 @@ import { selectPopulatedUsers } from 'store/users/selectors';
 import { fetchUsersAction } from 'store/users/thunk';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
+import { DEBOUNCE_TIMEOUT } from 'constants/common';
 import { fetchTasksAction } from 'store/tasks/thunk';
 import { IPopulatedUser, IUser } from 'store/users/types';
 import {
@@ -14,6 +15,7 @@ import {
   selectFilterUsersNames,
 } from 'store/filters/selectors';
 import { usersUpdated } from 'store/filters/slice';
+import { debounce } from 'lodash';
 import FilterWrapper from '../../../Common/FilterWrapper';
 import ParticipantTag from './ParticipantTag';
 import styles from './index.module.scss';
@@ -31,9 +33,13 @@ const ParticipantsSelect: React.FC = () => {
     dispatch(fetchTasksAction());
   };
 
-  const handleSearch = (query: string) => {
-    dispatch(fetchUsersAction(query));
-  };
+  const debouncedHandleSearch = useMemo(() => {
+    function handleSearch(query: string) {
+      dispatch(fetchUsersAction(query));
+    }
+
+    return debounce(handleSearch, DEBOUNCE_TIMEOUT);
+  }, [dispatch]);
 
   return (
     <FilterWrapper header="УЧАСТНИКИ">
@@ -49,7 +55,7 @@ const ParticipantsSelect: React.FC = () => {
         placeholder="Выберите..."
         notFoundContent="Ничего не найдено"
         onChange={handleChange}
-        onSearch={handleSearch}
+        onSearch={debouncedHandleSearch}
       />
       <div className={styles.tags}>
         {selectedUsers.map((user) => (
