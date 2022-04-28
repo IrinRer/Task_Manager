@@ -21,8 +21,6 @@ const Task: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchTaskAction(taskId));
-    // dispatch(fetchStatusesAction());
-    // dispatch(fetchAllMembers());
   }, [dispatch]);
 
   const handleCancel = () => {

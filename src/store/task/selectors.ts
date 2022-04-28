@@ -71,32 +71,3 @@ export const getUnselectedMembers = (state: RootState) =>
 
 export const getTaskLoading = (state: RootState) => state.onetask.loading;
 export const getTaskError = (state: RootState) => state.onetask.error.task;
-
-// export const getTask = (state: RootState) => state.onetask.data;
-// export const getWatcherRoleID = (state: RootState) =>state.onetask.allroles?.find(isWatcherFromRoles)?.task_role_id;
-// export const getResponsibleRoleID = (state: RootState) =>state.onetask.allroles?.find(isResponsibleFromRoles)?.task_role_id;
-// export const getImplementerRoleID = (state: RootState) =>state.onetask.allroles?.find(isImplementerFromRoles)?.task_role_id;
-
-// export const getTaskId = (state: RootState) => state.onetask.data?.task_id;
-// export const getTitle = (state: RootState) => state.onetask.data?.title;
-// export const getDescription = (state: RootState) => state.onetask.data?.description;
-// export const getTaskStatus = (state: RootState) => state.onetask.data?.status.name;
-
-// export const getTaskAuthor = (state: RootState) => state.onetask.data?.roles?.find(isAuthor)?.assign_user;
-// export const getTaskResponsible = (state: RootState) => state.onetask.data?.roles?.find(isResponsible)?.assign_user;
-// export const getTaskImplementer = (state: RootState) => state.onetask.data?.roles?.find(isImplementer)?.assign_user;
-// export const getTaskWatchers = (state: RootState) => getUsersFromRoles(state.onetask.data?.roles?.filter(isWatcher));
-// export const getTaskWatchersID = (state: RootState) =>getUsersIdFromRoles(state.onetask.data?.roles?.filter(isWatcher));
-
-// export const getTaskResponsibleID = (state: RootState) => state.onetask.data?.roles?.find(isResponsible)?.assign_user.user_id;
-// export const getTaskImplementerID = (state: RootState) => state.onetask.data?.roles?.find(isImplementer)?.assign_user.user_id;
-
-/* function isCreate(element) {
-  if (element.name !== "Создана") {
-    return false;
-  }
-return {task_status_id: element.task_status_id, name: element.name};
-} */
-// export const getDefaultStatus = (state: RootState) => state.onetask.statuses?.find(isCreate);
-// export const getDefaultStatusName = (state: RootState) => state.onetask.statuses?.find(isCreate)?.name;
-// export const getDefaultStatusId = (state: RootState) => state.onetask.statuses?.find(isCreate)?.task_status_id;

@@ -88,12 +88,6 @@ export const onetaskSlice = createSlice({
     ) => {
       state.unselectedMembers = action.payload;
     },
-    /* createStatusId: (state: ITaskReducer, action: PayloadAction<string>) => {
-      state.data.status.task_status_id = action.payload;
-    }, */
-    /* setTaskId: (state: ITaskReducer, action: PayloadAction<string>) => {
-      state.data.task_id = action.payload;
-    }, */
   },
   extraReducers: {
     [fetchTaskAction.pending.type]: (state: ITaskReducer) => {
@@ -116,28 +110,6 @@ export const onetaskSlice = createSlice({
       state.loading = false;
       state.error.task = payload;
     },
-
-    /* [createTaskAction.pending.type]: (state: ITaskReducer) => {
-      state.loading = true;
-      state.error = null;
-    },
-    [createTaskAction.fulfilled.type]: (
-      state: ITaskReducer,
-      // TODO: Добавить типизацию
-      { payload }: PayloadAction<any>,
-    ) => {
-      state.createdTask = payload;
-      state.loading = false;
-    },
-    [createTaskAction.rejected.type]: (
-      state: ITaskReducer,
-      // TODO: Добавить типизацию
-      { payload }: PayloadAction<AxiosError>,
-    ) => {
-      state.createdTask = null;
-      state.loading = false;
-      state.error = payload;
-    }, */
 
     [setTaskDescription.pending.type]: (state: ITaskReducer) => {
       state.loading = true;
