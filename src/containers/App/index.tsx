@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
-import CreateRoutes from 'containers/routes';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { getVerifyIdUser } from 'store/auth/verify/selectors';
@@ -8,6 +7,7 @@ import { getToken } from 'helpers/usersInfo';
 import { fetchVerifyAction } from 'store/auth/verify/thunk';
 import { addVerifyToken } from 'store/auth/verify/slice';
 import { getGenerateToken } from 'store/auth/token/selectors';
+import CreateRoutes from 'containers/Routes';
 import { fetchUsersAction } from '../../store/users/thunk';
 import { fetchTagsAction } from '../../store/common/tags/thunk';
 import { fetchTasksAction } from '../../store/tasks/thunk';
