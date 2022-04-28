@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Select } from 'antd';
-import { PlusSquareTwoTone } from '@ant-design/icons';
 import { tagsUpdated } from 'store/filters/slice';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
@@ -17,6 +16,7 @@ import {
 } from 'store/filters/selectors';
 import FilterWrapper from '../../../Common/FilterWrapper';
 import Tag from './Tag';
+import PlusIcon from './PlusIcon/PlusIcon';
 import styles from './index.module.scss';
 
 const TagsInput: React.FC = () => {
@@ -41,7 +41,7 @@ const TagsInput: React.FC = () => {
       <Select
         mode="tags"
         className={styles.tagSelect}
-        suffixIcon={<PlusSquareTwoTone />}
+        suffixIcon={<PlusIcon />}
         bordered={false}
         options={allTags}
         value={selectedTagsNames}
