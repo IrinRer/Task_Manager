@@ -22,7 +22,7 @@ const SearchInput: React.FC = () => {
     <Input
       id="search"
       allowClear
-      value={inputValue || ''}
+      value={inputValue}
       placeholder="Поиск по задачам"
       maxLength={100}
       className={styles.search}

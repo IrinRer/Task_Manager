@@ -3,30 +3,39 @@ import { ROLES } from 'constants/task';
 import { RootState } from 'store';
 import { IRoles } from './types';
 
-function isWatcherFromRoles(element: IRoles) {
-  return element.task_role_id !== ROLES.watcher.id;
+function getWatcherFromRoles(element: IRoles) {
+  if (element.name !== ROLES.watcher.name) {
+    return false;
+  }
+  return element;
 }
 
-function isResponsibleFromRoles(element: IRoles) {
-  return element.task_role_id !== ROLES.responsible.id;
+function getResponsibleFromRoles(element: IRoles) {
+  if (element.name !== ROLES.responsible.name) {
+    return false;
+  }
+  return element;
 }
-function isImplementerFromRoles(element: IRoles) {
-  return element.task_role_id !== ROLES.implementer.id;
+function getImplementerFromRoles(element: IRoles) {
+  if (element.name !== ROLES.implementer.name) {
+    return false;
+  }
+  return element;
 }
 
 const allroles = (state: RootState) => state.common.roles.allroles;
 
 export const getWatcherRoleID = createSelector(
   allroles,
-  (roles) => roles?.find(isWatcherFromRoles)?.task_role_id,
+  (roles) => roles?.find(getWatcherFromRoles)?.task_role_id,
 );
 export const getResponsibleRoleID = createSelector(
   allroles,
-  (roles) => roles?.find(isResponsibleFromRoles)?.task_role_id,
+  (roles) => roles?.find(getResponsibleFromRoles)?.task_role_id,
 );
 export const getImplementerRoleID = createSelector(
   allroles,
-  (roles) => roles?.find(isImplementerFromRoles)?.task_role_id,
+  (roles) => roles?.find(getImplementerFromRoles)?.task_role_id,
 );
 
 export const getRolesLoading = (state: RootState) => state.common.roles.loading;

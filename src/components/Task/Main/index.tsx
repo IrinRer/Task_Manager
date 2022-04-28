@@ -12,25 +12,32 @@ import Description from '../Description';
 import Title from '../Title';
 
 const Main: React.FC = () => {
-  return (
-    <div className={styles.taskMain}>
-      <Title />
-
-      <InputWrapper labelText="Описание" icon={<AlignLeftOutlined />}>
-        <Description />
-      </InputWrapper>
-
-      <InputWrapper labelText="Комментарии" icon={<CommentOutlined />}>
+  const elements = [
+    { title: 'Описание', icon: <AlignLeftOutlined />, block: <Description /> },
+    {
+      title: 'Комментарии',
+      icon: <CommentOutlined />,
+      block: (
         <TextArea
           autoSize
           placeholder="Оставьте комментарий"
           className={styles.comm}
         />
-      </InputWrapper>
+      ),
+    },
+    { title: 'Действия', icon: <ContainerOutlined />, block: <History /> },
+  ];
 
-      <InputWrapper labelText="Действия" icon={<ContainerOutlined />}>
-        <History />
-      </InputWrapper>
+  return (
+    <div className={styles.taskMain}>
+      <Title />
+      {elements.map((el) => {
+        return (
+          <InputWrapper key={el.title} labelText={el.title} icon={el.icon}>
+            {el.block}
+          </InputWrapper>
+        );
+      })}
     </div>
   );
 };

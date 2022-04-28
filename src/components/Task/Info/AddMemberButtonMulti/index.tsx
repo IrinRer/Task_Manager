@@ -65,7 +65,7 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
           setTaskMemberAction({
             task_id: taskId,
             assign_user_id: element,
-            task_role_id: roleId || '',
+            task_role_id: roleId,
           }),
         );
       });
@@ -74,7 +74,7 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
           deleteTaskMemberAction({
             task_id: taskId,
             assign_user_id: element,
-            task_role_id: roleId || '',
+            task_role_id: roleId,
           }),
         );
       });
@@ -108,16 +108,14 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
         <Button className={styles.addmember} onClick={showMemberModal}>
           + добавить участника
         </Button>
-      ) : (
-        ''
-      )}
+      ) : null}
 
       {isVisible ? (
         <Select<string[] | number | string, { value: string; children: string }>
+          {...options}
           mode="multiple"
           dropdownClassName={styles.dropdown}
           defaultValue={generateValue()}
-          {...options}
           suffixIcon={
             <span
               role="img"
@@ -133,9 +131,7 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
         >
           {children}
         </Select>
-      ) : (
-        ''
-      )}
+      ) : null}
     </div>
   );
 };

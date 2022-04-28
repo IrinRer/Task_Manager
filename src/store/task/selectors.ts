@@ -4,20 +4,35 @@ import { RootState } from 'store';
 import { IUser } from 'store/users/types';
 import { ITaskRoles } from './types';
 
-function isAuthor(element: ITaskRoles) {
-  return element.task_role.task_role_id !== ROLES.author.id;
+function getAuthor(element: ITaskRoles) {
+  if (element.task_role.name !== ROLES.author.name) {
+    return false;
+  }
+  return { element };
 }
 
-function isWatcher(element: ITaskRoles) {
-  return element.task_role.task_role_id !== ROLES.watcher.id;
+function getWatcher(element: ITaskRoles) {
+  if (element.task_role.name !== ROLES.watcher.name) {
+    return false;
+  }
+  const el = element.assign_user.name;
+  return { el };
 }
 
-function isImplementer(element: ITaskRoles) {
-  return element.task_role.task_role_id !== ROLES.implementer.id;
+function getImplementer(element: ITaskRoles) {
+  if (element.task_role.name !== ROLES.implementer.name) {
+    return false;
+  }
+  const el = element.assign_user.name;
+  return { el };
 }
 
-function isResponsible(element: ITaskRoles) {
-  return element.task_role.task_role_id !== ROLES.responsible.id;
+function getResponsible(element: ITaskRoles) {
+  if (element.task_role.name !== ROLES.responsible.name) {
+    return false;
+  }
+  const el = element.assign_user.name;
+  return { el };
 }
 
 function getUsersFromRoles(roles: Array<ITaskRoles> | undefined) {
@@ -42,26 +57,26 @@ export const getDescription = createSelector(
 );
 export const getTaskStatus = createSelector(
   taskData,
-  (data) => data.status.name,
+  (data) => data.status?.name,
 );
 
 export const getTaskAuthor = createSelector(
   taskRoles,
-  (roles) => roles?.find(isAuthor)?.assign_user,
+  (roles) => roles?.find(getAuthor)?.assign_user,
 );
 export const getTaskResponsible = createSelector(
   taskRoles,
-  (roles) => roles?.find(isResponsible)?.assign_user,
+  (roles) => roles?.find(getResponsible)?.assign_user,
 );
 export const getTaskImplementer = createSelector(
   taskRoles,
-  (roles) => roles?.find(isImplementer)?.assign_user,
+  (roles) => roles?.find(getImplementer)?.assign_user,
 );
 export const getTaskWatchers = createSelector(taskRoles, (roles) =>
-  getUsersFromRoles(roles?.filter(isWatcher)),
+  getUsersFromRoles(roles?.filter(getWatcher)),
 );
 export const getTaskWatchersID = createSelector(taskRoles, (roles) =>
-  getUsersIdFromRoles(roles?.filter(isWatcher)),
+  getUsersIdFromRoles(roles?.filter(getWatcher)),
 );
 
 export const getNewSelectedMembers = (state: RootState) =>

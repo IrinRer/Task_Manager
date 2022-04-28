@@ -23,10 +23,10 @@ const Description: React.FC = () => {
   };
 
   const handleSave = () => {
-    dispatch(setDescription(newDesc || ''));
-    dispatch(
-      setTaskDescription({ task_id: taskId, description: newDesc || '' }),
-    );
+    if (newDesc) {
+      dispatch(setDescription(newDesc));
+      dispatch(setTaskDescription({ task_id: taskId, description: newDesc }));
+    }
     setIsReadonly(true);
   };
 
@@ -45,9 +45,7 @@ const Description: React.FC = () => {
         <Button className={styles.change} onClick={handleChange}>
           изменить
         </Button>
-      ) : (
-        ''
-      )}
+      ) : null}
       <TextArea
         autoSize
         maxLength={500}
@@ -68,9 +66,7 @@ const Description: React.FC = () => {
             Отменить
           </Button>{' '}
         </>
-      ) : (
-        ''
-      )}
+      ) : null}
     </div>
   );
 };

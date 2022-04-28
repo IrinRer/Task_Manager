@@ -4,63 +4,60 @@ import {
   getTaskAuthor,
   getTaskImplementer,
   getTaskResponsible,
-  getTaskWatchers,
-  getTaskWatchersID,
 } from 'store/task/selectors';
 import {
   getImplementerRoleID,
   getResponsibleRoleID,
-  getWatcherRoleID,
 } from 'store/common/roles/selectors';
-import styles from './index.module.scss';
-import AddMemberButtonMulti from '../Info/AddMemberButtonMulti';
 import MembersWrapper from './MembersWrapper';
 import OneMember from './OneMember';
+import Watchers from './Watchers';
 
 const Info: React.FC = () => {
   const author = useAppSelector(getTaskAuthor);
-  const watchers = useAppSelector(getTaskWatchers);
   const responsible = useAppSelector(getTaskResponsible);
   const implementer = useAppSelector(getTaskImplementer);
 
-  const watchersID = useAppSelector(getTaskWatchersID);
-  const watcherRoleID = useAppSelector(getWatcherRoleID);
   const responsibleRoleID = useAppSelector(getResponsibleRoleID);
   const implementerRoleID = useAppSelector(getImplementerRoleID);
 
-  return (
-    <>
-      <MembersWrapper roleName="Автор">
-        <OneMember user={author || null} roleId="" />
-      </MembersWrapper>
-
-      <MembersWrapper roleName="Ответственный">
+  const elements = [
+    { title: 'Автор', block: <OneMember user={author || null} roleId="" /> },
+    {
+      title: 'Ответственный',
+      block: (
         <OneMember
           editable
           user={responsible || null}
-          roleId={responsibleRoleID || ''}
+          roleId={responsibleRoleID || null}
         />
-      </MembersWrapper>
-
-      <MembersWrapper roleName="Исполнитель">
+      ),
+    },
+    {
+      title: 'Исполнитель',
+      block: (
         <OneMember
           editable
           user={implementer || null}
-          roleId={implementerRoleID || ''}
+          roleId={implementerRoleID || null}
         />
-      </MembersWrapper>
+      ),
+    },
+    {
+      title: 'Наблюдатель',
+      block: <Watchers />,
+    },
+  ];
 
-      <MembersWrapper roleName="Наблюдатель">
-        <div className={styles.watchers}>
-          {watchers?.map((el) => (
-            <OneMember editable user={el} roleId={watcherRoleID || ''} />
-          ))}
-          <AddMemberButtonMulti
-            selectedMembers={watchersID}
-            roleId={watcherRoleID || ''}
-          />
-        </div>
-      </MembersWrapper>
+  return (
+    <>
+      {elements.map((el) => {
+        return (
+          <MembersWrapper key={el.title} roleName={el.title}>
+            {el.block}
+          </MembersWrapper>
+        );
+      })}
     </>
   );
 };

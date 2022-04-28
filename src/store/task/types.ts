@@ -19,14 +19,14 @@ export interface ITaskReducer {
   prevData: {
     task_id: string;
     title: string;
-    description: string;
+    description: string | null;
     status: { task_status_id: string; name: string };
     roles: Array<ITaskRoles> | null;
   } | null;
   data: {
     task_id: string;
     title: string;
-    description: string;
+    description: string | null;
     status: { task_status_id: string; name: string };
     roles: Array<ITaskRoles> | null;
   };

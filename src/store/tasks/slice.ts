@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 import {
   ITasksReducer,
@@ -45,4 +45,4 @@ export const tasksSlice = createSlice({
   },
 });
 
-export default tasksSlice.reducer;
+export default tasksSlice.reducer as Reducer<ITasksReducer>;

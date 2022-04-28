@@ -1,8 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { notification } from 'antd';
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 
-import { getBackendURL } from 'helpers/common';
 import { api } from 'network';
 
 import { ITaskWatchers, ONETASK_SLICE_ALIAS } from 'store/task/types';

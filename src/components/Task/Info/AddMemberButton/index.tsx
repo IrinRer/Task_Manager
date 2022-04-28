@@ -31,7 +31,7 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
     setIsVisible(true);
   };
 
-  const onChange = (value: string[]) => {
+  const onChange = (value: string) => {
     dispatch(setNewSelectedMembers(value));
   };
 
@@ -46,7 +46,7 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
         setTaskMemberAction({
           task_id: taskId,
           assign_user_id: roleAssign,
-          task_role_id: roleId || '',
+          task_role_id: roleId,
         }),
       );
       dispatch(setNewSelectedMembers([]));
@@ -56,7 +56,9 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
   const children = (
     <>
       {allUsers?.map((el) => (
+        // <div key={el.user_id + el.name}>
         <Option value={el.user_id}>{el.name}</Option>
+        // </div>
       ))}
     </>
   );
@@ -67,15 +69,13 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
         <Button className={styles.addmember} onClick={showMemberModal}>
           + добавить участника
         </Button>
-      ) : (
-        ''
-      )}
+      ) : null}
 
       {isVisible ? (
         <Select<string[] | number | string, { value: string; children: string }>
+          {...options}
           defaultValue={roleAssign}
           dropdownClassName={styles.dropdown}
-          {...options}
           suffixIcon={
             <span
               role="img"
@@ -91,9 +91,7 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
         >
           {children}
         </Select>
-      ) : (
-        ''
-      )}
+      ) : null}
     </div>
   );
 };

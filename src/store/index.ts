@@ -1,5 +1,9 @@
-
-import { configureStore, ThunkAction, Action, combineReducers } from '@reduxjs/toolkit';
+import {
+  configureStore,
+  ThunkAction,
+  Action,
+  combineReducers,
+} from '@reduxjs/toolkit';
 
 import tasksReducer from './tasks/slice';
 import onetaskReducer from './task/slice';
