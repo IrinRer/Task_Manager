@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useMemo } from 'react';
+import React, { ChangeEvent } from 'react';
 
 import { Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
@@ -12,14 +12,10 @@ import styles from './index.module.scss';
 const SearchInput: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const debouncedHandleChange = useMemo(() => {
-    function handleChange(evt: ChangeEvent<HTMLInputElement>) {
-      dispatch(searchUpdated(evt.target.value));
-      dispatch(fetchTasksAction());
-    }
-
-    return debounce(handleChange, DEBOUNCE_TIMEOUT);
-  }, [dispatch]);
+  function handleChange(evt: ChangeEvent<HTMLInputElement>) {
+    dispatch(searchUpdated(evt.target.value));
+    dispatch(fetchTasksAction());
+  }
 
   return (
     <Input
@@ -28,7 +24,7 @@ const SearchInput: React.FC = () => {
       placeholder="Поиск по задачам"
       maxLength={100}
       className={styles.search}
-      onChange={debouncedHandleChange}
+      onChange={debounce(handleChange, DEBOUNCE_TIMEOUT)}
       prefix={<SearchOutlined />}
     />
   );

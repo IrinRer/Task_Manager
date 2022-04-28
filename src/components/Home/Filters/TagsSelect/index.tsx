@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
 import { Select } from 'antd';
 import { PlusSquareTwoTone } from '@ant-design/icons';
@@ -32,13 +32,9 @@ const TagsInput: React.FC = () => {
     dispatch(fetchTasksAction());
   };
 
-  const debouncedHandleSearch = useMemo(() => {
-    function handleSearch(query: string) {
-      dispatch(fetchTagsAction(query));
-    }
-
-    return debounce(handleSearch, DEBOUNCE_TIMEOUT);
-  }, [dispatch]);
+  function handleSearch(query: string) {
+    dispatch(fetchTagsAction(query));
+  }
 
   return (
     <FilterWrapper header="МЕТКА">
@@ -53,7 +49,7 @@ const TagsInput: React.FC = () => {
         notFoundContent="Ничего не найдено"
         showArrow
         onChange={handleChange}
-        onSearch={debouncedHandleSearch}
+        onSearch={debounce(handleSearch, DEBOUNCE_TIMEOUT)}
       />
       <div className={styles.tags}>
         {selectedTags.map((tag) => (

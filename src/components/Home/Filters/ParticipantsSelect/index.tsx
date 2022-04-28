@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
 import { Select } from 'antd';
 
@@ -33,13 +33,9 @@ const ParticipantsSelect: React.FC = () => {
     dispatch(fetchTasksAction());
   };
 
-  const debouncedHandleSearch = useMemo(() => {
-    function handleSearch(query: string) {
-      dispatch(fetchUsersAction(query));
-    }
-
-    return debounce(handleSearch, DEBOUNCE_TIMEOUT);
-  }, [dispatch]);
+  function handleSearch(query: string) {
+    dispatch(fetchUsersAction(query));
+  }
 
   return (
     <FilterWrapper header="УЧАСТНИКИ">
@@ -55,7 +51,7 @@ const ParticipantsSelect: React.FC = () => {
         placeholder="Выберите..."
         notFoundContent="Ничего не найдено"
         onChange={handleChange}
-        onSearch={debouncedHandleSearch}
+        onSearch={debounce(handleSearch, DEBOUNCE_TIMEOUT)}
       />
       <div className={styles.tags}>
         {selectedUsers.map((user) => (
