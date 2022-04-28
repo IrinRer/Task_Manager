@@ -4,11 +4,12 @@ import { ROUTES } from 'constants/routes';
 import PrivateRoute from 'containers/routes/PrivateRoute';
 import ErrorBoundary from 'containers/ErrorBoundary';
 import Error from 'components/Common/Error';
+import Preloader from 'components/Common/Preloader';
 import Auth from 'pages/Auth';
-import Preloader from 'components/Preloader';
 
 const CreateRoutes: React.FC = () => {
-  const Hello = lazy(() => import('components/Hello'));
+  const Home = lazy(() => import('pages/Home'));
+
   return (
     <BrowserRouter>
       <Suspense fallback={<Preloader />}>
@@ -18,7 +19,7 @@ const CreateRoutes: React.FC = () => {
               index
               element={
                 <PrivateRoute>
-                  <Hello />
+                  <Home />
                 </PrivateRoute>
               }
             />

@@ -8,6 +8,11 @@ import { getToken } from 'helpers/usersInfo';
 import { fetchVerifyAction } from 'store/auth/verify/thunk';
 import { addVerifyToken } from 'store/auth/verify/slice';
 import { getGenerateToken } from 'store/auth/token/selectors';
+import { fetchUsersAction } from '../../store/users/thunk';
+import { fetchTagsAction } from '../../store/common/tags/thunk';
+import { fetchTasksAction } from '../../store/tasks/thunk';
+import { fetchPrioritiesAction } from '../../store/common/priorities/thunk';
+import { fetchStatusesAction } from '../../store/common/statuses/thunk';
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -22,6 +27,16 @@ const App: React.FC = () => {
   useEffect(() => {
     if (userID || generateToken) dispatch(addVerifyToken(token!));
   }, [userID, generateToken]);
+
+  useEffect(() => {
+    if (token) {
+      dispatch(fetchUsersAction());
+      dispatch(fetchTagsAction());
+      dispatch(fetchTasksAction());
+      dispatch(fetchPrioritiesAction());
+      dispatch(fetchStatusesAction());
+    }
+  }, [generateToken]);
 
   return <CreateRoutes />;
 };

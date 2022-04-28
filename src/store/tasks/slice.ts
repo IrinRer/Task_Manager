@@ -2,14 +2,17 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 import {
   ITasksReducer,
+  ITasksResponse,
   TASKS_SLICE_ALIAS,
-  TTasksResponse,
 } from 'store/tasks/types';
 import { fetchTasksAction } from 'store/tasks/thunk';
 
 const initialState: ITasksReducer = {
-  response: null,
+  tasks: null,
+  itemsTotal: 0,
   loading: false,
+  // auth временное свойство, необходимое на данном этапе для корректной работы роута
+  auth: true,
   error: null,
 };
 
@@ -25,18 +28,17 @@ export const tasksSlice = createSlice({
     },
     [fetchTasksAction.fulfilled.type]: (
       state: ITasksReducer,
-      // TODO: Добавить типизацию
-      { payload }: PayloadAction<TTasksResponse>,
+      { payload }: PayloadAction<ITasksResponse>,
     ) => {
-      state.response = payload;
+      state.tasks = payload.data;
+      state.itemsTotal = payload.pagination.items_total;
       state.loading = false;
     },
     [fetchTasksAction.rejected.type]: (
       state: ITasksReducer,
-      // TODO: Добавить типизацию
       { payload }: PayloadAction<AxiosError>,
     ) => {
-      state.response = null;
+      state.tasks = null;
       state.loading = false;
       state.error = payload;
     },

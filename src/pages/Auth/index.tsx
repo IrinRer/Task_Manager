@@ -1,7 +1,7 @@
 import React from 'react';
 import { getAuthLoading } from 'store/auth/token/selectors';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import Preloader from 'components/Preloader';
+import Preloader from 'components/Common/Preloader';
 import { Navigate } from 'react-router-dom';
 import { ROUTES } from 'constants/routes';
 import {

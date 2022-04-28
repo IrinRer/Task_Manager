@@ -8,7 +8,7 @@ import {
   getVerifyLoading,
   getVerifyToken,
 } from 'store/auth/verify/selectors';
-import Preloader from 'components/Preloader';
+import Preloader from 'components/Common/Preloader';
 
 interface IRouteProps {
   children: ReactElement;

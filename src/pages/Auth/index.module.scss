@@ -1,5 +1,6 @@
+@import '../../styles/color-variables';
 .wrapper {
-  background: #fafafb;
+  background: $bg-primary;
   overflow-y: auto;
   display: flex;
   align-items: center;

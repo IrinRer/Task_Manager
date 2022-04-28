@@ -1,24 +1,34 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { notification } from 'antd';
-import axios from 'axios';
-import { getBackendURL } from 'helpers/common';
-import { getToken } from 'helpers/usersInfo';
 import { TASKS_SLICE_ALIAS } from 'store/tasks/types';
+import { api } from '../../network';
+import { selectTaskQuery } from '../filters/selectors';
 
 export const fetchTasksAction = createAsyncThunk(
   `${TASKS_SLICE_ALIAS}/fetchAll`,
-  async (_, { rejectWithValue }) => {
+  async (_, { rejectWithValue, getState }) => {
     try {
-      const token = getToken();
-      const axiosInstance = axios.create({
-        baseURL: getBackendURL(),
-        headers: { Authorization: `Bearer ${token}` },
+      const state = getState();
+      const tasksQuery = selectTaskQuery(state);
+
+      const response = await api().get('/api/v1.0/task/tasks', {
+        params: {
+          search: tasksQuery.searchQuery || null,
+          assign_user_id: tasksQuery.users.map((user) => user.user_id),
+          status_id: tasksQuery.statuses,
+          tag_id: tasksQuery.tags.map((tag) => tag.task_tag_id),
+          storage_files_gte: tasksQuery.attachments ? 1 : null,
+          priority_id: tasksQuery.priorities,
+          progress_gte: tasksQuery.progress,
+          page: 1,
+          per_page: 50,
+        },
       });
-      const response = await axiosInstance.get('/api/v1.0/task/tasks');
-      return response.data.data;
+
+      return response.data;
     } catch (error) {
       notification.error({ message: error.message });
-      return rejectWithValue(JSON.parse(JSON.stringify(error)));
+      return rejectWithValue(error.message);
     }
   },
 );
