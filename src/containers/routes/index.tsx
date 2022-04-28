@@ -1,11 +1,11 @@
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ROUTES } from 'constants/routes';
-import PrivateRoute from 'containers/routes/PrivateRoute';
 import ErrorBoundary from 'containers/ErrorBoundary';
 import Error from 'components/Common/Error';
 import Preloader from 'components/Common/Preloader';
 import Auth from 'pages/Auth';
+import PrivateRoute from './PrivateRoute';
 
 const CreateRoutes: React.FC = () => {
   const Home = lazy(() => import('pages/Home'));
