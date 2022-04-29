@@ -5,7 +5,7 @@ import { IUser } from 'store/users/types';
 export const ONETASK_SLICE_ALIAS = 'onetask';
 
 export interface ITaskReducer {
-  response: IResponseTask | null;
+  data: IResponseTask | null;
   loading: boolean;
   selectedMembers: Array<string> | string | null;
   unselectedMembers: Array<string> | string | null;
@@ -15,20 +15,6 @@ export interface ITaskReducer {
     desc: AxiosError | null;
     setMembers: AxiosError | null;
     delMembers: AxiosError | null;
-  };
-  prevData: {
-    task_id: string;
-    title: string;
-    description: string | null;
-    status: { task_status_id: string; name: string };
-    roles: Array<ITaskRoles> | null;
-  } | null;
-  data: {
-    task_id: string;
-    title: string;
-    description: string | null;
-    status: { task_status_id: string; name: string };
-    roles: Array<ITaskRoles> | null;
   };
 }
 
@@ -48,15 +34,6 @@ export interface ITaskWatchers {
 }
 
 export interface IResponseTask {
-  /* relation: {
-      task_to_role_id: string,
-      task_id: string,
-      assign_user_id: string,
-      task_role_id: string,
-      created: Date,
-      updated: Date,
-    },
-    data: { */
   task_id: string;
   title: string;
   description: string;

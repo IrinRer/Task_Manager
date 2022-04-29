@@ -10,6 +10,7 @@ export const fetchTasksAction = createAsyncThunk(
   async (_, { rejectWithValue, getState }) => {
     try {
       const state = getState();
+      // @ts-ignore
       const tasksQuery = selectTaskQuery(state);
 
       const response = await api().get('/api/v1.0/task/tasks', {

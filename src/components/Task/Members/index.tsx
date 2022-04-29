@@ -29,7 +29,7 @@ const Info: React.FC = () => {
         <OneMember
           editable
           user={responsible || null}
-          roleId={responsibleRoleID || null}
+          roleId={responsibleRoleID || ''}
         />
       ),
     },
@@ -39,7 +39,7 @@ const Info: React.FC = () => {
         <OneMember
           editable
           user={implementer || null}
-          roleId={implementerRoleID || null}
+          roleId={implementerRoleID || ''}
         />
       ),
     },

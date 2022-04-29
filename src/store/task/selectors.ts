@@ -47,17 +47,18 @@ function getUsersIdFromRoles(roles: Array<ITaskRoles> | undefined) {
 }
 
 const taskData = (state: RootState) => state.onetask.data;
-const taskRoles = (state: RootState) => state.onetask.data.roles;
 
-export const getTaskId = createSelector(taskData, (data) => data.task_id);
-export const getTitle = createSelector(taskData, (data) => data.title);
+export const taskRoles = createSelector(taskData, (data) => data?.roles);
+
+export const getTaskId = createSelector(taskData, (data) => data?.task_id);
+export const getTitle = createSelector(taskData, (data) => data?.title);
 export const getDescription = createSelector(
   taskData,
-  (data) => data.description,
+  (data) => data?.description,
 );
 export const getTaskStatus = createSelector(
   taskData,
-  (data) => data.status?.name,
+  (data) => data?.status?.name,
 );
 
 export const getTaskAuthor = createSelector(

@@ -18,12 +18,12 @@ const Watchers: React.FC = () => {
           key={el.user_id}
           editable
           user={el}
-          roleId={watcherRoleID || null}
+          roleId={watcherRoleID || ''}
         />
       ))}
       <AddMemberButtonMulti
         selectedMembers={watchersID}
-        roleId={watcherRoleID || null}
+        roleId={watcherRoleID || ''}
       />
     </div>
   );

@@ -41,7 +41,7 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
 
   const onBlur = () => {
     setIsVisible(!isVisible);
-    if (typeof roleAssign === 'string') {
+    if (typeof roleAssign === 'string' && taskId) {
       dispatch(
         setTaskMemberAction({
           task_id: taskId,
@@ -56,9 +56,9 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
   const children = (
     <>
       {allUsers?.map((el) => (
-        // <div key={el.user_id + el.name}>
-        <Option value={el.user_id}>{el.name}</Option>
-        // </div>
+        <Option key={el.user_id + el.name} value={el.user_id}>
+          {el.name}
+        </Option>
       ))}
     </>
   );

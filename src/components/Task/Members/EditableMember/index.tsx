@@ -17,13 +17,15 @@ const EditableMember: FC<TProps> = ({ user, roleId }) => {
   const taskId = useAppSelector(getTaskId);
 
   const deleteMember = () => {
-    dispatch(
-      deleteTaskMemberAction({
-        task_id: taskId,
-        assign_user_id: user.user_id,
-        task_role_id: roleId,
-      }),
-    );
+    if (taskId) {
+      dispatch(
+        deleteTaskMemberAction({
+          task_id: taskId,
+          assign_user_id: user.user_id,
+          task_role_id: roleId,
+        }),
+      );
+    }
   };
   return (
     <div className={styles.editMembers}>

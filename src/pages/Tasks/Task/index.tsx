@@ -38,7 +38,7 @@ const Task: React.FC = () => {
     return <Navigate to={ROUTES.tasks.path} />;
   }
 
-  return (
+  return visible ? (
     <Modal
       visible={visible}
       confirmLoading={loading}
@@ -51,6 +51,8 @@ const Task: React.FC = () => {
         <Info />
       </div>
     </Modal>
+  ) : (
+    <Navigate to={ROUTES.tasks.path} />
   );
 };
 

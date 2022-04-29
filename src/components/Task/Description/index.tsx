@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import TextArea from 'antd/lib/input/TextArea';
-import { setDescription } from 'store/task/slice';
 import { Button } from 'antd';
 import { getDescription, getTaskId } from 'store/task/selectors';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
@@ -23,9 +22,10 @@ const Description: React.FC = () => {
   };
 
   const handleSave = () => {
-    if (newDesc) {
-      dispatch(setDescription(newDesc));
-      dispatch(setTaskDescription({ task_id: taskId, description: newDesc }));
+    if (taskId) {
+      dispatch(
+        setTaskDescription({ task_id: taskId, description: newDesc || '' }),
+      );
     }
     setIsReadonly(true);
   };
@@ -54,7 +54,7 @@ const Description: React.FC = () => {
           isReadonly ? `${styles.desc} ${styles.readonly}` : styles.desc
         }
         onChange={changeDescription}
-        value={newDesc || description}
+        value={newDesc || ''}
         readOnly={isReadonly}
       />
       {!isReadonly ? (

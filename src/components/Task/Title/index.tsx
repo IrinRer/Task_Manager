@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TextArea from 'antd/lib/input/TextArea';
-import { setTitle } from 'store/task/slice';
 import { getTaskId, getTitle } from 'store/task/selectors';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { setTaskTitle } from 'store/task/thunk';
@@ -13,12 +12,19 @@ const Title: React.FC = () => {
   const title = useAppSelector(getTitle);
   const taskId = useAppSelector(getTaskId);
 
+  const [newTitle, setNewTitle] = useState<string | undefined>(
+    useAppSelector(getTitle),
+  );
+
   const changeTitle = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    dispatch(setTitle(e.target.value));
+    setNewTitle(e.target.value);
   };
 
   const onBlur = () => {
-    dispatch(setTaskTitle({ task_id: taskId, title }));
+    if (taskId && newTitle) {
+      dispatch(setTaskTitle({ task_id: taskId, title: newTitle }));
+      setNewTitle(title);
+    }
   };
 
   return (
@@ -31,7 +37,8 @@ const Title: React.FC = () => {
           className={styles.name}
           onChange={changeTitle}
           onBlur={onBlur}
-          value={title}
+          value={newTitle || ''}
+          status={!newTitle ? 'error' : ''}
         />
         <EditOutlined />
       </div>

@@ -59,7 +59,7 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
 
   const onBlur = () => {
     setIsVisible(!isVisible);
-    if (Array.isArray(roleAssign) && Array.isArray(roleUnassign)) {
+    if (Array.isArray(roleAssign) && Array.isArray(roleUnassign) && taskId) {
       roleAssign?.forEach((element) => {
         dispatch(
           setTaskMemberAction({
@@ -97,7 +97,9 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
   const children = (
     <>
       {allUsers?.map((el) => (
-        <Option value={el.user_id}>{el.name}</Option>
+        <Option key={el.user_id + el.name} value={el.user_id}>
+          {el.name}
+        </Option>
       ))}
     </>
   );
