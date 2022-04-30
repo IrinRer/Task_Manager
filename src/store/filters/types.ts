@@ -1,4 +1,4 @@
-import { TProgress } from 'store/common/progresses/types';
+import { TProgressValue } from 'store/common/progresses/types';
 import { ITag } from '../common/tags/types';
 import { IUser } from '../users/types';
 
@@ -10,6 +10,6 @@ export interface IFiltersReducer {
   statuses: Array<string>;
   tags: Array<ITag>;
   attachments: boolean;
-  progress: TProgress;
+  progress: TProgressValue;
   priorities: Array<string>;
 }
