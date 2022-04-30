@@ -7,6 +7,10 @@
     font-size: $font-size-m;
     line-height: $line-height-m;
     border-bottom: 1px solid $dark-secondary;
+
+    .ant-select-selection-item {
+      display: none;
+    }
   }
 }
 
