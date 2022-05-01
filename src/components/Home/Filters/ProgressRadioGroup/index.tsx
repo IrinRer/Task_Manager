@@ -7,13 +7,13 @@ import { selectProgresses } from 'store/common/progresses/selectors';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { selectProgressValue } from 'store/filters/selectors';
 import { fetchTasksAction } from 'store/tasks/thunk';
-import { IProgress, TProgress } from 'store/common/progresses/types';
+import { IProgress, TProgressValue } from 'store/common/progresses/types';
 import FilterWrapper from '../../../Common/FilterWrapper';
 import styles from './index.module.scss';
 
 const ProgressRadioGroup: React.FC = () => {
   const progresses: Array<IProgress> = useAppSelector(selectProgresses);
-  const progressValue: TProgress = useAppSelector(selectProgressValue);
+  const progressValue: TProgressValue = useAppSelector(selectProgressValue);
   const dispatch = useAppDispatch();
 
   const handleChange = (evt: RadioChangeEvent) => {

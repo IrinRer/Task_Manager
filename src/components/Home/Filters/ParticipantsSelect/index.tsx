@@ -7,6 +7,7 @@ import { selectPopulatedUsers } from 'store/users/selectors';
 import { fetchUsersAction } from 'store/users/thunk';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
+import { DEBOUNCE_TIMEOUT } from 'constants/common';
 import { fetchTasksAction } from 'store/tasks/thunk';
 import { IPopulatedUser, IUser } from 'store/users/types';
 import {
@@ -14,6 +15,7 @@ import {
   selectFilterUsersNames,
 } from 'store/filters/selectors';
 import { usersUpdated } from 'store/filters/slice';
+import { debounce } from 'lodash';
 import FilterWrapper from '../../../Common/FilterWrapper';
 import ParticipantTag from './ParticipantTag';
 import styles from './index.module.scss';
@@ -31,9 +33,9 @@ const ParticipantsSelect: React.FC = () => {
     dispatch(fetchTasksAction());
   };
 
-  const handleSearch = (query: string) => {
+  function handleSearch(query: string) {
     dispatch(fetchUsersAction(query));
-  };
+  }
 
   return (
     <FilterWrapper header="УЧАСТНИКИ">
@@ -49,7 +51,7 @@ const ParticipantsSelect: React.FC = () => {
         placeholder="Выберите..."
         notFoundContent="Ничего не найдено"
         onChange={handleChange}
-        onSearch={handleSearch}
+        onSearch={debounce(handleSearch, DEBOUNCE_TIMEOUT)}
       />
       <div className={styles.tags}>
         {selectedUsers.map((user) => (
