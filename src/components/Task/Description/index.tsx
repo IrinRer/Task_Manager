@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import TextArea from 'antd/lib/input/TextArea';
 import { Button } from 'antd';
-import { getDescription, getTaskId } from 'store/task/selectors';
+import { getDescription, getTaskId } from 'store/editTask/selectors';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { setTaskDescription } from 'store/task/thunk';
+import { setTaskDescription } from 'store/editTask/thunk';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import styles from './index.module.scss';
 
@@ -13,9 +13,7 @@ const Description: React.FC = () => {
   const [isReadonly, setIsReadonly] = useState<boolean>(true);
   const taskId = useAppSelector(getTaskId);
 
-  const [newDesc, setNewDesc] = useState<string | undefined>(
-    useAppSelector(getDescription),
-  );
+  const [newDesc, setNewDesc] = useState<string | undefined>(description);
 
   const changeDescription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNewDesc(e.target.value);

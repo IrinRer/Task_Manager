@@ -1,36 +1,13 @@
 import { AxiosError } from 'axios';
-import { IRoles } from 'store/common/roles/types';
 import { IUser } from 'store/users/types';
+import { IRoles } from '../roles/types';
 
 export const ONETASK_SLICE_ALIAS = 'onetask';
 
 export interface ITaskReducer {
   data: IResponseTask | null;
   loading: boolean;
-  selectedMembers: Array<string> | string | null;
-  unselectedMembers: Array<string> | string | null;
-  error: {
-    task: AxiosError | null;
-    title: AxiosError | null;
-    desc: AxiosError | null;
-    setMembers: AxiosError | null;
-    delMembers: AxiosError | null;
-  };
-}
-
-export interface ITaskRoles {
-  task_to_role_id: string;
-  task: {
-    task_id: string;
-  };
-  task_role: IRoles;
-  assign_user: IUser;
-}
-
-export interface ITaskWatchers {
-  task_id: string;
-  assign_user_id: string;
-  task_role_id: string;
+  error: AxiosError | null;
 }
 
 export interface IResponseTask {
@@ -59,4 +36,13 @@ export interface IResponseTask {
     total: number;
   };
   permissions: Array<string>;
+}
+
+export interface ITaskRoles {
+  task_to_role_id: string;
+  task: {
+    task_id: string;
+  };
+  task_role: IRoles;
+  assign_user: IUser;
 }

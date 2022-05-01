@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { getTaskStatus, getTaskResponsible } from 'store/task/selectors';
+import { getTaskStatus, getTaskResponsible } from 'store/editTask/selectors';
 
 import styles from './index.module.scss';
 

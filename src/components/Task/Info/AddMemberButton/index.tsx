@@ -3,11 +3,12 @@ import { Button, Select } from 'antd';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import React, { FC, useState } from 'react';
 
-import { getNewSelectedMembers, getTaskId } from 'store/task/selectors';
+import { getNewSelectedMembers, getTaskId } from 'store/editTask/selectors';
+
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import useSelectOptions from 'customHooks/Task/useSelectOptions';
-import { setNewSelectedMembers } from 'store/task/slice';
-import { setTaskMemberAction } from 'store/task/thunk';
+import { setNewSelectedMembers } from 'store/editTask/slice';
+import { setTaskMemberAction } from 'store/editTask/thunk';
 import { selectPopulatedUsers } from 'store/users/selectors';
 import { IPopulatedUser } from 'store/users/types';
 import styles from './index.module.scss';

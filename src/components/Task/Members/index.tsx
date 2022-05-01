@@ -4,7 +4,7 @@ import {
   getTaskAuthor,
   getTaskImplementer,
   getTaskResponsible,
-} from 'store/task/selectors';
+} from 'store/editTask/selectors';
 import {
   getImplementerRoleID,
   getResponsibleRoleID,

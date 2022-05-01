@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { getTaskWatchers, getTaskWatchersID } from 'store/task/selectors';
+import { getTaskWatchers, getTaskWatchersID } from 'store/editTask/selectors';
 import { getWatcherRoleID } from 'store/common/roles/selectors';
 import AddMemberButtonMulti from 'components/Task/Info/AddMemberButtonMulti';
 import styles from './index.module.scss';

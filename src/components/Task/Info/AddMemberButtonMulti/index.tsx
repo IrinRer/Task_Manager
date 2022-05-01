@@ -5,13 +5,20 @@ import React, { FC, useState } from 'react';
 
 import {
   getNewSelectedMembers,
-  getTaskId,
   getUnselectedMembers,
-} from 'store/task/selectors';
+  getTaskId,
+} from 'store/editTask/selectors';
+
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import useSelectOptions from 'customHooks/Task/useSelectOptions';
-import { setNewSelectedMembers, setUnselectedMembers } from 'store/task/slice';
-import { deleteTaskMemberAction, setTaskMemberAction } from 'store/task/thunk';
+import {
+  setNewSelectedMembers,
+  setUnselectedMembers,
+} from 'store/editTask/slice';
+import {
+  deleteTaskMemberAction,
+  setTaskMemberAction,
+} from 'store/editTask/thunk';
 import { selectPopulatedUsers } from 'store/users/selectors';
 import { IPopulatedUser } from 'store/users/types';
 import styles from '../AddMemberButton/index.module.scss';

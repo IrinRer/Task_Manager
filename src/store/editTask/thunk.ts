@@ -4,25 +4,10 @@ import { AxiosResponse } from 'axios';
 
 import { api } from 'network';
 
-import { ITaskWatchers, ONETASK_SLICE_ALIAS } from 'store/task/types';
-
-export const fetchTaskAction = createAsyncThunk(
-  `${ONETASK_SLICE_ALIAS}/fetchAll`,
-  async (task_id: string, { rejectWithValue }) => {
-    try {
-      const response: AxiosResponse = await api().get(
-        `/api/v1.0/task/tasks/${task_id}`,
-      );
-      return response.data.data;
-    } catch (error) {
-      notification.error({ message: 'Ошибка открытия задачи' });
-      return rejectWithValue(error);
-    }
-  },
-);
+import { ITaskAssignUser, EDIT_TASK_SLICE_ALIAS } from 'store/editTask/types';
 
 export const setTaskDescription = createAsyncThunk(
-  `${ONETASK_SLICE_ALIAS}/setDescription`,
+  `${EDIT_TASK_SLICE_ALIAS}/setDescription`,
   async (
     data: { task_id: string; description: string },
     { rejectWithValue },
@@ -41,7 +26,7 @@ export const setTaskDescription = createAsyncThunk(
 );
 
 export const setTaskTitle = createAsyncThunk(
-  `${ONETASK_SLICE_ALIAS}/setTitle`,
+  `${EDIT_TASK_SLICE_ALIAS}/setTitle`,
   async (data: { task_id: string; title: string }, { rejectWithValue }) => {
     try {
       const response: AxiosResponse = await api().post(
@@ -57,11 +42,8 @@ export const setTaskTitle = createAsyncThunk(
 );
 
 export const setTaskMemberAction = createAsyncThunk(
-  `${ONETASK_SLICE_ALIAS}/setMember`,
-  async (
-    data: { task_id: string; assign_user_id: string; task_role_id: string },
-    { rejectWithValue },
-  ) => {
+  `${EDIT_TASK_SLICE_ALIAS}/setMember`,
+  async (data: ITaskAssignUser, { rejectWithValue }) => {
     try {
       const response: AxiosResponse = await api().post(
         `/api/v1.0/task/tasks/${data.task_id}/role-assign`,
@@ -79,8 +61,8 @@ export const setTaskMemberAction = createAsyncThunk(
 );
 
 export const deleteTaskMemberAction = createAsyncThunk(
-  `${ONETASK_SLICE_ALIAS}/deleteMember`,
-  async (data: ITaskWatchers, { rejectWithValue }) => {
+  `${EDIT_TASK_SLICE_ALIAS}/deleteMember`,
+  async (data: ITaskAssignUser, { rejectWithValue }) => {
     try {
       const response: AxiosResponse = await api().post(
         `/api/v1.0/task/tasks/${data.task_id}/role-unassign`,

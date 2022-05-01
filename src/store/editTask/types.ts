@@ -1,0 +1,24 @@
+import { AxiosError } from 'axios';
+import { IResponseTask } from 'store/common/task/types';
+
+export const EDIT_TASK_SLICE_ALIAS = 'edittask';
+
+export interface IEditTaskReducer {
+  data: IResponseTask | null;
+  editLoading: boolean;
+  selectedMembers: Array<string> | string | null;
+  unselectedMembers: Array<string> | string | null;
+  editError: {
+    task: AxiosError | null;
+    title: AxiosError | null;
+    desc: AxiosError | null;
+    setMembers: AxiosError | null;
+    delMembers: AxiosError | null;
+  };
+}
+
+export interface ITaskAssignUser {
+  task_id: string;
+  assign_user_id: string;
+  task_role_id: string;
+}
