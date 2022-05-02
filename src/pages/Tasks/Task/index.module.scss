@@ -1,11 +1,6 @@
 @import 'src/styles/font-variables';
 @import 'src/styles/color-variables';
 
-html,
-body,
-div#root {
-  height: 100%;
-}
 ///////////глобальные!
 :global(.ant-modal-content) {
   height: 100%;
@@ -19,6 +14,11 @@ div#root {
 :global(.ant-modal-body) {
   height: 100%;
   padding: 0 !important;
+}
+:global(.ant-modal-footer) {
+  display: none;
+  padding: 0;
+  margin: 0;
 }
 //////////////
 .task {

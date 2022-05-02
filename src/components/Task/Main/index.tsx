@@ -5,6 +5,7 @@ import {
   CommentOutlined,
   ContainerOutlined,
 } from '@ant-design/icons';
+import lodash, { uniqueId } from 'lodash';
 import styles from './index.module.scss';
 import History from '../History';
 import InputWrapper from './InputWrapper';
@@ -13,8 +14,14 @@ import Title from '../Title';
 
 const Main: React.FC = () => {
   const elements = [
-    { title: 'Описание', icon: <AlignLeftOutlined />, block: <Description /> },
     {
+      id: lodash(uniqueId).toString(),
+      title: 'Описание',
+      icon: <AlignLeftOutlined />,
+      block: <Description />,
+    },
+    {
+      id: lodash(uniqueId).toString(),
       title: 'Комментарии',
       icon: <CommentOutlined />,
       block: (
@@ -25,7 +32,12 @@ const Main: React.FC = () => {
         />
       ),
     },
-    { title: 'Действия', icon: <ContainerOutlined />, block: <History /> },
+    {
+      id: lodash(uniqueId).toString(),
+      title: 'Действия',
+      icon: <ContainerOutlined />,
+      block: <History />,
+    },
   ];
 
   return (
@@ -33,7 +45,7 @@ const Main: React.FC = () => {
       <Title />
       {elements.map((el) => {
         return (
-          <InputWrapper key={el.title} labelText={el.title} icon={el.icon}>
+          <InputWrapper key={el.id} labelText={el.title} icon={el.icon}>
             {el.block}
           </InputWrapper>
         );

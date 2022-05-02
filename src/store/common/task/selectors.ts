@@ -4,35 +4,20 @@ import { RootState } from 'store';
 import { ITaskRoles } from 'store/common/task/types';
 import { IUser } from 'store/users/types';
 
-export function getAuthor(element: ITaskRoles) {
-  if (element.task_role.name !== ROLES.author.name) {
-    return false;
-  }
-  return { element };
+export function isAuthor(element: ITaskRoles): boolean {
+  return element.task_role.name === ROLES.author;
 }
 
-export function getWatcher(element: ITaskRoles) {
-  if (element.task_role.name !== ROLES.watcher.name) {
-    return false;
-  }
-  const el = element.assign_user.name;
-  return { el };
+export function isWatcher(element: ITaskRoles): boolean {
+  return element.task_role.name === ROLES.watcher;
 }
 
-export function getImplementer(element: ITaskRoles) {
-  if (element.task_role.name !== ROLES.implementer.name) {
-    return false;
-  }
-  const el = element.assign_user.name;
-  return { el };
+export function isImplementer(element: ITaskRoles): boolean {
+  return element.task_role.name === ROLES.implementer;
 }
 
-export function getResponsible(element: ITaskRoles) {
-  if (element.task_role.name !== ROLES.responsible.name) {
-    return false;
-  }
-  const el = element.assign_user.name;
-  return { el };
+export function isResponsible(element: ITaskRoles): boolean {
+  return element.task_role.name === ROLES.responsible;
 }
 
 export function getUsersFromRoles(roles: Array<ITaskRoles> | undefined) {
@@ -46,40 +31,36 @@ export function getUsersIdFromRoles(roles: Array<ITaskRoles> | undefined) {
   return arr;
 }
 
-const taskData = (state: RootState) => state.common.onetask.data;
+export const taskRoles = (state: RootState) => state.common.onetask.data?.roles;
 
-export const taskRoles = createSelector(taskData, (data) => data?.roles);
+export const getTaskId = (state: RootState) =>
+  state.common.onetask.data?.task_id;
 
-export const getTaskId = createSelector(taskData, (data) => data?.task_id);
+export const getTitle = (state: RootState) => state.common.onetask.data?.title;
 
-export const getTitle = createSelector(taskData, (data) => data?.title);
+export const getDescription = (state: RootState) =>
+  state.common.onetask.data?.description;
 
-export const getDescription = createSelector(
-  taskData,
-  (data) => data?.description,
-);
-export const getTaskStatus = createSelector(
-  taskData,
-  (data) => data?.status?.name,
-);
+export const getTaskStatus = (state: RootState) =>
+  state.common.onetask.data?.status?.name;
 
 export const getTaskAuthor = createSelector(
   taskRoles,
-  (roles) => roles?.find(getAuthor)?.assign_user,
+  (roles) => roles?.find(isAuthor)?.assign_user,
 );
 export const getTaskResponsible = createSelector(
   taskRoles,
-  (roles) => roles?.find(getResponsible)?.assign_user,
+  (roles) => roles?.find(isResponsible)?.assign_user,
 );
 export const getTaskImplementer = createSelector(
   taskRoles,
-  (roles) => roles?.find(getImplementer)?.assign_user,
+  (roles) => roles?.find(isImplementer)?.assign_user,
 );
 export const getTaskWatchers = createSelector(taskRoles, (roles) =>
-  getUsersFromRoles(roles?.filter(getWatcher)),
+  getUsersFromRoles(roles?.filter(isWatcher)),
 );
 export const getTaskWatchersID = createSelector(taskRoles, (roles) =>
-  getUsersIdFromRoles(roles?.filter(getWatcher)),
+  getUsersIdFromRoles(roles?.filter(isWatcher)),
 );
 
 export const getTaskLoading = (state: RootState) =>

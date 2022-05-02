@@ -6,7 +6,7 @@ import React, { FC, useState } from 'react';
 import { getNewSelectedMembers, getTaskId } from 'store/editTask/selectors';
 
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import useSelectOptions from 'customHooks/Task/useSelectOptions';
+import useSelectOptions from 'components/Task/Info/TaskHook/useSelectOptions';
 import { setNewSelectedMembers } from 'store/editTask/slice';
 import { setTaskMemberAction } from 'store/editTask/thunk';
 import { selectPopulatedUsers } from 'store/users/selectors';
@@ -33,7 +33,7 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
   };
 
   const onChange = (value: string) => {
-    dispatch(setNewSelectedMembers(value));
+    dispatch(setNewSelectedMembers([value]));
   };
 
   const onSearch = (val) => {
@@ -42,11 +42,11 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
 
   const onBlur = () => {
     setIsVisible(!isVisible);
-    if (typeof roleAssign === 'string' && taskId) {
+    if (roleAssign && taskId) {
       dispatch(
         setTaskMemberAction({
           task_id: taskId,
-          assign_user_id: roleAssign,
+          assign_user_id: roleAssign[0],
           task_role_id: roleId,
         }),
       );
@@ -57,7 +57,7 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
   const children = (
     <>
       {allUsers?.map((el) => (
-        <Option key={el.user_id + el.name} value={el.user_id}>
+        <Option key={el.key} value={el.user_id}>
           {el.name}
         </Option>
       ))}

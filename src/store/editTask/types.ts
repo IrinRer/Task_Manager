@@ -6,8 +6,8 @@ export const EDIT_TASK_SLICE_ALIAS = 'edittask';
 export interface IEditTaskReducer {
   data: IResponseTask | null;
   editLoading: boolean;
-  selectedMembers: Array<string> | string | null;
-  unselectedMembers: Array<string> | string | null;
+  selectedMembers: Array<string> | null;
+  unselectedMembers: Array<string> | null;
   editError: {
     task: AxiosError | null;
     title: AxiosError | null;

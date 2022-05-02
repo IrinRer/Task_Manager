@@ -9,6 +9,7 @@ import {
   getImplementerRoleID,
   getResponsibleRoleID,
 } from 'store/common/roles/selectors';
+import lodash, { uniqueId } from 'lodash';
 import MembersWrapper from './MembersWrapper';
 import OneMember from './OneMember';
 import Watchers from './Watchers';
@@ -22,8 +23,13 @@ const Info: React.FC = () => {
   const implementerRoleID = useAppSelector(getImplementerRoleID);
 
   const elements = [
-    { title: 'Автор', block: <OneMember user={author || null} roleId="" /> },
     {
+      id: lodash(uniqueId).toString(),
+      title: 'Автор',
+      block: <OneMember user={author || null} roleId="" />,
+    },
+    {
+      id: lodash(uniqueId).toString(),
       title: 'Ответственный',
       block: (
         <OneMember
@@ -34,6 +40,7 @@ const Info: React.FC = () => {
       ),
     },
     {
+      id: lodash(uniqueId).toString(),
       title: 'Исполнитель',
       block: (
         <OneMember
@@ -44,6 +51,7 @@ const Info: React.FC = () => {
       ),
     },
     {
+      id: lodash(uniqueId).toString(),
       title: 'Наблюдатель',
       block: <Watchers />,
     },
@@ -53,7 +61,7 @@ const Info: React.FC = () => {
     <>
       {elements.map((el) => {
         return (
-          <MembersWrapper key={el.title} roleName={el.title}>
+          <MembersWrapper key={el.id} roleName={el.title}>
             {el.block}
           </MembersWrapper>
         );

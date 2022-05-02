@@ -7,10 +7,11 @@ import {
   getNewSelectedMembers,
   getUnselectedMembers,
   getTaskId,
+  getTaskWatchersID,
 } from 'store/editTask/selectors';
 
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import useSelectOptions from 'customHooks/Task/useSelectOptions';
+import useSelectOptions from 'components/Task/Info/TaskHook/useSelectOptions';
 import {
   setNewSelectedMembers,
   setUnselectedMembers,
@@ -24,14 +25,13 @@ import { IPopulatedUser } from 'store/users/types';
 import styles from '../AddMemberButton/index.module.scss';
 
 type TProps = {
-  selectedMembers: string[];
   roleId: string;
 };
 
 const { Option } = Select;
 
 const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
-  const { selectedMembers, roleId } = props;
+  const { roleId } = props;
   const options = useSelectOptions();
   const dispatch = useAppDispatch();
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -40,6 +40,11 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
 
   const roleAssign = useAppSelector(getNewSelectedMembers);
   const roleUnassign = useAppSelector(getUnselectedMembers);
+  const selectedMembers = useAppSelector(getTaskWatchersID);
+
+  const isNewUser = (users: string[] | string, elem: string) => {
+    return users?.indexOf(elem) === -1;
+  };
 
   const showMemberModal = () => {
     setIsVisible(true);
@@ -49,12 +54,12 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
     if (selectedMembers) {
       dispatch(
         setNewSelectedMembers(
-          value.filter((elem: string) => selectedMembers?.indexOf(elem) === -1),
+          value.filter((elem: string) => isNewUser(selectedMembers, elem)),
         ),
       );
       dispatch(
         setUnselectedMembers(
-          selectedMembers.filter((elem: string) => value.indexOf(elem) === -1),
+          selectedMembers.filter((elem: string) => isNewUser(value, elem)),
         ),
       );
     }
@@ -95,7 +100,7 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
       return selectedMembers
         .concat(roleAssign || [])
         .filter((elem: string) =>
-          roleUnassign ? roleUnassign.indexOf(elem) === -1 : true,
+          roleUnassign ? isNewUser(roleUnassign, elem) : true,
         );
     }
     return null;
@@ -104,7 +109,7 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
   const children = (
     <>
       {allUsers?.map((el) => (
-        <Option key={el.user_id + el.name} value={el.user_id}>
+        <Option key={el.key} value={el.user_id}>
           {el.name}
         </Option>
       ))}

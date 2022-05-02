@@ -14,11 +14,7 @@ export const onetaskSlice = createSlice({
   name: ONETASK_SLICE_ALIAS,
   initialState,
   reducers: {
-    clearDataTask: (state: ITaskReducer) => {
-      state.data = initialState.data;
-      state.loading = initialState.loading;
-      state.error = initialState.error;
-    },
+    clearDataTask: () => initialState,
   },
   extraReducers: {
     [fetchTaskAction.pending.type]: (state: ITaskReducer) => {

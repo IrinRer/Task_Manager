@@ -14,7 +14,7 @@ import Preloader from 'components/Common/Preloader';
 import { Navigate } from 'react-router-dom';
 import { ROUTES } from 'constants/routes';
 import { fetchTaskAction } from 'store/common/task/thunk';
-
+import { clearDataTask } from 'store/common/task/slice';
 import styles from './index.module.scss';
 
 const Task: React.FC = () => {
@@ -30,18 +30,20 @@ const Task: React.FC = () => {
 
   const handleCancel = () => {
     setVisible(false);
-    dispatch(clearEditDataTask());
+    dispatch(clearDataTask());
     dispatch(clearEditDataTask());
   };
 
   const loading = useAppSelector(getEditTaskLoading);
   const editLoading = useAppSelector(getEditTaskLoading);
 
+  const isNotShow = errorTask || !visible;
+
   if (loading || editLoading) {
     return <Preloader />;
   }
 
-  if (errorTask) {
+  if (isNotShow) {
     return <Navigate to={ROUTES.tasks.path} />;
   }
 
@@ -58,8 +60,6 @@ const Task: React.FC = () => {
         <Info />
       </div>
     </Modal>
-  ) : (
-    <Navigate to={ROUTES.tasks.path} />
-  );
+  ) : null;
 };
 export default Task;

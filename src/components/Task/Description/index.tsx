@@ -5,6 +5,7 @@ import { getDescription, getTaskId } from 'store/editTask/selectors';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { setTaskDescription } from 'store/editTask/thunk';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
+import classnames from 'classnames';
 import styles from './index.module.scss';
 
 const Description: React.FC = () => {
@@ -48,9 +49,9 @@ const Description: React.FC = () => {
         autoSize
         maxLength={500}
         placeholder="Введите описание, чтобы сделать задачу понятнее"
-        className={
-          isReadonly ? `${styles.desc} ${styles.readonly}` : styles.desc
-        }
+        className={classnames(styles.desc, {
+          [styles.readonly]: isReadonly,
+        })}
         onChange={changeDescription}
         value={newDesc || ''}
         readOnly={isReadonly}

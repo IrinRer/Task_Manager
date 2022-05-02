@@ -29,18 +29,15 @@ export const editTaskSlice = createSlice({
   name: EDIT_TASK_SLICE_ALIAS,
   initialState,
   reducers: {
-    clearEditDataTask: (state: IEditTaskReducer) => {
-      state.data = initialState.data;
-      state.editError = initialState.editError;
-      state.selectedMembers = initialState.selectedMembers;
-      state.unselectedMembers = initialState.unselectedMembers;
-    },
+    clearEditDataTask: () => initialState,
+
     setNewSelectedMembers: (
       state: IEditTaskReducer,
-      action: PayloadAction<string[] | string>,
+      action: PayloadAction<string[]>,
     ) => {
       state.selectedMembers = action.payload;
     },
+
     setUnselectedMembers: (
       state: IEditTaskReducer,
       action: PayloadAction<string[]>,
