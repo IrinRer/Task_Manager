@@ -22,6 +22,9 @@ import {
 } from 'store/editTask/thunk';
 import { selectPopulatedUsers } from 'store/users/selectors';
 import { IPopulatedUser } from 'store/users/types';
+import { debounce } from 'lodash';
+import { DEBOUNCE_TIMEOUT } from 'constants/common';
+import { fetchUsersAction } from 'store/users/thunk';
 import styles from '../AddMemberButton/index.module.scss';
 
 type TProps = {
@@ -65,8 +68,8 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
     }
   };
 
-  const onSearch = (val) => {
-    // console.log('search:', val);
+  const onSearch = (query: string) => {
+    dispatch(fetchUsersAction(query));
   };
 
   const onBlur = () => {
@@ -141,7 +144,7 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
           }
           onChange={onChange}
           onBlur={onBlur}
-          onSearch={onSearch}
+          onSearch={debounce(onSearch, DEBOUNCE_TIMEOUT)}
         >
           {children}
         </Select>

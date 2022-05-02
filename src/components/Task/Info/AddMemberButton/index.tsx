@@ -11,6 +11,9 @@ import { setNewSelectedMembers } from 'store/editTask/slice';
 import { setTaskMemberAction } from 'store/editTask/thunk';
 import { selectPopulatedUsers } from 'store/users/selectors';
 import { IPopulatedUser } from 'store/users/types';
+import { fetchUsersAction } from 'store/users/thunk';
+import { debounce } from 'lodash';
+import { DEBOUNCE_TIMEOUT } from 'constants/common';
 import styles from './index.module.scss';
 
 type TProps = {
@@ -36,8 +39,8 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
     dispatch(setNewSelectedMembers([value]));
   };
 
-  const onSearch = (val) => {
-    // console.log('search:', val);
+  const onSearch = (query: string) => {
+    dispatch(fetchUsersAction(query));
   };
 
   const onBlur = () => {
@@ -88,7 +91,7 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
           }
           onChange={onChange}
           onBlur={onBlur}
-          onSearch={onSearch}
+          onSearch={debounce(onSearch, DEBOUNCE_TIMEOUT)}
         >
           {children}
         </Select>
