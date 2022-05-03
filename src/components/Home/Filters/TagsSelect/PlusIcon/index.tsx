@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PlusIcon = () => {
+const Index = () => {
   return (
     <svg
       width="17"
@@ -25,4 +25,4 @@ const PlusIcon = () => {
   );
 };
 
-export default PlusIcon;
+export default Index;

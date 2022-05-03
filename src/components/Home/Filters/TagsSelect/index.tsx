@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import { Select } from 'antd';
 import { tagsUpdated } from 'store/filters/slice';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { DEBOUNCE_TIMEOUT } from 'constants/common';
+import { DEBOUNCE_TIMEOUT, TAGS_INPUT_MAX_LENGTH } from 'constants/common';
 import { debounce } from 'lodash';
 import { selectPopulatedTags } from 'store/common/tags/selectors';
 import { fetchTagsAction } from 'store/common/tags/thunk';
@@ -16,7 +16,7 @@ import {
 } from 'store/filters/selectors';
 import FilterWrapper from '../../../Common/FilterWrapper';
 import Tag from './Tag';
-import PlusIcon from './PlusIcon/PlusIcon';
+import Index from './PlusIcon';
 import styles from './index.module.scss';
 
 const TagsInput: React.FC = () => {
@@ -27,29 +27,47 @@ const TagsInput: React.FC = () => {
     selectFilterTagsNames,
   );
 
+  const [searchValue, setSearchValue] = useState<string>('');
+
   const handleChange = (_, query: Array<IPopulatedTag>) => {
     dispatch(tagsUpdated(query));
     dispatch(fetchTasksAction());
   };
 
-  function handleSearch(query: string) {
-    dispatch(fetchTagsAction(query));
-  }
+  const fetchTags = useCallback(
+    (query: string) => {
+      dispatch(fetchTagsAction(query));
+    },
+    [dispatch],
+  );
+
+  const debouncedFetchTags = useMemo(
+    () => debounce((query: string) => fetchTags(query), DEBOUNCE_TIMEOUT),
+    [fetchTags],
+  );
+
+  const handleSearch = (query: string) => {
+    const trimmedQuery = query.slice(0, TAGS_INPUT_MAX_LENGTH);
+
+    setSearchValue(trimmedQuery);
+    debouncedFetchTags(trimmedQuery);
+  };
 
   return (
     <FilterWrapper header="МЕТКА">
       <Select
         mode="tags"
         className={styles.tagSelect}
-        suffixIcon={<PlusIcon />}
+        suffixIcon={<Index />}
         bordered={false}
         options={allTags}
+        searchValue={searchValue}
         value={selectedTagsNames}
         placeholder="Поиск..."
         notFoundContent="Ничего не найдено"
         showArrow
         onChange={handleChange}
-        onSearch={debounce(handleSearch, DEBOUNCE_TIMEOUT)}
+        onSearch={handleSearch}
       />
       <div className={styles.tags}>
         {selectedTags.map((tag) => (

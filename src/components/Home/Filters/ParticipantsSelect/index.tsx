@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import { Select } from 'antd';
 
@@ -7,7 +7,10 @@ import { selectPopulatedUsers } from 'store/users/selectors';
 import { fetchUsersAction } from 'store/users/thunk';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { DEBOUNCE_TIMEOUT } from 'constants/common';
+import {
+  DEBOUNCE_TIMEOUT,
+  PARTICIPANTS_INPUT_MAX_LENGTH,
+} from 'constants/common';
 import { fetchTasksAction } from 'store/tasks/thunk';
 import { IPopulatedUser, IUser } from 'store/users/types';
 import {
@@ -28,14 +31,31 @@ const ParticipantsSelect: React.FC = () => {
     selectFilterUsersNames,
   );
 
-  const handleChange = (_, query: Array<IPopulatedUser>) => {
+  const [searchValue, setSearchValue] = useState<string>('');
+
+  const handleChange = (_, query: Array<IPopulatedUser>): void => {
     dispatch(usersUpdated(query));
     dispatch(fetchTasksAction());
   };
 
-  function handleSearch(query: string) {
-    dispatch(fetchUsersAction(query));
-  }
+  const fetchUsers = useCallback(
+    (query: string) => {
+      dispatch(fetchUsersAction(query));
+    },
+    [dispatch],
+  );
+
+  const debouncedFetchUsers = useMemo(
+    () => debounce((query: string) => fetchUsers(query), DEBOUNCE_TIMEOUT),
+    [fetchUsers],
+  );
+
+  const handleSearch = (query: string) => {
+    const trimmedQuery = query.slice(0, PARTICIPANTS_INPUT_MAX_LENGTH);
+
+    setSearchValue(trimmedQuery);
+    debouncedFetchUsers(trimmedQuery);
+  };
 
   return (
     <FilterWrapper header="УЧАСТНИКИ">
@@ -47,11 +67,12 @@ const ParticipantsSelect: React.FC = () => {
         options={allUsers}
         className={styles.participants}
         dropdownClassName={styles.dropdown}
+        searchValue={searchValue}
         value={selectedUsersNames}
         placeholder="Выберите..."
         notFoundContent="Ничего не найдено"
         onChange={handleChange}
-        onSearch={debounce(handleSearch, DEBOUNCE_TIMEOUT)}
+        onSearch={handleSearch}
       />
       <div className={styles.tags}>
         {selectedUsers.map((user) => (
