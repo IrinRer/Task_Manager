@@ -12,6 +12,7 @@
     margin-top: 16px;
     margin-bottom: 20px;
     color: $text-light;
+    cursor: pointer;
   }
 
   :global(textarea.ant-input).name {
@@ -46,6 +47,11 @@
   }
   :global(textarea.ant-input-status-error).name::placeholder {
     color: $alert;
+  }
+  :global(.ant-input).readonly:focus,
+  :global(.ant-input).readonly:active,
+  :global(.ant-input).readonly:focus-visible {
+    border: none;
   }
 }
 .border {
