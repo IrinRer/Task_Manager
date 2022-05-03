@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TextArea from 'antd/lib/input/TextArea';
 import { Button } from 'antd';
 import { getDescription, getTaskId } from 'store/editTask/selectors';
@@ -9,15 +9,40 @@ import classnames from 'classnames';
 import styles from './index.module.scss';
 
 const Description: React.FC = () => {
+  const EXP_TEXT = {
+    expand: 'Показать целиком',
+    collapse: 'Скрыть полное описание',
+  };
+
   const dispatch = useAppDispatch();
   const description = useAppSelector(getDescription);
-  const [isReadonly, setIsReadonly] = useState<boolean>(true);
   const taskId = useAppSelector(getTaskId);
 
   const [newDesc, setNewDesc] = useState<string | undefined>(description);
+  const [isReadonly, setIsReadonly] = useState<boolean>(true);
+
+  const isBigDesc = (str: string) => {
+    return str ? str.length > 300 : false;
+  };
+
+  const [isFullText, setIsFullText] = useState<boolean>(
+    !isBigDesc(description || ''),
+  );
+
+  const expandText = isFullText ? EXP_TEXT.collapse : EXP_TEXT.expand;
 
   const changeDescription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNewDesc(e.target.value);
+  };
+
+  const getShortDesc = () => {
+    return `${newDesc?.slice(0, 300).trim()} ...`;
+  };
+
+  const setInitialExpand = () => {
+    if (isBigDesc(description || '')) {
+      setIsFullText(false);
+    }
   };
 
   const handleSave = () => {
@@ -27,15 +52,22 @@ const Description: React.FC = () => {
       );
     }
     setIsReadonly(true);
+    setInitialExpand();
   };
 
   const handleCancel = () => {
     setNewDesc(description);
     setIsReadonly(true);
+    setInitialExpand();
   };
 
   const handleChange = () => {
     setIsReadonly(!isReadonly);
+    setIsFullText(true);
+  };
+
+  const expandChange = () => {
+    setIsFullText(!isFullText);
   };
 
   return (
@@ -45,6 +77,7 @@ const Description: React.FC = () => {
           изменить
         </Button>
       ) : null}
+
       <TextArea
         autoSize
         maxLength={500}
@@ -53,9 +86,10 @@ const Description: React.FC = () => {
           [styles.readonly]: isReadonly,
         })}
         onChange={changeDescription}
-        value={newDesc || ''}
+        value={isFullText ? newDesc : getShortDesc() || ''}
         readOnly={isReadonly}
       />
+
       {!isReadonly ? (
         <>
           <Button className={styles.save} onClick={handleSave}>
@@ -65,6 +99,12 @@ const Description: React.FC = () => {
             Отменить
           </Button>{' '}
         </>
+      ) : null}
+
+      {isReadonly && isBigDesc(description || '') ? (
+        <Button className={styles.expand} onClick={expandChange}>
+          {expandText}
+        </Button>
       ) : null}
     </div>
   );
