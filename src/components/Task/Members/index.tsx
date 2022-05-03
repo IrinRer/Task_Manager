@@ -24,12 +24,12 @@ const Info: React.FC = () => {
 
   const elements = [
     {
-      id: lodash(uniqueId).toString(),
+      id: lodash(uniqueId()).toString(),
       title: 'Автор',
       block: <OneMember user={author || null} roleId="" />,
     },
     {
-      id: lodash(uniqueId).toString(),
+      id: lodash(uniqueId()).toString(),
       title: 'Ответственный',
       block: (
         <OneMember
@@ -40,7 +40,7 @@ const Info: React.FC = () => {
       ),
     },
     {
-      id: lodash(uniqueId).toString(),
+      id: lodash(uniqueId()).toString(),
       title: 'Исполнитель',
       block: (
         <OneMember
@@ -51,7 +51,7 @@ const Info: React.FC = () => {
       ),
     },
     {
-      id: lodash(uniqueId).toString(),
+      id: lodash(uniqueId()).toString(),
       title: 'Наблюдатель',
       block: <Watchers />,
     },

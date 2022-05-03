@@ -15,13 +15,13 @@ import Title from '../Title';
 const Main: React.FC = () => {
   const elements = [
     {
-      id: lodash(uniqueId).toString(),
+      id: lodash(uniqueId()).toString(),
       title: 'Описание',
       icon: <AlignLeftOutlined />,
       block: <Description />,
     },
     {
-      id: lodash(uniqueId).toString(),
+      id: lodash(uniqueId()).toString(),
       title: 'Комментарии',
       icon: <CommentOutlined />,
       block: (
@@ -33,7 +33,7 @@ const Main: React.FC = () => {
       ),
     },
     {
-      id: lodash(uniqueId).toString(),
+      id: lodash(uniqueId()).toString(),
       title: 'Действия',
       icon: <ContainerOutlined />,
       block: <History />,
