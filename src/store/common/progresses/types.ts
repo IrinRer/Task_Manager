@@ -10,7 +10,7 @@ export interface ICommonProgressesReducer {
 
 export interface IProgress {
   label: string;
-  value: TProgress;
+  value: TProgressValue;
 }
 
-export type TProgress = 0 | 10 | 50;
+export type TProgressValue = 0 | 10 | 50;

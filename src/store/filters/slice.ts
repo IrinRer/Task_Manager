@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { FILTERS_SLICE_ALIAS, IFiltersReducer } from 'store/filters/types';
-import { TProgress } from 'store/common/progresses/types';
+import { TProgressValue } from 'store/common/progresses/types';
 import { IUser } from '../users/types';
 import { ITag } from '../common/tags/types';
 
@@ -58,7 +58,7 @@ export const filtersSlice = createSlice({
     },
     progressUpdated: (
       state: IFiltersReducer,
-      action: PayloadAction<TProgress>,
+      action: PayloadAction<TProgressValue>,
     ) => {
       state.progress = action.payload;
     },
