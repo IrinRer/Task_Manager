@@ -39,7 +39,13 @@ const Task: React.FC = () => {
   const isNotShow = errorTask || !visible;
 
   if (loadingTask) {
-    return <Spinner margin="0 auto" size="large" />;
+    return (
+      <Spinner
+        className={`${styles.mainSpinner}`}
+        margin="0 auto"
+        size="large"
+      />
+    );
   }
 
   if (isNotShow) {

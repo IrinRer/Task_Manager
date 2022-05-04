@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import TextArea from 'antd/lib/input/TextArea';
 import {
-  getEditTaskLoading,
+  getEditTitleLoading,
   getTaskId,
   getTitle,
 } from 'store/editTask/selectors';
@@ -17,7 +17,7 @@ const Title: React.FC = () => {
   const dispatch = useAppDispatch();
   const title = useAppSelector(getTitle);
   const taskId = useAppSelector(getTaskId);
-  const editLoading = useAppSelector(getEditTaskLoading);
+  const editLoading = useAppSelector(getEditTitleLoading);
 
   const inputRef = useRef<any>(null);
   const [newTitle, setNewTitle] = useState<string | undefined>(title);
@@ -38,10 +38,18 @@ const Title: React.FC = () => {
     if (taskId && newTitle && !isReadonly) {
       dispatch(setTaskTitle({ task_id: taskId, title: newTitle }));
     }
+    setIsReadonly(true);
   };
 
   if (editLoading) {
-    return <Spinner margin="0 auto" size="large" />;
+    return (
+      <>
+        <div className={styles.wrapname}>
+          <Spinner margin="0 auto" size="default" />
+        </div>
+        <div className={styles.border} />
+      </>
+    );
   }
 
   return (

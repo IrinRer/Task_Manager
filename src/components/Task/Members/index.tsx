@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import {
+  getEditMembersLoading,
   getTaskAuthor,
   getTaskImplementer,
   getTaskResponsible,
@@ -10,6 +11,7 @@ import {
   getResponsibleRoleID,
 } from 'store/common/roles/selectors';
 import lodash, { uniqueId } from 'lodash';
+import Spinner from 'components/Common/Spinner';
 import MembersWrapper from './MembersWrapper';
 import OneMember from './OneMember';
 import Watchers from './Watchers';
@@ -21,6 +23,8 @@ const Info: React.FC = () => {
 
   const responsibleRoleID = useAppSelector(getResponsibleRoleID);
   const implementerRoleID = useAppSelector(getImplementerRoleID);
+
+  const editLoading = useAppSelector(getEditMembersLoading);
 
   const elements = [
     {
@@ -56,6 +60,10 @@ const Info: React.FC = () => {
       block: <Watchers />,
     },
   ];
+
+  if (editLoading) {
+    return <Spinner margin="0 auto" size="default" />;
+  }
 
   return (
     <>
