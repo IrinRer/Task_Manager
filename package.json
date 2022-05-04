@@ -52,7 +52,6 @@
     "eslint-plugin-sonarjs": "^0.12.0",
     "prettier": "^2.5.1",
     "prettier-eslint": "^13.0.0",
-    "react-error-overlay": "^6.0.9",
     "typescript": "^4.5.5"
   }
 }

@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { getVerifyIdUser } from 'store/auth/verify/selectors';
+import { getVerifyIdUser, getVerifyToken } from 'store/auth/verify/selectors';
 import { getToken } from 'helpers/usersInfo';
 import { fetchVerifyAction } from 'store/auth/verify/thunk';
 import { addVerifyToken } from 'store/auth/verify/slice';
@@ -19,6 +19,7 @@ const App: React.FC = () => {
   const userID = useAppSelector(getVerifyIdUser);
   const token = getToken();
   const generateToken = useAppSelector(getGenerateToken);
+  const verifyToken = useAppSelector(getVerifyToken);
 
   useEffect(() => {
     if (token) dispatch(fetchVerifyAction(token));
@@ -29,14 +30,14 @@ const App: React.FC = () => {
   }, [userID, generateToken]);
 
   useEffect(() => {
-    if (token) {
+    if (verifyToken) {
       dispatch(fetchUsersAction());
       dispatch(fetchTagsAction());
       dispatch(fetchTasksAction());
       dispatch(fetchPrioritiesAction());
       dispatch(fetchStatusesAction());
     }
-  }, [generateToken]);
+  }, [verifyToken]);
 
   return <CreateRoutes />;
 };

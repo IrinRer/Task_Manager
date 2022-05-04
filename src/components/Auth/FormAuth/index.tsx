@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import { Form, Input, Button, notification } from 'antd';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
@@ -9,7 +8,7 @@ import styles from './index.module.scss';
 const FormAuth: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const onFinish = async ({ id }: { id: string }) => {
+  const onFinish = ({ id }: { id: string }) => {
     dispatch(fetchAuthAction(id));
   };
 

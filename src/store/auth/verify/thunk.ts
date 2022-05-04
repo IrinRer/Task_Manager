@@ -6,10 +6,10 @@ import { resetToken } from 'helpers/usersInfo';
 
 export const fetchVerifyAction = createAsyncThunk(
   `${VERIFY_SLICE_ALIAS}/verifyToken`,
-  async (id: string, { rejectWithValue }) => {
+  async (token: string, { rejectWithValue }) => {
     try {
       const response = await api(true).post('/ladum/token/verify', {
-        token: id,
+        token,
       });
       return response.data.data.verify.id;
     } catch (error) {
