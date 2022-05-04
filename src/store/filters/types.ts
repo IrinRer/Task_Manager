@@ -12,4 +12,6 @@ export interface IFiltersReducer {
   attachments: boolean;
   progress: TProgressValue;
   priorities: Array<string>;
+  usersInputValue: string;
+  tagsInputValue: string;
 }
