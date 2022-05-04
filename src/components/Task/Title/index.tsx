@@ -1,17 +1,23 @@
 import React, { useRef, useState } from 'react';
 import TextArea from 'antd/lib/input/TextArea';
-import { getTaskId, getTitle } from 'store/editTask/selectors';
+import {
+  getEditTaskLoading,
+  getTaskId,
+  getTitle,
+} from 'store/editTask/selectors';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { setTaskTitle } from 'store/editTask/thunk';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { EditOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
+import Spinner from 'components/Common/Spinner';
 import styles from './index.module.scss';
 
 const Title: React.FC = () => {
   const dispatch = useAppDispatch();
   const title = useAppSelector(getTitle);
   const taskId = useAppSelector(getTaskId);
+  const editLoading = useAppSelector(getEditTaskLoading);
 
   const inputRef = useRef<any>(null);
   const [newTitle, setNewTitle] = useState<string | undefined>(title);
@@ -33,6 +39,10 @@ const Title: React.FC = () => {
       dispatch(setTaskTitle({ task_id: taskId, title: newTitle }));
     }
   };
+
+  if (editLoading) {
+    return <Spinner margin="0 auto" size="large" />;
+  }
 
   return (
     <>

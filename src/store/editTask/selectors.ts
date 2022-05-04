@@ -12,6 +12,9 @@ import {
 export const getNewSelectedMembers = (state: RootState) =>
   state.editTask.selectedMembers;
 
+export const getOneNewSelectedMembers = (state: RootState) =>
+  state.editTask.selectedMembers?.pop();
+
 export const getUnselectedMembers = (state: RootState) =>
   state.editTask.unselectedMembers;
 

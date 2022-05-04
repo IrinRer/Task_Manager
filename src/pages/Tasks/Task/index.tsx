@@ -34,12 +34,11 @@ const Task: React.FC = () => {
     dispatch(clearEditDataTask());
   };
 
-  const loading = useAppSelector(getEditTaskLoading);
-  const editLoading = useAppSelector(getEditTaskLoading);
+  const loadingTask = useAppSelector(getEditTaskLoading);
 
   const isNotShow = errorTask || !visible;
 
-  if (loading || editLoading) {
+  if (loadingTask) {
     return <Spinner margin="0 auto" size="large" />;
   }
 
@@ -50,7 +49,7 @@ const Task: React.FC = () => {
   return visible ? (
     <Modal
       visible={visible}
-      confirmLoading={loading}
+      confirmLoading={loadingTask}
       onCancel={handleCancel}
       className={styles.task}
       footer={[]}

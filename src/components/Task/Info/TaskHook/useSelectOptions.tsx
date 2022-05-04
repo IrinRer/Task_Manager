@@ -1,3 +1,18 @@
+import { Select } from 'antd';
+import React from 'react';
+import { IPopulatedUser } from 'store/users/types';
+
+const { Option } = Select;
+export const usersOption = (users: Array<IPopulatedUser>) => (
+  <>
+    {users?.map((el) => (
+      <Option key={el.key} value={el.user_id}>
+        {el.name}
+      </Option>
+    ))}
+  </>
+);
+
 type TOption = {
   value: string;
   children: string;

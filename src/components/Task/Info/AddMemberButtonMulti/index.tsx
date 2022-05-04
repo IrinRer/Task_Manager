@@ -11,7 +11,9 @@ import {
 } from 'store/editTask/selectors';
 
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import useSelectOptions from 'components/Task/Info/TaskHook/useSelectOptions';
+import useSelectOptions, {
+  usersOption,
+} from 'components/Task/Info/TaskHook/useSelectOptions';
 import {
   setNewSelectedMembers,
   setUnselectedMembers,
@@ -109,15 +111,7 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
     return null;
   };
 
-  const children = (
-    <>
-      {allUsers?.map((el) => (
-        <Option key={el.key} value={el.user_id}>
-          {el.name}
-        </Option>
-      ))}
-    </>
-  );
+  const children = usersOption(allUsers);
 
   return (
     <div className={styles.addmemberWrapper}>

@@ -3,10 +3,12 @@ import { Button, Select } from 'antd';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import React, { FC, useState } from 'react';
 
-import { getNewSelectedMembers, getTaskId } from 'store/editTask/selectors';
+import { getOneNewSelectedMembers, getTaskId } from 'store/editTask/selectors';
 
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import useSelectOptions from 'components/Task/Info/TaskHook/useSelectOptions';
+import useSelectOptions, {
+  usersOption,
+} from 'components/Task/Info/TaskHook/useSelectOptions';
 import { setNewSelectedMembers } from 'store/editTask/slice';
 import { setTaskMemberAction } from 'store/editTask/thunk';
 import { selectPopulatedUsers } from 'store/users/selectors';
@@ -29,7 +31,7 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
   const allUsers: Array<IPopulatedUser> = useAppSelector(selectPopulatedUsers);
   const taskId = useAppSelector(getTaskId);
 
-  const roleAssign = useAppSelector(getNewSelectedMembers);
+  const roleAssign = useAppSelector(getOneNewSelectedMembers);
 
   const showMemberModal = () => {
     setIsVisible(true);
@@ -49,7 +51,7 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
       dispatch(
         setTaskMemberAction({
           task_id: taskId,
-          assign_user_id: roleAssign[0],
+          assign_user_id: roleAssign,
           task_role_id: roleId,
         }),
       );
@@ -57,15 +59,7 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
     }
   };
 
-  const children = (
-    <>
-      {allUsers?.map((el) => (
-        <Option key={el.key} value={el.user_id}>
-          {el.name}
-        </Option>
-      ))}
-    </>
-  );
+  const children = usersOption(allUsers);
 
   return (
     <div className={styles.addmemberWrapper}>
