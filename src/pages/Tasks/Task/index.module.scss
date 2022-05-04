@@ -20,6 +20,10 @@
   padding: 0;
   margin: 0;
 }
+:global(.ant-spin-spinning) {
+  display: flex;
+  position: absolute;
+}
 //////////////
 .task {
   top: 0 !important;

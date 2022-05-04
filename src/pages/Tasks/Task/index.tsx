@@ -10,11 +10,11 @@ import {
 import Main from 'components/Task/Main';
 import Info from 'components/Task/Info';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import Preloader from 'components/Common/Preloader';
 import { Navigate } from 'react-router-dom';
 import { ROUTES } from 'constants/routes';
 import { fetchTaskAction } from 'store/common/task/thunk';
 import { clearDataTask } from 'store/common/task/slice';
+import Spinner from 'components/Common/Spinner';
 import styles from './index.module.scss';
 
 const Task: React.FC = () => {
@@ -40,7 +40,7 @@ const Task: React.FC = () => {
   const isNotShow = errorTask || !visible;
 
   if (loading || editLoading) {
-    return <Preloader />;
+    return <Spinner margin="0 auto" size="large" />;
   }
 
   if (isNotShow) {
