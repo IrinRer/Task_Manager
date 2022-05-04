@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { notification } from 'antd';
+import { RootState } from 'store';
 
 import { TASKS_SLICE_ALIAS } from 'store/tasks/types';
 import { api } from '../../network';
@@ -9,8 +10,7 @@ export const fetchTasksAction = createAsyncThunk(
   `${TASKS_SLICE_ALIAS}/fetchAll`,
   async (_, { rejectWithValue, getState }) => {
     try {
-      const state = getState();
-      // @ts-ignore
+      const state = getState() as RootState;
       const tasksQuery = selectTaskQuery(state);
 
       const response = await api().get('/api/v1.0/task/tasks', {

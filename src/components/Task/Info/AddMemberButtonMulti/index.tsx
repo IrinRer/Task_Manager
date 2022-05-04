@@ -24,7 +24,7 @@ import {
 } from 'store/editTask/thunk';
 import { selectPopulatedUsers } from 'store/users/selectors';
 import { IPopulatedUser } from 'store/users/types';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 import { DEBOUNCE_TIMEOUT } from 'constants/common';
 import { fetchUsersAction } from 'store/users/thunk';
 import styles from '../AddMemberButton/index.module.scss';
@@ -32,8 +32,6 @@ import styles from '../AddMemberButton/index.module.scss';
 type TProps = {
   roleId: string;
 };
-
-const { Option } = Select;
 
 const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
   const { roleId } = props;

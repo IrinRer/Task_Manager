@@ -10,7 +10,7 @@ import {
   getImplementerRoleID,
   getResponsibleRoleID,
 } from 'store/common/roles/selectors';
-import lodash, { uniqueId } from 'lodash';
+import uniqueId from 'lodash/uniqueId';
 import Spinner from 'components/Common/Spinner';
 import MembersWrapper from './MembersWrapper';
 import OneMember from './OneMember';
@@ -28,12 +28,12 @@ const Info: React.FC = () => {
 
   const elements = [
     {
-      id: lodash(uniqueId()).toString(),
+      id: uniqueId(),
       title: 'Автор',
       block: <OneMember user={author || null} roleId="" />,
     },
     {
-      id: lodash(uniqueId()).toString(),
+      id: uniqueId(),
       title: 'Ответственный',
       block: (
         <OneMember
@@ -44,7 +44,7 @@ const Info: React.FC = () => {
       ),
     },
     {
-      id: lodash(uniqueId()).toString(),
+      id: uniqueId(),
       title: 'Исполнитель',
       block: (
         <OneMember
@@ -55,7 +55,7 @@ const Info: React.FC = () => {
       ),
     },
     {
-      id: lodash(uniqueId()).toString(),
+      id: uniqueId(),
       title: 'Наблюдатель',
       block: <Watchers />,
     },

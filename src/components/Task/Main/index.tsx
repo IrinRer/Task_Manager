@@ -5,7 +5,7 @@ import {
   CommentOutlined,
   ContainerOutlined,
 } from '@ant-design/icons';
-import lodash, { uniqueId } from 'lodash';
+import uniqueId from 'lodash/uniqueId';
 import styles from './index.module.scss';
 import History from '../History';
 import InputWrapper from './InputWrapper';
@@ -15,13 +15,13 @@ import Title from '../Title';
 const Main: React.FC = () => {
   const elements = [
     {
-      id: lodash(uniqueId()).toString(),
+      id: uniqueId(),
       title: 'Описание',
       icon: <AlignLeftOutlined />,
       block: <Description />,
     },
     {
-      id: lodash(uniqueId()).toString(),
+      id: uniqueId(),
       title: 'Комментарии',
       icon: <CommentOutlined />,
       block: (
@@ -33,7 +33,7 @@ const Main: React.FC = () => {
       ),
     },
     {
-      id: lodash(uniqueId()).toString(),
+      id: uniqueId(),
       title: 'Действия',
       icon: <ContainerOutlined />,
       block: <History />,

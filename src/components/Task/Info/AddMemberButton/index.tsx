@@ -14,15 +14,13 @@ import { setTaskMemberAction } from 'store/editTask/thunk';
 import { selectPopulatedUsers } from 'store/users/selectors';
 import { IPopulatedUser } from 'store/users/types';
 import { fetchUsersAction } from 'store/users/thunk';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 import { DEBOUNCE_TIMEOUT } from 'constants/common';
 import styles from './index.module.scss';
 
 type TProps = {
   roleId: string;
 };
-
-const { Option } = Select;
 
 const AddMemberButton: FC<TProps> = ({ roleId }) => {
   const options = useSelectOptions();
