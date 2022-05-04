@@ -4,6 +4,7 @@ import {
   getTaskAuthor,
   getTaskImplementer,
   getTaskResponsible,
+  getTaskWatchers,
 } from 'store/editTask/selectors';
 import {
   getImplementerRoleID,
@@ -13,11 +14,13 @@ import lodash, { uniqueId } from 'lodash';
 import MembersWrapper from './MembersWrapper';
 import OneMember from './OneMember';
 import Watchers from './Watchers';
+import MembersWrapperMulti from './MembersWrapperMulti';
 
 const Info: React.FC = () => {
   const author = useAppSelector(getTaskAuthor);
   const responsible = useAppSelector(getTaskResponsible);
   const implementer = useAppSelector(getTaskImplementer);
+  const watchers = useAppSelector(getTaskWatchers);
 
   const responsibleRoleID = useAppSelector(getResponsibleRoleID);
   const implementerRoleID = useAppSelector(getImplementerRoleID);
@@ -27,6 +30,7 @@ const Info: React.FC = () => {
       id: lodash(uniqueId()).toString(),
       title: 'Автор',
       block: <OneMember user={author || null} roleId="" />,
+      expand: false,
     },
     {
       id: lodash(uniqueId()).toString(),
@@ -38,6 +42,7 @@ const Info: React.FC = () => {
           roleId={responsibleRoleID || ''}
         />
       ),
+      expand: false,
     },
     {
       id: lodash(uniqueId()).toString(),
@@ -49,17 +54,26 @@ const Info: React.FC = () => {
           roleId={implementerRoleID || ''}
         />
       ),
+      expand: false,
     },
     {
       id: lodash(uniqueId()).toString(),
-      title: 'Наблюдатель',
+      title: `Наблюдатель ${watchers.length}`,
       block: <Watchers />,
+      expand: true,
     },
   ];
 
   return (
     <>
       {elements.map((el) => {
+        if (el.expand) {
+          return (
+            <MembersWrapperMulti key={el.id} roleName={el.title}>
+              {el.block}
+            </MembersWrapperMulti>
+          );
+        }
         return (
           <MembersWrapper key={el.id} roleName={el.title}>
             {el.block}

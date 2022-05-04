@@ -12,7 +12,7 @@ const Watchers: React.FC = () => {
 
   return (
     <div className={styles.watchers}>
-      {watchers?.map((el) => (
+      {watchers?.slice(0, 3).map((el) => (
         <OneMember
           key={el.user_id}
           editable
@@ -20,7 +20,9 @@ const Watchers: React.FC = () => {
           roleId={watcherRoleID || ''}
         />
       ))}
-      <AddMemberButtonMulti roleId={watcherRoleID || ''} />
+      {watchers.length <= 50 ? (
+        <AddMemberButtonMulti roleId={watcherRoleID || ''} />
+      ) : null}
     </div>
   );
 };
