@@ -5,22 +5,14 @@ import { fetchVerifyAction } from 'store/auth/verify/thunk';
 
 const initialState: IVerifyReducer = {
   userID: null,
-  loading: null,
+  loading: false,
   error: null,
-  verifyToken: null,
 };
 
 export const verifySlice = createSlice({
   name: VERIFY_SLICE_ALIAS,
   initialState,
-  reducers: {
-    addVerifyToken: (
-      state: IVerifyReducer,
-      { payload }: PayloadAction<string>,
-    ) => {
-      state.verifyToken = payload;
-    },
-  },
+  reducers: {},
   extraReducers: {
     [fetchVerifyAction.pending.type]: (state: IVerifyReducer) => {
       state.loading = true;
@@ -43,5 +35,4 @@ export const verifySlice = createSlice({
   },
 });
 
-export const { addVerifyToken } = verifySlice.actions;
 export default verifySlice.reducer;

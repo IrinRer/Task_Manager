@@ -2,12 +2,12 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { getVerifyIdUser, getVerifyToken } from 'store/auth/verify/selectors';
+import { getVerifyIdUser } from 'store/auth/verify/selectors';
 import { getToken } from 'helpers/usersInfo';
 import { fetchVerifyAction } from 'store/auth/verify/thunk';
-import { addVerifyToken } from 'store/auth/verify/slice';
-import { getGenerateToken } from 'store/auth/token/selectors';
+import { getVerifyToken } from 'store/auth/token/selectors';
 import CreateRoutes from 'containers/Routes';
+import { addVerifyToken } from 'store/auth/token/slice';
 import { fetchUsersAction } from '../../store/users/thunk';
 import { fetchTagsAction } from '../../store/common/tags/thunk';
 import { fetchTasksAction } from '../../store/tasks/thunk';
@@ -18,7 +18,6 @@ const App: React.FC = () => {
   const dispatch = useAppDispatch();
   const userID = useAppSelector(getVerifyIdUser);
   const token = getToken();
-  const generateToken = useAppSelector(getGenerateToken);
   const verifyToken = useAppSelector(getVerifyToken);
 
   useEffect(() => {
@@ -26,8 +25,8 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (userID || generateToken) dispatch(addVerifyToken(token!));
-  }, [userID, generateToken]);
+    if (userID) dispatch(addVerifyToken(token!));
+  }, [userID]);
 
   useEffect(() => {
     if (verifyToken) {

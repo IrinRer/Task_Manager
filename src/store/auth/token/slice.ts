@@ -12,7 +12,14 @@ const initialState: IAuthReducer = {
 export const authSlice = createSlice({
   name: AUTH_SLICE_ALIAS,
   initialState,
-  reducers: {},
+  reducers: {
+    addVerifyToken: (
+      state: IAuthReducer,
+      { payload }: PayloadAction<string>,
+    ) => {
+      state.token = payload;
+    },
+  },
   extraReducers: {
     [fetchAuthAction.pending.type]: (state: IAuthReducer) => {
       state.loading = true;
@@ -35,4 +42,5 @@ export const authSlice = createSlice({
   },
 });
 
+export const { addVerifyToken } = authSlice.actions;
 export default authSlice.reducer;

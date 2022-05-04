@@ -6,5 +6,4 @@ export interface IVerifyReducer {
   userID: string | null;
   error: AxiosError | null;
   loading: boolean | null;
-  verifyToken: string | null;
 }
