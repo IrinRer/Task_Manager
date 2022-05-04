@@ -16,7 +16,7 @@ import {
 } from 'store/filters/selectors';
 import FilterWrapper from '../../../Common/FilterWrapper';
 import Tag from './Tag';
-import Index from './PlusIcon';
+import PlusIcon from './PlusIcon';
 import styles from './index.module.scss';
 
 const TagsInput: React.FC = () => {
@@ -58,7 +58,7 @@ const TagsInput: React.FC = () => {
       <Select
         mode="tags"
         className={styles.tagSelect}
-        suffixIcon={<Index />}
+        suffixIcon={<PlusIcon />}
         bordered={false}
         options={allTags}
         searchValue={searchValue}
