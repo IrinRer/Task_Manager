@@ -1,6 +1,12 @@
+@import 'src/styles/_color-variables.scss';
+
 .priorityCheckboxLabel {
   display: flex;
   align-items: center;
+}
+
+.labelText {
+  margin: 0;
 }
 
 .colorDot {
@@ -8,8 +14,17 @@
   height: 8px;
   margin-right: 8px;
   border-radius: 50%;
+  background-color: $dark-primary;
 }
 
-.labelText {
-  margin: 0;
+.colorDotOrange {
+  background-color: $priority-orange;
+}
+
+.colorDotRed {
+  background-color: $priority-red;
+}
+
+.colorDotGreen {
+  background-color: $priority-green;
 }
