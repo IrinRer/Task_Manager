@@ -1,7 +1,7 @@
 import { RootState } from 'store/index';
 import { createSelector } from '@reduxjs/toolkit';
+import { PRIORITY_COLORS } from 'constants/common';
 import { IPopulatedPriority, IPriority } from './types';
-import { PRIORITY_COLORS } from '../../../constants/common';
 
 const selectPriorities = (state: RootState): Array<IPriority> =>
   state.common.priorities.priorities;
