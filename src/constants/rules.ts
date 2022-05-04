@@ -14,3 +14,10 @@ export const RULES = {
     },
   ],
 };
+
+export const VALIDATEMESSAGE = {
+  pattern: {
+    mismatch: undefined,
+  },
+  required: undefined,
+};

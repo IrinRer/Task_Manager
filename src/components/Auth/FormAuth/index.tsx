@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Input, Button, notification } from 'antd';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { fetchAuthAction } from 'store/auth/token/thunk';
-import { RULES } from 'constants/rules';
+import { RULES, VALIDATEMESSAGE } from 'constants/rules';
 import styles from './index.module.scss';
 
 const FormAuth: React.FC = () => {
@@ -26,9 +26,15 @@ const FormAuth: React.FC = () => {
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       validateTrigger="onSubmit"
+      validateMessages={VALIDATEMESSAGE}
     >
       <h2>Авторизация</h2>
-      <Form.Item label="Логин" name="id" rules={RULES.input}>
+      <Form.Item
+        label="Логин"
+        name="id"
+        rules={RULES.input}
+        validateTrigger="onChange"
+      >
         <Input />
       </Form.Item>
 
