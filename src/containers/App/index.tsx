@@ -1,9 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { getVerifyIdUser } from 'store/auth/verify/selectors';
-import { getToken } from 'helpers/usersInfo';
+import { getToken } from 'helpers/cookies';
 import { fetchVerifyAction } from 'store/auth/verify/thunk';
 import { getVerifyToken } from 'store/auth/token/selectors';
 import CreateRoutes from 'containers/Routes';
@@ -22,7 +21,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (token) dispatch(fetchVerifyAction(token));
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     if (userID) dispatch(addVerifyToken(token!));

@@ -1,11 +1,4 @@
 export const RULES = {
-  input: [
-    {
-      required: true,
-      message: 'Неверный формат данных',
-      pattern: /^[1-6]$/gm,
-    },
-  ],
   password: [
     {
       required: true,

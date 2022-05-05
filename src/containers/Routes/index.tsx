@@ -3,9 +3,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ROUTES } from 'constants/routes';
 import ErrorBoundary from 'containers/ErrorBoundary';
 import Error from 'components/Common/Error';
-import Preloader from 'components/Common/Preloader';
 import Auth from 'pages/Auth';
-import PrivateRoute from './PrivateRoute';
+import PrivateRoute from 'containers/Routes/PrivateRoute';
+import Preloader from 'components/Common/Preloader';
 
 const CreateRoutes: React.FC = () => {
   const Home = lazy(() => import('pages/Home'));

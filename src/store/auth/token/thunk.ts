@@ -17,7 +17,7 @@ export const fetchAuthAction = createAsyncThunk(
       return response.data.token;
     } catch (error) {
       notification.error(
-        rejectWithValue(error.response.status).payload === 404
+        error.response.status === 404
           ? { message: 'Пользователь с указанным id не найден' }
           : { message: error.message },
       );

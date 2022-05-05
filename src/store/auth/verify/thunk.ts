@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { VERIFY_SLICE_ALIAS } from 'store/auth/verify/types';
 import { api } from 'network';
-import { resetToken } from 'helpers/usersInfo';
+import { resetToken } from 'helpers/cookies';
 
 export const fetchVerifyAction = createAsyncThunk(
   `${VERIFY_SLICE_ALIAS}/verifyToken`,

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 import Error from '../../components/Common/Error';
 
@@ -17,7 +16,6 @@ class ErrorBoundary extends Component<IProps, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('Error:', error, errorInfo);
     this.setState({ hasError: true });
   }
 
