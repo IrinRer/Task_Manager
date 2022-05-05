@@ -7,6 +7,8 @@ import {
 
 import tasksReducer from 'store/tasks/slice';
 import filtersReducer from 'store/filters/slice';
+import tokenReducer from 'store/auth/token/slice';
+import verifyReducer from 'store/auth/verify/slice';
 import usersReducer from './users/slice';
 import commonTagsReducer from './common/tags/slice';
 import commonProgressesReducer from './common/progresses/slice';
@@ -18,6 +20,10 @@ export const store = configureStore({
     tasks: tasksReducer,
     users: usersReducer,
     filters: filtersReducer,
+    auth: combineReducers({
+      token: tokenReducer,
+      verify: verifyReducer,
+    }),
     common: combineReducers({
       statuses: commonStatusesReducer,
       priorities: commonPrioritiesReducer,
