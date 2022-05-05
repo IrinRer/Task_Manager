@@ -33,8 +33,7 @@ export function getUsersIdFromRoles(roles: Array<ITaskRoles> | undefined) {
 
 export const taskRoles = (state: RootState) => state.common.onetask.data?.roles;
 
-export const getTaskId = (state: RootState) =>
-  state.common.onetask.data?.task_id;
+export const getHomeTaskId = (state: RootState) => state.common.onetask.task_id;
 
 export const getTitle = (state: RootState) => state.common.onetask.data?.title;
 
