@@ -1,9 +1,10 @@
 import axios, { AxiosInstance } from 'axios';
-import { getToken } from 'helpers/usersInfo';
+import { RootState, store } from 'store';
 import { getBackendURL } from '../helpers/common';
 
 export const api = (requireAuth: boolean = false): AxiosInstance => {
-  const token = getToken();
+  const state: RootState = store.getState();
+  const { token } = state.auth.token;
   return axios.create({
     baseURL: getBackendURL(requireAuth),
     headers: token ? { Authorization: `Bearer ${token}` } : undefined,
