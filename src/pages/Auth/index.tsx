@@ -1,32 +1,30 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
+import { getAuthLoading, getVerifyToken } from 'store/auth/token/selectors';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { Navigate } from 'react-router-dom';
 import { ROUTES } from 'constants/routes';
 import { getVerifyLoading } from 'store/auth/verify/selectors';
-import { getAuthLoading, getVerifyToken } from 'store/auth/token/selectors';
+import FormAuth from 'components/Auth/FormAuth';
 import Preloader from 'components/Common/Preloader';
+import style from './index.module.scss';
 
-interface IRouteProps {
-  children: ReactElement;
-}
-
-const PrivateRoute: React.FC = ({ children: Component }: IRouteProps) => {
-  const verifyLoading = useAppSelector(getVerifyLoading);
+const Auth: React.FC = () => {
   const authLoading = useAppSelector(getAuthLoading);
-  const loading = verifyLoading || authLoading;
+  const verifyLoading = useAppSelector(getVerifyLoading);
+  const loading = authLoading || verifyLoading;
   const verifyToken = useAppSelector(getVerifyToken);
 
   return (
-    <>
+    <div className={style.wrapper}>
       {loading ? (
         <Preloader />
       ) : verifyToken ? (
-        Component
+        <Navigate to={ROUTES.tasks.path} />
       ) : (
-        <Navigate to={ROUTES.login.path} />
+        <FormAuth />
       )}
-    </>
+    </div>
   );
 };
 
-export default PrivateRoute;
+export default Auth;

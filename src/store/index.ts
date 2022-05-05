@@ -8,8 +8,9 @@ import {
 
 import tasksReducer from './tasks/slice';
 import commonRolesReducer from './common/roles/slice';
-
 import filtersReducer from './filters/slice';
+import tokenReducer from './auth/token/slice';
+import verifyReducer from './auth/verify/slice';
 import usersReducer from './users/slice';
 import commonTagsReducer from './common/tags/slice';
 import commonProgressesReducer from './common/progresses/slice';
@@ -34,6 +35,10 @@ export const store = configureStore({
     editTask: editTaskReducer,
     users: usersReducer,
     filters: filtersReducer,
+    auth: combineReducers({
+      token: tokenReducer,
+      verify: verifyReducer,
+    }),
     common: combineReducers({
       onetask: onetaskReducer,
       statuses: commonStatusesReducer,

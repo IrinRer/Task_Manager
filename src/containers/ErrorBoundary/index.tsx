@@ -16,7 +16,6 @@ class ErrorBoundary extends Component<IProps, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('Error:', error, errorInfo);
     this.setState({ hasError: true });
   }
 
@@ -24,7 +23,7 @@ class ErrorBoundary extends Component<IProps, State> {
     const { hasError } = this.state;
     const { children } = this.props;
     if (hasError) {
-      return <Error text='Что-то пошло не так'/>;
+      return <Error text="Что-то пошло не так" />;
     }
 
     return children;
