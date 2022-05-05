@@ -13,7 +13,7 @@ const CreateRoutes: React.FC = () => {
 
   return (
     <BrowserRouter>
-      <Suspense fallback={<Preloader />}>
+      <Suspense fallback={<Preloader size="large" />}>
         <ErrorBoundary>
           <Routes>
             <Route

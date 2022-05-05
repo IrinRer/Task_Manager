@@ -28,6 +28,8 @@ import { ITasksReducer } from './tasks/types';
 import { IRolesReducer } from './common/roles/types';
 import { ITaskReducer } from './common/task/types';
 import { IEditTaskReducer } from './editTask/types';
+import { IAuthReducer } from './auth/token/types';
+import { IVerifyReducer } from './auth/verify/types';
 
 export const store = configureStore({
   reducer: {
@@ -57,6 +59,10 @@ export type RootState = {
   editTask: IEditTaskReducer;
   users: IUsersReducer;
   filters: IFiltersReducer;
+  auth: CombinedState<{
+    token: IAuthReducer;
+    verify: IVerifyReducer;
+  }>;
   common: CombinedState<{
     onetask: ITaskReducer;
     statuses: ICommonStatusesReducer;

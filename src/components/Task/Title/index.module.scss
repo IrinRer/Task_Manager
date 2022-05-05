@@ -48,6 +48,21 @@
   :global(textarea.ant-input-status-error).name::placeholder {
     color: $alert;
   }
+  :global(textarea.ant-input).error {
+    border: none;
+    box-shadow: none;
+    border-bottom: 2px solid $alert;
+  }
+  :global(textarea.ant-input).error:focus,
+  :global(textarea.ant-input).error:active,
+  :global(textarea.ant-input).error:focus-visible {
+    border: none;
+    box-shadow: none !important;
+    border-bottom: 2px solid $alert;
+  }
+  :global(textarea.ant-input).error::placeholder {
+    color: $alert;
+  }
   :global(.ant-input).readonly:focus,
   :global(.ant-input).readonly:active,
   :global(.ant-input).readonly:focus-visible {

@@ -62,11 +62,11 @@ const Title: React.FC = () => {
           placeholder="Введите название"
           className={classnames(styles.name, {
             [styles.readonly]: isReadonly,
+            [styles.error]: !newTitle,
           })}
           onChange={changeTitle}
           onBlur={onBlur}
           value={newTitle || ''}
-          status={!newTitle ? 'error' : ''}
           readOnly={isReadonly}
         />
         {isReadonly ? <EditOutlined onClick={changeReadonly} /> : null}

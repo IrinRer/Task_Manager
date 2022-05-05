@@ -12,6 +12,7 @@ import { fetchTaskAction } from 'store/common/task/thunk';
 import { clearDataTask } from 'store/common/task/slice';
 import Spinner from 'components/Common/Spinner';
 import { getHomeTaskId } from 'store/common/task/selectors';
+import Preloader from 'components/Common/Preloader';
 import styles from './index.module.scss';
 
 const Task: React.FC = () => {
@@ -42,13 +43,7 @@ const Task: React.FC = () => {
   const isNotShow = errorTask || !taskId;
 
   if (loadingTask) {
-    return (
-      <Spinner
-        // className={`${styles.mainSpinner}`}
-        margin="0 auto"
-        size="large"
-      />
-    );
+    return <Preloader size="large" />;
   }
 
   if (isNotShow) {
