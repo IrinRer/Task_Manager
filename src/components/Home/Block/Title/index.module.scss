@@ -1,0 +1,14 @@
+@import 'src/styles/color-variables.scss';
+@import 'src/styles/font-variables.scss';
+
+.wrapper {
+  max-width: 480px;
+  min-width: 320px;
+  max-height: 60px;
+  font-size: $font-size-m;
+  color: $text-dark;
+  font-weight: 600;
+  .done {
+    color: $heading;
+  }
+}

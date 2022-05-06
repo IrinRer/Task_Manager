@@ -1,0 +1,9 @@
+@import 'src/styles/color-variables.scss';
+
+.attached {
+  color: $heading;
+  margin-right: 15px;
+  img {
+    margin-right: 3px;
+  }
+}

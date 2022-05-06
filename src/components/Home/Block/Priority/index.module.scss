@@ -1,0 +1,35 @@
+@import 'src/styles/color-variables.scss';
+@import 'src/styles/font-variables.scss';
+@import 'src/styles/colors';
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  color: $heading;
+  font-size: $font-size-m;
+  line-height: $line-height-m;
+}
+.low {
+  display: inline-block;
+  margin-right: 5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: $salad;
+}
+.middle {
+  display: inline-block;
+  margin-right: 5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: $orange;
+}
+.high {
+  display: inline-block;
+  margin-right: 5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: $red;
+}

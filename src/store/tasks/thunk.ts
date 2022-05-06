@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { notification } from 'antd';
+import { RootState } from 'store';
 
 import { TASKS_SLICE_ALIAS } from 'store/tasks/types';
 import { api } from '../../network';
@@ -10,7 +11,7 @@ export const fetchTasksAction = createAsyncThunk(
   async (_, { rejectWithValue, getState }) => {
     try {
       const state = getState();
-      const tasksQuery = selectTaskQuery(state);
+      const tasksQuery = selectTaskQuery(state as RootState);
 
       const response = await api().get('/api/v1.0/task/tasks', {
         params: {
@@ -28,7 +29,30 @@ export const fetchTasksAction = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      notification.error({ message: error.message });
+      notification.error({ message: 'Ошибка данных' });
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
+interface IArg {
+  task_id: string;
+  task_status_id: string;
+}
+
+export const changeTaskStatusAction = createAsyncThunk(
+  `${TASKS_SLICE_ALIAS}/changeTaskStatus`,
+  async (arg: IArg, { rejectWithValue }) => {
+    try {
+      const response = await api().post(
+        `/api/v1.0/task/tasks/${arg.task_id}/status-change`,
+        {
+          task_status_id: arg.task_status_id,
+        },
+      );
+      return response.data.data;
+    } catch (error) {
+      notification.error({ message: 'Ошибка изменения статуса' });
       return rejectWithValue(error.message);
     }
   },
