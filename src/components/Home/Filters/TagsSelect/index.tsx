@@ -33,6 +33,7 @@ const TagsInput: React.FC = () => {
   const handleChange = (_, query: Array<IPopulatedTag>) => {
     dispatch(tagsUpdated(query));
     dispatch(fetchTasksAction());
+    dispatch(tagsInputValueUpdated(''));
   };
 
   const fetchTags = useCallback(

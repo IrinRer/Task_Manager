@@ -37,6 +37,7 @@ const ParticipantsSelect: React.FC = () => {
   const handleChange = (_, query: Array<IPopulatedUser>): void => {
     dispatch(usersUpdated(query));
     dispatch(fetchTasksAction());
+    dispatch(usersInputValueUpdated(''));
   };
 
   const fetchUsers = useCallback(
