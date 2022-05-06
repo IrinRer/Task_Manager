@@ -11,9 +11,7 @@ import {
 } from 'store/editTask/selectors';
 
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import useSelectOptions, {
-  usersOption,
-} from 'components/Task/Info/TaskHook/useSelectOptions';
+import useSelectOptions from 'components/Task/Info/TaskHook/useSelectOptions';
 import {
   setNewSelectedMembers,
   setUnselectedMembers,
@@ -28,6 +26,7 @@ import debounce from 'lodash/debounce';
 import { DEBOUNCE_TIMEOUT } from 'constants/common';
 import { fetchUsersAction } from 'store/users/thunk';
 import styles from '../AddMemberButton/index.module.scss';
+import UsersOption from '../UsersOption';
 
 type TProps = {
   roleId: string;
@@ -109,8 +108,6 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
     return null;
   };
 
-  const children = usersOption(allUsers);
-
   return (
     <div className={styles.addmemberWrapper}>
       {!isVisible ? (
@@ -138,7 +135,7 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
           onBlur={onBlur}
           onSearch={debounce(onSearch, DEBOUNCE_TIMEOUT)}
         >
-          {children}
+          <UsersOption users={allUsers} />
         </Select>
       ) : null}
     </div>

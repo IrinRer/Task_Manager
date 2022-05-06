@@ -6,9 +6,7 @@ import React, { FC, useState } from 'react';
 import { getOneNewSelectedMembers, getTaskId } from 'store/editTask/selectors';
 
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import useSelectOptions, {
-  usersOption,
-} from 'components/Task/Info/TaskHook/useSelectOptions';
+import useSelectOptions from 'components/Task/Info/TaskHook/useSelectOptions';
 import { setNewSelectedMembers } from 'store/editTask/slice';
 import { setTaskMemberAction } from 'store/editTask/thunk';
 import { selectPopulatedUsers } from 'store/users/selectors';
@@ -17,6 +15,7 @@ import { fetchUsersAction } from 'store/users/thunk';
 import debounce from 'lodash/debounce';
 import { DEBOUNCE_TIMEOUT } from 'constants/common';
 import styles from './index.module.scss';
+import UsersOption from '../UsersOption';
 
 type TProps = {
   roleId: string;
@@ -57,8 +56,6 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
     }
   };
 
-  const children = usersOption(allUsers);
-
   return (
     <div className={styles.addmemberWrapper}>
       {!isVisible ? (
@@ -85,7 +82,7 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
           onBlur={onBlur}
           onSearch={debounce(onSearch, DEBOUNCE_TIMEOUT)}
         >
-          {children}
+          <UsersOption users={allUsers} />
         </Select>
       ) : null}
     </div>

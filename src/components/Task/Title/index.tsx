@@ -1,4 +1,4 @@
-import React, {MutableRefObject, Ref, useRef, useState } from 'react';
+import React, { Ref, useRef, useState } from 'react';
 import TextArea, { TextAreaRef } from 'antd/lib/input/TextArea';
 import {
   getEditTitleLoading,
@@ -12,7 +12,6 @@ import { EditOutlined } from '@ant-design/icons';
 
 import Spinner from 'components/Common/Spinner';
 import classnames from 'classnames';
-import { Button } from 'antd';
 import styles from './index.module.scss';
 
 const Title: React.FC = () => {

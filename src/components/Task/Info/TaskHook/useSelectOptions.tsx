@@ -1,29 +1,14 @@
-import { Select } from 'antd';
-import React from 'react';
-import { IPopulatedUser } from 'store/users/types';
-
-const { Option } = Select;
-export const usersOption = (users: Array<IPopulatedUser>) => (
-  <>
-    {users?.map((el) => (
-      <Option key={el.key} value={el.user_id}>
-        {el.name}
-      </Option>
-    ))}
-  </>
-);
-
 type TOption = {
   value: string;
   children: string;
 };
 
 const useSelectOptions = () => {
-  const filterOption = (input: string, option: TOption) => {
+  const filterOption = (input: string, option: TOption):boolean => {
     return option!.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
   };
 
-  const filterSort = (optionA: TOption, optionB: TOption) => {
+  const filterSort = (optionA: TOption, optionB: TOption):number => {
     return optionA!.children
       .toLowerCase()
       .localeCompare(optionB!.children.toLowerCase());
