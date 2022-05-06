@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import TextArea from 'antd/lib/input/TextArea';
+import React, {MutableRefObject, Ref, useRef, useState } from 'react';
+import TextArea, { TextAreaRef } from 'antd/lib/input/TextArea';
 import {
   getEditTitleLoading,
   getTaskId,
@@ -9,8 +9,10 @@ import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { setTaskTitle } from 'store/editTask/thunk';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { EditOutlined } from '@ant-design/icons';
-import classnames from 'classnames';
+
 import Spinner from 'components/Common/Spinner';
+import classnames from 'classnames';
+import { Button } from 'antd';
 import styles from './index.module.scss';
 
 const Title: React.FC = () => {
@@ -19,7 +21,7 @@ const Title: React.FC = () => {
   const taskId = useAppSelector(getTaskId);
   const editLoading = useAppSelector(getEditTitleLoading);
 
-  const inputRef = useRef<any>(null);
+  const inputRef: Ref<TextAreaRef> | undefined  /*: MutableRefObject<typeof TextArea | null> */ = useRef(null);
   const [newTitle, setNewTitle] = useState<string | undefined>(title);
   const [isReadonly, setIsReadonly] = useState<boolean>(true);
 
@@ -51,6 +53,8 @@ const Title: React.FC = () => {
       </>
     );
   }
+
+  
 
   return (
     <>

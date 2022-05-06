@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import TextArea from 'antd/lib/input/TextArea';
 import { Button } from 'antd';
 import {
@@ -9,8 +9,8 @@ import {
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { setTaskDescription } from 'store/editTask/thunk';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import classnames from 'classnames';
 import Spinner from 'components/Common/Spinner';
+import classnames from 'classnames';
 import styles from './index.module.scss';
 
 const Description: React.FC = () => {

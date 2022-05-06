@@ -10,7 +10,6 @@ import { Navigate } from 'react-router-dom';
 import { ROUTES } from 'constants/routes';
 import { fetchTaskAction } from 'store/common/task/thunk';
 import { clearDataTask } from 'store/common/task/slice';
-import Spinner from 'components/Common/Spinner';
 import { getHomeTaskId } from 'store/common/task/selectors';
 import Preloader from 'components/Common/Preloader';
 import styles from './index.module.scss';
@@ -18,9 +17,6 @@ import styles from './index.module.scss';
 const Task: React.FC = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  // const taskId: string | undefined =
-  // 'dedfb4d3-5ba0-45bd-9623-24b76c16dc2c';
-  //  '2d497445-f89c-4de6-aec3-c69985c7a54a';
   const taskId = useAppSelector(getHomeTaskId);
   const errorTask = useAppSelector(getEditTaskError);
 
