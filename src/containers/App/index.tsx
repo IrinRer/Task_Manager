@@ -21,11 +21,11 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (token) dispatch(fetchVerifyAction(token));
-  }, [token]);
+  }, [dispatch, token]);
 
   useEffect(() => {
     if (userID) dispatch(addVerifyToken(token!));
-  }, [userID]);
+  }, [dispatch, userID, token]);
 
   useEffect(() => {
     if (verifyToken) {
@@ -35,7 +35,7 @@ const App: React.FC = () => {
       dispatch(fetchPrioritiesAction());
       dispatch(fetchStatusesAction());
     }
-  }, [verifyToken]);
+  }, [dispatch, verifyToken]);
 
   return <CreateRoutes />;
 };
