@@ -1,0 +1,73 @@
+@import 'src/styles/color-variables.scss';
+@import 'src/styles/font-variables.scss';
+@import 'src/styles/colors';
+.wrapper {
+  :global(.ant-tag) {
+    display: flex;
+    align-items: center;
+    height: 24px;
+    font-size: $font-size-s;
+    font-weight: 500;
+    border-radius: 12px;
+    margin: 5px;
+  }
+
+  :global(.ant-tag).salad {
+    border: 1px solid $salad;
+    background-color: rgba($salad, 0.1);
+    color: $salad;
+    svg {
+      color: $salad;
+    }
+  }
+
+  :global(.ant-tag).blue {
+    border: 1px solid $blue-secondary;
+    background-color: rgba($blue-secondary, 0.1);
+    color: $blue-secondary;
+    svg {
+      color: $blue-secondary;
+    }
+  }
+
+  :global(.ant-tag).red {
+    border: 1px solid $red;
+    background-color: rgba($red, 0.05);
+    color: $red;
+    svg {
+      color: $red;
+    }
+  }
+  :global(.ant-tag).purple {
+    border: 1px solid $purple;
+    background-color: rgba($purple, 0.05);
+    color: $purple;
+    svg {
+      color: $purple;
+    }
+  }
+  :global(.ant-tag).pink {
+    border: 1px solid $pink;
+    background-color: rgba($pink, 0.05);
+    color: $pink;
+    svg {
+      color: $pink;
+    }
+  }
+  :global(.ant-tag).orange {
+    border: 1px solid $orange;
+    background-color: rgba($orange, 0.05);
+    color: $orange;
+    svg {
+      color: $orange;
+    }
+  }
+  :global(.ant-tag).yellow {
+    border: 1px solid $yellow;
+    background-color: rgba($yellow, 0.05);
+    color: $yellow;
+    svg {
+      color: $yellow;
+    }
+  }
+}

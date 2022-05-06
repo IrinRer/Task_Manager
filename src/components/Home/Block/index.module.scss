@@ -1,0 +1,54 @@
+@import 'src/styles/color-variables.scss';
+@import 'src/styles/font-variables.scss';
+@import 'src/styles/colors';
+
+.wrapper {
+  width: 100%;
+  padding: 14px 25px;
+  border: 1px solid $border-primary;
+  border-radius: 10px;
+  margin-top: 30px;
+  .header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    h2 {
+      padding: 8px 0px 0px 20px;
+      margin: 0;
+      font-size: $font-size-xl;
+      font-weight: 600;
+      line-height: $line-height-xl;
+      color: $dark-primary;
+    }
+  }
+  .pagination {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 5px;
+    :global(.ant-pagination) {
+      color: $heading;
+    }
+    :global(.ant-pagination-prev) button {
+      border-radius: 10px;
+      background: transparent;
+    }
+    :global(.ant-pagination-item) {
+      border: none;
+      background: transparent;
+      a {
+        color: $dark-primary;
+        &:hover {
+          color: rgba($blue, 0.9);
+        }
+      }
+    }
+    :global(.ant-pagination-item.ant-pagination-item-active) a {
+      color: $blue;
+    }
+    :global(.ant-pagination-next) button {
+      border-radius: 10px;
+      background: transparent;
+    }
+  }
+}
