@@ -1,9 +1,20 @@
 import { RootState } from 'store/index';
 import { createSelector } from '@reduxjs/toolkit';
+import { TaskStatuses, TaskStatusName } from 'constants/types/common';
 import { IPopulatedStatus, IStatus } from './types';
 
-const selectStatuses = (state: RootState): Array<IStatus> =>
+const selectOriginalStatuses = (state: RootState): Array<IStatus> =>
   state.common.statuses.statuses;
+
+export const selectStatuses = createSelector(
+  selectOriginalStatuses,
+  (statuses): IStatus[] =>
+    statuses
+      .filter((status: IStatus) => status.name !== TaskStatuses.Rejected)
+      .map((status: IStatus) => {
+        return { ...status, name: TaskStatusName[status.name] };
+      }),
+);
 
 export const selectPopulatedStatuses = createSelector(
   selectStatuses,

@@ -1,0 +1,10 @@
+@import 'src/styles/color-variables.scss';
+@import 'src/styles/font-variables.scss';
+@import 'src/styles/colors';
+
+.wrapper {
+  :global(.ant-avatar) {
+    margin-right: 10px;
+    color: $white;
+  }
+}

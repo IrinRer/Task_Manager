@@ -1,0 +1,8 @@
+@import 'src/styles/color-variables.scss';
+
+.wrapper {
+  color: $heading;
+  img {
+    margin-right: 5px;
+  }
+}
