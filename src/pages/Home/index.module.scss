@@ -1,4 +1,18 @@
-.home {
-  display: flex;
-  column-gap: 20px;
+@import 'src/styles/color-variables.scss';
+@import 'src/styles/font-variables.scss';
+@import 'src/styles/colors';
+
+:global(.ant-layout).tasks {
+  background-color: $white;
+  :global(.ant-layout-sider) {
+    background-color: transparent;
+  }
+  :global(.ant-layout-content) {
+    border-left: 1px solid $border-primary;
+  }
+}
+
+.sider {
+  padding: 0px;
+  color: $text-dark;
 }
