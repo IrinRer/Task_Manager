@@ -7,10 +7,10 @@ import {
 } from '@reduxjs/toolkit';
 
 import tasksReducer from './tasks/slice';
-import commonRolesReducer from './common/roles/slice';
 import filtersReducer from './filters/slice';
 import tokenReducer from './auth/token/slice';
 import verifyReducer from './auth/verify/slice';
+import commonRolesReducer from './common/roles/slice';
 import usersReducer from './users/slice';
 import commonTagsReducer from './common/tags/slice';
 import commonProgressesReducer from './common/progresses/slice';
@@ -18,6 +18,7 @@ import commonPrioritiesReducer from './common/priorities/slice';
 import commonStatusesReducer from './common/statuses/slice';
 import onetaskReducer from './common/task/slice';
 import editTaskReducer from './editTask/slice';
+
 import { ICommonTagsReducer } from './common/tags/types';
 import { ICommonProgressesReducer } from './common/progresses/types';
 import { ICommonPrioritiesReducer } from './common/priorities/types';
@@ -54,6 +55,7 @@ export const store = configureStore({
 });
 
 export type AppDispatch = typeof store.dispatch;
+
 export type RootState = {
   tasks: ITasksReducer;
   editTask: IEditTaskReducer;

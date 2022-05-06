@@ -1,0 +1,16 @@
+@import 'src/styles/color-variables.scss';
+@import 'src/styles/font-variables.scss';
+@import 'src/styles/colors';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+
+  :global(.ant-btn).button {
+    text-align: left;
+    text-transform: uppercase;
+    font-size: $font-size-s;
+    font-weight: 700;
+    color: $text-dark;
+  }
+}

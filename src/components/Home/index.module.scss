@@ -1,0 +1,9 @@
+@import 'src/styles/color-variables.scss';
+@import 'src/styles/font-variables.scss';
+@import 'src/styles/colors';
+
+.wrapper {
+  padding: 40px;
+  min-width: 1160px;
+  background-color: $bg-primary;
+}
