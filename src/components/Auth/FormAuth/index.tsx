@@ -39,7 +39,6 @@ const FormAuth: React.FC = () => {
             pattern: /^[1-9]$|^[0-4][0-9]$|^50$/gm,
           },
         ]}
-        validateTrigger="onChange"
       >
         <Input />
       </Form.Item>
