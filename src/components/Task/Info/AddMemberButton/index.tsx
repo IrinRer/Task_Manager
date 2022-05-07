@@ -3,7 +3,7 @@ import { Button, Select } from 'antd';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import React, { FC, useState } from 'react';
 
-import { getNewSelectedMembers, getTaskId } from 'store/editTask/selectors';
+import { getOneNewSelectedMembers, getTaskId } from 'store/editTask/selectors';
 
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import useSelectOptions from 'components/Task/Info/TaskHook/useSelectOptions';
@@ -12,15 +12,14 @@ import { setTaskMemberAction } from 'store/editTask/thunk';
 import { selectPopulatedUsers } from 'store/users/selectors';
 import { IPopulatedUser } from 'store/users/types';
 import { fetchUsersAction } from 'store/users/thunk';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 import { DEBOUNCE_TIMEOUT } from 'constants/common';
 import styles from './index.module.scss';
+import UsersOption from '../UsersOption';
 
 type TProps = {
   roleId: string;
 };
-
-const { Option } = Select;
 
 const AddMemberButton: FC<TProps> = ({ roleId }) => {
   const options = useSelectOptions();
@@ -29,7 +28,7 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
   const allUsers: Array<IPopulatedUser> = useAppSelector(selectPopulatedUsers);
   const taskId = useAppSelector(getTaskId);
 
-  const roleAssign = useAppSelector(getNewSelectedMembers);
+  const roleAssign = useAppSelector(getOneNewSelectedMembers);
 
   const showMemberModal = () => {
     setIsVisible(true);
@@ -49,23 +48,13 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
       dispatch(
         setTaskMemberAction({
           task_id: taskId,
-          assign_user_id: roleAssign[0],
+          assign_user_id: roleAssign,
           task_role_id: roleId,
         }),
       );
       dispatch(setNewSelectedMembers([]));
     }
   };
-
-  const children = (
-    <>
-      {allUsers?.map((el) => (
-        <Option key={el.key} value={el.user_id}>
-          {el.name}
-        </Option>
-      ))}
-    </>
-  );
 
   return (
     <div className={styles.addmemberWrapper}>
@@ -93,7 +82,7 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
           onBlur={onBlur}
           onSearch={debounce(onSearch, DEBOUNCE_TIMEOUT)}
         >
-          {children}
+          <UsersOption users={allUsers} />
         </Select>
       ) : null}
     </div>

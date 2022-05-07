@@ -12,6 +12,9 @@ import {
 export const getNewSelectedMembers = (state: RootState) =>
   state.editTask.selectedMembers;
 
+export const getOneNewSelectedMembers = (state: RootState) =>
+  state.editTask.selectedMembers?.pop();
+
 export const getUnselectedMembers = (state: RootState) =>
   state.editTask.unselectedMembers;
 
@@ -47,7 +50,16 @@ export const getTaskWatchersID = createSelector(taskRoles, (roles) =>
 );
 
 export const getEditTaskLoading = (state: RootState) =>
-  state.editTask.editLoading;
+  state.editTask.editLoading.task;
+
+export const getEditTitleLoading = (state: RootState) =>
+  state.editTask.editLoading.title;
+
+export const getEditDescLoading = (state: RootState) =>
+  state.editTask.editLoading.desc;
+
+export const getEditMembersLoading = (state: RootState) =>
+  state.editTask.editLoading.members;
 
 export const getEditTaskError = (state: RootState) =>
   state.editTask.editError.task;

@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import TextArea from 'antd/lib/input/TextArea';
 import { Button } from 'antd';
-import { getDescription, getTaskId } from 'store/editTask/selectors';
+import {
+  getDescription,
+  getEditDescLoading,
+  getTaskId,
+} from 'store/editTask/selectors';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { setTaskDescription } from 'store/editTask/thunk';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
+import Spinner from 'components/Common/Spinner';
 import classnames from 'classnames';
 import styles from './index.module.scss';
 
@@ -17,6 +22,7 @@ const Description: React.FC = () => {
   const dispatch = useAppDispatch();
   const description = useAppSelector(getDescription);
   const taskId = useAppSelector(getTaskId);
+  const editLoading = useAppSelector(getEditDescLoading);
 
   const [newDesc, setNewDesc] = useState<string | undefined>(description);
   const [isReadonly, setIsReadonly] = useState<boolean>(true);
@@ -69,6 +75,14 @@ const Description: React.FC = () => {
   const expandChange = () => {
     setIsFullText(!isFullText);
   };
+
+  if (editLoading) {
+    return (
+      <div className={styles.description}>
+        <Spinner margin="0 auto" size="default" />
+      </div>
+    );
+  }
 
   return (
     <div className={styles.description}>

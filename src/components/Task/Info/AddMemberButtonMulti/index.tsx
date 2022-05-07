@@ -22,16 +22,15 @@ import {
 } from 'store/editTask/thunk';
 import { selectPopulatedUsers } from 'store/users/selectors';
 import { IPopulatedUser } from 'store/users/types';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 import { DEBOUNCE_TIMEOUT } from 'constants/common';
 import { fetchUsersAction } from 'store/users/thunk';
 import styles from '../AddMemberButton/index.module.scss';
+import UsersOption from '../UsersOption';
 
 type TProps = {
   roleId: string;
 };
-
-const { Option } = Select;
 
 const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
   const { roleId } = props;
@@ -109,16 +108,6 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
     return null;
   };
 
-  const children = (
-    <>
-      {allUsers?.map((el) => (
-        <Option key={el.key} value={el.user_id}>
-          {el.name}
-        </Option>
-      ))}
-    </>
-  );
-
   return (
     <div className={styles.addmemberWrapper}>
       {!isVisible ? (
@@ -146,7 +135,7 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
           onBlur={onBlur}
           onSearch={debounce(onSearch, DEBOUNCE_TIMEOUT)}
         >
-          {children}
+          <UsersOption users={allUsers} />
         </Select>
       ) : null}
     </div>

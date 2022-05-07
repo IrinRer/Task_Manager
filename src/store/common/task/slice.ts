@@ -5,6 +5,7 @@ import { fetchTaskAction } from './thunk';
 import { ITaskReducer, ONETASK_SLICE_ALIAS } from './types';
 
 const initialState: ITaskReducer = {
+  task_id: null,
   data: null,
   loading: false,
   error: null,
@@ -15,6 +16,9 @@ export const onetaskSlice = createSlice({
   initialState,
   reducers: {
     clearDataTask: () => initialState,
+    setTaskId: (state: ITaskReducer, action: PayloadAction<string>) => {
+      state.task_id = action.payload;
+    },
   },
   extraReducers: {
     [fetchTaskAction.pending.type]: (state: ITaskReducer) => {
@@ -39,5 +43,5 @@ export const onetaskSlice = createSlice({
   },
 });
 
-export const { clearDataTask } = onetaskSlice.actions;
+export const { clearDataTask, setTaskId } = onetaskSlice.actions;
 export default onetaskSlice.reducer;

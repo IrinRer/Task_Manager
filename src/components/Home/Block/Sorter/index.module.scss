@@ -1,0 +1,10 @@
+@import 'src/styles/color-variables.scss';
+@import 'src/styles/font-variables.scss';
+@import 'src/styles/colors';
+
+.selector {
+  :global(.ant-select-selection-item) {
+    font-weight: 700;
+    color: $text-dark;
+  }
+}

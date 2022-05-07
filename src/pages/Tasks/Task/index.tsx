@@ -2,31 +2,31 @@ import React, { useEffect, useState } from 'react';
 import { Modal } from 'antd';
 import { clearEditDataTask } from 'store/editTask/slice';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import {
-  getEditTaskError,
-  getTaskId,
-  getEditTaskLoading,
-} from 'store/editTask/selectors';
+import { getEditTaskError, getEditTaskLoading } from 'store/editTask/selectors';
 import Main from 'components/Task/Main';
 import Info from 'components/Task/Info';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import Preloader from 'components/Common/Preloader';
 import { Navigate } from 'react-router-dom';
 import { ROUTES } from 'constants/routes';
 import { fetchTaskAction } from 'store/common/task/thunk';
 import { clearDataTask } from 'store/common/task/slice';
+import { getHomeTaskId } from 'store/common/task/selectors';
+import Preloader from 'components/Common/Preloader';
 import styles from './index.module.scss';
 
 const Task: React.FC = () => {
-  const [visible, setVisible] = useState<boolean>(/* false */ true);
+  const [visible, setVisible] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  const taskId: string | undefined = // 'dedfb4d3-5ba0-45bd-9623-24b76c16dc2c';
-    '2d497445-f89c-4de6-aec3-c69985c7a54a'; /* useAppSelector(getTaskId) */
+  const taskId = useAppSelector(getHomeTaskId);
   const errorTask = useAppSelector(getEditTaskError);
 
   useEffect(() => {
-    dispatch(fetchTaskAction(taskId));
-  }, [dispatch]);
+    setVisible(true);
+    if (taskId) {
+      setVisible(true);
+      dispatch(fetchTaskAction(taskId));
+    }
+  }, [dispatch, taskId]);
 
   const handleCancel = () => {
     setVisible(false);
@@ -34,13 +34,12 @@ const Task: React.FC = () => {
     dispatch(clearEditDataTask());
   };
 
-  const loading = useAppSelector(getEditTaskLoading);
-  const editLoading = useAppSelector(getEditTaskLoading);
+  const loadingTask = useAppSelector(getEditTaskLoading);
 
-  const isNotShow = errorTask || !visible;
+  const isNotShow = errorTask || !taskId;
 
-  if (loading || editLoading) {
-    return <Preloader />;
+  if (loadingTask) {
+    return <Preloader size="large" />;
   }
 
   if (isNotShow) {
@@ -50,7 +49,7 @@ const Task: React.FC = () => {
   return visible ? (
     <Modal
       visible={visible}
-      confirmLoading={loading}
+      confirmLoading={loadingTask}
       onCancel={handleCancel}
       className={styles.task}
       footer={[]}

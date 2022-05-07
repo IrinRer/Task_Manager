@@ -1,0 +1,39 @@
+@import 'src/styles/color-variables.scss';
+@import 'src/styles/font-variables.scss';
+@import 'src/styles/colors';
+
+.wrapper {
+  height: 32px;
+  width: 61px;
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  border: 1px solid $dark-secondary;
+  border-radius: 10px;
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+  }
+  button {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 5px;
+    line-height: 16px;
+    height: 16px;
+    border: none;
+    background: transparent;
+  }
+  .pageSize {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    border-right: 1px solid $dark-secondary;
+    color: $dark-primary;
+    padding: 0px 10px;
+    margin: 0px;
+  }
+}

@@ -5,7 +5,12 @@ export const EDIT_TASK_SLICE_ALIAS = 'edittask';
 
 export interface IEditTaskReducer {
   data: IResponseTask | null;
-  editLoading: boolean;
+  editLoading: {
+    task: boolean;
+    title: boolean;
+    desc: boolean;
+    members: boolean;
+  };
   selectedMembers: Array<string> | null;
   unselectedMembers: Array<string> | null;
   editError: {

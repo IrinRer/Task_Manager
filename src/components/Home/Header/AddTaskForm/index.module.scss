@@ -1,0 +1,40 @@
+@import 'src/styles/color-variables.scss';
+@import 'src/styles/font-variables.scss';
+@import 'src/styles/colors';
+
+:global(.ant-input-affix-wrapper).input {
+  padding-left: 0px;
+  --antd-wave-shadow-color: $gray-500;
+  background: transparent;
+  border: none;
+  height: 48px;
+  border-bottom: 1px solid $gray-500;
+  color: $gray-500;
+  width: 298px;
+  :global(.ant-input) {
+    background-color: transparent;
+  }
+}
+
+:global(.ant-btn).save {
+  box-sizing: border-box;
+  height: 32px;
+  margin: 0px 5px;
+  border-radius: 10px;
+  background-color: $blue;
+  border-color: $blue;
+  color: $white;
+  font-size: $font-size-s;
+}
+
+:global(.ant-btn).cancel {
+  height: 32px;
+  margin: 0px 5px;
+  border-radius: 10px;
+  font-size: $font-size-s;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+}

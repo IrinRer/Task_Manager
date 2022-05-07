@@ -4,11 +4,11 @@ type TOption = {
 };
 
 const useSelectOptions = () => {
-  const filterOption = (input: string, option: TOption) => {
+  const filterOption = (input: string, option: TOption):boolean => {
     return option!.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
   };
 
-  const filterSort = (optionA: TOption, optionB: TOption) => {
+  const filterSort = (optionA: TOption, optionB: TOption):number => {
     return optionA!.children
       .toLowerCase()
       .localeCompare(optionB!.children.toLowerCase());

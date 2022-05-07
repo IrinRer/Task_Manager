@@ -5,6 +5,7 @@ import { IRoles } from '../roles/types';
 export const ONETASK_SLICE_ALIAS = 'onetask';
 
 export interface ITaskReducer {
+  task_id: string | null;
   data: IResponseTask | null;
   loading: boolean;
   error: AxiosError | null;

@@ -13,7 +13,12 @@ import { fetchTaskAction } from 'store/common/task/thunk';
 
 const initialState: IEditTaskReducer = {
   data: null,
-  editLoading: false,
+  editLoading: {
+    task: false,
+    title: false,
+    desc: false,
+    members: false,
+  },
   selectedMembers: null,
   unselectedMembers: null,
   editError: {
@@ -47,7 +52,7 @@ export const editTaskSlice = createSlice({
   },
   extraReducers: {
     [fetchTaskAction.pending.type]: (state: IEditTaskReducer) => {
-      state.editLoading = true;
+      state.editLoading.task = true;
       state.editError.task = null;
     },
     [fetchTaskAction.fulfilled.type]: (
@@ -55,38 +60,38 @@ export const editTaskSlice = createSlice({
       { payload }: PayloadAction<IResponseTask>,
     ) => {
       state.data = payload;
-      state.editLoading = false;
+      state.editLoading.task = false;
     },
     [fetchTaskAction.rejected.type]: (
       state: IEditTaskReducer,
       { payload }: PayloadAction<AxiosError>,
     ) => {
       state.data = initialState.data;
-      state.editLoading = false;
+      state.editLoading.task = false;
       state.editError.task = payload;
     },
 
     [setTaskDescription.pending.type]: (state: IEditTaskReducer) => {
       state.editError.desc = null;
-      state.editLoading = true;
+      state.editLoading.desc = true;
     },
     [setTaskDescription.fulfilled.type]: (
       state: IEditTaskReducer,
       { payload }: PayloadAction<IResponseTask>,
     ) => {
       state.data = payload;
-      state.editLoading = false;
+      state.editLoading.desc = false;
     },
     [setTaskDescription.rejected.type]: (
       state: IEditTaskReducer,
       { payload }: PayloadAction<AxiosError>,
     ) => {
-      state.editLoading = false;
+      state.editLoading.desc = false;
       state.editError.desc = payload;
     },
 
     [setTaskTitle.pending.type]: (state: IEditTaskReducer) => {
-      state.editLoading = true;
+      state.editLoading.title = true;
       state.editError.title = null;
     },
     [setTaskTitle.fulfilled.type]: (
@@ -94,18 +99,18 @@ export const editTaskSlice = createSlice({
       { payload }: PayloadAction<IResponseTask>,
     ) => {
       state.data = payload;
-      state.editLoading = false;
+      state.editLoading.title = false;
     },
     [setTaskTitle.rejected.type]: (
       state: IEditTaskReducer,
       { payload }: PayloadAction<AxiosError>,
     ) => {
-      state.editLoading = false;
+      state.editLoading.title = false;
       state.editError.title = payload;
     },
 
     [setTaskMemberAction.pending.type]: (state: IEditTaskReducer) => {
-      state.editLoading = true;
+      state.editLoading.members = true;
       state.editError.setMembers = null;
     },
     [setTaskMemberAction.fulfilled.type]: (
@@ -113,7 +118,7 @@ export const editTaskSlice = createSlice({
       { payload }: PayloadAction<IResponseTask>,
     ) => {
       state.data = payload;
-      state.editLoading = false;
+      state.editLoading.members = false;
     },
     [setTaskMemberAction.rejected.type]: (
       state: IEditTaskReducer,
@@ -121,11 +126,11 @@ export const editTaskSlice = createSlice({
     ) => {
       state.editError.setMembers = payload;
       state.selectedMembers = null;
-      state.editLoading = false;
+      state.editLoading.members = false;
     },
 
     [deleteTaskMemberAction.pending.type]: (state: IEditTaskReducer) => {
-      state.editLoading = true;
+      state.editLoading.members = true;
       state.editError.delMembers = null;
     },
     [deleteTaskMemberAction.fulfilled.type]: (
@@ -133,7 +138,7 @@ export const editTaskSlice = createSlice({
       { payload }: PayloadAction<IResponseTask>,
     ) => {
       state.data = payload;
-      state.editLoading = false;
+      state.editLoading.members = false;
     },
     [deleteTaskMemberAction.rejected.type]: (
       state: IEditTaskReducer,
@@ -141,7 +146,7 @@ export const editTaskSlice = createSlice({
     ) => {
       state.editError.delMembers = payload;
       state.unselectedMembers = null;
-      state.editLoading = false;
+      state.editLoading.members = false;
     },
   },
 });

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import {
+  getEditMembersLoading,
   getTaskAuthor,
   getTaskImplementer,
   getTaskResponsible,
@@ -10,7 +11,8 @@ import {
   getImplementerRoleID,
   getResponsibleRoleID,
 } from 'store/common/roles/selectors';
-import lodash, { uniqueId } from 'lodash';
+import uniqueId from 'lodash/uniqueId';
+import Spinner from 'components/Common/Spinner';
 import MembersWrapper from './MembersWrapper';
 import OneMember from './OneMember';
 import Watchers from './Watchers';
@@ -25,15 +27,17 @@ const Info: React.FC = () => {
   const responsibleRoleID = useAppSelector(getResponsibleRoleID);
   const implementerRoleID = useAppSelector(getImplementerRoleID);
 
+  const editLoading = useAppSelector(getEditMembersLoading);
+
   const elements = [
     {
-      id: lodash(uniqueId()).toString(),
+      id: uniqueId(),
       title: 'Автор',
       block: <OneMember user={author || null} roleId="" />,
       expand: false,
     },
     {
-      id: lodash(uniqueId()).toString(),
+      id: uniqueId(),
       title: 'Ответственный',
       block: (
         <OneMember
@@ -45,7 +49,7 @@ const Info: React.FC = () => {
       expand: false,
     },
     {
-      id: lodash(uniqueId()).toString(),
+      id: uniqueId(),
       title: 'Исполнитель',
       block: (
         <OneMember
@@ -57,12 +61,16 @@ const Info: React.FC = () => {
       expand: false,
     },
     {
-      id: lodash(uniqueId()).toString(),
+      id: uniqueId(),
       title: `Наблюдатель ${watchers.length}`,
       block: <Watchers />,
       expand: true,
     },
   ];
+
+  if (editLoading) {
+    return <Spinner margin="0 auto" size="default" />;
+  }
 
   return (
     <>
