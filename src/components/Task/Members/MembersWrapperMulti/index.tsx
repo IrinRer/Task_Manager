@@ -19,8 +19,8 @@ const MembersWrapperMulti: FC<TProps> = (props: TProps) => {
     <div className={styles.infoLine}>
       <span onClick={expandChange}>
         {roleName} <CaretRightOutlined rotate={isActive ? 90 : 0} />
-      </span>
-      {children}
+      </span> 
+      {isActive ? children : null}
     </div>
   );
 };

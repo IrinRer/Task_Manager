@@ -1,11 +1,11 @@
 import React from 'react';
 import { Select } from 'antd';
-import { IPopulatedUser } from 'store/users/types';
+import { IPopulatedUser, IUser } from 'store/users/types';
 
 const { Option } = Select;
 
 interface IProps {
-  users: Array<IPopulatedUser>;
+  users: Array<IPopulatedUser> /* | Array<IUser> */ ;
 }
 
 const UsersOption: React.FC<IProps> = ({ users, ...restProps }) => {
