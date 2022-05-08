@@ -3,8 +3,7 @@ import { Button, Select } from 'antd';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import React, { FC, useState } from 'react';
 
-import { getOneNewSelectedMembers, getTaskId } from 'store/editTask/selectors';
-
+import { getNewSelectedMembers, getOneNewSelectedMembers, getTaskId } from 'store/editTask/selectors';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import useSelectOptions from 'components/Task/Info/TaskHook/useSelectOptions';
 import { setNewSelectedMembers } from 'store/editTask/slice';
@@ -15,7 +14,8 @@ import { fetchUsersAction } from 'store/users/thunk';
 import debounce from 'lodash/debounce';
 import { DEBOUNCE_TIMEOUT } from 'constants/common';
 import styles from './index.module.scss';
-import UsersOption from '../UsersOption';
+
+const { Option } = Select;
 
 type TProps = {
   roleId: string;
@@ -28,7 +28,8 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
   const allUsers: Array<IPopulatedUser> = useAppSelector(selectPopulatedUsers);
   const taskId = useAppSelector(getTaskId);
 
-  const roleAssign = useAppSelector(getOneNewSelectedMembers);
+  // const roleAssign = useAppSelector(getOneNewSelectedMembers);
+  const roleAssign = useAppSelector(getNewSelectedMembers);
 
   const showMemberModal = () => {
     setIsVisible(true);
@@ -48,13 +49,19 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
       dispatch(
         setTaskMemberAction({
           task_id: taskId,
-          assign_user_id: roleAssign,
+          assign_user_id: roleAssign[0],
           task_role_id: roleId,
         }),
       );
       dispatch(setNewSelectedMembers([]));
     }
   };
+
+ const children = (allUsers?.map((el) => (
+    <Option key={el.key} value={el.user_id}>
+      {el.name}
+    </Option>
+  )));
 
   return (
     <div className={styles.addmemberWrapper}>
@@ -82,7 +89,7 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
           onBlur={onBlur}
           onSearch={debounce(onSearch, DEBOUNCE_TIMEOUT)}
         >
-          <UsersOption users={allUsers} />
+          {children}
         </Select>
       ) : null}
     </div>
