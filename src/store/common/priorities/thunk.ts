@@ -6,7 +6,7 @@ import { api } from '../../../network';
 
 export const fetchPrioritiesAction = createAsyncThunk(
   `${COMMON_PRIORITIES_SLICE_ALIAS}/fetchPriorities`,
-  // @ts-ignore
+
   async (_, { rejectWithValue }) => {
     try {
       const response: AxiosResponse = await api().get(

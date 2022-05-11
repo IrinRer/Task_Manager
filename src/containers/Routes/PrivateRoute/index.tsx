@@ -19,7 +19,7 @@ const PrivateRoute: React.FC = ({ children: Component }: IRouteProps) => {
   return (
     <>
       {loading ? (
-        <Preloader />
+        <Preloader size="large" />
       ) : verifyToken ? (
         Component
       ) : (

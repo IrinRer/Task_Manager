@@ -6,7 +6,7 @@ import { tagsUpdated } from 'store/filters/slice';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { DEBOUNCE_TIMEOUT } from 'constants/common';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 import { selectPopulatedTags } from 'store/common/tags/selectors';
 import { fetchTagsAction } from 'store/common/tags/thunk';
 import { fetchTasksAction } from 'store/tasks/thunk';
