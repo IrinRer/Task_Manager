@@ -8,7 +8,11 @@ import {
   TsetPagePayload,
   TsetSortFieldPayload,
 } from 'store/tasks/types';
-import { changeTaskStatusAction, fetchTasksAction } from 'store/tasks/thunk';
+import {
+  changeTaskStatusAction,
+  createTaskAction,
+  fetchTasksAction,
+} from 'store/tasks/thunk';
 import { SortField, TTask } from 'constants/types/common';
 
 const TASKS_ON_PAGE_DEFAULT = 3;
@@ -111,6 +115,25 @@ export const tasksSlice = createSlice({
       { payload }: PayloadAction<AxiosError>,
     ) => {
       // state.response = null;
+      state.loading = false;
+      state.error = payload;
+    },
+    [createTaskAction.pending.type]: (state: ITasksReducer) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [createTaskAction.fulfilled.type]: (
+      state: ITasksReducer,
+      { payload }: PayloadAction<TTask>,
+    ) => {
+      console.log('CreateTaskAction: Task created. id: ', payload.task_id);
+      state.tasks?.push(payload);
+      state.loading = false;
+    },
+    [createTaskAction.rejected.type]: (
+      state: ITasksReducer,
+      { payload }: PayloadAction<AxiosError>,
+    ) => {
       state.loading = false;
       state.error = payload;
     },

@@ -78,9 +78,11 @@ export const sortPaginate = (
   viewParameters: TViewParameters,
 ): TTask[] => {
   const { sortField, page, tasksOnPage } = viewParameters;
-  return tasks
-    .sort((a, b) => isFirstGTSecond(a, b, sortField))
-    .slice((page - 1) * tasksOnPage, page * tasksOnPage);
+  const sortedTasks = tasks.sort((a, b) => isFirstGTSecond(a, b, sortField));
+  if (sortField === SortField.created) {
+    sortedTasks.reverse();
+  }
+  return sortedTasks.slice((page - 1) * tasksOnPage, page * tasksOnPage);
 };
 
 export const getTasksSortedPaginated = (

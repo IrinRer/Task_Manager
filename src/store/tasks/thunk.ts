@@ -1,8 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { notification } from 'antd';
 import { RootState } from 'store';
-
-import { TASKS_SLICE_ALIAS } from 'store/tasks/types';
+import {
+  ICreateTaskArg,
+  IStatusChangeArg,
+  TASKS_SLICE_ALIAS,
+} from 'store/tasks/types';
 import { api } from '../../network';
 import { selectTaskQuery } from '../filters/selectors';
 
@@ -35,14 +38,9 @@ export const fetchTasksAction = createAsyncThunk(
   },
 );
 
-interface IArg {
-  task_id: string;
-  task_status_id: string;
-}
-
 export const changeTaskStatusAction = createAsyncThunk(
   `${TASKS_SLICE_ALIAS}/changeTaskStatus`,
-  async (arg: IArg, { rejectWithValue }) => {
+  async (arg: IStatusChangeArg, { rejectWithValue }) => {
     try {
       const response = await api().post(
         `/api/v1.0/task/tasks/${arg.task_id}/status-change`,
@@ -53,6 +51,22 @@ export const changeTaskStatusAction = createAsyncThunk(
       return response.data.data;
     } catch (error) {
       notification.error({ message: 'Ошибка изменения статуса' });
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
+export const createTaskAction = createAsyncThunk(
+  `${TASKS_SLICE_ALIAS}/createTask`,
+  async (arg: ICreateTaskArg, { rejectWithValue }) => {
+    try {
+      const response = await api().post(`/api/v1.0/task/tasks`, {
+        title: arg.title,
+        task_status_id: arg.task_status_id,
+      });
+      return response.data.data;
+    } catch (error) {
+      notification.error({ message: 'Ошибка создания задачи' });
       return rejectWithValue(error.message);
     }
   },
