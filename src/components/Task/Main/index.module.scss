@@ -1,0 +1,26 @@
+@import 'src/styles/font-variables';
+@import 'src/styles/color-variables';
+
+.taskMain {
+  width: 60%;
+  padding: 24px;
+  display: inline-block;
+
+  :global(.ant-input).comm {
+    font-size: $font-size-m;
+    line-height: $line-height-m;
+    color: $heading;
+    box-shadow: none;
+    overflow: hidden;
+    margin-top: 16px;
+    margin-bottom: 14px;
+    padding: 5px 11px 3px;
+    border-radius: 8px;
+  }
+  :global(.ant-input).comm:focus,
+  :global(.ant-input).comm:hover,
+  :global(.ant-input).comm:focus-visible {
+    box-shadow: none;
+    color: $text-color;
+  }
+}

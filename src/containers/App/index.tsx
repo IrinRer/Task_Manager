@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+
+import { fetchAllRoles } from 'store/common/roles/thunk';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { getVerifyIdUser } from 'store/auth/verify/selectors';
@@ -25,7 +27,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (userID) dispatch(addVerifyToken(token!));
-  }, [dispatch, userID, token]);
+  }, [dispatch, token, userID]);
 
   useEffect(() => {
     if (verifyToken) {
@@ -34,6 +36,7 @@ const App: React.FC = () => {
       dispatch(fetchTasksAction());
       dispatch(fetchPrioritiesAction());
       dispatch(fetchStatusesAction());
+      dispatch(fetchAllRoles());
     }
   }, [dispatch, verifyToken]);
 

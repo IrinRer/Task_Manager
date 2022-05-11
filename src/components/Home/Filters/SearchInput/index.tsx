@@ -6,7 +6,7 @@ import { DEBOUNCE_TIMEOUT } from 'constants/common';
 import { searchUpdated } from 'store/filters/slice';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { fetchTasksAction } from 'store/tasks/thunk';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 import styles from './index.module.scss';
 import { useAppSelector } from '../../../../customHooks/redux/useAppSelector';
 import { selectSearchQueryValue } from '../../../../store/filters/selectors';
