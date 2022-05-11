@@ -1,0 +1,16 @@
+@import 'src/styles/font-variables';
+
+.section {
+  font-size: $font-size-l;
+  padding: 25px 0;
+  display: flex;
+  justify-content: left;
+  align-items: flex-start;
+}
+.section span {
+  padding-top: 4px;
+}
+.wrapper {
+  padding-left: 10px;
+  width: 100%;
+}

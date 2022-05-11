@@ -9,10 +9,11 @@ import Preloader from 'components/Common/Preloader';
 
 const CreateRoutes: React.FC = () => {
   const Home = lazy(() => import('pages/Home'));
+  const Task = lazy(() => import('pages/Tasks/Task'));
 
   return (
     <BrowserRouter>
-      <Suspense fallback={<Preloader />}>
+      <Suspense fallback={<Preloader size="large" />}>
         <ErrorBoundary>
           <Routes>
             <Route
@@ -27,11 +28,13 @@ const CreateRoutes: React.FC = () => {
               path={ROUTES.editTask.path}
               element={
                 <PrivateRoute>
-                  <div>{ROUTES.editTask.name}</div>
+                  <Task />
                 </PrivateRoute>
               }
             />
+
             <Route path={ROUTES.login.path} element={<Auth />} />
+
             <Route
               path={ROUTES.notFound.path}
               element={<Error text="Страница не найдена" />}
