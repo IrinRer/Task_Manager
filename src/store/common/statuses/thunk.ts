@@ -6,7 +6,7 @@ import { api } from '../../../network';
 
 export const fetchStatusesAction = createAsyncThunk(
   `${COMMON_STATUSES_SLICE_ALIAS}/fetchStatuses`,
-  // @ts-ignore
+
   async (_, { rejectWithValue }) => {
     try {
       const response: AxiosResponse = await api().get(

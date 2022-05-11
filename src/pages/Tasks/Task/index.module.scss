@@ -1,0 +1,68 @@
+@import 'src/styles/font-variables';
+@import 'src/styles/color-variables';
+@import 'src/components/Common/Spinner/index.module.scss';
+
+///////////глобальные!
+:global(.ant-modal-content) {
+  height: 100%;
+  border-top-left-radius: 16px !important;
+  border-top-right-radius: 16px !important;
+  color: $text-color;
+}
+:global(.ant-modal-close-icon) {
+  font-size: $font-size-m;
+}
+:global(.ant-modal-body) {
+  height: 100%;
+  padding: 0 !important;
+}
+:global(.ant-modal-footer) {
+  display: none;
+  padding: 0;
+  margin: 0;
+}
+/*.mainSpinner {
+  width: 100%;
+  height: 100%;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute !important;
+}*/
+//////////////
+.task {
+  top: 0 !important;
+  height: 100%;
+  padding-bottom: 0 !important;
+  width: 1167px !important;
+  .taskContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    height: 100%;
+  }
+  .taskInfo {
+    width: 40%;
+    padding: 24px;
+    display: inline-block;
+    background-color: $border-secondary;
+    border-top-right-radius: 16px;
+  }
+  :global(.ant-btn).saveTask,
+  :global(.ant-btn).saveTask:focus {
+    border-radius: 8px;
+    background-color: $button-main;
+    color: $bg-secondary;
+    font-size: $font-size-m;
+    border: none;
+    position: absolute;
+    top: 12px;
+    right: 60px;
+    z-index: 10;
+  }
+  :global(.ant-btn).saveTask:hover {
+    background-color: $button-main-hover;
+    color: $bg-secondary;
+  }
+}

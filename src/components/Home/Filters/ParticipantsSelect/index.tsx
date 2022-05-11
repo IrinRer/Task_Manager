@@ -15,7 +15,7 @@ import {
   selectFilterUsersNames,
 } from 'store/filters/selectors';
 import { usersUpdated } from 'store/filters/slice';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 import FilterWrapper from '../../../Common/FilterWrapper';
 import ParticipantTag from './ParticipantTag';
 import styles from './index.module.scss';

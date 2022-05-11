@@ -17,7 +17,7 @@ const Auth: React.FC = () => {
   return (
     <div className={style.wrapper}>
       {loading ? (
-        <Preloader />
+        <Preloader size="large" />
       ) : verifyToken ? (
         <Navigate to={ROUTES.tasks.path} />
       ) : (

@@ -6,7 +6,7 @@ import { IUser } from '../users/types';
 import { ITag } from '../common/tags/types';
 
 const initialState: IFiltersReducer = {
-  searchQuery: null,
+  searchQuery: undefined,
   users: [],
   statuses: [],
   tags: [],

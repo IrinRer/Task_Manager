@@ -1,5 +1,5 @@
 import { Row } from 'antd';
-import Spinner from 'components/Common/Spinner';
+import Preloader from 'components/Common/Preloader';
 import { BlockType } from 'constants/types/common';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import React from 'react';
@@ -15,7 +15,7 @@ const Display: React.FC = () => {
     <Row className={styles.wrapper}>
       <Header />
       {loading ? (
-        <Spinner />
+        <Preloader size="large" />
       ) : (
         <>
           <Block blockType={BlockType.in} />

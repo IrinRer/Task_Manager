@@ -1,0 +1,33 @@
+@import 'src/styles/font-variables';
+@import 'src/styles/color-variables';
+
+.taskInfo {
+  width: 40%;
+  padding: 68px 12px;
+  display: inline-block;
+  background-color: $bg-primary;
+  border-top-right-radius: 16px;
+  border-left: 1px solid $border-secondary;
+
+  :global([data-theme='compact']
+      .site-collapse-custom-collapse
+      .site-collapse-custom-panel),
+  :global(.site-collapse-custom-collapse .site-collapse-custom-panel) {
+    margin-bottom: 24px;
+    overflow: hidden;
+    background: none;
+    border: none;
+    font-size: $font-size-m;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  :global(.site-collapse-custom-collapse .ant-collapse-content-box) {
+    padding: 12px 12px 12px 39px;
+  }
+  :global(.ant-select) {
+    width: 100%;
+    border: none;
+    background: none;
+    font-size: $font-size-m;
+  }
+}
