@@ -17,7 +17,7 @@
       font-size: $font-size-m;
 
       &:not(:first-child)::before {
-        background-color: white;
+        background-color: $bg-secondary;
       }
 
       &:hover {

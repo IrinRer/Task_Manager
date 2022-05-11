@@ -13,8 +13,8 @@ export const fetchTasksAction = createAsyncThunk(
   `${TASKS_SLICE_ALIAS}/fetchAll`,
   async (_, { rejectWithValue, getState }) => {
     try {
-      const state = getState();
-      const tasksQuery = selectTaskQuery(state as RootState);
+      const state = getState() as RootState;
+      const tasksQuery = selectTaskQuery(state);
 
       const response = await api().get('/api/v1.0/task/tasks', {
         params: {

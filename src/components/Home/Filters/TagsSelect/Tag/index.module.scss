@@ -1,8 +1,10 @@
 @import 'src/styles/color-variables.scss';
 @import 'src/styles/font-variables.scss';
 
+@import 'src/styles/color-variables';
+
 .tag {
-  border: 1px solid #3DD598;
+  border: 1px solid $checkbox-checked;
   box-sizing: border-box;
   border-radius: 16px;
   max-width: fit-content;
@@ -16,7 +18,7 @@
 .text {
   padding: 0;
   margin: 0;
-  color: #3DD598;
+  color: $checkbox-checked;
   font-size: $font-size-s;
 }
 
@@ -35,6 +37,6 @@
 .icon {
   :global {
     font-size: 10px;
-    color: #3DD598;
+    color: $checkbox-checked;
   }
 }
