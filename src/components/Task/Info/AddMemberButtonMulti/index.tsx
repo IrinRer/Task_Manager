@@ -1,5 +1,5 @@
 import { SearchOutlined } from '@ant-design/icons';
-import { Button, Select } from 'antd';
+import { Button } from 'antd';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import React, { FC, useState } from 'react';
 
@@ -11,7 +11,6 @@ import {
 } from 'store/editTask/selectors';
 
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import useSelectOptions from 'components/Task/Info/TaskHook/useSelectOptions';
 import {
   setNewSelectedMembers,
   setUnselectedMembers,
@@ -26,8 +25,7 @@ import debounce from 'lodash/debounce';
 import { DEBOUNCE_TIMEOUT } from 'constants/common';
 import { fetchUsersAction } from 'store/users/thunk';
 import styles from '../AddMemberButton/index.module.scss';
-
-const { Option } = Select;
+import SimpleSelect from '../SimpleSelect';
 
 type TProps = {
   roleId: string;
@@ -35,7 +33,6 @@ type TProps = {
 
 const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
   const { roleId } = props;
-  const options = useSelectOptions();
   const dispatch = useAppDispatch();
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const allUsers: Array<IPopulatedUser> = useAppSelector(selectPopulatedUsers);
@@ -109,12 +106,6 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
     return null;
   };
 
-  const children = (allUsers?.map((el) => (
-    <Option key={el.key} value={el.user_id}>
-      {el.name}
-    </Option>
-  )));
-
   return (
     <div className={styles.addmemberWrapper}>
       {!isVisible ? (
@@ -124,8 +115,11 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
       ) : null}
 
       {isVisible ? (
-        <Select<string[] | number | string, { value: string; children: string }>
-          {...options}
+        <SimpleSelect
+          users={allUsers}
+          itemKey="key"
+          itemLabel="name"
+          itemValue="user_id"
           mode="multiple"
           dropdownClassName={styles.dropdown}
           defaultValue={generateValue()}
@@ -141,9 +135,7 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
           onChange={onChange}
           onBlur={onBlur}
           onSearch={debounce(onSearch, DEBOUNCE_TIMEOUT)}
-        >
-          {children}
-        </Select>
+        />
       ) : null}
     </div>
   );
