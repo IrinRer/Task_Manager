@@ -7,4 +7,9 @@
   font-size: $font-size-m;
   line-height: $line-height-xs;
   color: $red;
+  cursor: pointer;
+
+  &:hover {
+    color: darken($red, 10%);
+  }
 }

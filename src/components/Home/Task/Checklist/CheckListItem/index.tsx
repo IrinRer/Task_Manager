@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import { ReactComponent as MoreIcon } from 'assets/icons/more.svg';
 import filterStyles from 'components/Home/Filters/index.module.scss';
 import { ICheckListItem } from '..';
-import PopoverMenu from './PopoverMenu';
+import ChecklistItemPopoverMenu from './ChecklistItemPopoverMenu';
 import styles from './index.module.scss';
 
 interface IProps {
@@ -29,9 +29,10 @@ const CheckListItem: React.FC<IProps> = ({ checkListItem }) => {
       <p className={checkBoxTextClassName}>{message}</p>
       <Popover
         trigger="click"
-        content={PopoverMenu}
+        content={ChecklistItemPopoverMenu}
         overlayClassName={styles.popoverMenu}
         placement="bottomRight"
+        className={styles.moreButton}
       >
         <MoreIcon />
       </Popover>

@@ -13,6 +13,7 @@ import { EditOutlined } from '@ant-design/icons';
 import Spinner from 'components/Common/Spinner';
 import classnames from 'classnames';
 import styles from './index.module.scss';
+import TaskActions from './TaskActions';
 
 const Title: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -20,7 +21,9 @@ const Title: React.FC = () => {
   const taskId = useAppSelector(getTaskId);
   const editLoading = useAppSelector(getEditTitleLoading);
 
-  const inputRef: Ref<TextAreaRef> | undefined  /*: MutableRefObject<typeof TextArea | null> */ = useRef(null);
+  const inputRef:
+    | Ref<TextAreaRef>
+    | undefined /*: MutableRefObject<typeof TextArea | null> */ = useRef(null);
   const [newTitle, setNewTitle] = useState<string | undefined>(title);
   const [isReadonly, setIsReadonly] = useState<boolean>(true);
 
@@ -44,19 +47,17 @@ const Title: React.FC = () => {
 
   if (editLoading) {
     return (
-      <>
+      <div>
         <div className={styles.wrapname}>
           <Spinner margin="0 auto" size="default" />
         </div>
         <div className={styles.border} />
-      </>
+      </div>
     );
   }
 
-  
-
   return (
-    <>
+    <div>
       <div className={styles.wrapname}>
         <TextArea
           ref={inputRef}
@@ -73,9 +74,11 @@ const Title: React.FC = () => {
           readOnly={isReadonly}
         />
         {isReadonly ? <EditOutlined onClick={changeReadonly} /> : null}
+
+        <TaskActions />
       </div>
       <div className={styles.border} />
-    </>
+    </div>
   );
 };
 

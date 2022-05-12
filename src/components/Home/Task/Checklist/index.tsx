@@ -39,7 +39,7 @@ const Checklist: React.FC = () => {
       <div className={styles.headerSection}>
         <CheckMarkIcon className={styles.headerIcon} />
         <h4 className={styles.title}>Чек-лист</h4>
-        <RecycleBinIcon className={styles.headerIcon} />
+        <RecycleBinIcon className={styles.headerIconButton} />
       </div>
       <div className={styles.headerSection}>
         <p className={styles.progressPercentage}>{`${percentage}%`}</p>

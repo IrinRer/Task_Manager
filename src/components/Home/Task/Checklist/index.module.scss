@@ -1,4 +1,5 @@
 @import 'src/styles/_color-variables.scss';
+@import 'src/styles/_colors.scss';
 @import 'src/styles/_font-variables.scss';
 
 .checklist {
@@ -17,6 +18,15 @@
 .headerIcon {
   width: 20px;
   height: 20px;
+
+  &Button {
+    cursor: pointer;
+    fill: $coral;
+
+    &:hover {
+      fill: darken($coral, 10%);
+    }
+  }
 }
 
 .title {

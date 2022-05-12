@@ -5,51 +5,35 @@ import {
   CommentOutlined,
   ContainerOutlined,
 } from '@ant-design/icons';
-import uniqueId from 'lodash/uniqueId';
 import styles from './index.module.scss';
 import History from '../History';
 import InputWrapper from './InputWrapper';
 import Description from '../Description';
 import Title from '../Title';
+import Checklist from '../../Home/Task/Checklist';
 
 const Main: React.FC = () => {
-  const elements = [
-    {
-      id: uniqueId(),
-      title: 'Описание',
-      icon: <AlignLeftOutlined />,
-      block: <Description />,
-    },
-    {
-      id: uniqueId(),
-      title: 'Комментарии',
-      icon: <CommentOutlined />,
-      block: (
+  return (
+    <div className={styles.taskMain}>
+      <Title />
+
+      <InputWrapper labelText="Описание" icon={<AlignLeftOutlined />}>
+        <Description />
+      </InputWrapper>
+
+      <Checklist />
+
+      <InputWrapper labelText="Комментарии" icon={<CommentOutlined />}>
         <TextArea
           autoSize
           placeholder="Оставьте комментарий"
           className={styles.comm}
         />
-      ),
-    },
-    {
-      id: uniqueId(),
-      title: 'Действия',
-      icon: <ContainerOutlined />,
-      block: <History />,
-    },
-  ];
+      </InputWrapper>
 
-  return (
-    <div className={styles.taskMain}>
-      <Title />
-      {elements.map((el) => {
-        return (
-          <InputWrapper key={el.id} labelText={el.title} icon={el.icon}>
-            {el.block}
-          </InputWrapper>
-        );
-      })}
+      <InputWrapper labelText="Действия" icon={<ContainerOutlined />}>
+        <History />
+      </InputWrapper>
     </div>
   );
 };

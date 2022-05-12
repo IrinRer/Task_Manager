@@ -7,7 +7,6 @@
   :global(.ant-input).desc {
     font-size: $font-size-m;
     line-height: $line-height-m;
-    color: $heading;
     box-shadow: none;
     overflow: hidden;
     margin-top: 16px;
@@ -16,9 +15,11 @@
     padding: 0;
     color: $text-color;
   }
+
   :global(.ant-input).readonly {
     color: $dark-primary;
   }
+
   :global(.ant-input).desc:focus,
   :global(.ant-input).desc:hover,
   :global(.ant-input).desc:focus-visible {
@@ -34,9 +35,11 @@
     font-size: $font-size-m;
     border: none;
   }
+
   :global(.ant-btn).save span {
     padding-top: 0;
   }
+
   :global(.ant-btn).save:hover {
     background-color: $button-main-hover;
     color: $bg-secondary;
@@ -51,9 +54,11 @@
     border: 1px solid $border-primary;
     margin-left: 8px;
   }
+
   :global(.ant-btn).cancel span {
     padding-top: 0;
   }
+
   :global(.ant-btn).cancel:hover,
   :global(.ant-btn).cancel:active {
     background-color: $border-secondary;
@@ -72,9 +77,11 @@
     padding: 1px 8px;
     height: 24px;
   }
+
   :global(.ant-btn).change span {
     padding-top: 0;
   }
+
   :global(.ant-btn).change:hover,
   :global(.ant-btn).change:active {
     background-color: $button-secondary-hover;
@@ -92,16 +99,19 @@
     padding: 0;
     box-shadow: none;
   }
+
   :global(.ant-btn).expand span {
     padding-top: 0;
     text-decoration: underline;
     text-align: left;
   }
+
   :global(.ant-btn).expand[ant-click-animating-without-extra-node='true']::after {
     border: 0 none;
     opacity: 0;
     animation: none 0 ease 0 1 normal;
   }
+
   :global(.ant-btn).expand:hover,
   :global(.ant-btn).expand:active {
     background-color: none;

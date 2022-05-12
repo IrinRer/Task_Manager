@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './index.module.scss';
 
-const PopoverMenu: React.FC = () => {
+const ChecklistItemPopoverMenu: React.FC = () => {
   return (
     <div>
       <p className={styles.menuOption}>Удалить&nbsp;пункт</p>
@@ -9,4 +9,4 @@ const PopoverMenu: React.FC = () => {
   );
 };
 
-export default PopoverMenu;
+export default ChecklistItemPopoverMenu;

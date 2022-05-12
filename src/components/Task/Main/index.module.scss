@@ -3,8 +3,10 @@
 
 .taskMain {
   width: 60%;
-  padding: 24px;
-  display: inline-block;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 40px;
 
   :global(.ant-input).comm {
     font-size: $font-size-m;
