@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+
+import { fetchAllRoles } from 'store/common/roles/thunk';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { getVerifyIdUser } from 'store/auth/verify/selectors';
@@ -21,11 +23,11 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (token) dispatch(fetchVerifyAction(token));
-  }, [token]);
+  }, [dispatch, token]);
 
   useEffect(() => {
     if (userID) dispatch(addVerifyToken(token!));
-  }, [userID]);
+  }, [dispatch, token, userID]);
 
   useEffect(() => {
     if (verifyToken) {
@@ -34,8 +36,9 @@ const App: React.FC = () => {
       dispatch(fetchTasksAction());
       dispatch(fetchPrioritiesAction());
       dispatch(fetchStatusesAction());
+      dispatch(fetchAllRoles());
     }
-  }, [verifyToken]);
+  }, [dispatch, verifyToken]);
 
   return <CreateRoutes />;
 };
