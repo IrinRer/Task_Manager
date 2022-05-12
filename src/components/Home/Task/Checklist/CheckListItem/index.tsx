@@ -3,7 +3,7 @@ import { Checkbox, Popover } from 'antd';
 import classnames from 'classnames';
 import { ReactComponent as MoreIcon } from 'assets/icons/more.svg';
 import filterStyles from 'components/Home/Filters/index.module.scss';
-import { ICheckListItem } from '..';
+import { ICheckListItem } from 'store/common/task/types';
 import ChecklistItemPopoverMenu from './ChecklistItemPopoverMenu';
 import styles from './index.module.scss';
 

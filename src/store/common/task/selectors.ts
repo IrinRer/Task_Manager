@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { ROLES } from 'constants/task';
 import { RootState } from 'store';
-import { ITaskRoles } from 'store/common/task/types';
+import { ICheckList, ITaskRoles } from 'store/common/task/types';
 import { IUser } from 'store/users/types';
 
 export function isAuthor(element: ITaskRoles): boolean {
@@ -47,21 +47,29 @@ export const getTaskAuthor = createSelector(
   taskRoles,
   (roles) => roles?.find(isAuthor)?.assign_user,
 );
+
 export const getTaskResponsible = createSelector(
   taskRoles,
   (roles) => roles?.find(isResponsible)?.assign_user,
 );
+
 export const getTaskImplementer = createSelector(
   taskRoles,
   (roles) => roles?.find(isImplementer)?.assign_user,
 );
+
 export const getTaskWatchers = createSelector(taskRoles, (roles) =>
   getUsersFromRoles(roles?.filter(isWatcher)),
 );
+
 export const getTaskWatchersID = createSelector(taskRoles, (roles) =>
   getUsersIdFromRoles(roles?.filter(isWatcher)),
 );
 
 export const getTaskLoading = (state: RootState) =>
   state.common.onetask.loading;
+
 export const getTaskError = (state: RootState) => state.common.onetask.error;
+
+export const getCheckLists = (state: RootState): Array<ICheckList> | [] =>
+  state.common.onetask.data?.check_lists || [];
