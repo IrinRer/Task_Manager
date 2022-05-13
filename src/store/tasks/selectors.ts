@@ -16,7 +16,6 @@ export const selectTasksTotalCount = (state: RootState) =>
 export const getOnlyMyTasksFlag = (state: RootState) => state.tasks.onlyMyTasks;
 export const getViewParameters = (state: RootState) =>
   state.tasks.viewParameters;
-export const getNewTaskId = (state: RootState) => state.tasks.newTaskId;
 // тест для роутинга
 export const getTasksAuth = (state: RootState) => state.tasks.auth;
 

@@ -3,8 +3,8 @@ import { Button, Input, notification } from 'antd';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { getCreatedStatusID } from 'store/common/statuses/selectors';
-import { createTaskAction } from 'store/tasks/thunk';
 import checkIcon from 'assets/icons/check1.svg';
+import { createTaskAction } from 'store/createTask/thunk';
 import styles from './index.module.scss';
 
 interface IProps {

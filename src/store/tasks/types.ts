@@ -21,7 +21,6 @@ export interface ITasksReducer {
   error: AxiosError | null;
   onlyMyTasks: boolean;
   viewParameters: TAllViewParameters;
-  newTaskId: string;
 }
 export type TsetSortFieldPayload = {
   blockType: BlockType;
@@ -52,11 +51,5 @@ export interface IPagination {
 // используется в thunk для изменения статуса
 export interface IStatusChangeArg {
   task_id: string;
-  task_status_id: string;
-}
-
-// используется в thunk для создания задачи
-export interface ICreateTaskArg {
-  title: string;
   task_status_id: string;
 }

@@ -10,7 +10,6 @@ import {
 } from 'store/tasks/types';
 import {
   changeTaskStatusAction,
-  createTaskAction,
   deleteTaskAction,
   fetchTasksAction,
 } from 'store/tasks/thunk';
@@ -43,7 +42,6 @@ const initialState: ITasksReducer = {
       tasksOnPage: TASKS_ON_PAGE_DEFAULT,
     },
   },
-  newTaskId: '',
 };
 
 export const tasksSlice = createSlice({
@@ -74,8 +72,8 @@ export const tasksSlice = createSlice({
       state.viewParameters[action.payload.blockType].tasksOnPage =
         action.payload.tasksOnPage;
     },
-    resetNewTaskId: (state: ITasksReducer) => {
-      state.newTaskId = '';
+    addTask: (state: ITasksReducer, action: PayloadAction<TTask>) => {
+      state.tasks?.push(action.payload);
     },
   },
   extraReducers: {
@@ -123,25 +121,6 @@ export const tasksSlice = createSlice({
       state.loading = false;
       state.error = payload;
     },
-    [createTaskAction.pending.type]: (state: ITasksReducer) => {
-      state.loading = true;
-      state.error = null;
-    },
-    [createTaskAction.fulfilled.type]: (
-      state: ITasksReducer,
-      { payload }: PayloadAction<TTask>,
-    ) => {
-      state.tasks?.push(payload);
-      state.loading = false;
-      state.newTaskId = payload.task_id;
-    },
-    [createTaskAction.rejected.type]: (
-      state: ITasksReducer,
-      { payload }: PayloadAction<AxiosError>,
-    ) => {
-      state.loading = false;
-      state.error = payload;
-    },
     [deleteTaskAction.pending.type]: (state: ITasksReducer) => {
       state.loading = true;
       state.error = null;
@@ -171,6 +150,6 @@ export const {
   setSortField,
   setPage,
   setTasksOnPage,
-  resetNewTaskId,
+  addTask,
 } = tasksSlice.actions;
 export default tasksSlice.reducer;

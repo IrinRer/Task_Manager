@@ -9,6 +9,8 @@ interface IProps {
   user: IUser | undefined;
 }
 
+// переделать чтоб принимал user_id?
+
 const UserAvatar: React.FC<IProps> = ({ user }) => {
   const renderLogo = (logo: string): React.ReactElement => {
     if (logo) {
