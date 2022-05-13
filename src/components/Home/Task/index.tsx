@@ -1,27 +1,20 @@
 import { Button } from 'antd';
 import { ROUTES } from 'constants/routes';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom';
-import { getHomeTaskId } from 'store/common/task/selectors';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { setTaskId } from 'store/common/task/slice';
 
 import style from './index.module.scss';
 
 const Task = ({ task }) => {
-  const dispatch = useAppDispatch();
-  const taskId = useAppSelector(getHomeTaskId);
-  const [isShouldOpenTask, setIsShouldOpenTask] = useState<boolean>(false);
+  // const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const openTask = () => {
-    dispatch(setTaskId(task.task_id));
-    setIsShouldOpenTask(true);
+    // dispatch(setTaskId(task.task_id));
+    navigate(`${ROUTES.editTask.path}${task.task_id}`);
   };
-
-  if (taskId && isShouldOpenTask) {
-    return <Navigate to={ROUTES.editTask.path} />;
-  }
 
   return (
     <div className={style.task}>

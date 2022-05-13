@@ -1,7 +1,7 @@
 type TRouteNames = 'login' | 'tasks' | 'editTask' | 'notFound';
 
 interface IRoute {
-  path: string
+  path: string;
   name: string;
 }
 
@@ -15,7 +15,7 @@ export const ROUTES: Record<TRouteNames, IRoute> = {
     name: 'Авторизация',
   },
   editTask: {
-    path: '/edit-task',
+    path: '/edit/',
     name: 'Редактирование задачи',
   },
   notFound: {

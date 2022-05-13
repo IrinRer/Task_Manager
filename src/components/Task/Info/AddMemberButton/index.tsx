@@ -14,6 +14,7 @@ import debounce from 'lodash/debounce';
 import { DEBOUNCE_TIMEOUT } from 'constants/common';
 import styles from './index.module.scss';
 import SimpleSelect from '../SimpleSelect';
+import useSelectOptions from '../TaskHook/useSelectOptions';
 
 type TProps = {
   roleId: string;
@@ -22,6 +23,7 @@ type TProps = {
 const AddMemberButton: FC<TProps> = ({ roleId }) => {
   const dispatch = useAppDispatch();
   const [isVisible, setIsVisible] = useState<boolean>(false);
+  const options = useSelectOptions();
   const allUsers: Array<IPopulatedUser> = useAppSelector(selectPopulatedUsers);
   const taskId = useAppSelector(getTaskId);
 
@@ -64,10 +66,11 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
 
       {isVisible ? (
         <SimpleSelect
-          users={allUsers}
+          list={allUsers}
           itemKey="key"
           itemLabel="name"
           itemValue="user_id"
+          {...options}
           defaultValue={roleAssign}
           dropdownClassName={styles.dropdown}
           suffixIcon={

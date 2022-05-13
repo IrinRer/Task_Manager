@@ -6,22 +6,22 @@ import { getEditTaskError, getEditTaskLoading } from 'store/editTask/selectors';
 import Main from 'components/Task/Main';
 import Info from 'components/Task/Info';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import { Navigate } from 'react-router-dom';
-import { ROUTES } from 'constants/routes';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { fetchTaskAction } from 'store/common/task/thunk';
 import { clearDataTask } from 'store/common/task/slice';
-import { getHomeTaskId } from 'store/common/task/selectors';
 import Preloader from 'components/Common/Preloader';
+import { ROUTES } from 'constants/routes';
 import styles from './index.module.scss';
 
 const Task: React.FC = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  const taskId = useAppSelector(getHomeTaskId);
+  const navigate = useNavigate();
+  // const taskId = useAppSelector(getHomeTaskId);
   const errorTask = useAppSelector(getEditTaskError);
+  const { taskId } = useParams();
 
   useEffect(() => {
-    setVisible(true);
     if (taskId) {
       setVisible(true);
       dispatch(fetchTaskAction(taskId));
@@ -32,6 +32,7 @@ const Task: React.FC = () => {
     setVisible(false);
     dispatch(clearDataTask());
     dispatch(clearEditDataTask());
+    navigate(ROUTES.tasks.path);
   };
 
   const loadingTask = useAppSelector(getEditTaskLoading);

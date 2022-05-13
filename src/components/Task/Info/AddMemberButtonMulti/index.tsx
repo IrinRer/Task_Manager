@@ -26,6 +26,7 @@ import { DEBOUNCE_TIMEOUT } from 'constants/common';
 import { fetchUsersAction } from 'store/users/thunk';
 import styles from '../AddMemberButton/index.module.scss';
 import SimpleSelect from '../SimpleSelect';
+import useSelectOptions from '../TaskHook/useSelectOptions';
 
 type TProps = {
   roleId: string;
@@ -35,6 +36,7 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
   const { roleId } = props;
   const dispatch = useAppDispatch();
   const [isVisible, setIsVisible] = useState<boolean>(false);
+  const options = useSelectOptions();
   const allUsers: Array<IPopulatedUser> = useAppSelector(selectPopulatedUsers);
   const taskId = useAppSelector(getTaskId);
 
@@ -116,10 +118,11 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
 
       {isVisible ? (
         <SimpleSelect
-          users={allUsers}
+          list={allUsers}
           itemKey="key"
           itemLabel="name"
           itemValue="user_id"
+          {...options}
           mode="multiple"
           dropdownClassName={styles.dropdown}
           defaultValue={generateValue()}
