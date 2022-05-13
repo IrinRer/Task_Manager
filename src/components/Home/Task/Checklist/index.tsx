@@ -10,10 +10,12 @@ import styles from './index.module.scss';
 
 const Checklist: React.FC = () => {
   const checkList = useAppSelector(getCheckLists)[0];
-  console.log(checkList);
-  const { items } = checkList;
-  console.log(items);
   const percentage: number = 10;
+  console.log(checkList);
+
+  if (!checkList) {
+    return null;
+  }
 
   return (
     <div className={styles.checklist}>
@@ -32,8 +34,8 @@ const Checklist: React.FC = () => {
         </div>
       </div>
       <div className={styles.checklistItems}>
-        {items &&
-          items.map((checkListItem) => (
+        {checkList.items &&
+          checkList.items.map((checkListItem) => (
             <CheckListItem
               key={checkListItem.check_list_item_id}
               checkListItem={checkListItem}

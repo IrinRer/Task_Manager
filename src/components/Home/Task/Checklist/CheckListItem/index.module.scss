@@ -48,3 +48,12 @@
     }
   }
 }
+
+.moreButton {
+  cursor: pointer;
+  color: $text-light;
+
+  &:hover {
+    color: darken($text-light, 10%);
+  }
+}

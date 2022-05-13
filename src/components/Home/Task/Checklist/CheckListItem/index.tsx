@@ -32,9 +32,8 @@ const CheckListItem: React.FC<IProps> = ({ checkListItem }) => {
         content={ChecklistItemPopoverMenu}
         overlayClassName={styles.popoverMenu}
         placement="bottomRight"
-        className={styles.moreButton}
       >
-        <MoreIcon />
+        <MoreIcon className={styles.moreButton} />
       </Popover>
     </div>
   );
