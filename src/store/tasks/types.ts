@@ -14,13 +14,14 @@ export type TAllViewParameters = {
 };
 
 export interface ITasksReducer {
-  tasks: Array<TTask> | null;
+  tasks: Array<TTask>;
   itemsTotal: number;
   loading: boolean;
   auth: boolean;
   error: AxiosError | null;
   onlyMyTasks: boolean;
   viewParameters: TAllViewParameters;
+  newTaskId: string;
 }
 export type TsetSortFieldPayload = {
   blockType: BlockType;

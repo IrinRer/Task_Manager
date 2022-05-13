@@ -7,6 +7,8 @@ import { getOnlyMyTasksFlag } from 'store/tasks/selectors';
 import { showOnlyMyTasks, showAllTasks } from 'store/tasks/slice';
 import clockIcon from 'assets/icons/clock.svg';
 import personIcon from 'assets/icons/person.svg';
+import { getCurrentUser } from 'store/users/selectors';
+import UserAvatar from 'components/Common/UserAvatar';
 import AddNewTask from './AddNewTask';
 import styles from './index.module.scss';
 
@@ -17,6 +19,7 @@ const tasksButtonClass = (flag: boolean): string => {
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
   const onlyMyTasks = useAppSelector(getOnlyMyTasksFlag);
+  const user = useAppSelector(getCurrentUser);
 
   const allTasksButtonStyle = classnames(tasksButtonClass(onlyMyTasks));
   const onlyMyTasksButtonStyle = classnames(tasksButtonClass(!onlyMyTasks));
@@ -29,10 +32,7 @@ const Header: React.FC = () => {
     <>
       <Row className={styles.wrapper}>
         <h1>Задачи</h1>
-        <h1>
-          {/* аватар будет от реального пользователя */}
-          <Avatar src="https://vraki.net/sites/default/files/inline/images/30_55.jpg" />
-        </h1>
+        <UserAvatar user={user} />
       </Row>
 
       {/* Кнопки все задачи - мои задачи */}

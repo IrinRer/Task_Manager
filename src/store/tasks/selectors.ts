@@ -1,13 +1,12 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from 'store';
 import { BlockType } from 'constants/types/common';
+import { getVerifyIdUser } from 'store/auth/verify/selectors';
 import {
   blockTasksTotal,
   getMyTasks,
   getTasksSortedPaginated,
 } from './service';
-
-export const TEST_USER_ID = 51;
 
 export const selectTasks = (state: RootState) => state.tasks.tasks;
 export const selectTasksLoading = (state: RootState) => state.tasks.loading;
@@ -17,7 +16,7 @@ export const selectTasksTotalCount = (state: RootState) =>
 export const getOnlyMyTasksFlag = (state: RootState) => state.tasks.onlyMyTasks;
 export const getViewParameters = (state: RootState) =>
   state.tasks.viewParameters;
-
+export const getNewTaskId = (state: RootState) => state.tasks.newTaskId;
 // тест для роутинга
 export const getTasksAuth = (state: RootState) => state.tasks.auth;
 
@@ -25,6 +24,7 @@ export const getTasksAuth = (state: RootState) => state.tasks.auth;
 export const getTasksToShow = createSelector(
   selectTasks,
   getOnlyMyTasksFlag,
+  getVerifyIdUser,
   getMyTasks,
 );
 

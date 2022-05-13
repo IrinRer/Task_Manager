@@ -5,6 +5,7 @@
 .wrapper {
   display: flex;
   flex-direction: column;
+  width: 800px;
 
   :global(.ant-btn).button {
     text-align: left;

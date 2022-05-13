@@ -18,7 +18,8 @@
     width: 298px;
     :global(.ant-input) {
       background-color: transparent;
-      font-size: $font-size-xxl;
+      font-size: $font-size-m;
+      line-height: $line-height-m;
       font-weight: 500;
     }
   }

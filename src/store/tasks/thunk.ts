@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { notification } from 'antd';
 import { RootState } from 'store';
+
 import {
   ICreateTaskArg,
   IStatusChangeArg,
@@ -64,9 +65,23 @@ export const createTaskAction = createAsyncThunk(
         title: arg.title,
         task_status_id: arg.task_status_id,
       });
+
       return response.data.data;
     } catch (error) {
       notification.error({ message: 'Ошибка создания задачи' });
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
+export const deleteTaskAction = createAsyncThunk(
+  `${TASKS_SLICE_ALIAS}/deleteTask`,
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const response = await api().delete(`/api/v1.0/task/tasks/${id}`);
+      return response.data.data;
+    } catch (error) {
+      notification.error({ message: 'Ошибка удаления задачи' });
       return rejectWithValue(error.message);
     }
   },

@@ -6,21 +6,25 @@ import {
   TTask,
   UserRoles,
 } from 'constants/types/common';
-import { TEST_USER_ID } from './selectors';
 import { TAllViewParameters, TViewParameters } from './types';
 
-export const getMyTasks = (tasks: TTask[], onlyMyTasks: boolean): TTask[] =>
-  onlyMyTasks
+export const getMyTasks = (
+  tasks: TTask[],
+  onlyMyTasks: boolean,
+  userId: string,
+): TTask[] => {
+  return onlyMyTasks
     ? tasks.filter((task) => {
         return (
           task.roles.find(
             (role) =>
               role.task_role.name === UserRoles.executor &&
-              Number(role.assign_user.user_id) === TEST_USER_ID,
+              role.assign_user.user_id === userId,
           ) !== undefined
         );
       })
     : tasks;
+};
 
 export const blockTasks = (tasks: TTask[], blockType: BlockType): TTask[] => {
   if (blockType === BlockType.in) {

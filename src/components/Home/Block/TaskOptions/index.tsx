@@ -1,22 +1,37 @@
-import { Button } from 'antd';
+import { Button, notification } from 'antd';
+import { TTask } from 'constants/types/common';
+import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
+import { useAppSelector } from 'customHooks/redux/useAppSelector';
+import { isUserTaskAuthor } from 'helpers/userRoles';
 import React from 'react';
+import { getVerifyIdUser } from 'store/auth/verify/selectors';
+import { deleteTaskAction } from 'store/tasks/thunk';
 import styles from './index.module.scss';
 
 interface IProps {
-  task_id: string;
+  task: TTask;
 }
 
-const TaskOptions: React.FC<IProps> = ({ task_id }) => {
+const TaskOptions: React.FC<IProps> = ({ task }) => {
+  const dispatch = useAppDispatch();
+  const userId = useAppSelector(getVerifyIdUser);
+
+  const handleDeleteTask = () => {
+    if (isUserTaskAuthor(userId, task)) {
+      dispatch(deleteTaskAction(task.task_id));
+    } else notification.warn({ message: 'Удалить задачу может только автор' });
+  };
+
   return (
     <div className={styles.wrapper}>
       <Button className={styles.button} type="text">
-        Опция 1
+        Дублировать задачу
       </Button>
       <Button className={styles.button} type="text">
-        Опция 2
+        Отслеживать задачу
       </Button>
-      <Button className={styles.button} type="text">
-        Опция 3
+      <Button className={styles.button} type="text" onClick={handleDeleteTask}>
+        Удалить задачу
       </Button>
     </div>
   );

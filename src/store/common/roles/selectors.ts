@@ -14,6 +14,10 @@ function isImplementerFromRoles(element: IRoles): boolean {
   return element.name === ROLES.implementer;
 }
 
+function isAuthorFromRoles(element: IRoles): boolean {
+  return element.name === ROLES.author;
+}
+
 const allroles = (state: RootState) => state.common.roles.allroles;
 
 export const getWatcherRoleID = createSelector(
@@ -27,6 +31,10 @@ export const getResponsibleRoleID = createSelector(
 export const getImplementerRoleID = createSelector(
   allroles,
   (roles) => roles?.find(isImplementerFromRoles)?.task_role_id,
+);
+export const getAuthorRoleID = createSelector(
+  allroles,
+  (roles) => roles?.find(isAuthorFromRoles)?.task_role_id,
 );
 
 export const getRolesLoading = (state: RootState) => state.common.roles.loading;

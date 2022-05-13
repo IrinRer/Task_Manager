@@ -44,6 +44,9 @@
     border-radius: 8px;
     padding: 10px 0px;
     width: 160px;
+    .options {
+      width: 500px;
+    }
     :global(.ant-popover-inner-content) {
       padding: 0px;
       :global(.ant-btn.ant-btn-text) {
@@ -58,5 +61,11 @@
         }
       }
     }
+  }
+}
+
+:global(.ant-popover.popover.options.ant-popover-placement-top) {
+  :global(.ant-popover-inner) {
+    width: 200px;
   }
 }

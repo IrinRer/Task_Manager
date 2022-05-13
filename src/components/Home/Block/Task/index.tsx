@@ -24,7 +24,7 @@ const Task: React.FC<IProps> = ({ task, type }) => {
     <Row className={styles.wrapper} justify="space-between">
       {/* Заголовок задачи с указателями вложений и прогресса */}
       <Col span={7} className={styles.title}>
-        <Title title={task.title} type={type} task_id={task.task_id}/>
+        <Title title={task.title} type={type} task_id={task.task_id} />
         <div className={styles.flex}>
           <Attached attached={task.storage_files_meta.total} />
           <Progress progress={task.progress} />
@@ -65,8 +65,8 @@ const Task: React.FC<IProps> = ({ task, type }) => {
       {/* Кнопка ... со всплывающими опциями для задачи */}
       <Col span={1} className={styles.options}>
         <Popover
-          overlayClassName="popover"
-          content={<TaskOptions task_id={task.task_id} />}
+          overlayClassName="popover options"
+          content={<TaskOptions task={task} />}
           trigger="click"
         >
           <div>
