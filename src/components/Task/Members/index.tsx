@@ -5,7 +5,6 @@ import {
   getTaskAuthor,
   getTaskImplementer,
   getTaskResponsible,
-  getTaskWatchers,
 } from 'store/editTask/selectors';
 import {
   getImplementerRoleID,
@@ -16,13 +15,11 @@ import Spinner from 'components/Common/Spinner';
 import MembersWrapper from './MembersWrapper';
 import OneMember from './OneMember';
 import Watchers from './Watchers';
-import MembersWrapperMulti from './MembersWrapperMulti';
 
 const Info: React.FC = () => {
   const author = useAppSelector(getTaskAuthor);
   const responsible = useAppSelector(getTaskResponsible);
   const implementer = useAppSelector(getTaskImplementer);
-  const watchers = useAppSelector(getTaskWatchers);
 
   const responsibleRoleID = useAppSelector(getResponsibleRoleID);
   const implementerRoleID = useAppSelector(getImplementerRoleID);
@@ -34,7 +31,6 @@ const Info: React.FC = () => {
       id: uniqueId(),
       title: 'Автор',
       block: <OneMember user={author || null} roleId="" />,
-      expand: false,
     },
     {
       id: uniqueId(),
@@ -46,7 +42,6 @@ const Info: React.FC = () => {
           roleId={responsibleRoleID || ''}
         />
       ),
-      expand: false,
     },
     {
       id: uniqueId(),
@@ -58,13 +53,11 @@ const Info: React.FC = () => {
           roleId={implementerRoleID || ''}
         />
       ),
-      expand: false,
     },
     {
       id: uniqueId(),
-      title: `Наблюдатель ${watchers.length}`,
+      title: 'Наблюдатель',
       block: <Watchers />,
-      expand: true,
     },
   ];
 
@@ -75,13 +68,6 @@ const Info: React.FC = () => {
   return (
     <>
       {elements.map((el) => {
-        if (el.expand) {
-          return (
-            <MembersWrapperMulti key={el.id} roleName={el.title}>
-              {el.block}
-            </MembersWrapperMulti>
-          );
-        }
         return (
           <MembersWrapper key={el.id} roleName={el.title}>
             {el.block}
