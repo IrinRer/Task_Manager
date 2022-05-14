@@ -1,5 +1,4 @@
 import { SearchOutlined } from '@ant-design/icons';
-import { Select } from 'antd';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import React, { FC, useState } from 'react';
 
@@ -8,10 +7,10 @@ import {
   getUnselectedMembers,
   getTaskId,
   getTaskWatchersID,
+  getTaskWatchers,
 } from 'store/editTask/selectors';
 
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import useSelectOptions from 'components/Task/Info/TaskHook/useSelectOptions';
 import {
   setNewSelectedMembers,
   setUnselectedMembers,
@@ -21,18 +20,41 @@ import {
   setTaskMemberAction,
 } from 'store/editTask/thunk';
 import { IUser } from 'store/users/types';
-import UsersOption from '../UsersOption';
+import { getWatcherRoleID } from 'store/common/roles/selectors';
 import styles from '../AddMemberButton/index.module.scss';
+import SimpleSelect from '../../../Common/SimpleSelect';
+import useSelectOptions from '../TaskHook/useSelectOptions';
 
-type TProps = {
+type TRoleData = {
+  name: string;
   roleId: string;
   users: IUser[];
   usersID: string[];
 };
 
-const ListMemberMulti: FC<TProps> = (props: TProps) => {
-  const { roleId, users, usersID } = props;
+type TProps = {
+  roleName: string;
+};
+
+const ListMemberMulti: FC<TProps> = ({ roleName }) => {
   const options = useSelectOptions();
+  const watchers = useAppSelector(getTaskWatchers);
+  const watchersID = useAppSelector(getTaskWatchersID);
+  const watcherRoleID = useAppSelector(getWatcherRoleID);
+
+  const RoleData: Array<TRoleData> = [
+    {
+      name: 'Наблюдатель',
+      roleId: watcherRoleID || '',
+      users: watchers,
+      usersID: watchersID,
+    },
+  ];
+
+  const usersData = RoleData.find((el) => {
+    return el.name === roleName;
+  });
+
   const dispatch = useAppDispatch();
   const taskId = useAppSelector(getTaskId);
 
@@ -58,7 +80,7 @@ const ListMemberMulti: FC<TProps> = (props: TProps) => {
   };
 
   const onBlur = () => {
-   /* if (Array.isArray(roleAssign) && Array.isArray(roleUnassign) && taskId) {
+    /* if (Array.isArray(roleAssign) && Array.isArray(roleUnassign) && taskId) {
       roleAssign?.forEach((element) => {
         dispatch(
           setTaskMemberAction({
@@ -84,25 +106,27 @@ const ListMemberMulti: FC<TProps> = (props: TProps) => {
 
   return (
     <div className={styles.addmemberWrapper}>
-      <Select<string[] | number | string, { value: string; children: string }>
-          {...options}
-          dropdownClassName={styles.dropdown}
-          defaultValue={usersID}
-          suffixIcon={
-            <span
-              role="img"
-              aria-label="search"
-              className="anticon anticon-search"
-            >
-              <SearchOutlined />
-            </span>
-          }
-          onChange={onChange}
-          onBlur={onBlur}
-          onSearch={onSearch}
-        >
-          {/* <UsersOption users={ users } /> */}
-        </Select>
+      <SimpleSelect
+        list={usersData?.users || null}
+        itemKey="key"
+        itemLabel="name"
+        itemValue="user_id"
+        {...options}
+        dropdownClassName={styles.dropdown}
+        defaultValue={usersData?.usersID}
+        suffixIcon={
+          <span
+            role="img"
+            aria-label="search"
+            className="anticon anticon-search"
+          >
+            <SearchOutlined />
+          </span>
+        }
+        onChange={onChange}
+        onBlur={onBlur}
+        onSearch={onSearch}
+      />
     </div>
   );
 };

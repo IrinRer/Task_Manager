@@ -29,6 +29,8 @@ const Info: React.FC = () => {
 
   const editLoading = useAppSelector(getEditMembersLoading);
 
+  const isManyUsers = watchers.length > 3;
+
   const elements = [
     {
       id: uniqueId(),
@@ -62,9 +64,10 @@ const Info: React.FC = () => {
     },
     {
       id: uniqueId(),
-      title: `Наблюдатель ${watchers.length}`,
+      title: `Наблюдатель`,
+      length: watchers.length,
       block: <Watchers />,
-      expand: true,
+      expand: isManyUsers,
     },
   ];
 
@@ -77,7 +80,11 @@ const Info: React.FC = () => {
       {elements.map((el) => {
         if (el.expand) {
           return (
-            <MembersWrapperMulti key={el.id} roleName={el.title}>
+            <MembersWrapperMulti
+              key={el.id}
+              roleName={el.title}
+              length={el.length || 0}
+            >
               {el.block}
             </MembersWrapperMulti>
           );
