@@ -17,7 +17,6 @@ const Task: React.FC = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  // const taskId = useAppSelector(getHomeTaskId);
   const errorTask = useAppSelector(getEditTaskError);
   const { taskId } = useParams();
 

@@ -13,7 +13,7 @@ import { fetchUsersAction } from 'store/users/thunk';
 import debounce from 'lodash/debounce';
 import { DEBOUNCE_TIMEOUT } from 'constants/common';
 import styles from './index.module.scss';
-import SimpleSelect from '../SimpleSelect';
+import SimpleSelect from '../../../Common/SimpleSelect';
 import useSelectOptions from '../TaskHook/useSelectOptions';
 
 type TProps = {
@@ -27,7 +27,6 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
   const allUsers: Array<IPopulatedUser> = useAppSelector(selectPopulatedUsers);
   const taskId = useAppSelector(getTaskId);
 
-  // const roleAssign = useAppSelector(getOneNewSelectedMembers);
   const roleAssign = useAppSelector(getNewSelectedMembers);
 
   const showMemberModal = () => {

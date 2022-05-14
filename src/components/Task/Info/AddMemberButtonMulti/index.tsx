@@ -25,7 +25,7 @@ import debounce from 'lodash/debounce';
 import { DEBOUNCE_TIMEOUT } from 'constants/common';
 import { fetchUsersAction } from 'store/users/thunk';
 import styles from '../AddMemberButton/index.module.scss';
-import SimpleSelect from '../SimpleSelect';
+import SimpleSelect from '../../../Common/SimpleSelect';
 import useSelectOptions from '../TaskHook/useSelectOptions';
 
 type TProps = {
