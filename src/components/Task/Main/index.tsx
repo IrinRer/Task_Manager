@@ -4,15 +4,22 @@ import {
   AlignLeftOutlined,
   CommentOutlined,
   ContainerOutlined,
+  PaperClipOutlined,
 } from '@ant-design/icons';
+import { Row } from 'antd';
+import { useAppSelector } from 'customHooks/redux/useAppSelector';
+import { isClickedAttachments } from 'store/attachments/selectors';
 import uniqueId from 'lodash/uniqueId';
 import styles from './index.module.scss';
 import History from '../History';
 import InputWrapper from './InputWrapper';
 import Description from '../Description';
 import Title from '../Title';
+import Attachments from './Attachments';
 
 const Main: React.FC = () => {
+  const clickedAttachments = useAppSelector(isClickedAttachments);
+
   const elements = [
     {
       id: uniqueId(),
@@ -20,6 +27,7 @@ const Main: React.FC = () => {
       icon: <AlignLeftOutlined />,
       block: <Description />,
     },
+
     {
       id: uniqueId(),
       title: 'Комментарии',
@@ -32,6 +40,7 @@ const Main: React.FC = () => {
         />
       ),
     },
+
     {
       id: uniqueId(),
       title: 'Действия',
@@ -44,6 +53,14 @@ const Main: React.FC = () => {
     <div className={styles.taskMain}>
       <Title />
       {elements.map((el) => {
+        if (el.title === 'Описание' && clickedAttachments) {
+          return (
+            <div className={styles.wrapperAttachments}>
+              <PaperClipOutlined />
+              <Attachments />
+            </div>
+          );
+        }
         return (
           <InputWrapper key={el.id} labelText={el.title} icon={el.icon}>
             {el.block}

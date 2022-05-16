@@ -1,3 +1,4 @@
+import { IAttachmentsReducer } from 'store/attachments/types';
 import {
   configureStore,
   ThunkAction,
@@ -18,6 +19,7 @@ import commonPrioritiesReducer from './common/priorities/slice';
 import commonStatusesReducer from './common/statuses/slice';
 import onetaskReducer from './common/task/slice';
 import editTaskReducer from './editTask/slice';
+import attachmentsReducer from './attachments/slice';
 
 import { ICommonTagsReducer } from './common/tags/types';
 import { ICommonProgressesReducer } from './common/progresses/types';
@@ -38,6 +40,7 @@ export const store = configureStore({
     editTask: editTaskReducer,
     users: usersReducer,
     filters: filtersReducer,
+    attachments: attachmentsReducer,
     auth: combineReducers({
       token: tokenReducer,
       verify: verifyReducer,
@@ -61,6 +64,7 @@ export type RootState = {
   editTask: IEditTaskReducer;
   users: IUsersReducer;
   filters: IFiltersReducer;
+  attachments: IAttachmentsReducer;
   auth: CombinedState<{
     token: IAuthReducer;
     verify: IVerifyReducer;

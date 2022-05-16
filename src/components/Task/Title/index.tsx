@@ -12,7 +12,9 @@ import { EditOutlined } from '@ant-design/icons';
 
 import Spinner from 'components/Common/Spinner';
 import classnames from 'classnames';
+import DropMenu  from './AddFunctionality';
 import styles from './index.module.scss';
+
 
 const Title: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -20,7 +22,9 @@ const Title: React.FC = () => {
   const taskId = useAppSelector(getTaskId);
   const editLoading = useAppSelector(getEditTitleLoading);
 
-  const inputRef: Ref<TextAreaRef> | undefined  /*: MutableRefObject<typeof TextArea | null> */ = useRef(null);
+  const inputRef:
+    | Ref<TextAreaRef>
+    | undefined /*: MutableRefObject<typeof TextArea | null> */ = useRef(null);
   const [newTitle, setNewTitle] = useState<string | undefined>(title);
   const [isReadonly, setIsReadonly] = useState<boolean>(true);
 
@@ -53,8 +57,6 @@ const Title: React.FC = () => {
     );
   }
 
-  
-
   return (
     <>
       <div className={styles.wrapname}>
@@ -72,7 +74,12 @@ const Title: React.FC = () => {
           value={newTitle || ''}
           readOnly={isReadonly}
         />
-        {isReadonly ? <EditOutlined onClick={changeReadonly} /> : null}
+        {isReadonly ? (
+          <div className={styles.icon}>
+            <EditOutlined onClick={changeReadonly} />
+            <DropMenu />
+          </div>
+        ) : null}
       </div>
       <div className={styles.border} />
     </>

@@ -9,8 +9,6 @@
   span {
     font-size: $font-size-xxl;
     line-height: $line-height-xxxl;
-    margin-top: 16px;
-    margin-bottom: 20px;
     color: $text-light;
     cursor: pointer;
   }
@@ -67,6 +65,14 @@
   :global(.ant-input).readonly:active,
   :global(.ant-input).readonly:focus-visible {
     border: none;
+  }
+
+  .icon {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    margin-top: 16px;
+    margin-bottom: 20px;
   }
 }
 .border {
