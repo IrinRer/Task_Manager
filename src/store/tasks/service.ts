@@ -1,10 +1,10 @@
+import { MY_TASKS_ROLES } from 'constants/common';
 import {
   BlockType,
   PriorityName,
   SortField,
   TaskStatuses,
   TTask,
-  UserRoles,
 } from 'constants/types/common';
 import { TAllViewParameters, TViewParameters } from './types';
 
@@ -18,7 +18,7 @@ export const getMyTasks = (
         return (
           task.roles.find(
             (role) =>
-              role.task_role.name === UserRoles.executor &&
+              MY_TASKS_ROLES.includes(role.task_role.name) &&
               role.assign_user.user_id === userId,
           ) !== undefined
         );

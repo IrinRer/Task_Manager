@@ -1,6 +1,6 @@
 import React from 'react';
 import { Select } from 'antd';
-import { SortField } from 'constants/types/common';
+import { BlockType, SortField } from 'constants/types/common';
 import styles from './index.module.scss';
 
 const { Option } = Select;
@@ -8,9 +8,10 @@ const { Option } = Select;
 interface IProps {
   onSelect(sortField: SortField): void;
   selectValue: SortField;
+  blockType: BlockType;
 }
 
-const Sorter: React.FC<IProps> = ({ onSelect, selectValue }) => {
+const Sorter: React.FC<IProps> = ({ onSelect, selectValue, blockType }) => {
   return (
     <div>
       <span>Упорядочить по:</span>
@@ -22,7 +23,9 @@ const Sorter: React.FC<IProps> = ({ onSelect, selectValue }) => {
       >
         <Option value={SortField.created}>дате создания</Option>
         <Option value={SortField.title}>названию</Option>
-        <Option value={SortField.priority}>приоритету</Option>
+        {blockType === BlockType.done ? null : (
+          <Option value={SortField.priority}>приоритету</Option>
+        )}
       </Select>
     </div>
   );

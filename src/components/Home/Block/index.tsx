@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { setPage, setSortField, setTasksOnPage } from 'store/tasks/slice';
@@ -27,6 +27,14 @@ const Block: React.FC<IProps> = ({ blockType }) => {
   const tasksTotal = useAppSelector(getTotalTasksSelector(blockType));
 
   const { sortField, page, tasksOnPage } = viewParameters[blockType];
+
+  // Если число задач обновилось и страниц стало больше чем хватает задач, уменьшаем число страниц
+  useEffect(() => {
+    if (tasksTotal < tasksOnPage * (page - 1)) {
+      const newPage = Math.floor(tasksTotal / tasksOnPage) + 1;
+      dispatch(setPage({ blockType, page: newPage }));
+    }
+  }, [tasksOnPage, tasksTotal, page]);
 
   // Хэндлеры для изменения параметров отображения - сортировки, страницы и задач на странице
 
@@ -60,7 +68,11 @@ const Block: React.FC<IProps> = ({ blockType }) => {
       {/* Шапка блока */}
       <Col className={styles.header}>
         <h2>{BlockTitle[blockType]}</h2>
-        <Sorter onSelect={handleSortFieldChange} selectValue={sortField} />
+        <Sorter
+          onSelect={handleSortFieldChange}
+          selectValue={sortField}
+          blockType={blockType}
+        />
       </Col>
 
       {/* Задачи */}

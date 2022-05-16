@@ -4,10 +4,11 @@ import { RootState } from 'store';
 import { IStatusChangeArg, TASKS_SLICE_ALIAS } from 'store/tasks/types';
 import { api } from '../../network';
 import { selectTaskQuery } from '../filters/selectors';
+import { resetPages } from './slice';
 
 export const fetchTasksAction = createAsyncThunk(
   `${TASKS_SLICE_ALIAS}/fetchAll`,
-  async (_, { rejectWithValue, getState }) => {
+  async (_, { rejectWithValue, getState, dispatch }) => {
     try {
       const state = getState() as RootState;
       const tasksQuery = selectTaskQuery(state);
@@ -25,6 +26,9 @@ export const fetchTasksAction = createAsyncThunk(
           per_page: 50,
         },
       });
+
+      // при обновлении списка задач - применении фильтров - сбрасываем страницы на 1-е.
+      dispatch(resetPages());
 
       return response.data;
     } catch (error) {

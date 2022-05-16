@@ -1,22 +1,24 @@
 import { PriorityName } from 'constants/types/common';
 import React from 'react';
+import classnames from 'classnames';
 import styles from './index.module.scss';
 
 interface IProps {
   priority: PriorityName | null;
 }
 
-const STYLES: string[] = ['low', 'middle', 'high'];
+const STYLES: string[] = ['high', 'middle', 'low'];
 
 const Priority: React.FC<IProps> = ({ priority }) => {
-  return (
+  const classNames = classnames(
+    priority ? styles[STYLES[PriorityName[priority]]] : '',
+  );
+  return priority ? (
     <div className={styles.wrapper}>
-      {priority ? (
-        <span className={styles[STYLES[PriorityName[priority]]]}> </span>
-      ) : null}
+      <span className={classNames} />
       <span>{priority}</span>
     </div>
-  );
+  ) : null;
 };
 
 export default Priority;

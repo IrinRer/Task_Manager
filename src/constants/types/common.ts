@@ -3,7 +3,7 @@ export type TRole = {
   task: { task_id: string };
   task_role: {
     task_role_id: string;
-    name: string;
+    name: UserRoles;
     name_group: string;
     max_user_assigned: number;
     is_author: boolean;

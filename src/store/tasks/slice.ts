@@ -65,6 +65,11 @@ export const tasksSlice = createSlice({
     setPage: (state: ITasksReducer, action: PayloadAction<TsetPagePayload>) => {
       state.viewParameters[action.payload.blockType].page = action.payload.page;
     },
+    resetPages: (state: ITasksReducer) => {
+      Object.keys(state.viewParameters).forEach((key) => {
+        state.viewParameters[key].page = 1;
+      });
+    },
     setTasksOnPage: (
       state: ITasksReducer,
       action: PayloadAction<TsetTasksOnPagePayload>,
@@ -151,5 +156,6 @@ export const {
   setPage,
   setTasksOnPage,
   addTask,
+  resetPages,
 } = tasksSlice.actions;
 export default tasksSlice.reducer;
