@@ -22,4 +22,5 @@ export interface IPopulatedPriority {
   updated: string;
   label: string;
   value: string;
+  color: string;
 }
