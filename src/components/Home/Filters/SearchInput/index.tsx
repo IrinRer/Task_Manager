@@ -5,11 +5,11 @@ import { SearchOutlined } from '@ant-design/icons';
 import { DEBOUNCE_TIMEOUT } from 'constants/common';
 import { searchUpdated } from 'store/filters/slice';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
+import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { fetchTasksAction } from 'store/tasks/thunk';
 import debounce from 'lodash/debounce';
+import { selectSearchQueryValue } from 'store/filters/selectors';
 import styles from './index.module.scss';
-import { useAppSelector } from '../../../../customHooks/redux/useAppSelector';
-import { selectSearchQueryValue } from '../../../../store/filters/selectors';
 
 const SearchInput: React.FC = () => {
   const dispatch = useAppDispatch();

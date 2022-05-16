@@ -15,9 +15,9 @@ import {
   selectFilterTagsNames,
   selectTagsInputValue,
 } from 'store/filters/selectors';
-import FilterWrapper from '../../../Common/FilterWrapper';
+import FilterWrapper from 'components/Common/FilterWrapper';
+import { ReactComponent as PlusIcon } from 'assets/icons/plusIcon.svg';
 import Tag from './Tag';
-import PlusIcon from './PlusIcon';
 import styles from './index.module.scss';
 
 const TagsInput: React.FC = () => {
