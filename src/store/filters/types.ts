@@ -5,6 +5,11 @@ import { IUser } from '../users/types';
 export const FILTERS_SLICE_ALIAS = 'filters';
 
 export interface IFiltersReducer {
+  currentState: IFilters;
+  previousState: IFilters;
+}
+
+export interface IFilters {
   searchQuery: string;
   users: Array<IUser>;
   statuses: Array<string>;
