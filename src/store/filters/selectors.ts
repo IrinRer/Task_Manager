@@ -2,20 +2,22 @@ import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../index';
 
 export const selectSearchQueryValue = (state: RootState) =>
-  state.filters.searchQuery;
+  state.filters.currentState.searchQuery;
 
 export const selectStatusCheckboxesValues = (state: RootState) =>
-  state.filters.statuses;
+  state.filters.currentState.statuses;
 
 export const selectPriorityCheckboxesValues = (state: RootState) =>
-  state.filters.priorities;
+  state.filters.currentState.priorities;
 
 export const selectAttachmentCheckboxValue = (state: RootState) =>
-  state.filters.attachments;
+  state.filters.currentState.attachments;
 
-export const selectProgressValue = (state: RootState) => state.filters.progress;
+export const selectProgressValue = (state: RootState) =>
+  state.filters.currentState.progress;
 
-export const selectFilterTags = (state: RootState) => state.filters.tags;
+export const selectFilterTags = (state: RootState) =>
+  state.filters.currentState.tags;
 
 export const selectFilterTagsNames = createSelector(
   selectFilterTags,
@@ -24,7 +26,8 @@ export const selectFilterTagsNames = createSelector(
   },
 );
 
-export const selectFilterUsers = (state: RootState) => state.filters.users;
+export const selectFilterUsers = (state: RootState) =>
+  state.filters.currentState.users;
 
 export const selectFilterUsersNames = createSelector(
   selectFilterUsers,
@@ -33,4 +36,4 @@ export const selectFilterUsersNames = createSelector(
   },
 );
 
-export const selectTaskQuery = (state: RootState) => state.filters;
+export const selectTaskQuery = (state: RootState) => state.filters.currentState;

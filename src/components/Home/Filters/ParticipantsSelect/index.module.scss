@@ -11,6 +11,10 @@
     .ant-select-selection-item {
       display: none;
     }
+
+    .ant-select-arrow .anticon:not(.ant-select-suffix) {
+      pointer-events: none;
+    }
   }
 }
 
