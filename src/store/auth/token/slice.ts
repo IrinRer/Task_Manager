@@ -15,7 +15,7 @@ export const authSlice = createSlice({
   reducers: {
     addVerifyToken: (
       state: IAuthReducer,
-      { payload }: PayloadAction<string>,
+      { payload }: PayloadAction<string | null>,
     ) => {
       state.token = payload;
     },
