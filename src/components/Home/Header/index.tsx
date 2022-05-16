@@ -7,8 +7,10 @@ import { getOnlyMyTasksFlag } from 'store/tasks/selectors';
 import { showOnlyMyTasks, showAllTasks } from 'store/tasks/slice';
 import clockIcon from 'assets/icons/clock.svg';
 import personIcon from 'assets/icons/person.svg';
+import { CaretDownOutlined } from '@ant-design/icons';
 import AddNewTask from './AddNewTask';
 import styles from './index.module.scss';
+import UserMenu from './UserMenu';
 
 const tasksButtonClass = (flag: boolean): string => {
   return flag ? styles.inactive : styles.active;
@@ -29,10 +31,12 @@ const Header: React.FC = () => {
     <>
       <Row className={styles.wrapper}>
         <h1>Задачи</h1>
-        <h1>
+        <div className={styles.user}>
           {/* аватар будет от реального пользователя */}
           <Avatar src="https://vraki.net/sites/default/files/inline/images/30_55.jpg" />
-        </h1>
+          <UserMenu />
+          <CaretDownOutlined className={styles.menuicon} />
+        </div>
       </Row>
 
       {/* Кнопки все задачи - мои задачи */}
