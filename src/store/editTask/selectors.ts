@@ -8,6 +8,7 @@ import {
   getUsersIdFromRoles,
   isWatcher,
 } from 'store/common/task/selectors';
+import { ICheckList } from '../common/task/types';
 
 export const getNewSelectedMembers = (state: RootState) =>
   state.editTask.selectedMembers;
@@ -34,17 +35,21 @@ export const getTaskAuthor = createSelector(
   taskRoles,
   (roles) => roles?.find(isAuthor)?.assign_user,
 );
+
 export const getTaskResponsible = createSelector(
   taskRoles,
   (roles) => roles?.find(isResponsible)?.assign_user,
 );
+
 export const getTaskImplementer = createSelector(
   taskRoles,
   (roles) => roles?.find(isImplementer)?.assign_user,
 );
+
 export const getTaskWatchers = createSelector(taskRoles, (roles) =>
   getUsersFromRoles(roles?.filter(isWatcher)),
 );
+
 export const getTaskWatchersID = createSelector(taskRoles, (roles) =>
   getUsersIdFromRoles(roles?.filter(isWatcher)),
 );
@@ -63,3 +68,19 @@ export const getEditMembersLoading = (state: RootState) =>
 
 export const getEditTaskError = (state: RootState) =>
   state.editTask.editError.task;
+
+export const getCheckList = (state: RootState): ICheckList | null =>
+  state.editTask.data?.check_lists[0] || null;
+
+export const getCheckListProgress = createSelector(
+  getCheckList,
+  (checkList) => {
+    if (checkList && checkList.items.length > 0) {
+      const completedItems = checkList.items.filter((item) => item.complete);
+
+      return (completedItems.length / checkList.items.length) * 100;
+    }
+
+    return 0;
+  },
+);

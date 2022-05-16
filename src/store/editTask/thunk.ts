@@ -5,6 +5,8 @@ import { AxiosResponse } from 'axios';
 import { api } from 'network';
 
 import { ITaskAssignUser, EDIT_TASK_SLICE_ALIAS } from 'store/editTask/types';
+import { getTaskId } from './selectors';
+import { RootState } from '../index';
 
 export const setTaskDescription = createAsyncThunk(
   `${EDIT_TASK_SLICE_ALIAS}/setDescription`,
@@ -74,6 +76,55 @@ export const deleteTaskMemberAction = createAsyncThunk(
       return response.data.data;
     } catch (error) {
       notification.error({ message: 'Ошибка удаления участника' });
+      return rejectWithValue(error);
+    }
+  },
+);
+
+export const deleteCheckListAction = createAsyncThunk(
+  `${EDIT_TASK_SLICE_ALIAS}/deleteCheckList`,
+  async (check_list_id: string, { getState, rejectWithValue }) => {
+    const task_id = getTaskId(getState() as RootState);
+
+    try {
+      const response: AxiosResponse = await api().post(
+        `/api/v1.0/task/tasks/${task_id}/check-list-un-assign`,
+        {
+          check_list_id,
+        },
+      );
+
+      return response.data.data;
+    } catch (error) {
+      notification.error({ message: 'Ошибка удаления чеклиста' });
+      return rejectWithValue(error);
+    }
+  },
+);
+
+export const addCheckListAction = createAsyncThunk(
+  `${EDIT_TASK_SLICE_ALIAS}/addCheckList`,
+  async (_, { getState, rejectWithValue }) => {
+    const task_id = getTaskId(getState() as RootState);
+
+    try {
+      const newCheckList: AxiosResponse = await api().post(
+        `/api/v1.0/check-list/check-lists`,
+        {
+          title: 'Чек-лист',
+        },
+      );
+
+      const response: AxiosResponse = await api().post(
+        `/api/v1.0/task/tasks/${task_id}/check-list-assign`,
+        {
+          check_list_id: newCheckList.data.data.check_list_id,
+        },
+      );
+
+      return response.data.data;
+    } catch (error) {
+      notification.error({ message: 'Ошибка добавления чеклиста' });
       return rejectWithValue(error);
     }
   },

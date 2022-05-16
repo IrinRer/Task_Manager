@@ -2,6 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { IEditTaskReducer, EDIT_TASK_SLICE_ALIAS } from 'store/editTask/types';
 import {
+  addCheckListAction,
+  deleteCheckListAction,
   deleteTaskMemberAction,
   setTaskDescription,
   setTaskMemberAction,
@@ -18,6 +20,7 @@ const initialState: IEditTaskReducer = {
     title: false,
     desc: false,
     members: false,
+    checkList: false,
   },
   selectedMembers: null,
   unselectedMembers: null,
@@ -27,6 +30,7 @@ const initialState: IEditTaskReducer = {
     desc: null,
     setMembers: null,
     delMembers: null,
+    checkList: null,
   },
 };
 
@@ -147,6 +151,42 @@ export const editTaskSlice = createSlice({
       state.editError.delMembers = payload;
       state.unselectedMembers = null;
       state.editLoading.members = false;
+    },
+
+    [deleteCheckListAction.pending.type]: (state: IEditTaskReducer) => {
+      state.editLoading.checkList = true;
+    },
+    [deleteCheckListAction.fulfilled.type]: (
+      state: IEditTaskReducer,
+      { payload }: PayloadAction<IResponseTask>,
+    ) => {
+      state.data = payload;
+      state.editLoading.checkList = false;
+    },
+    [deleteCheckListAction.rejected.type]: (
+      state: IEditTaskReducer,
+      { payload }: PayloadAction<AxiosError>,
+    ) => {
+      state.editError.checkList = payload;
+      state.editLoading.checkList = false;
+    },
+
+    [addCheckListAction.pending.type]: (state: IEditTaskReducer) => {
+      state.editLoading.checkList = true;
+    },
+    [addCheckListAction.fulfilled.type]: (
+      state: IEditTaskReducer,
+      { payload }: PayloadAction<IResponseTask>,
+    ) => {
+      state.data = payload;
+      state.editLoading.checkList = false;
+    },
+    [addCheckListAction.rejected.type]: (
+      state: IEditTaskReducer,
+      { payload }: PayloadAction<AxiosError>,
+    ) => {
+      state.editError.checkList = payload;
+      state.editLoading.checkList = false;
     },
   },
 });

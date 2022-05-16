@@ -1,15 +1,19 @@
 @import 'src/styles/colors.scss';
+@import 'src/styles/color-variables.scss';
 @import 'src/styles/font-variables.scss';
 
 .menuOption {
   margin: 0;
+  padding: 0;
   font-weight: 400;
   font-size: $font-size-m;
   line-height: $line-height-m;
   color: $gray-800;
   cursor: pointer;
+  border: none;
+  background-color: $bg-secondary;
 
   &:hover {
-    color: darken($gray-800, 10%);
+    color: darken($gray-800, 20%);
   }
 }

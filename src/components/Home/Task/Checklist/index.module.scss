@@ -19,9 +19,15 @@
   width: 20px;
   height: 20px;
 
+
   &Button {
     cursor: pointer;
     fill: $coral;
+    border: none;
+    background-color: $bg-secondary;
+    padding: 0;
+    display: flex;
+    align-items: center;
 
     &:hover {
       fill: darken($coral, 10%);

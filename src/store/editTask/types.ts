@@ -10,6 +10,7 @@ export interface IEditTaskReducer {
     title: boolean;
     desc: boolean;
     members: boolean;
+    checkList: boolean;
   };
   selectedMembers: Array<string> | null;
   unselectedMembers: Array<string> | null;
@@ -19,6 +20,7 @@ export interface IEditTaskReducer {
     desc: AxiosError | null;
     setMembers: AxiosError | null;
     delMembers: AxiosError | null;
+    checkList: AxiosError | null;
   };
 }
 
