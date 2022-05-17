@@ -21,9 +21,6 @@ import {
 } from 'store/editTask/thunk';
 import { selectPopulatedUsers } from 'store/users/selectors';
 import { IPopulatedUser } from 'store/users/types';
-import debounce from 'lodash/debounce';
-import { DEBOUNCE_TIMEOUT } from 'constants/common';
-import { fetchUsersAction } from 'store/users/thunk';
 import styles from '../AddMemberButton/index.module.scss';
 import SimpleSelect from '../../../Common/SimpleSelect';
 import useSelectOptions from '../TaskHook/useSelectOptions';
@@ -67,11 +64,8 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
     }
   };
 
-  const onSearch = (query: string) => {
-    dispatch(fetchUsersAction(query));
-  };
-
   const onBlur = () => {
+    options.common.onBlur();
     setIsVisible(!isVisible);
     if (Array.isArray(roleAssign) && Array.isArray(roleUnassign) && taskId) {
       roleAssign?.forEach((element) => {
@@ -122,7 +116,7 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
           itemKey="key"
           itemLabel="name"
           itemValue="user_id"
-          {...options}
+          {...options.common}
           mode="multiple"
           dropdownClassName={styles.dropdown}
           defaultValue={generateValue()}
@@ -137,7 +131,7 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
           }
           onChange={onChange}
           onBlur={onBlur}
-          onSearch={debounce(onSearch, DEBOUNCE_TIMEOUT)}
+          onSearch={options.particular.handleSearch}
         />
       ) : null}
     </div>

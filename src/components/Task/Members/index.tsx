@@ -3,27 +3,29 @@ import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import {
   getEditMembersLoading,
   getTaskAuthor,
-  getTaskImplementer,
+  getTaskImplementers,
   getTaskResponsible,
   getTaskWatchers,
 } from 'store/editTask/selectors';
 import {
   getImplementerRoleID,
   getResponsibleRoleID,
+  getWatcherRoleID,
 } from 'store/common/roles/selectors';
 import uniqueId from 'lodash/uniqueId';
 import Spinner from 'components/Common/Spinner';
 import MembersWrapper from './MembersWrapper';
 import OneMember from './OneMember';
-import Watchers from './Watchers';
 import MembersWrapperMulti from './MembersWrapperMulti';
+import MembersByOne from './MembersByOne';
 
 const Info: React.FC = () => {
   const author = useAppSelector(getTaskAuthor);
   const responsible = useAppSelector(getTaskResponsible);
-  const implementer = useAppSelector(getTaskImplementer);
+  const implementer = useAppSelector(getTaskImplementers);
   const watchers = useAppSelector(getTaskWatchers);
 
+  const watcherRoleID = useAppSelector(getWatcherRoleID);
   const responsibleRoleID = useAppSelector(getResponsibleRoleID);
   const implementerRoleID = useAppSelector(getImplementerRoleID);
 
@@ -54,9 +56,8 @@ const Info: React.FC = () => {
       id: uniqueId(),
       title: 'Исполнитель',
       block: (
-        <OneMember
-          editable
-          user={implementer || null}
+        <MembersByOne
+          users={implementer || null}
           roleId={implementerRoleID || ''}
         />
       ),
@@ -66,7 +67,7 @@ const Info: React.FC = () => {
       id: uniqueId(),
       title: `Наблюдатель`,
       length: watchers.length,
-      block: <Watchers />,
+      block: <MembersByOne users={watchers} roleId={watcherRoleID || ''} />,
       expand: isManyUsers,
     },
   ];

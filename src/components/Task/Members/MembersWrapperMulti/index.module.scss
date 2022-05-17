@@ -1,4 +1,5 @@
 @import 'src/styles/font-variables';
+@import 'src/styles/colors';
 
 .infoLine {
   display: flex;
@@ -25,5 +26,8 @@
     .members {
       width: 100%;
     }
+  }
+  .expand:hover {
+    color: $blue;
   }
 }

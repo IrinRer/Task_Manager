@@ -1,9 +1,8 @@
-import { SearchOutlined } from '@ant-design/icons';
+import { CloseOutlined, SearchOutlined } from '@ant-design/icons';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import React, { FC, useState } from 'react';
+import React, { FC, Ref, RefObject, useRef } from 'react';
 
 import {
-  getNewSelectedMembers,
   getUnselectedMembers,
   getTaskId,
   getTaskWatchersID,
@@ -11,17 +10,14 @@ import {
 } from 'store/editTask/selectors';
 
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import {
-  setNewSelectedMembers,
-  setUnselectedMembers,
-} from 'store/editTask/slice';
-import {
-  deleteTaskMemberAction,
-  setTaskMemberAction,
-} from 'store/editTask/thunk';
+import { setUnselectedMembers } from 'store/editTask/slice';
+import { deleteTaskMemberAction } from 'store/editTask/thunk';
 import { IUser } from 'store/users/types';
 import { getWatcherRoleID } from 'store/common/roles/selectors';
+import classnames from 'classnames';
+import { RefSelectProps } from 'antd/lib/select';
 import styles from '../AddMemberButton/index.module.scss';
+import stylesList from './index.module.scss';
 import SimpleSelect from '../../../Common/SimpleSelect';
 import useSelectOptions from '../TaskHook/useSelectOptions';
 
@@ -34,9 +30,11 @@ type TRoleData = {
 
 type TProps = {
   roleName: string;
+  isActive: boolean;
+  setIsActive: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const ListMemberMulti: FC<TProps> = ({ roleName }) => {
+const ListMemberMulti: FC<TProps> = ({ roleName, isActive, setIsActive }) => {
   const options = useSelectOptions();
   const watchers = useAppSelector(getTaskWatchers);
   const watchersID = useAppSelector(getTaskWatchersID);
@@ -55,65 +53,70 @@ const ListMemberMulti: FC<TProps> = ({ roleName }) => {
     return el.name === roleName;
   });
 
+  const roleUnassign = useAppSelector(getUnselectedMembers);
+  const selectedMembers = usersData?.usersID;
+
   const dispatch = useAppDispatch();
   const taskId = useAppSelector(getTaskId);
 
-  const onChange = (value: string[]) => {
-    /* if (selectedMembers) {
-      dispatch(
-        setUnselectedMembers(
-          selectedMembers.filter((elem: string) => isNewUser(value, elem)),
-        ),
-      );
-      dispatch(
-        deleteTaskMemberAction({
-          task_id: taskId,
-          assign_user_id: element,
-          task_role_id: roleId,
-        }),
-      );
-    } */
+  const isUnassignUser = (users: string[] | string, elem: string) => {
+    return users?.indexOf(elem) === -1;
   };
 
-  const onSearch = (query: string) => {
-    // dispatch(fetchUsersAction(query));
+  const onChange = (value: string[]) => {
+    if (selectedMembers) {
+      dispatch(
+        setUnselectedMembers(
+          selectedMembers.filter((elem: string) => isUnassignUser(value, elem)),
+        ),
+      );
+    }
   };
 
   const onBlur = () => {
-    /* if (Array.isArray(roleAssign) && Array.isArray(roleUnassign) && taskId) {
-      roleAssign?.forEach((element) => {
-        dispatch(
-          setTaskMemberAction({
-            task_id: taskId,
-            assign_user_id: element,
-            task_role_id: roleId,
-          }),
-        );
-      });
+    options.common.onBlur();
+    setIsActive(!isActive);
+
+    if (Array.isArray(roleUnassign) && taskId && usersData?.roleId) {
       roleUnassign?.forEach((element) => {
         dispatch(
           deleteTaskMemberAction({
             task_id: taskId,
             assign_user_id: element,
-            task_role_id: roleId,
+            task_role_id: usersData?.roleId,
           }),
         );
       });
-      dispatch(setNewSelectedMembers([]));
       dispatch(setUnselectedMembers([]));
-    } */
+    }
+  };
+
+  const generateValue = () => {
+    if (selectedMembers) {
+      return selectedMembers.filter((elem: string) =>
+        roleUnassign ? isUnassignUser(roleUnassign, elem) : true,
+      );
+    }
+    return null;
   };
 
   return (
-    <div className={styles.addmemberWrapper}>
+    <div
+      className={classnames(
+        styles.addmemberWrapper,
+        stylesList.listMemberWrapper,
+      )}
+    >
       <SimpleSelect
         list={usersData?.users || null}
-        itemKey="key"
+        itemKey="user_id"
         itemLabel="name"
         itemValue="user_id"
-        {...options}
+        {...options.common}
+        mode="multiple"
+        menuItemSelectedIcon={<CloseOutlined />}
         dropdownClassName={styles.dropdown}
-        defaultValue={usersData?.usersID}
+        defaultValue={generateValue()}
         suffixIcon={
           <span
             role="img"
@@ -125,7 +128,6 @@ const ListMemberMulti: FC<TProps> = ({ roleName }) => {
         }
         onChange={onChange}
         onBlur={onBlur}
-        onSearch={onSearch}
       />
     </div>
   );
