@@ -3,7 +3,7 @@ import { Button, Select } from 'antd';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import React, { FC, useState } from 'react';
 
-import { getNewSelectedMembers, getOneNewSelectedMembers, getTaskId } from 'store/editTask/selectors';
+import { getNewSelectedMembers, getTaskId } from 'store/editTask/selectors';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import useSelectOptions from 'components/Task/Info/TaskHook/useSelectOptions';
 import { setNewSelectedMembers } from 'store/editTask/slice';
@@ -57,11 +57,11 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
     }
   };
 
- const children = (allUsers?.map((el) => (
+  const children = allUsers?.map((el) => (
     <Option key={el.key} value={el.user_id}>
       {el.name}
     </Option>
-  )));
+  ));
 
   return (
     <div className={styles.addmemberWrapper}>
