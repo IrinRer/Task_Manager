@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Modal } from 'antd';
 import { clearEditDataTask, setModalVisible } from 'store/editTask/slice';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
