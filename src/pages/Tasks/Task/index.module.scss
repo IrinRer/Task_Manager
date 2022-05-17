@@ -2,7 +2,7 @@
 @import 'src/styles/color-variables';
 @import 'src/components/Common/Spinner/index.module.scss';
 
-///////////глобальные!
+//глобальные!
 :global(.ant-modal-content) {
   height: 100%;
   border-top-left-radius: 16px !important;
@@ -21,16 +21,7 @@
   padding: 0;
   margin: 0;
 }
-/*.mainSpinner {
-  width: 100%;
-  height: 100%;
-  display: flex !important;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: absolute !important;
-}*/
-//////////////
+
 .task {
   top: 0 !important;
   height: 100%;

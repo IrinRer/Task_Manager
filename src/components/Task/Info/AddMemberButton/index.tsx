@@ -27,7 +27,6 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
   const allUsers: Array<IPopulatedUser> = useAppSelector(selectPopulatedUsers);
   const taskId = useAppSelector(getTaskId);
 
-  // const roleAssign = useAppSelector(getOneNewSelectedMembers);
   const roleAssign = useAppSelector(getNewSelectedMembers);
 
   const showMemberModal = () => {

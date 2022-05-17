@@ -29,16 +29,8 @@ const PrivateRoute: React.FC = ({ children: Component }: IRouteProps) => {
   const verifyError = useAppSelector(getVerifyError);
   const authError = useAppSelector(getAuthError);
   const error = verifyError || authError;
-  // const [isBeenLoad, setIsBeenLoad] = useState<boolean>(false);
 
-  /* if (loading && !isBeenLoad) {
-    setIsBeenLoad(true);
-  } */
-
-  if (
-    error ||
-    !token /* (!loading && isBeenLoad && !userID && !verifyToken) */
-  ) {
+  if (error || !token) {
     return <Navigate to={ROUTES.login.path} />;
   }
 
@@ -47,18 +39,6 @@ const PrivateRoute: React.FC = ({ children: Component }: IRouteProps) => {
   }
 
   return <>{verifyToken ? Component : null}</>;
-
-  /* return (
-    <>
-      {loading ? (
-        <Preloader size="large" />
-      ) : verifyToken ? (
-        Component
-      ) : (
-        <Preloader size="large" />
-      )}
-    </>
-  ); */
 };
 
 export default PrivateRoute;
