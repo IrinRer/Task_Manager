@@ -1,74 +1,41 @@
 import React from 'react';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import {
-  getEditMembersLoading,
-  getTaskAuthor,
-  getTaskImplementers,
-  getTaskResponsible,
-  getTaskWatchers,
-} from 'store/editTask/selectors';
-import {
-  getImplementerRoleID,
-  getResponsibleRoleID,
-  getWatcherRoleID,
-} from 'store/common/roles/selectors';
+import { getEditMembersLoading } from 'store/editTask/selectors';
+
 import uniqueId from 'lodash/uniqueId';
 import Spinner from 'components/Common/Spinner';
-import MembersWrapper from './MembersWrapper';
+import { ROLES } from 'constants/task';
 import OneMember from './OneMember';
 import MembersWrapperMulti from './MembersWrapperMulti';
 import MembersByOne from './MembersByOne';
 
 const Info: React.FC = () => {
-  const author = useAppSelector(getTaskAuthor);
-  const responsible = useAppSelector(getTaskResponsible);
-  const implementer = useAppSelector(getTaskImplementers);
-  const watchers = useAppSelector(getTaskWatchers);
-
-  const watcherRoleID = useAppSelector(getWatcherRoleID);
-  const responsibleRoleID = useAppSelector(getResponsibleRoleID);
-  const implementerRoleID = useAppSelector(getImplementerRoleID);
-
   const editLoading = useAppSelector(getEditMembersLoading);
-
-  const isManyUsers = watchers.length > 3;
 
   const elements = [
     {
       id: uniqueId(),
       title: 'Автор',
-      block: <OneMember user={author || null} roleId="" />,
-      expand: false,
+      block: <OneMember roleName="Автор" />,
     },
     {
       id: uniqueId(),
-      title: 'Ответственный',
+      title: ROLES.responsible,
+      block: <OneMember editable roleName={ROLES.responsible} />,
+    },
+    {
+      id: uniqueId(),
+      title: ROLES.implementer,
       block: (
-        <OneMember
-          editable
-          user={responsible || null}
-          roleId={responsibleRoleID || ''}
-        />
+        <MembersByOne roleName={ROLES.implementer} multiAdd usersMaxCount={3} />
       ),
-      expand: false,
     },
     {
       id: uniqueId(),
-      title: 'Исполнитель',
+      title: ROLES.watcher,
       block: (
-        <MembersByOne
-          users={implementer || null}
-          roleId={implementerRoleID || ''}
-        />
+        <MembersByOne roleName={ROLES.watcher} multiAdd usersMaxCount={50} />
       ),
-      expand: false,
-    },
-    {
-      id: uniqueId(),
-      title: `Наблюдатель`,
-      length: watchers.length,
-      block: <MembersByOne users={watchers} roleId={watcherRoleID || ''} />,
-      expand: isManyUsers,
     },
   ];
 
@@ -79,21 +46,10 @@ const Info: React.FC = () => {
   return (
     <>
       {elements.map((el) => {
-        if (el.expand) {
-          return (
-            <MembersWrapperMulti
-              key={el.id}
-              roleName={el.title}
-              length={el.length || 0}
-            >
-              {el.block}
-            </MembersWrapperMulti>
-          );
-        }
         return (
-          <MembersWrapper key={el.id} roleName={el.title}>
+          <MembersWrapperMulti key={el.id} roleName={el.title}>
             {el.block}
-          </MembersWrapper>
+          </MembersWrapperMulti>
         );
       })}
     </>

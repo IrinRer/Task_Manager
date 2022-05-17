@@ -12,7 +12,6 @@
 
   span:first-of-type {
     text-align: left;
-    cursor: pointer;
   }
   .members {
     width: 56%;
@@ -26,6 +25,9 @@
     .members {
       width: 100%;
     }
+  }
+  .expand {
+    cursor: pointer;
   }
   .expand:hover {
     color: $blue;

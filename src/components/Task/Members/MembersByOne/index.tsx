@@ -1,23 +1,33 @@
 import React, { FC } from 'react';
+import AddMemberButton from 'components/Task/Info/AddMemberButton';
 import AddMemberButtonMulti from 'components/Task/Info/AddMemberButtonMulti';
-import { IUser } from 'store/users/types';
+import useMembersProps from 'components/Task/Info/MembersHook/useMembersProps';
 import styles from './index.module.scss';
 import OneMember from '../OneMember';
 
 type TProps = {
-  users: IUser[] | null;
-  roleId: string;
+  roleName: string;
+  multiAdd: boolean;
+  usersMaxCount: number;
 };
 
-const MembersByOne: FC<TProps> = ({ users, roleId }) => {
+const MembersByOne: FC<TProps> = ({ roleName, multiAdd, usersMaxCount }) => {
+  const usersData = useMembersProps(roleName);
+  const users =
+    usersData?.users && Array.isArray(usersData?.users) ? usersData?.users : [];
+
+  const addMemberBtn = multiAdd ? (
+    <AddMemberButtonMulti roleName={roleName} />
+  ) : (
+    <AddMemberButton roleName={roleName} />
+  );
+
   return (
     <div className={styles.watchers}>
       {users?.slice(0, 3).map((el) => (
-        <OneMember key={el.user_id} editable user={el} roleId={roleId || ''} />
+        <OneMember key={el.user_id} user={el} editable roleName={roleName} />
       ))}
-      {users?.length <= 3 ? (
-        <AddMemberButtonMulti roleId={roleId || ''} />
-      ) : null}
+      {users?.length < usersMaxCount ? addMemberBtn : null}
     </div>
   );
 };

@@ -4,20 +4,24 @@ import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import React, { FC } from 'react';
 import { deleteTaskMemberAction } from 'store/editTask/thunk';
 import { getTaskId } from 'store/editTask/selectors';
+import useMembersProps from 'components/Task/Info/MembersHook/useMembersProps';
 import { IUser } from 'store/users/types';
 import styles from './index.module.scss';
 
 type TProps = {
   user: IUser;
-  roleId: string;
+  roleName: string;
 };
 
-const EditableMember: FC<TProps> = ({ user, roleId }) => {
+const EditableMember: FC<TProps> = ({ user, roleName }) => {
   const dispatch = useAppDispatch();
   const taskId = useAppSelector(getTaskId);
 
+  const usersData = useMembersProps(roleName);
+  const roleId = usersData?.roleId;
+
   const deleteMember = () => {
-    if (taskId) {
+    if (taskId && user && roleId) {
       dispatch(
         deleteTaskMemberAction({
           task_id: taskId,
@@ -29,7 +33,7 @@ const EditableMember: FC<TProps> = ({ user, roleId }) => {
   };
   return (
     <div className={styles.editMembers}>
-      <span>{user.name}</span>
+      <span>{user?.name}</span>
       <CloseOutlined className={styles.delete} onClick={deleteMember} />
     </div>
   );

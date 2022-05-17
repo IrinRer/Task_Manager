@@ -1,32 +1,18 @@
 import { CloseOutlined, SearchOutlined } from '@ant-design/icons';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import React, { FC, Ref, RefObject, useRef } from 'react';
+import React, { FC } from 'react';
 
-import {
-  getUnselectedMembers,
-  getTaskId,
-  getTaskWatchersID,
-  getTaskWatchers,
-} from 'store/editTask/selectors';
+import { getUnselectedMembers, getTaskId } from 'store/editTask/selectors';
 
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { setUnselectedMembers } from 'store/editTask/slice';
 import { deleteTaskMemberAction } from 'store/editTask/thunk';
-import { IUser } from 'store/users/types';
-import { getWatcherRoleID } from 'store/common/roles/selectors';
 import classnames from 'classnames';
-import { RefSelectProps } from 'antd/lib/select';
 import styles from '../AddMemberButton/index.module.scss';
 import stylesList from './index.module.scss';
 import SimpleSelect from '../../../Common/SimpleSelect';
 import useSelectOptions from '../TaskHook/useSelectOptions';
-
-type TRoleData = {
-  name: string;
-  roleId: string;
-  users: IUser[];
-  usersID: string[];
-};
+import useMembersProps from '../MembersHook/useMembersProps';
 
 type TProps = {
   roleName: string;
@@ -36,24 +22,9 @@ type TProps = {
 
 const ListMemberMulti: FC<TProps> = ({ roleName, isActive, setIsActive }) => {
   const options = useSelectOptions();
-  const watchers = useAppSelector(getTaskWatchers);
-  const watchersID = useAppSelector(getTaskWatchersID);
-  const watcherRoleID = useAppSelector(getWatcherRoleID);
-
-  const RoleData: Array<TRoleData> = [
-    {
-      name: 'Наблюдатель',
-      roleId: watcherRoleID || '',
-      users: watchers,
-      usersID: watchersID,
-    },
-  ];
-
-  const usersData = RoleData.find((el) => {
-    return el.name === roleName;
-  });
 
   const roleUnassign = useAppSelector(getUnselectedMembers);
+  const usersData = useMembersProps(roleName);
   const selectedMembers = usersData?.usersID;
 
   const dispatch = useAppDispatch();
@@ -64,7 +35,7 @@ const ListMemberMulti: FC<TProps> = ({ roleName, isActive, setIsActive }) => {
   };
 
   const onChange = (value: string[]) => {
-    if (selectedMembers) {
+    if (selectedMembers && Array.isArray(selectedMembers)) {
       dispatch(
         setUnselectedMembers(
           selectedMembers.filter((elem: string) => isUnassignUser(value, elem)),
@@ -92,13 +63,18 @@ const ListMemberMulti: FC<TProps> = ({ roleName, isActive, setIsActive }) => {
   };
 
   const generateValue = () => {
-    if (selectedMembers) {
+    if (selectedMembers && Array.isArray(selectedMembers)) {
       return selectedMembers.filter((elem: string) =>
         roleUnassign ? isUnassignUser(roleUnassign, elem) : true,
       );
     }
     return null;
   };
+
+  const users =
+    usersData?.users && Array.isArray(usersData?.users)
+      ? usersData?.users
+      : null;
 
   return (
     <div
@@ -108,7 +84,7 @@ const ListMemberMulti: FC<TProps> = ({ roleName, isActive, setIsActive }) => {
       )}
     >
       <SimpleSelect
-        list={usersData?.users || null}
+        list={users}
         itemKey="user_id"
         itemLabel="name"
         itemValue="user_id"

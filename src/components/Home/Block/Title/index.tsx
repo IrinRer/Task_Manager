@@ -1,10 +1,8 @@
 import React from 'react';
 import classnames from 'classnames';
 import { shortTitle } from 'helpers/titleLength';
-import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from 'constants/routes';
-import { setTaskId } from 'store/common/task/slice';
 import styles from './index.module.scss';
 
 interface IProps {
@@ -17,11 +15,9 @@ interface IProps {
 const TITLE_LENGTH = 100;
 
 const Title: React.FC<IProps> = ({ title, type, task_id }) => {
-  // const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const openTask = () => {
-    // dispatch(setTaskId(task_id));
     navigate(`${ROUTES.editTask.path}${task_id}`);
   };
 

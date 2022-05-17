@@ -7,7 +7,6 @@ import {
   getNewSelectedMembers,
   getUnselectedMembers,
   getTaskId,
-  getTaskWatchersID,
 } from 'store/editTask/selectors';
 
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
@@ -24,13 +23,13 @@ import { IPopulatedUser } from 'store/users/types';
 import styles from '../AddMemberButton/index.module.scss';
 import SimpleSelect from '../../../Common/SimpleSelect';
 import useSelectOptions from '../TaskHook/useSelectOptions';
+import useMembersProps from '../MembersHook/useMembersProps';
 
 type TProps = {
-  roleId: string;
+  roleName: string;
 };
 
-const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
-  const { roleId } = props;
+const AddMemberButtonMulti: FC<TProps> = ({ roleName }) => {
   const dispatch = useAppDispatch();
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const options = useSelectOptions();
@@ -39,7 +38,10 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
 
   const roleAssign = useAppSelector(getNewSelectedMembers);
   const roleUnassign = useAppSelector(getUnselectedMembers);
-  const selectedMembers = useAppSelector(getTaskWatchersID);
+
+  const usersData = useMembersProps(roleName);
+  const selectedMembers = usersData?.usersID;
+  const roleId = usersData?.roleId;
 
   const isNewUser = (users: string[] | string, elem: string) => {
     return users?.indexOf(elem) === -1;
@@ -50,7 +52,7 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
   };
 
   const onChange = (value: string[]) => {
-    if (selectedMembers) {
+    if (selectedMembers && Array.isArray(selectedMembers)) {
       dispatch(
         setNewSelectedMembers(
           value.filter((elem: string) => isNewUser(selectedMembers, elem)),
@@ -67,7 +69,12 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
   const onBlur = () => {
     options.common.onBlur();
     setIsVisible(!isVisible);
-    if (Array.isArray(roleAssign) && Array.isArray(roleUnassign) && taskId) {
+    if (
+      Array.isArray(roleAssign) &&
+      Array.isArray(roleUnassign) &&
+      taskId &&
+      roleId
+    ) {
       roleAssign?.forEach((element) => {
         dispatch(
           setTaskMemberAction({
@@ -92,7 +99,7 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
   };
 
   const generateValue = () => {
-    if (selectedMembers) {
+    if (selectedMembers && Array.isArray(selectedMembers)) {
       return selectedMembers
         .concat(roleAssign || [])
         .filter((elem: string) =>

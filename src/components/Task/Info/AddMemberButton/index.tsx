@@ -12,12 +12,13 @@ import { IPopulatedUser } from 'store/users/types';
 import styles from './index.module.scss';
 import SimpleSelect from '../../../Common/SimpleSelect';
 import useSelectOptions from '../TaskHook/useSelectOptions';
+import useMembersProps from '../MembersHook/useMembersProps';
 
 type TProps = {
-  roleId: string;
+  roleName: string;
 };
 
-const AddMemberButton: FC<TProps> = ({ roleId }) => {
+const AddMemberButton: FC<TProps> = ({ roleName }) => {
   const dispatch = useAppDispatch();
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const options = useSelectOptions();
@@ -25,6 +26,9 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
   const taskId = useAppSelector(getTaskId);
 
   const roleAssign = useAppSelector(getNewSelectedMembers);
+
+  const usersData = useMembersProps(roleName);
+  const roleId = usersData?.roleId;
 
   const showMemberModal = () => {
     setIsVisible(true);
@@ -37,7 +41,7 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
   const onBlur = () => {
     options.common.onBlur();
     setIsVisible(!isVisible);
-    if (roleAssign && taskId) {
+    if (roleAssign && taskId && roleId) {
       dispatch(
         setTaskMemberAction({
           task_id: taskId,
