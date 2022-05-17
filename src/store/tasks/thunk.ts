@@ -4,10 +4,11 @@ import { RootState } from 'store';
 import { TASKS_SLICE_ALIAS } from 'store/tasks/types';
 import { api } from '../../network';
 import { selectTaskQuery } from '../filters/selectors';
+import { filtersRollBack, filtersSyncState } from '../filters/slice';
 
 export const fetchTasksAction = createAsyncThunk(
   `${TASKS_SLICE_ALIAS}/fetchAll`,
-  async (_, { rejectWithValue, getState }) => {
+  async (_, { rejectWithValue, getState, dispatch }) => {
     try {
       const state = getState() as RootState;
       const tasksQuery = selectTaskQuery(state);
@@ -26,9 +27,13 @@ export const fetchTasksAction = createAsyncThunk(
         },
       });
 
+      dispatch(filtersSyncState());
+
       return response.data;
     } catch (error) {
-      notification.error({ message: 'Ошибка данных' });
+      dispatch(filtersRollBack());
+
+      notification.error({ message: error.message });
       return rejectWithValue(error.message);
     }
   },

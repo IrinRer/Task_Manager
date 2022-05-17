@@ -1,0 +1,29 @@
+@import 'src/styles/font-variables';
+
+.infoLine {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-size: $font-size-m;
+  padding-bottom: 14px;
+  font-weight: normal;
+  text-transform: none;
+
+  span:first-of-type {
+    text-align: left;
+    cursor: pointer;
+  }
+  .members {
+    width: 56%;
+  }
+  .watchers {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 56%;
+    .members {
+      width: 100%;
+    }
+  }
+}

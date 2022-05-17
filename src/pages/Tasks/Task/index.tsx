@@ -11,6 +11,7 @@ import { fetchTaskAction } from 'store/common/task/thunk';
 import { clearDataTask } from 'store/common/task/slice';
 import Preloader from 'components/Common/Preloader';
 import { ROUTES } from 'constants/routes';
+
 import styles from './index.module.scss';
 
 const Task: React.FC = () => {

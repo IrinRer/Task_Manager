@@ -17,6 +17,7 @@ const StatusCheckboxGroup: React.FC = () => {
   const statusCheckboxes: Array<IPopulatedStatus> = useAppSelector(
     selectPopulatedStatuses,
   );
+
   const checkboxValues: Array<string> = useAppSelector(
     selectStatusCheckboxesValues,
   );
