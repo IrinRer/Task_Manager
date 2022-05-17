@@ -23,7 +23,8 @@ const Task: React.FC = () => {
   const navigate = useNavigate();
   const modalVisible = useAppSelector(getModalVisible);
   const errorTask = useAppSelector(getEditTaskError);
-  const { taskId } = useParams();
+  const params = useParams();
+  const taskId = params.id;
 
   useEffect(() => {
     if (taskId) {
