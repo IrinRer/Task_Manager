@@ -48,8 +48,9 @@ const Header: React.FC = () => {
     <>
       <Row className={styles.wrapper}>
         <h1>Задачи</h1>
-        <UserAvatar user={user} />
+
         <div className={styles.user}>
+          <UserAvatar user={user} />
           <UserMenu />
           <CaretDownOutlined className={styles.menuicon} />
         </div>
