@@ -1,7 +1,7 @@
 import React from 'react';
 import { Select } from 'antd';
 import { SelectProps, SelectValue } from 'antd/lib/select';
-import { TOption } from '../TaskHook/useSelectOptions';
+import { TOption } from '../../Task/Info/TaskHook/useSelectOptions';
 
 const { Option } = Select;
 
