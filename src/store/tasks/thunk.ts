@@ -5,7 +5,7 @@ import { RootState } from 'store';
 import { TASKS_SLICE_ALIAS } from 'store/tasks/types';
 import { api } from '../../network';
 import { selectTaskQuery } from '../filters/selectors';
-import { resetPages } from './slice';
+import { filtersRollBack, filtersSyncState } from '../filters/slice';
 
 export const fetchTasksAction = createAsyncThunk(
   `${TASKS_SLICE_ALIAS}/fetchAll`,
@@ -28,12 +28,13 @@ export const fetchTasksAction = createAsyncThunk(
         },
       });
 
-      // при обновлении списка задач - применении фильтров - сбрасываем страницы на 1-е.
-      dispatch(resetPages());
+      dispatch(filtersSyncState());
 
       return response.data;
     } catch (error) {
-      notification.error({ message: 'Ошибка данных' });
+      dispatch(filtersRollBack());
+
+      notification.error({ message: error.message });
       return rejectWithValue(error.message);
     }
   },

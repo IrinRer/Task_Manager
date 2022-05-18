@@ -13,8 +13,10 @@ import { ROUTES } from 'constants/routes';
 import { useNavigate } from 'react-router-dom';
 import { getNewTaskSuccess } from 'store/createTask/selectors';
 import { resetNewTaskSuccess } from 'store/createTask/slice';
+import { CaretDownOutlined } from '@ant-design/icons';
 import AddNewTask from './AddNewTask';
 import styles from './index.module.scss';
+import UserMenu from './UserMenu';
 
 const tasksButtonClass = (flag: boolean): string => {
   return flag ? styles.inactive : styles.active;
@@ -47,6 +49,10 @@ const Header: React.FC = () => {
       <Row className={styles.wrapper}>
         <h1>Задачи</h1>
         <UserAvatar user={user} />
+        <div className={styles.user}>
+          <UserMenu />
+          <CaretDownOutlined className={styles.menuicon} />
+        </div>
       </Row>
 
       {/* Кнопки все задачи - мои задачи */}

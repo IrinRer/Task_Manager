@@ -29,3 +29,12 @@ export const MY_TASKS_ROLES = [
   UserRoles.watcher,
   UserRoles.responsible,
 ];
+export const PARTICIPANTS_INPUT_MAX_LENGTH = 50;
+
+export const TAGS_INPUT_MAX_LENGTH = 20;
+
+export const PRIORITY_COLORS = {
+  Высокий: 'Red',
+  Средний: 'Orange',
+  Низкий: 'Green',
+};
