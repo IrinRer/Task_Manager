@@ -25,10 +25,11 @@ const PageSize: React.FC<IProps> = ({ pageSize, handleChange }) => {
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' || e.key === 'Escape') {
-      console.log(Number(newPageSize));
-      if (Number(newPageSize) > 0) {
-        handleChange(Number(newPageSize));
-        setEditMode(false);
+      if (e.key === 'Enter') {
+        if (Number(newPageSize) > 0) {
+          handleChange(Number(newPageSize));
+          setEditMode(false);
+        }
       } else if (e.key === 'Escape') {
         setNewPageSize(pageSize.toString());
         setEditMode(false);

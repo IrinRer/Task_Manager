@@ -13,6 +13,10 @@
   color: $dark-primary;
   font-size: $font-size-m;
   line-height: $line-height-m;
+  span {
+    width: 100%;
+    text-align: center;
+  }
   input {
     max-width: 26px;
     border: 1px solid $dark-secondary;
