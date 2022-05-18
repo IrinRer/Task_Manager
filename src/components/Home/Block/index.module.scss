@@ -28,6 +28,8 @@
     margin-top: 5px;
     :global(.ant-pagination) {
       color: $heading;
+      font-size: $font-size-m;
+      line-height: $line-height-m;
     }
     :global(.ant-pagination-prev) button {
       border-radius: 10px;

@@ -47,7 +47,9 @@ const Block: React.FC<IProps> = ({ blockType }) => {
   };
 
   const handleTasksOnPageChange = (newTasksOnPage: number) => {
-    if (newTasksOnPage < tasksTotal && newTasksOnPage > 0) {
+    if (newTasksOnPage > tasksTotal - 1) {
+      dispatch(setTasksOnPage({ blockType, tasksOnPage: tasksTotal - 1 }));
+    } else if (newTasksOnPage < tasksTotal && newTasksOnPage > 0) {
       // При увеличении числа задач на странице в конце нужно проверить что страница не выходит за диапазон задач
       if (newTasksOnPage * page > tasksTotal) {
         handlePageChange(Math.ceil(tasksTotal / newTasksOnPage));
