@@ -34,7 +34,7 @@ const Block: React.FC<IProps> = ({ blockType }) => {
       const newPage = Math.floor(tasksTotal / tasksOnPage) + 1;
       dispatch(setPage({ blockType, page: newPage }));
     }
-  }, [tasksOnPage, tasksTotal, page]);
+  }, [tasksOnPage, tasksTotal, page, blockType, dispatch]);
 
   // Хэндлеры для изменения параметров отображения - сортировки, страницы и задач на странице
 

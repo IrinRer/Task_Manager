@@ -10,7 +10,7 @@ import Tags from '../Tags';
 import Roles from '../Roles';
 import Priority from '../Priority';
 import Title from '../Title';
-import StatusChange from '../StatusChange';
+import StatusChange from '../../../Common/StatusChange';
 import TaskOptions from '../TaskOptions';
 import styles from './index.module.scss';
 

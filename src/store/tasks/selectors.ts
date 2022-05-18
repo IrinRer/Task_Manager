@@ -9,6 +9,8 @@ import {
 } from './service';
 
 export const selectTasks = (state: RootState) => state.tasks.tasks;
+export const getTaskById = (state: RootState, id: string) =>
+  state.tasks.tasks.find((task) => task.task_id === id);
 export const selectTasksLoading = (state: RootState) => state.tasks.loading;
 export const selectTasksError = (state: RootState) => state.tasks.error;
 export const selectTasksTotalCount = (state: RootState) =>

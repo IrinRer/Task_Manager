@@ -1,7 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { notification } from 'antd';
+import { IStatusChangeArg } from 'constants/types/common';
 import { RootState } from 'store';
-import { IStatusChangeArg, TASKS_SLICE_ALIAS } from 'store/tasks/types';
+import { TASKS_SLICE_ALIAS } from 'store/tasks/types';
 import { api } from '../../network';
 import { selectTaskQuery } from '../filters/selectors';
 import { resetPages } from './slice';

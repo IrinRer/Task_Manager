@@ -10,9 +10,18 @@
   text-transform: none;
 
   span {
-    width: 56%;
+    width: 50%;
   }
   span:first-of-type {
     text-align: left;
+  }
+  .second {
+    display: flex;
+    justify-content: flex-start;
+  }
+  .spinner {
+    display: flex;
+    justify-content: center;
+    padding-left: 50px;
   }
 }

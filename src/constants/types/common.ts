@@ -97,3 +97,9 @@ export enum UserRoles {
   watcher = 'Наблюдатель',
   responsible = 'Ответственный',
 }
+
+// используется в thunk для изменения статуса
+export interface IStatusChangeArg {
+  task_id: string;
+  task_status_id: string;
+}

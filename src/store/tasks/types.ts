@@ -47,9 +47,3 @@ export interface IPagination {
   page_total: number;
   per_page: number;
 }
-
-// используется в thunk для изменения статуса
-export interface IStatusChangeArg {
-  task_id: string;
-  task_status_id: string;
-}

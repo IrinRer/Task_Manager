@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { IEditTaskReducer, EDIT_TASK_SLICE_ALIAS } from 'store/editTask/types';
 import {
+  changeEditTaskStatusAction,
   deleteTaskMemberAction,
   setTaskDescription,
   setTaskMemberAction,
@@ -12,12 +13,14 @@ import { IResponseTask } from 'store/common/task/types';
 import { fetchTaskAction } from 'store/common/task/thunk';
 
 const initialState: IEditTaskReducer = {
+  modalVisible: false,
   data: null,
   editLoading: {
     task: false,
     title: false,
     desc: false,
     members: false,
+    status: false,
   },
   selectedMembers: null,
   unselectedMembers: null,
@@ -27,6 +30,7 @@ const initialState: IEditTaskReducer = {
     desc: null,
     setMembers: null,
     delMembers: null,
+    status: null,
   },
 };
 
@@ -42,7 +46,6 @@ export const editTaskSlice = createSlice({
     ) => {
       state.selectedMembers = action.payload;
     },
-
     setUnselectedMembers: (
       state: IEditTaskReducer,
       action: PayloadAction<string[]>,
@@ -147,6 +150,25 @@ export const editTaskSlice = createSlice({
       state.editError.delMembers = payload;
       state.unselectedMembers = null;
       state.editLoading.members = false;
+    },
+    [changeEditTaskStatusAction.pending.type]: (state: IEditTaskReducer) => {
+      state.editLoading.status = true;
+      state.editError.status = null;
+    },
+    [changeEditTaskStatusAction.fulfilled.type]: (
+      state: IEditTaskReducer,
+      { payload }: PayloadAction<IResponseTask>,
+    ) => {
+      state.data = payload;
+      state.editLoading.status = false;
+    },
+    [changeEditTaskStatusAction.rejected.type]: (
+      state: IEditTaskReducer,
+      { payload }: PayloadAction<AxiosError>,
+    ) => {
+      // state.response = null;
+      state.editLoading.status = false;
+      state.editError.status = payload;
     },
   },
 });

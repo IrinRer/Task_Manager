@@ -9,6 +9,9 @@ import {
   isWatcher,
 } from 'store/common/task/selectors';
 
+export const getModalVisible = (state: RootState) =>
+  state.editTask.modalVisible;
+
 export const getNewSelectedMembers = (state: RootState) =>
   state.editTask.selectedMembers;
 
@@ -63,3 +66,8 @@ export const getEditMembersLoading = (state: RootState) =>
 
 export const getEditTaskError = (state: RootState) =>
   state.editTask.editError.task;
+export const getEditStatusLoading = (state: RootState) =>
+  state.editTask.editLoading.status;
+
+export const getEditStatusError = (state: RootState) =>
+  state.editTask.editError.status;

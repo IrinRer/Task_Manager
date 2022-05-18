@@ -4,12 +4,14 @@ import { IResponseTask } from 'store/common/task/types';
 export const EDIT_TASK_SLICE_ALIAS = 'edittask';
 
 export interface IEditTaskReducer {
+  modalVisible: boolean;
   data: IResponseTask | null;
   editLoading: {
     task: boolean;
     title: boolean;
     desc: boolean;
     members: boolean;
+    status: boolean;
   };
   selectedMembers: Array<string> | null;
   unselectedMembers: Array<string> | null;
@@ -19,6 +21,7 @@ export interface IEditTaskReducer {
     desc: AxiosError | null;
     setMembers: AxiosError | null;
     delMembers: AxiosError | null;
+    status: AxiosError | null;
   };
 }
 

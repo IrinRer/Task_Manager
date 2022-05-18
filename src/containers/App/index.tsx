@@ -9,6 +9,7 @@ import { fetchVerifyAction } from 'store/auth/verify/thunk';
 import { getVerifyToken } from 'store/auth/token/selectors';
 import CreateRoutes from 'containers/Routes';
 import { addVerifyToken } from 'store/auth/token/slice';
+import { getModalVisible } from 'store/editTask/selectors';
 import { fetchUsersAction } from '../../store/users/thunk';
 import { fetchTagsAction } from '../../store/common/tags/thunk';
 import { fetchTasksAction } from '../../store/tasks/thunk';
@@ -20,6 +21,7 @@ const App: React.FC = () => {
   const userID = useAppSelector(getVerifyIdUser);
   const token = getToken();
   const verifyToken = useAppSelector(getVerifyToken);
+  const modalVisible = useAppSelector(getModalVisible);
 
   useEffect(() => {
     if (token) dispatch(fetchVerifyAction(token));
@@ -39,6 +41,12 @@ const App: React.FC = () => {
       dispatch(fetchAllRoles());
     }
   }, [dispatch, verifyToken]);
+
+  useEffect(() => {
+    if (!modalVisible && verifyToken) {
+      dispatch(fetchTasksAction());
+    }
+  }, [dispatch, modalVisible]);
 
   return <CreateRoutes />;
 };
