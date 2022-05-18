@@ -16,7 +16,11 @@ const PageSize: React.FC<IProps> = ({ pageSize, handleChange }) => {
   }, [editMode]);
 
   const handleInput: React.ChangeEventHandler = (e: any) => {
-    if (validNumber(e.target.value)) setNewPageSize(e.target.value);
+    if (validNumber(e.target.value)) {
+      setNewPageSize(e.target.value);
+    } else {
+      notification.warn({ message: 'Введите число от 1 до 100' });
+    }
   };
 
   const handleClick = (e: any) => {
@@ -53,7 +57,7 @@ const PageSize: React.FC<IProps> = ({ pageSize, handleChange }) => {
 
   const validNumber = (value: string): boolean => {
     return (
-      (/^\d{1,2}$/.test(value) && Number(value) > 0 && Number(value) <= 50) ||
+      (/^\d{1,3}$/.test(value) && Number(value) > 0 && Number(value) <= 100) ||
       value.length === 0
     );
   };
