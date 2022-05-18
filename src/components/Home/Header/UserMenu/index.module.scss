@@ -1,0 +1,42 @@
+@import 'src/styles/color-variables.scss';
+@import 'src/styles/font-variables.scss';
+@import 'src/styles/colors';
+
+.usermenu {
+  opacity: 0;
+  z-index: 5;
+  width: 30px;
+  :global {
+    .ant-select-selection-item {
+      display: none;
+    }
+  }
+}
+
+.dropdown {
+  width: 200px;
+  border-radius: 10px;
+  padding: 0;
+
+  :global {
+    .ant-select-item {
+      background-color: $bg-secondary;
+      padding-left: 0;
+      &:hover {
+        background-color: rgba(0, 98, 255, 0.05);
+      }
+    }
+  }
+
+  a,
+  span {
+    display: block;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: $text-dark;
+    font-weight: 700;
+    font-size: $font-size-s;
+    padding: 0 20px;
+    margin: 0;
+  }
+}

@@ -8,11 +8,19 @@ import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { selectPriorityCheckboxesValues } from 'store/filters/selectors';
 import { fetchTasksAction } from 'store/tasks/thunk';
 import { IPopulatedPriority } from 'store/common/priorities/types';
+import classnames from 'classnames';
 import filterStyles from '../index.module.scss';
+import styles from './index.module.scss';
 import FilterWrapper from '../../../Common/FilterWrapper';
+import PriorityCheckboxLabel from './PriorityCheckboxLabel';
 
 const PriorityCheckboxGroup: React.FC = () => {
   const dispatch = useAppDispatch();
+
+  const className = classnames(
+    filterStyles.checkboxGroup,
+    styles.priorityCheckboxGroup,
+  );
 
   const priorityCheckboxes: Array<IPopulatedPriority> = useAppSelector(
     selectPopulatedPriorities,
@@ -30,11 +38,19 @@ const PriorityCheckboxGroup: React.FC = () => {
   return (
     <FilterWrapper header="ПРИОРИТЕТ">
       <Checkbox.Group
-        className={filterStyles.checkboxGroup}
-        options={priorityCheckboxes}
+        className={className}
         value={checkboxValues}
         onChange={handleChange}
-      />
+      >
+        {priorityCheckboxes.map((checkbox) => (
+          <Checkbox value={checkbox.value} key={checkbox.task_priority_id}>
+            <PriorityCheckboxLabel
+              color={checkbox.color}
+              label={checkbox.label}
+            />
+          </Checkbox>
+        ))}
+      </Checkbox.Group>
     </FilterWrapper>
   );
 };

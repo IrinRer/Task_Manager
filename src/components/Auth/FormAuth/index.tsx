@@ -32,6 +32,7 @@ const FormAuth: React.FC = () => {
       <Form.Item
         label="Логин"
         name="id"
+        validateTrigger="onChange"
         rules={[
           {
             required: true,

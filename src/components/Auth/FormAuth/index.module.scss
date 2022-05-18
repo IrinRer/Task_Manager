@@ -5,24 +5,26 @@
 .auth,
 .ant-form {
   width: 424px;
-  height: 418px;
   background-color: $bg-secondary;
   border-radius: 16px;
-  padding: 18px 56px !important;
+  padding: 56px !important;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   @include media-breakpoint-down(sm) {
     width: 300px;
-    padding: 10px 20px !important;
+    padding: 20px !important;
   }
 
   h2 {
     text-align: left;
     font-weight: 500;
     font-size: $font-size-xxl;
+    line-height: 1;
     color: $text-title;
+    margin-bottom: 40px;
+    padding: 0;
+    @include media-breakpoint-down(sm) {
+      margin-bottom: 15px;
+    }
   }
   :global {
     .ant-form-item-label
@@ -31,14 +33,21 @@
       content: '';
     }
     .ant-form-item {
+      margin-bottom: 0 !important;
       @include media-breakpoint-down(sm) {
         flex-direction: row !important;
       }
     }
+    .ant-form-item-control {
+      height: 74px;
+    }
     .ant-form-item-label {
-      font-weight: 400;
-      font-size: $font-size-m;
-      color: $dark-primary;
+      label {
+        font-weight: 400;
+        font-size: $font-size-m;
+        line-height: 1;
+        color: $dark-primary;
+      }
     }
     .ant-input,
     .ant-input-password {
@@ -47,6 +56,10 @@
       border-radius: 8px;
       width: 100%;
       height: 48px;
+
+      @include media-breakpoint-down(sm) {
+        margin-bottom: 0px;
+      }
     }
     .ant-input-password {
       padding-top: 0;
@@ -68,7 +81,7 @@
       font-style: normal;
       font-weight: 600;
       font-size: $font-size-m;
-      text-align: center;
+      margin-top: 40px;
       &:hover {
         background-color: darken($button-main, 10%);
       }
