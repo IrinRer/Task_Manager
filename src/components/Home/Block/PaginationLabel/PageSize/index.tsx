@@ -53,9 +53,7 @@ const PageSize: React.FC<IProps> = ({ pageSize, handleChange }) => {
 
   const validNumber = (value: string): boolean => {
     return (
-      (/^[\d{1,2}]*$/.test(value) &&
-        Number(value) > 0 &&
-        Number(value) <= 50) ||
+      (/^\d{1,2}$/.test(value) && Number(value) > 0 && Number(value) <= 50) ||
       value.length === 0
     );
   };
