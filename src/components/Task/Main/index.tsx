@@ -6,7 +6,6 @@ import {
   ContainerOutlined,
   PaperClipOutlined,
 } from '@ant-design/icons';
-import { Row } from 'antd';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { isClickedAttachments } from 'store/attachments/selectors';
 import uniqueId from 'lodash/uniqueId';
@@ -55,7 +54,7 @@ const Main: React.FC = () => {
       {elements.map((el) => {
         if (el.title === 'Описание' && clickedAttachments) {
           return (
-            <div className={styles.wrapperAttachments}>
+            <div className={styles.wrapperAttachments} key='attachments'>
               <PaperClipOutlined />
               <Attachments />
             </div>

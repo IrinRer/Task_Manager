@@ -13,8 +13,8 @@ const DropMenu = () => {
 
   const menu = (
     <Menu>
-      <Menu.Item>Добавить чеклист</Menu.Item>
-      <Menu.Item onClick={append}>Добавить вложение</Menu.Item>
+      <Menu.Item key='1'>Добавить чеклист</Menu.Item>
+      <Menu.Item onClick={append} key='2'>Добавить вложение</Menu.Item>
     </Menu>
   );
 

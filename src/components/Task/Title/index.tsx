@@ -76,8 +76,8 @@ const Title: React.FC = () => {
         />
         {isReadonly ? (
           <div className={styles.icon}>
-            <EditOutlined onClick={changeReadonly} key='EditOutlined'/>
-            <DropMenu key='DropMenu'/>
+            <EditOutlined onClick={changeReadonly}/>
+            <DropMenu/>
           </div>
         ) : null}
       </div>
