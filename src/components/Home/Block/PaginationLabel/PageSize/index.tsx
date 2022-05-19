@@ -15,6 +15,10 @@ const PageSize: React.FC<IProps> = ({ pageSize, handleChange }) => {
     if (editMode) inputRef.current?.focus();
   }, [editMode]);
 
+  useEffect(() => {
+    setNewPageSize(pageSize.toString());
+  }, [pageSize]);
+
   const handleInput: React.ChangeEventHandler = (e: any) => {
     if (validNumber(e.target.value)) {
       setNewPageSize(e.target.value);
