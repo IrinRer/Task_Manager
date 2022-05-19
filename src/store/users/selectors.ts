@@ -4,8 +4,22 @@ import { IPopulatedUser, IUser } from './types';
 
 const selectUsers = (state: RootState): Array<IUser> => state.users.users;
 
+const selectUniqueUsers = createSelector(selectUsers, (users): Array<IUser> => {
+  const uniqueUsersIds: Array<string> = [];
+  const uniqueUsers: Array<IUser> = [];
+
+  users.forEach((user) => {
+    if (!uniqueUsersIds.includes(user.user_id)) {
+      uniqueUsersIds.push(user.user_id);
+      uniqueUsers.push(user);
+    }
+  });
+
+  return uniqueUsers;
+});
+
 export const selectPopulatedUsers = createSelector(
-  selectUsers,
+  selectUniqueUsers,
   (users): Array<IPopulatedUser> =>
     users.map((user) => {
       return {
