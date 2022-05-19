@@ -8,6 +8,7 @@ import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { setUnselectedMembers } from 'store/editTask/slice';
 import { deleteTaskMemberAction } from 'store/editTask/thunk';
 import classnames from 'classnames';
+import { ROLES } from 'constants/task';
 import styles from '../AddMemberButton/index.module.scss';
 import stylesList from './index.module.scss';
 import SimpleSelect from '../../../Common/SimpleSelect';
@@ -26,6 +27,7 @@ const ListMemberMulti: FC<TProps> = ({ roleName, isActive, setIsActive }) => {
   const roleUnassign = useAppSelector(getUnselectedMembers);
   const usersData = useMembersProps(roleName);
   const selectedMembers = usersData?.usersID;
+  const watcherRoleId = useMembersProps(ROLES.watcher)?.roleId;
 
   const dispatch = useAppDispatch();
   const taskId = useAppSelector(getTaskId);
@@ -57,6 +59,15 @@ const ListMemberMulti: FC<TProps> = ({ roleName, isActive, setIsActive }) => {
             task_role_id: usersData?.roleId,
           }),
         );
+        if (roleName !== ROLES.watcher && watcherRoleId) {
+          dispatch(
+            deleteTaskMemberAction({
+              task_id: taskId,
+              assign_user_id: element,
+              task_role_id: watcherRoleId,
+            }),
+          );
+        }
       });
       dispatch(setUnselectedMembers([]));
     }

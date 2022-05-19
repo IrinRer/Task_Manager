@@ -6,6 +6,7 @@ import { deleteTaskMemberAction } from 'store/editTask/thunk';
 import { getTaskId } from 'store/editTask/selectors';
 import useMembersProps from 'components/Task/Info/MembersHook/useMembersProps';
 import { IUser } from 'store/users/types';
+import { ROLES } from 'constants/task';
 import styles from './index.module.scss';
 
 type TProps = {
@@ -19,6 +20,7 @@ const EditableMember: FC<TProps> = ({ user, roleName }) => {
 
   const usersData = useMembersProps(roleName);
   const roleId = usersData?.roleId;
+  const watcherRoleId = useMembersProps(ROLES.watcher)?.roleId;
 
   const deleteMember = () => {
     if (taskId && user && roleId) {
@@ -29,6 +31,15 @@ const EditableMember: FC<TProps> = ({ user, roleName }) => {
           task_role_id: roleId,
         }),
       );
+      if (roleName !== ROLES.watcher && watcherRoleId) {
+        dispatch(
+          deleteTaskMemberAction({
+            task_id: taskId,
+            assign_user_id: user.user_id,
+            task_role_id: watcherRoleId,
+          }),
+        );
+      }
     }
   };
   return (

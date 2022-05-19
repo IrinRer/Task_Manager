@@ -20,6 +20,7 @@ import {
 } from 'store/editTask/thunk';
 import { selectPopulatedUsers } from 'store/users/selectors';
 import { IPopulatedUser } from 'store/users/types';
+import { ROLES } from 'constants/task';
 import styles from '../AddMemberButton/index.module.scss';
 import SimpleSelect from '../../../Common/SimpleSelect';
 import useSelectOptions from '../TaskHook/useSelectOptions';
@@ -44,6 +45,7 @@ const AddMemberButtonMulti: FC<TProps> = ({ roleName, usersMaxCount }) => {
   const usersData = useMembersProps(roleName);
   const selectedMembers = usersData?.usersID;
   const roleId = usersData?.roleId;
+  const watcherRoleId = useMembersProps(ROLES.watcher)?.roleId;
 
   const isNewUser = (users: string[] | string, elem: string) => {
     return users?.indexOf(elem) === -1;
@@ -100,6 +102,15 @@ const AddMemberButtonMulti: FC<TProps> = ({ roleName, usersMaxCount }) => {
             task_role_id: roleId,
           }),
         );
+        if (roleName !== ROLES.watcher && watcherRoleId) {
+          dispatch(
+            setTaskMemberAction({
+              task_id: taskId,
+              assign_user_id: element,
+              task_role_id: watcherRoleId,
+            }),
+          );
+        }
       });
       roleUnassign?.forEach((element) => {
         dispatch(
@@ -109,6 +120,15 @@ const AddMemberButtonMulti: FC<TProps> = ({ roleName, usersMaxCount }) => {
             task_role_id: roleId,
           }),
         );
+        if (roleName !== ROLES.watcher && watcherRoleId) {
+          dispatch(
+            deleteTaskMemberAction({
+              task_id: taskId,
+              assign_user_id: element,
+              task_role_id: watcherRoleId,
+            }),
+          );
+        }
       });
       dispatch(setNewSelectedMembers([]));
       dispatch(setUnselectedMembers([]));

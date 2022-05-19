@@ -9,6 +9,7 @@ import { setNewSelectedMembers } from 'store/editTask/slice';
 import { setTaskMemberAction } from 'store/editTask/thunk';
 import { selectPopulatedUsers } from 'store/users/selectors';
 import { IPopulatedUser } from 'store/users/types';
+import { ROLES } from 'constants/task';
 import styles from './index.module.scss';
 import SimpleSelect from '../../../Common/SimpleSelect';
 import useSelectOptions from '../TaskHook/useSelectOptions';
@@ -29,6 +30,7 @@ const AddMemberButton: FC<TProps> = ({ roleName }) => {
 
   const usersData = useMembersProps(roleName);
   const roleId = usersData?.roleId;
+  const watcherRoleId = useMembersProps(ROLES.watcher)?.roleId;
 
   const showMemberModal = () => {
     setIsVisible(true);
@@ -49,6 +51,15 @@ const AddMemberButton: FC<TProps> = ({ roleName }) => {
           task_role_id: roleId,
         }),
       );
+      if (roleName !== ROLES.watcher && watcherRoleId) {
+        dispatch(
+          setTaskMemberAction({
+            task_id: taskId,
+            assign_user_id: roleAssign[0],
+            task_role_id: watcherRoleId,
+          }),
+        );
+      }
       dispatch(setNewSelectedMembers([]));
     }
   };
