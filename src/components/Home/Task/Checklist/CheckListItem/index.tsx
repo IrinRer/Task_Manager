@@ -4,7 +4,19 @@ import classnames from 'classnames';
 import { ReactComponent as MoreIcon } from 'assets/icons/more.svg';
 import filterStyles from 'components/Home/Filters/index.module.scss';
 import { ICheckListItem } from 'store/common/task/types';
-import ChecklistItemPopoverMenu from './ChecklistItemPopoverMenu';
+import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
+import {
+  deleteCheckListItemAction,
+  setCompleteCheckListItemAction,
+} from 'store/editTask/thunk';
+import { CheckboxChangeEvent } from 'antd/es/checkbox';
+import { ICheckListChangeCompleteStatus } from 'store/editTask/types';
+import { useAppSelector } from 'customHooks/redux/useAppSelector';
+import {
+  getIsCheckListItemLoading,
+  getIsTaskEditable,
+} from 'store/editTask/selectors';
+import Spinner from 'components/Common/Spinner';
 import styles from './index.module.scss';
 
 interface IProps {
@@ -12,7 +24,12 @@ interface IProps {
 }
 
 const CheckListItem: React.FC<IProps> = ({ checkListItem }) => {
+  const dispatch = useAppDispatch();
+
   const { check_list_item_id, message, complete } = checkListItem;
+
+  const isTaskEditable = useAppSelector(getIsTaskEditable);
+  const isCheckListItemLoading = useAppSelector(getIsCheckListItemLoading);
 
   const checkBoxClassName = classnames(
     filterStyles.checkboxGroup,
@@ -23,17 +40,46 @@ const CheckListItem: React.FC<IProps> = ({ checkListItem }) => {
     [styles.checkBoxTextCompleted]: complete,
   });
 
+  const handleDeleteCheckListItem = () => {
+    dispatch(deleteCheckListItemAction(check_list_item_id));
+  };
+
+  const toggleCheckListItemComplete = (evt: CheckboxChangeEvent) => {
+    const data: ICheckListChangeCompleteStatus = {
+      check_list_item_id,
+      complete: evt.target.checked,
+    };
+    dispatch(setCompleteCheckListItemAction(data));
+  };
+
   return (
     <div className={styles.checkListItem}>
-      <Checkbox checked={complete} className={checkBoxClassName} />
+      <Checkbox
+        checked={complete}
+        className={checkBoxClassName}
+        onChange={toggleCheckListItemComplete}
+        disabled={!isTaskEditable}
+      />
       <p className={checkBoxTextClassName}>{message}</p>
       <Popover
         trigger="click"
-        content={ChecklistItemPopoverMenu}
+        content={
+          isCheckListItemLoading ? (
+            <Spinner />
+          ) : (
+            <button
+              type="button"
+              className={styles.menuOption}
+              onClick={handleDeleteCheckListItem}
+            >
+              Удалить&nbsp;пункт
+            </button>
+          )
+        }
         overlayClassName={styles.popoverMenu}
         placement="bottomRight"
       >
-        <MoreIcon className={styles.moreButton} />
+        {isTaskEditable && <MoreIcon className={styles.moreButton} />}
       </Popover>
     </div>
   );

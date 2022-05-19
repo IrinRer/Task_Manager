@@ -11,6 +11,7 @@
 
 .headerSection {
   display: flex;
+  height: 24px;
   column-gap: 18px;
   align-items: center;
 }
@@ -33,14 +34,6 @@
       fill: darken($coral, 10%);
     }
   }
-}
-
-.title {
-  font-weight: 500;
-  font-size: $font-size-l;
-  line-height: $line-height-l;
-  color: $text-title;
-  margin: 0 auto 0 0;
 }
 
 .progressPercentage {
@@ -67,34 +60,44 @@
 .checklistItems {
   display: flex;
   flex-direction: column;
-  row-gap: 22px;
+  row-gap: 16px;
   margin: 8px 0 4px;
 }
 
-.newItemButton {
-  display: flex;
-  column-gap: 18px;
-  align-items: center;
-  margin: 0;
-  padding: 0;
-  border: none;
-  background-color: $bg-secondary;
-  cursor: pointer;
-  color: $button-main;
+.confirmationPopup {
+  :global {
+    padding-top: 10px;
 
-  &:hover {
-    color: lighten($button-main, 10%)
+    .ant-popover-inner {
+      border-radius: 8px;
+    }
+
+    .ant-popover-inner-content {
+      padding: 20px 27px;
+    }
+
+    .ant-popover-arrow {
+      display: none;
+    }
+
+    .ant-popover-message {
+      font-size: $font-size-m;
+      line-height: $line-height-m;
+    }
+
+    .ant-popover-message > .anticon {
+      top: 6px;
+    }
+
+    .ant-btn {
+      box-sizing: content-box;
+      padding: 3px 15px;
+      border-radius: 8px;
+      font-size: $font-size-m;
+    }
+
+    .ant-btn-primary {
+      margin-left: 12px;
+    }
   }
-}
-
-.newItemButtonIcon {
-  width: 15px;
-  height: 15px;
-}
-
-.newItemButtonText {
-  font-weight: 600;
-  font-size: $font-size-m;
-  line-height: $line-height-xs;
-  margin: 0;
 }

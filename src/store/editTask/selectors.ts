@@ -9,6 +9,8 @@ import {
   isWatcher,
 } from 'store/common/task/selectors';
 import { ICheckList } from '../common/task/types';
+import { TProgress } from '../../constants/types/common';
+import { getVerifyIdUser } from '../auth/verify/selectors';
 
 export const getNewSelectedMembers = (state: RootState) =>
   state.editTask.selectedMembers;
@@ -72,15 +74,48 @@ export const getEditTaskError = (state: RootState) =>
 export const getCheckList = (state: RootState): ICheckList | null =>
   state.editTask.data?.check_lists[0] || null;
 
+export const getCheckListId = (state: RootState): string | undefined =>
+  state.editTask.data?.check_lists[0]?.check_list_id;
+
 export const getCheckListProgress = createSelector(
   getCheckList,
-  (checkList) => {
+  (checkList): TProgress => {
     if (checkList && checkList.items.length > 0) {
-      const completedItems = checkList.items.filter((item) => item.complete);
+      const total = checkList.items.length;
+      const completed = checkList.items.filter((item) => item.complete).length;
+      const percent = Math.round((completed / total) * 100);
 
-      return (completedItems.length / checkList.items.length) * 100;
+      return {
+        total,
+        completed,
+        percent,
+      };
     }
 
-    return 0;
+    return null;
   },
 );
+
+export const getIsCheckListLoading = (state: RootState): boolean =>
+  state.editTask.editLoading.checkList;
+
+export const getIsCheckListItemLoading = (state: RootState): boolean =>
+  state.editTask.editLoading.checkListItem;
+
+export const getIsCheckListTitleLoading = (state: RootState): boolean =>
+  state.editTask.editLoading.checkListTitle;
+
+export const getIsTaskEditable = createSelector(
+  getTaskAuthor,
+  getTaskImplementer,
+  getTaskResponsible,
+  getVerifyIdUser,
+  (author, implementer, responsible, authUserId): boolean => {
+    return !![author, implementer, responsible].find(
+      (user) => user?.user_id === authUserId,
+    );
+  },
+);
+
+export const getCheckListTitle = (state: RootState): string | undefined =>
+  state.editTask.data?.check_lists[0].title;

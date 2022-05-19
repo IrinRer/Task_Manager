@@ -16,4 +16,13 @@
   &:hover {
     color: darken($gray-800, 20%);
   }
+
+  &:disabled {
+    color: $gray-500;
+    cursor: default;
+
+    &:hover {
+      color: $gray-500;
+    }
+  }
 }

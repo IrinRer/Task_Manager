@@ -11,6 +11,8 @@ export interface IEditTaskReducer {
     desc: boolean;
     members: boolean;
     checkList: boolean;
+    checkListTitle: boolean;
+    checkListItem: boolean;
   };
   selectedMembers: Array<string> | null;
   unselectedMembers: Array<string> | null;
@@ -21,6 +23,8 @@ export interface IEditTaskReducer {
     setMembers: AxiosError | null;
     delMembers: AxiosError | null;
     checkList: AxiosError | null;
+    checkListTitle: AxiosError | null;
+    checkListItem: AxiosError | null;
   };
 }
 
@@ -28,4 +32,9 @@ export interface ITaskAssignUser {
   task_id: string;
   assign_user_id: string;
   task_role_id: string;
+}
+
+export interface ICheckListChangeCompleteStatus {
+  check_list_item_id: string;
+  complete: boolean;
 }

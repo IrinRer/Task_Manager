@@ -4,8 +4,12 @@ import { AxiosResponse } from 'axios';
 
 import { api } from 'network';
 
-import { ITaskAssignUser, EDIT_TASK_SLICE_ALIAS } from 'store/editTask/types';
-import { getTaskId } from './selectors';
+import {
+  ITaskAssignUser,
+  EDIT_TASK_SLICE_ALIAS,
+  ICheckListChangeCompleteStatus,
+} from 'store/editTask/types';
+import { getCheckListId, getTaskId } from './selectors';
 import { RootState } from '../index';
 
 export const setTaskDescription = createAsyncThunk(
@@ -125,6 +129,96 @@ export const addCheckListAction = createAsyncThunk(
       return response.data.data;
     } catch (error) {
       notification.error({ message: 'Ошибка добавления чеклиста' });
+      return rejectWithValue(error);
+    }
+  },
+);
+
+export const addCheckListItemAction = createAsyncThunk(
+  `${EDIT_TASK_SLICE_ALIAS}/addCheckListItem`,
+  async (message: string, { getState, rejectWithValue }) => {
+    const check_list_id = getCheckListId(getState() as RootState);
+
+    try {
+      const response: AxiosResponse = await api().post(
+        `/api/v1.0/check-list/check-lists/${check_list_id}/items`,
+        {
+          message,
+        },
+      );
+
+      return response.data.data;
+    } catch (error) {
+      notification.error({ message: 'Ошибка добавления элемента чеклиста' });
+      return rejectWithValue(error);
+    }
+  },
+);
+
+export const deleteCheckListItemAction = createAsyncThunk(
+  `${EDIT_TASK_SLICE_ALIAS}/deleteCheckListItem`,
+  async (check_list_item_id: string, { getState, rejectWithValue }) => {
+    const check_list_id = getCheckListId(getState() as RootState);
+
+    try {
+      const response: AxiosResponse = await api().delete(
+        `/api/v1.0/check-list/check-lists/${check_list_id}/items/${check_list_item_id}`,
+      );
+
+      return response.data.data;
+    } catch (error) {
+      notification.error({ message: 'Ошибка удаления элемента чеклиста' });
+      return rejectWithValue(error);
+    }
+  },
+);
+
+export const setCompleteCheckListItemAction = createAsyncThunk(
+  `${EDIT_TASK_SLICE_ALIAS}/setCompleteCheckListItemAction`,
+  async (
+    data: ICheckListChangeCompleteStatus,
+    { getState, rejectWithValue },
+  ) => {
+    const check_list_id = getCheckListId(getState() as RootState);
+    const { check_list_item_id, complete } = data;
+
+    try {
+      const response: AxiosResponse = await api().post(
+        `/api/v1.0/check-list/check-lists/${check_list_id}/items/${check_list_item_id}/complete-change`,
+        { complete },
+      );
+
+      return response.data.data;
+    } catch (error) {
+      notification.error({
+        message: 'Ошибка изменения статуса элемента чеклиста',
+      });
+      return rejectWithValue(error);
+    }
+  },
+);
+
+export const setCheckListTitle = createAsyncThunk(
+  `${EDIT_TASK_SLICE_ALIAS}/setCheckListTitle`,
+  async (ctitle: string, { getState, rejectWithValue }) => {
+    const check_list_id = getCheckListId(getState() as RootState);
+
+    try {
+      const response: AxiosResponse = await api().post(
+        `/api/v1.0/check-list/check-lists/${check_list_id}/title-change`,
+        null,
+        {
+          params: {
+            title: ctitle,
+          },
+        },
+      );
+
+      return response.data.data;
+    } catch (error) {
+      notification.error({
+        message: 'Ошибка изменения заголовка чеклиста',
+      });
       return rejectWithValue(error);
     }
   },

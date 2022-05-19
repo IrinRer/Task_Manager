@@ -1,0 +1,52 @@
+@import 'src/styles/_color-variables.scss';
+@import 'src/styles/_colors.scss';
+@import 'src/styles/_font-variables.scss';
+
+.newItemButton {
+  display: flex;
+  column-gap: 18px;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: $bg-secondary;
+  cursor: pointer;
+  color: $button-main;
+
+  &:hover {
+    color: lighten($button-main, 10%)
+  }
+}
+
+.newItemInput {
+  :global {
+    font-size: $font-size-l;
+    line-height: $line-height-l;
+    color: $heading;
+    box-shadow: none;
+    overflow: hidden;
+    padding: 5px 11px 3px;
+    border-radius: 8px;
+    margin-left: 30px;
+    width: auto;
+  }
+
+  &:focus,
+  &:hover,
+  &:focus-visible {
+    box-shadow: none;
+    color: $text-color;
+  }
+}
+
+.newItemButtonIcon {
+  width: 15px;
+  height: 15px;
+}
+
+.newItemButtonText {
+  font-weight: 600;
+  font-size: $font-size-m;
+  line-height: $line-height-xs;
+  margin: 0;
+}
