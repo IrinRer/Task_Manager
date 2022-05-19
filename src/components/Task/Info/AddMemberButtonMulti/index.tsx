@@ -27,11 +27,13 @@ import useMembersProps from '../MembersHook/useMembersProps';
 
 type TProps = {
   roleName: string;
+  usersMaxCount: number;
 };
 
-const AddMemberButtonMulti: FC<TProps> = ({ roleName }) => {
+const AddMemberButtonMulti: FC<TProps> = ({ roleName, usersMaxCount }) => {
   const dispatch = useAppDispatch();
   const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const options = useSelectOptions();
   const allUsers: Array<IPopulatedUser> = useAppSelector(selectPopulatedUsers);
   const taskId = useAppSelector(getTaskId);
@@ -53,16 +55,31 @@ const AddMemberButtonMulti: FC<TProps> = ({ roleName }) => {
 
   const onChange = (value: string[]) => {
     if (selectedMembers && Array.isArray(selectedMembers)) {
-      dispatch(
-        setNewSelectedMembers(
-          value.filter((elem: string) => isNewUser(selectedMembers, elem)),
-        ),
+      const newSelectedMembers = value.filter((elem: string) =>
+        isNewUser(selectedMembers, elem),
       );
-      dispatch(
-        setUnselectedMembers(
-          selectedMembers.filter((elem: string) => isNewUser(value, elem)),
-        ),
+      const newUnselectedMembers = selectedMembers.filter((elem: string) =>
+        isNewUser(value, elem),
       );
+
+      const countSelectedMembers =
+        selectedMembers.length +
+        newSelectedMembers.length -
+        newUnselectedMembers.length;
+
+      if (countSelectedMembers > usersMaxCount) {
+        setIsDisabled(true);
+      }
+      if (countSelectedMembers === usersMaxCount) {
+        setIsDisabled(true);
+        dispatch(setNewSelectedMembers(newSelectedMembers));
+        dispatch(setUnselectedMembers(newUnselectedMembers));
+      }
+      if (countSelectedMembers < usersMaxCount) {
+        setIsDisabled(false);
+        dispatch(setNewSelectedMembers(newSelectedMembers));
+        dispatch(setUnselectedMembers(newUnselectedMembers));
+      }
     }
   };
 
@@ -109,6 +126,14 @@ const AddMemberButtonMulti: FC<TProps> = ({ roleName }) => {
     return null;
   };
 
+  const getOnlySelectedUsers = () => {
+    const selectedMembersWithNew = generateValue();
+
+    return allUsers.filter((el) => {
+      return !isNewUser(selectedMembersWithNew || [], el.user_id);
+    });
+  };
+
   return (
     <div className={styles.addmemberWrapper}>
       {!isVisible ? (
@@ -119,7 +144,7 @@ const AddMemberButtonMulti: FC<TProps> = ({ roleName }) => {
 
       {isVisible ? (
         <SimpleSelect
-          list={allUsers}
+          list={isDisabled ? getOnlySelectedUsers() : allUsers}
           itemKey="key"
           itemLabel="name"
           itemValue="user_id"

@@ -71,9 +71,13 @@ const ListMemberMulti: FC<TProps> = ({ roleName, isActive, setIsActive }) => {
     return null;
   };
 
+  const unselectedMembersWithNew = generateValue();
+
   const users =
     usersData?.users && Array.isArray(usersData?.users)
-      ? usersData?.users
+      ? usersData?.users.filter((el) => {
+          return !isUnassignUser(unselectedMembersWithNew || [], el.user_id);
+        })
       : null;
 
   return (

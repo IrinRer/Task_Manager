@@ -17,7 +17,7 @@ const MembersByOne: FC<TProps> = ({ roleName, multiAdd, usersMaxCount }) => {
     usersData?.users && Array.isArray(usersData?.users) ? usersData?.users : [];
 
   const addMemberBtn = multiAdd ? (
-    <AddMemberButtonMulti roleName={roleName} />
+    <AddMemberButtonMulti roleName={roleName} usersMaxCount={usersMaxCount} />
   ) : (
     <AddMemberButton roleName={roleName} />
   );
