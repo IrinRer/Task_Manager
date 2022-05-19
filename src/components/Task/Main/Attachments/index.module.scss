@@ -1,0 +1,55 @@
+@import 'src/styles/font-variables';
+@import 'src/styles/colors';
+
+
+.col {
+    margin-top: 40px;
+}
+
+.text {
+  font-size: $font-size-l;
+}
+
+.btn {
+  width: 32px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  display: inline-flex;
+  align-content: center;
+  justify-content: center;
+  border-radius: 8px;
+  margin-left: 10px;
+  border: none;
+  background-color: #f1f1f5;
+
+  &:hover {
+    background-color: #f1f1f5;
+    border: none;
+  }
+
+  :global(.anticon-plus) {
+    font-size: 16px !important;
+  }
+}
+
+:global(.ant-upload.ant-upload-drag).upload {
+  max-width: 250px;
+  background: none;
+  border-radius: 8px;
+  border: 1px dashed #b5b5be;
+
+  :global(.ant-upload-drag-container) {
+    display: flex;
+    color: $gray-500;
+    font-size: $font-size-m;
+  }
+
+  &:hover {
+    background-color: #f1f1f5;
+    border: 1px dashed #b5b5be;
+
+    .btn {
+      background-color: white;
+    }
+  }
+}

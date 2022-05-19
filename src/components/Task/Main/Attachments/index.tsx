@@ -1,59 +1,68 @@
-import React, { useState } from 'react';
-import { RootState, store } from 'store';
-import { getVerifyToken } from 'store/auth/token/selectors';
-
-import { Button, Upload } from 'antd';
+import React, {useState} from 'react';
+import { Button, Upload, Col} from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { createPlaceFile} from 'store/attachments/thunk';
-import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { getStorageFileId } from 'store/attachments/selectors';
-import { api } from 'network';
+
+import styles from './index.module.scss';
+
 
 const Attachments = () => {
   const dispatch = useAppDispatch();
-  const id = useAppSelector(getStorageFileId);
-  console.log(id);
-   
-  const onChange = (data) => {
-    dispatch(createPlaceFile(data));
+  const [fileList, setFileList] = useState<any>([]);
+  const [, setProgress] = useState(0);
+
+  const handleUpload = ({fileList}) => {
+    setFileList( fileList )
   };
 
-  const state: RootState = store.getState();
-  const token = getVerifyToken(state);
+  const handleSubmit = (options) => {
+    const { onSuccess, onError, onProgress } = options;
 
-  const props = {
-    headers: token ? { Authorization: `Bearer ${token}` } : undefined,
-    action: `https://swimlane-intership-group5.task.dev.tiny-services.ladcloud.ru/api/v1.0/storage/files/b71cc66b-b73c-46e4-a1b6-c9ad3542e3b4/upload`,
-    name: 'file'
-  };
+    const config = {
+      onUploadProgress: (event) => {
+        const percent = Math.floor((event.loaded / event.total) * 100);
+        setProgress(percent);
+        if (percent === 100) {
+          setTimeout(() => setProgress(0), 1000);
+        }
+        onProgress({ percent: (event.loaded / event.total) * 100 });
+      },
+    };
+
+    dispatch(createPlaceFile({fileList: fileList[0].originFileObj, onSuccess, onError, config }));
+  }
 
   return (
-    <>
-      <h3>Вложения</h3>
+    <Col className={styles.col}>
+      <p className={styles.text}>Вложения</p>
       <Upload.Dragger
+        className={styles.upload}
         multiple
-        {...props}
-        // action='https://swimlane-intership-group5.task.dev.tiny-services.ladcloud.ru/api/v1.0/storage/files/b71cc66b-b73c-46e4-a1b6-c9ad3542e3b4/upload'  
-        listType="picture"
-        showUploadList={{ showRemoveIcon: false }}
+        fileList={fileList}
+        listType='picture'
+        showUploadList={{ showRemoveIcon: true }}
         beforeUpload={(file) => {
           return true;
         }}
         progress={{
-          strokeWidth: 3,
-          style: { top: 12 },
+          strokeWidth: 5,
+          showInfo: true,
+          strokeColor: {
+            '0%': '#0062ff',
+            '100%': '#0062ff',
+          },
+          style: { top: 10, borderRadius: 8}
         }}
-        // customRequest={(e) => console.log(e)}
-        // onDrop={onChange}
+        customRequest={handleSubmit}
+        onChange={handleUpload}
       >
-        <Button>
+        <Button className={styles.btn}>
           <PlusOutlined />
         </Button>
         Перетащите сюда или загрузите файл
       </Upload.Dragger>
-      <input type='file' onChange={(e) => onChange(e.target.files)}/>
-    </>
+    </Col>
   );
 };
 
