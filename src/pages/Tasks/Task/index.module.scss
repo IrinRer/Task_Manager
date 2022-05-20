@@ -12,6 +12,19 @@
 :global(.ant-modal-close-icon) {
   font-size: $font-size-m;
 }
+:global(.ant-modal-close) svg path {
+  fill: $dark-primary;
+}
+:global(.ant-modal-close):hover svg path {
+  fill: $heading;
+}
+:global(.ant-modal-close-x) {
+  padding-top: 25px;
+  padding-right: 30px;
+  width: fit-content;
+  height: fit-content;
+  line-height: 1;
+}
 :global(.ant-modal-body) {
   height: 100%;
   padding: 0 !important;

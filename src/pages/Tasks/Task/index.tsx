@@ -15,6 +15,7 @@ import { fetchTaskAction } from 'store/common/task/thunk';
 import { clearDataTask } from 'store/common/task/slice';
 import Preloader from 'components/Common/Preloader';
 import { ROUTES } from 'constants/routes';
+import { ReactComponent as CloseIcon } from 'assets/icons/close.svg';
 
 import styles from './index.module.scss';
 
@@ -52,12 +53,19 @@ const Task: React.FC = () => {
     return <Navigate to={ROUTES.tasks.path} />;
   }
 
+  /* const img = (
+    <svg>
+      <use xlinkHref={`${close}`} />
+    </svg>
+  ); */
+
   return modalVisible ? (
     <Modal
       visible={modalVisible}
       confirmLoading={loadingTask}
       onCancel={handleCancel}
       className={styles.task}
+      closeIcon={<CloseIcon />}
       footer={[]}
     >
       <div className={styles.taskContainer}>

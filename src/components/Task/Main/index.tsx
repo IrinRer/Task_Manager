@@ -6,6 +6,9 @@ import {
   ContainerOutlined,
 } from '@ant-design/icons';
 import uniqueId from 'lodash/uniqueId';
+import description from 'assets/icons/description.png';
+import comments from 'assets/icons/comments.png';
+import history from 'assets/icons/history.png';
 import styles from './index.module.scss';
 import History from '../History';
 import InputWrapper from './InputWrapper';
@@ -17,13 +20,13 @@ const Main: React.FC = () => {
     {
       id: uniqueId(),
       title: 'Описание',
-      icon: <AlignLeftOutlined />,
+      icon: <img src={description} alt="description" />,
       block: <Description />,
     },
     {
       id: uniqueId(),
       title: 'Комментарии',
-      icon: <CommentOutlined />,
+      icon: <img src={comments} alt="comments" />,
       block: (
         <TextArea
           autoSize
@@ -35,7 +38,7 @@ const Main: React.FC = () => {
     {
       id: uniqueId(),
       title: 'Действия',
-      icon: <ContainerOutlined />,
+      icon: <img src={history} alt="history" />,
       block: <History />,
     },
   ];
