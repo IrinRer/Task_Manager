@@ -14,7 +14,7 @@ interface ITitleSignOut {
 const Signout: React.FC<ITitleSignOut> = ({ title }) => {
   const dispatch = useAppDispatch();
 
-  const userSignOut = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+  const userSignOut = () => {
     if (navigator.onLine) {
       resetToken();
       dispatch(addVerifyToken(null));
