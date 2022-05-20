@@ -55,6 +55,26 @@ const AddMemberButtonMulti: FC<TProps> = ({ roleName, usersMaxCount }) => {
     setIsVisible(true);
   };
 
+  const addNewMembersToArr = (
+    countSelectedMembers: number,
+    newSelectedMembers: string[],
+    newUnselectedMembers: string[],
+  ) => {
+    if (countSelectedMembers > usersMaxCount) {
+      setIsDisabled(true);
+    }
+    if (countSelectedMembers === usersMaxCount) {
+      setIsDisabled(true);
+      dispatch(setNewSelectedMembers(newSelectedMembers));
+      dispatch(setUnselectedMembers(newUnselectedMembers));
+    }
+    if (countSelectedMembers < usersMaxCount) {
+      setIsDisabled(false);
+      dispatch(setNewSelectedMembers(newSelectedMembers));
+      dispatch(setUnselectedMembers(newUnselectedMembers));
+    }
+  };
+
   const onChange = (value: string[]) => {
     if (selectedMembers && Array.isArray(selectedMembers)) {
       const newSelectedMembers = value.filter((elem: string) =>
@@ -69,19 +89,37 @@ const AddMemberButtonMulti: FC<TProps> = ({ roleName, usersMaxCount }) => {
         newSelectedMembers.length -
         newUnselectedMembers.length;
 
-      if (countSelectedMembers > usersMaxCount) {
-        setIsDisabled(true);
-      }
-      if (countSelectedMembers === usersMaxCount) {
-        setIsDisabled(true);
-        dispatch(setNewSelectedMembers(newSelectedMembers));
-        dispatch(setUnselectedMembers(newUnselectedMembers));
-      }
-      if (countSelectedMembers < usersMaxCount) {
-        setIsDisabled(false);
-        dispatch(setNewSelectedMembers(newSelectedMembers));
-        dispatch(setUnselectedMembers(newUnselectedMembers));
-      }
+      addNewMembersToArr(
+        countSelectedMembers,
+        newSelectedMembers,
+        newUnselectedMembers,
+      );
+    }
+  };
+
+  const updateNewMemberApi = (
+    task_id: string,
+    user_id: string,
+    role_id: string,
+    type: 'add' | 'del',
+  ) => {
+    if (type === 'add') {
+      dispatch(
+        setTaskMemberAction({
+          task_id,
+          assign_user_id: user_id,
+          task_role_id: role_id,
+        }),
+      );
+    }
+    if (type === 'del') {
+      dispatch(
+        deleteTaskMemberAction({
+          task_id,
+          assign_user_id: user_id,
+          task_role_id: role_id,
+        }),
+      );
     }
   };
 
@@ -95,39 +133,15 @@ const AddMemberButtonMulti: FC<TProps> = ({ roleName, usersMaxCount }) => {
       roleId
     ) {
       roleAssign?.forEach((element) => {
-        dispatch(
-          setTaskMemberAction({
-            task_id: taskId,
-            assign_user_id: element,
-            task_role_id: roleId,
-          }),
-        );
+        updateNewMemberApi(taskId, element, roleId, 'add');
         if (roleName !== ROLES.watcher && watcherRoleId) {
-          dispatch(
-            setTaskMemberAction({
-              task_id: taskId,
-              assign_user_id: element,
-              task_role_id: watcherRoleId,
-            }),
-          );
+          updateNewMemberApi(taskId, element, watcherRoleId, 'add');
         }
       });
       roleUnassign?.forEach((element) => {
-        dispatch(
-          deleteTaskMemberAction({
-            task_id: taskId,
-            assign_user_id: element,
-            task_role_id: roleId,
-          }),
-        );
+        updateNewMemberApi(taskId, element, roleId, 'del');
         if (roleName !== ROLES.watcher && watcherRoleId) {
-          dispatch(
-            deleteTaskMemberAction({
-              task_id: taskId,
-              assign_user_id: element,
-              task_role_id: watcherRoleId,
-            }),
-          );
+          updateNewMemberApi(taskId, element, watcherRoleId, 'del');
         }
       });
       dispatch(setNewSelectedMembers([]));
