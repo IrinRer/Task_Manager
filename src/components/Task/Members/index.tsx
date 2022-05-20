@@ -1,7 +1,6 @@
 import React from 'react';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { getEditMembersLoading } from 'store/editTask/selectors';
-
 import uniqueId from 'lodash/uniqueId';
 import Spinner from 'components/Common/Spinner';
 import { ROLES } from 'constants/task';

@@ -9,6 +9,9 @@ import {
   isWatcher,
 } from 'store/common/task/selectors';
 
+export const getModalVisible = (state: RootState) =>
+  state.editTask.modalVisible;
+
 export const getNewSelectedMembers = (state: RootState) =>
   state.editTask.selectedMembers;
 

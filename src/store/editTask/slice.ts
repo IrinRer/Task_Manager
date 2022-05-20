@@ -12,6 +12,7 @@ import { IResponseTask } from 'store/common/task/types';
 import { fetchTaskAction } from 'store/common/task/thunk';
 
 const initialState: IEditTaskReducer = {
+  modalVisible: false,
   data: null,
   editLoading: {
     task: false,
@@ -35,6 +36,13 @@ export const editTaskSlice = createSlice({
   initialState,
   reducers: {
     clearEditDataTask: () => initialState,
+
+    setModalVisible: (
+      state: IEditTaskReducer,
+      action: PayloadAction<boolean>,
+    ) => {
+      state.modalVisible = action.payload;
+    },
 
     setNewSelectedMembers: (
       state: IEditTaskReducer,
@@ -155,5 +163,6 @@ export const {
   clearEditDataTask,
   setNewSelectedMembers,
   setUnselectedMembers,
+  setModalVisible,
 } = editTaskSlice.actions;
 export default editTaskSlice.reducer;

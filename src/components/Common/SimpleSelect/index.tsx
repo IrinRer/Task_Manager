@@ -5,16 +5,19 @@ import { TOption } from '../../Task/Info/TaskHook/useSelectOptions';
 
 const { Option } = Select;
 
-type ISimpleSelect = {
-  list: object[] | null;
+interface ISimpleSelect<T> {
+  list: T[] | null;
   itemKey: string;
   itemLabel: string;
   itemValue: string;
-};
+}
 
-const SimpleSelect: React.FC<
-  ISimpleSelect & SelectProps<SelectValue, TOption>
-> = ({ list, itemKey, itemLabel, itemValue, ...props }) => {
+const SimpleSelect = <T,>(
+  props: React.PropsWithChildren<
+    ISimpleSelect<T> & SelectProps<SelectValue, TOption>
+  >,
+): React.ReactElement => {
+  const { list, itemKey, itemLabel, itemValue, ...rest } = props;
   const children = list?.map((el) => {
     return (
       <Option key={el[itemKey]} value={el[itemValue]}>
@@ -22,7 +25,7 @@ const SimpleSelect: React.FC<
       </Option>
     );
   });
-  return <Select {...props}>{children}</Select>;
+  return <Select {...rest}>{children}</Select>;
 };
 
 export default SimpleSelect;

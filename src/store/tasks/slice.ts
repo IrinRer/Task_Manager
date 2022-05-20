@@ -82,6 +82,7 @@ export const tasksSlice = createSlice({
       state.tasks = payload.data;
       state.itemsTotal = payload.pagination.items_total;
       state.loading = false;
+      state.error = null;
     },
     [fetchTasksAction.rejected.type]: (
       state: ITasksReducer,
@@ -110,7 +111,6 @@ export const tasksSlice = createSlice({
       state: ITasksReducer,
       { payload }: PayloadAction<AxiosError>,
     ) => {
-      // state.response = null;
       state.loading = false;
       state.error = payload;
     },
