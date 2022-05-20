@@ -1,3 +1,4 @@
+import { notification } from 'antd';
 import { ROUTES } from 'constants/routes';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { resetToken } from 'helpers/cookies';
@@ -13,11 +14,12 @@ interface ITitleSignOut {
 const Signout: React.FC<ITitleSignOut> = ({ title }) => {
   const dispatch = useAppDispatch();
 
-  const userSignOut = () => {
-    resetToken();
-    dispatch(addVerifyToken(null));
+  const userSignOut = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    if (navigator.onLine) {
+      resetToken();
+      dispatch(addVerifyToken(null));
+    } else notification.error({ message: 'Отсутствует интернет-соединение!' });
   };
-
   return (
     <Link
       className={style.link}
