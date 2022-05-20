@@ -1,19 +1,18 @@
-import React, {useState} from 'react';
-import { Button, Upload, Col} from 'antd';
+import React, { useState } from 'react';
+import { Button, Upload, Col } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import { createPlaceFile} from 'store/attachments/thunk';
+import { createPlaceFile } from 'store/attachments/thunk';
 
 import styles from './index.module.scss';
-
 
 const Attachments = () => {
   const dispatch = useAppDispatch();
   const [fileList, setFileList] = useState<any>([]);
   const [, setProgress] = useState(0);
 
-  const handleUpload = ({fileList}) => {
-    setFileList( fileList )
+  const handleUpload = ({ fileList }) => {
+    setFileList(fileList);
   };
 
   const handleSubmit = (options) => {
@@ -30,8 +29,15 @@ const Attachments = () => {
       },
     };
 
-    dispatch(createPlaceFile({fileList: fileList[0].originFileObj, onSuccess, onError, config }));
-  }
+    dispatch(
+      createPlaceFile({
+        fileList: fileList[0].originFileObj,
+        onSuccess,
+        onError,
+        config,
+      }),
+    );
+  };
 
   return (
     <Col className={styles.col}>
@@ -40,7 +46,7 @@ const Attachments = () => {
         className={styles.upload}
         multiple
         fileList={fileList}
-        listType='picture'
+        listType="picture"
         showUploadList={{ showRemoveIcon: true }}
         beforeUpload={(file) => {
           return true;
@@ -52,7 +58,7 @@ const Attachments = () => {
             '0%': '#0062ff',
             '100%': '#0062ff',
           },
-          style: { top: 10, borderRadius: 8}
+          style: { top: 10, borderRadius: 8 },
         }}
         customRequest={handleSubmit}
         onChange={handleUpload}

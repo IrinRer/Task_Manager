@@ -9,7 +9,6 @@ import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { setTaskTitle } from 'store/editTask/thunk';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { EditOutlined } from '@ant-design/icons';
-
 import Spinner from 'components/Common/Spinner';
 import classnames from 'classnames';
 import DropMenu  from './AddFunctionality';
