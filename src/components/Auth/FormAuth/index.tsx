@@ -9,7 +9,9 @@ const FormAuth: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const onFinish = ({ id }: { id: string }) => {
-    dispatch(fetchAuthAction(id));
+    if (navigator.onLine) {
+      dispatch(fetchAuthAction(id));
+    } else notification.error({ message: 'Отсутствует интернет-соединение!' });
   };
 
   const onFinishFailed = () => {
