@@ -68,6 +68,11 @@
   :global(.ant-input).readonly:focus-visible {
     border: none;
   }
+  button {
+    border: none;
+    margin-bottom: 30px;
+    height: 28px !important;
+  }
 }
 .border {
   border-bottom: 1px solid $dark-secondary;

@@ -8,10 +8,11 @@ import {
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { setTaskTitle } from 'store/editTask/thunk';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import { EditOutlined } from '@ant-design/icons';
+import { ReactComponent as EditIcon } from 'assets/icons/edit.svg';
 
 import Spinner from 'components/Common/Spinner';
 import classnames from 'classnames';
+import { Button } from 'antd';
 import styles from './index.module.scss';
 
 const Title: React.FC = () => {
@@ -70,7 +71,14 @@ const Title: React.FC = () => {
           value={newTitle || ''}
           readOnly={isReadonly}
         />
-        {isReadonly ? <EditOutlined onClick={changeReadonly} /> : null}
+        {isReadonly ? (
+          <Button
+            ghost
+            icon={<EditIcon />}
+            size="small"
+            onClick={changeReadonly}
+          />
+        ) : null}
       </div>
       <div className={styles.border} />
     </>
