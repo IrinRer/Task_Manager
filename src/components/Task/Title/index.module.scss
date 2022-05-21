@@ -16,6 +16,7 @@
   }
 
   :global(textarea.ant-input).name {
+    max-width: 499px;
     font-size: $font-size-xxl;
     line-height: $line-height-l;
     color: $text-color;
