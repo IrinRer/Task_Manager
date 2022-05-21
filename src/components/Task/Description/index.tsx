@@ -53,8 +53,12 @@ const Description: React.FC = () => {
 
   const handleSave = () => {
     if (taskId) {
+      setNewDesc(newDesc?.trim());
       dispatch(
-        setTaskDescription({ task_id: taskId, description: newDesc || '' }),
+        setTaskDescription({
+          task_id: taskId,
+          description: newDesc?.trim() || '',
+        }),
       );
     }
     setIsReadonly(true);
