@@ -37,8 +37,10 @@ const Title: React.FC = () => {
   };
 
   const onBlur = () => {
-    if (taskId && newTitle && !isReadonly) {
-      dispatch(setTaskTitle({ task_id: taskId, title: newTitle }));
+    setNewTitle(newTitle?.trim());
+
+    if (taskId && newTitle && !isReadonly && newTitle.trim() !== '') {
+      dispatch(setTaskTitle({ task_id: taskId, title: newTitle.trim() }));
     }
     setIsReadonly(true);
   };
@@ -67,6 +69,7 @@ const Title: React.FC = () => {
             [styles.error]: !newTitle,
           })}
           onChange={changeTitle}
+          onPressEnter={onBlur}
           onBlur={onBlur}
           value={newTitle || ''}
           readOnly={isReadonly}
