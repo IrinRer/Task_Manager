@@ -1,14 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ATTACHMENTS_SLICE_ALIAS, IAttachmentsReducer} from 'store/attachments/types';
+import {
+  ATTACHMENTS_SLICE_ALIAS,
+  IAttachmentsReducer,
+  IPayloadFile,
+} from 'store/attachments/types';
 import { AxiosError } from 'axios';
 import { createPlaceFile } from './thunk';
-
 
 const initialState: IAttachmentsReducer = {
   data: [],
   isClicked: false,
   loading: false,
-  error: null
+  error: null,
 };
 
 export const attachmentsSlice = createSlice({
@@ -20,16 +23,14 @@ export const attachmentsSlice = createSlice({
     },
   },
   extraReducers: {
-    [createPlaceFile.pending.type]: (
-      state
-    ) => {
+    [createPlaceFile.pending.type]: (state) => {
       state.loading = false;
       state.error = null;
     },
 
     [createPlaceFile.fulfilled.type]: (
       state,
-      { payload }: PayloadAction<any>,
+      { payload }: PayloadAction<IPayloadFile>,
     ) => {
       state.data = payload;
       state.loading = false;

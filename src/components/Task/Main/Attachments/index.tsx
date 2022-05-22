@@ -3,29 +3,49 @@ import { Button, Upload, Col } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { createPlaceFile } from 'store/attachments/thunk';
+import {
+  IFileList,
+  IOptions,
+  colorProgress,
+} from 'constants/types/attachments/attachments';
 
 import styles from './index.module.scss';
 
 const Attachments = () => {
   const dispatch = useAppDispatch();
-  const [fileList, setFileList] = useState<any>([]);
+  const [fileList, setFileList] = useState<Array<IFileList>>([]);
   const [, setProgress] = useState(0);
+
+  const beforeUpload = () => {
+    return true;
+  };
+
+  const progress = {
+    strokeWidth: 5,
+    showInfo: true,
+    strokeColor: {
+      '0%': colorProgress,
+      '100%': colorProgress,
+    },
+    style: { top: 10, borderRadius: 8 },
+  };
 
   const handleUpload = ({ fileList }) => {
     setFileList(fileList);
   };
 
-  const handleSubmit = (options) => {
+  const handleSubmit = (options: IOptions) => {
     const { onSuccess, onError, onProgress } = options;
 
     const config = {
-      onUploadProgress: (event) => {
-        const percent = Math.floor((event.loaded / event.total) * 100);
+      onUploadProgress: (event: ProgressEvent) => {
+        const definePercent = (event.loaded / event.total) * 100;
+        const percent = Math.floor(definePercent);
         setProgress(percent);
         if (percent === 100) {
           setTimeout(() => setProgress(0), 1000);
         }
-        onProgress({ percent: (event.loaded / event.total) * 100 });
+        onProgress({ percent: definePercent });
       },
     };
 
@@ -47,19 +67,9 @@ const Attachments = () => {
         multiple
         fileList={fileList}
         listType="picture"
+        progress={progress}
         showUploadList={{ showRemoveIcon: true }}
-        beforeUpload={(file) => {
-          return true;
-        }}
-        progress={{
-          strokeWidth: 5,
-          showInfo: true,
-          strokeColor: {
-            '0%': '#0062ff',
-            '100%': '#0062ff',
-          },
-          style: { top: 10, borderRadius: 8 },
-        }}
+        beforeUpload={beforeUpload}
         customRequest={handleSubmit}
         onChange={handleUpload}
       >

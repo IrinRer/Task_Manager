@@ -1,11 +1,10 @@
 import { SearchOutlined } from '@ant-design/icons';
-import { Button, Select } from 'antd';
+import { Button } from 'antd';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import React, { FC, useState } from 'react';
 
 import { getNewSelectedMembers, getTaskId } from 'store/editTask/selectors';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import useSelectOptions from 'components/Task/Info/TaskHook/useSelectOptions';
 import { setNewSelectedMembers } from 'store/editTask/slice';
 import { setTaskMemberAction } from 'store/editTask/thunk';
 import { selectPopulatedUsers } from 'store/users/selectors';
@@ -14,21 +13,20 @@ import { fetchUsersAction } from 'store/users/thunk';
 import debounce from 'lodash/debounce';
 import { DEBOUNCE_TIMEOUT } from 'constants/common';
 import styles from './index.module.scss';
-
-const { Option } = Select;
+import SimpleSelect from '../../../Common/SimpleSelect';
+import useSelectOptions from '../TaskHook/useSelectOptions';
 
 type TProps = {
   roleId: string;
 };
 
 const AddMemberButton: FC<TProps> = ({ roleId }) => {
-  const options = useSelectOptions();
   const dispatch = useAppDispatch();
   const [isVisible, setIsVisible] = useState<boolean>(false);
+  const options = useSelectOptions();
   const allUsers: Array<IPopulatedUser> = useAppSelector(selectPopulatedUsers);
   const taskId = useAppSelector(getTaskId);
 
-  // const roleAssign = useAppSelector(getOneNewSelectedMembers);
   const roleAssign = useAppSelector(getNewSelectedMembers);
 
   const showMemberModal = () => {
@@ -57,12 +55,6 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
     }
   };
 
-  const children = allUsers?.map((el) => (
-    <Option key={el.key} value={el.user_id}>
-      {el.name}
-    </Option>
-  ));
-
   return (
     <div className={styles.addmemberWrapper}>
       {!isVisible ? (
@@ -72,7 +64,11 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
       ) : null}
 
       {isVisible ? (
-        <Select<string[] | number | string, { value: string; children: string }>
+        <SimpleSelect
+          list={allUsers}
+          itemKey="key"
+          itemLabel="name"
+          itemValue="user_id"
           {...options}
           defaultValue={roleAssign}
           dropdownClassName={styles.dropdown}
@@ -88,9 +84,7 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
           onChange={onChange}
           onBlur={onBlur}
           onSearch={debounce(onSearch, DEBOUNCE_TIMEOUT)}
-        >
-          {children}
-        </Select>
+        />
       ) : null}
     </div>
   );
