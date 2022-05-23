@@ -11,6 +11,8 @@ import { setTaskDescription } from 'store/editTask/thunk';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import Spinner from 'components/Common/Spinner';
 import classnames from 'classnames';
+import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
+import { getRights } from 'helpers/rights';
 import styles from './index.module.scss';
 
 const Description: React.FC = () => {
@@ -23,6 +25,9 @@ const Description: React.FC = () => {
   const description = useAppSelector(getDescription);
   const taskId = useAppSelector(getTaskId);
   const editLoading = useAppSelector(getEditDescLoading);
+
+  const myMaxRole = useAppSelector(getMyMaxRoleForTask);
+  const isRights = getRights(myMaxRole, 'description');
 
   const [newDesc, setNewDesc] = useState<string | undefined>(description);
   const [isReadonly, setIsReadonly] = useState<boolean>(true);
@@ -90,7 +95,7 @@ const Description: React.FC = () => {
 
   return (
     <div className={styles.description}>
-      {isReadonly ? (
+      {isReadonly && isRights ? (
         <Button className={styles.change} onClick={handleChange}>
           изменить
         </Button>

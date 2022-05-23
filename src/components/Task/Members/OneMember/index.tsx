@@ -8,7 +8,7 @@ import styles from './index.module.scss';
 type TProps = {
   user?: IUser;
   roleName: string;
-  editable?: true;
+  editable: boolean;
 };
 
 const OneMember: FC<TProps> = ({ user, roleName, editable }) => {
@@ -30,7 +30,7 @@ const OneMember: FC<TProps> = ({ user, roleName, editable }) => {
         <span className={styles.noeditMembers}>{member.name}</span>
       ) : null}
 
-      {!member ? <AddMemberButton roleName={roleName} /> : null}
+      {!member && editable ? <AddMemberButton roleName={roleName} /> : null}
     </div>
   );
 };

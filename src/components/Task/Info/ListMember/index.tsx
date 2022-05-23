@@ -18,10 +18,16 @@ import useMembersProps from '../MembersHook/useMembersProps';
 type TProps = {
   roleName: string;
   isActive: boolean;
+  editable: boolean;
   setIsActive: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const ListMemberMulti: FC<TProps> = ({ roleName, isActive, setIsActive }) => {
+const ListMemberMulti: FC<TProps> = ({
+  roleName,
+  isActive,
+  setIsActive,
+  editable,
+}) => {
   const options = useSelectOptions();
 
   const roleUnassign = useAppSelector(getUnselectedMembers);
@@ -46,10 +52,13 @@ const ListMemberMulti: FC<TProps> = ({ roleName, isActive, setIsActive }) => {
     }
   };
 
-  const onBlur = () => {
+  const closeList = () => {
     options.common.onBlur();
     setIsActive(!isActive);
+  };
 
+  const onBlur = () => {
+    closeList();
     if (Array.isArray(roleUnassign) && taskId && usersData?.roleId) {
       roleUnassign?.forEach((element) => {
         dispatch(
@@ -105,7 +114,7 @@ const ListMemberMulti: FC<TProps> = ({ roleName, isActive, setIsActive }) => {
         itemValue="user_id"
         {...options.common}
         mode="multiple"
-        menuItemSelectedIcon={<CloseOutlined />}
+        menuItemSelectedIcon={editable ? <CloseOutlined /> : null}
         dropdownClassName={styles.dropdown}
         defaultValue={generateValue()}
         suffixIcon={
@@ -117,8 +126,8 @@ const ListMemberMulti: FC<TProps> = ({ roleName, isActive, setIsActive }) => {
             <SearchOutlined />
           </span>
         }
-        onChange={onChange}
-        onBlur={onBlur}
+        onChange={editable ? onChange : () => {}}
+        onBlur={editable ? onBlur : closeList}
       />
     </div>
   );

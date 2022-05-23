@@ -10,10 +10,10 @@ import description from 'assets/icons/description.png';
 import comments from 'assets/icons/comments.png';
 import history from 'assets/icons/history.png';
 import styles from './index.module.scss';
-import History from '../History';
+import History from './History';
 import InputWrapper from './InputWrapper';
-import Description from '../Description';
-import Title from '../Title';
+import Description from './Description';
+import Title from './Title';
 
 const Main: React.FC = () => {
   const elements = [

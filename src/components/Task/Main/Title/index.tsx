@@ -13,6 +13,8 @@ import { ReactComponent as EditIcon } from 'assets/icons/edit.svg';
 import Spinner from 'components/Common/Spinner';
 import classnames from 'classnames';
 import { Button } from 'antd';
+import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
+import { getRights } from 'helpers/rights';
 import styles from './index.module.scss';
 
 const Title: React.FC = () => {
@@ -24,6 +26,9 @@ const Title: React.FC = () => {
   const inputRef: Ref<TextAreaRef> | undefined = useRef(null);
   const [newTitle, setNewTitle] = useState<string | undefined>(title);
   const [isReadonly, setIsReadonly] = useState<boolean>(true);
+
+  const myMaxRole = useAppSelector(getMyMaxRoleForTask);
+  const isRights = getRights(myMaxRole, 'title');
 
   const changeReadonly = () => {
     setIsReadonly(!isReadonly);
@@ -74,7 +79,7 @@ const Title: React.FC = () => {
           value={newTitle || ''}
           readOnly={isReadonly}
         />
-        {isReadonly ? (
+        {isReadonly && isRights ? (
           <Button
             ghost
             icon={<EditIcon />}

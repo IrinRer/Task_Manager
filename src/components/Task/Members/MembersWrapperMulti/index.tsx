@@ -7,10 +7,11 @@ import styles from './index.module.scss';
 type TProps = {
   roleName: string;
   children: React.ReactNode;
+  editable: boolean;
 };
 
 const MembersWrapperMulti: FC<TProps> = (props: TProps) => {
-  const { roleName, children } = props;
+  const { roleName, children, editable } = props;
   const [isActive, setIsActive] = useState<boolean>(false);
 
   const usersData = useMembersProps(roleName);
@@ -30,6 +31,7 @@ const MembersWrapperMulti: FC<TProps> = (props: TProps) => {
       </span>
       {isActive ? (
         <ListMember
+          editable={editable}
           roleName={roleName}
           isActive={isActive}
           setIsActive={setIsActive}

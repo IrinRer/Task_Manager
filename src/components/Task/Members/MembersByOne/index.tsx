@@ -9,9 +9,15 @@ type TProps = {
   roleName: string;
   multiAdd: boolean;
   usersMaxCount: number;
+  editable: boolean;
 };
 
-const MembersByOne: FC<TProps> = ({ roleName, multiAdd, usersMaxCount }) => {
+const MembersByOne: FC<TProps> = ({
+  roleName,
+  multiAdd,
+  usersMaxCount,
+  editable,
+}) => {
   const usersData = useMembersProps(roleName);
   const users =
     usersData?.users && Array.isArray(usersData?.users) ? usersData?.users : [];
@@ -25,9 +31,14 @@ const MembersByOne: FC<TProps> = ({ roleName, multiAdd, usersMaxCount }) => {
   return (
     <div className={styles.watchers}>
       {users?.slice(0, 3).map((el) => (
-        <OneMember key={el.user_id} user={el} editable roleName={roleName} />
+        <OneMember
+          key={el.user_id}
+          user={el}
+          editable={editable}
+          roleName={roleName}
+        />
       ))}
-      {users?.length < usersMaxCount ? addMemberBtn : null}
+      {users?.length < usersMaxCount && editable ? addMemberBtn : null}
     </div>
   );
 };

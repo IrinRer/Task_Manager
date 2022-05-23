@@ -49,9 +49,8 @@ export const getTaskResponsible = createSelector(
   taskRoles,
   (roles) => roles?.find(isResponsible)?.assign_user,
 );
-export const getTaskImplementer = createSelector(
-  taskRoles,
-  (roles) => roles?.find(isImplementer)?.assign_user,
+export const getTaskImplementers = createSelector(taskRoles, (roles) =>
+  getUsersFromRoles(roles?.filter(isImplementer)),
 );
 export const getTaskWatchers = createSelector(taskRoles, (roles) =>
   getUsersFromRoles(roles?.filter(isWatcher)),

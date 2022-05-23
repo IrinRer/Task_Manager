@@ -4,36 +4,61 @@ import { getEditMembersLoading } from 'store/editTask/selectors';
 import uniqueId from 'lodash/uniqueId';
 import Spinner from 'components/Common/Spinner';
 import { ROLES } from 'constants/task';
+import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
+import { getRights } from 'helpers/rights';
 import OneMember from './OneMember';
 import MembersWrapperMulti from './MembersWrapperMulti';
 import MembersByOne from './MembersByOne';
 
 const Info: React.FC = () => {
   const editLoading = useAppSelector(getEditMembersLoading);
+  const myMaxRole = useAppSelector(getMyMaxRoleForTask);
+  const isRightsEditWatchers = getRights(myMaxRole, 'editWatcher');
+  const isRightsEditImplementer = getRights(myMaxRole, 'editImplementer');
+  const isRightsEditResponsible = getRights(myMaxRole, 'editResponsible');
 
   const elements = [
     {
       id: uniqueId(),
       title: 'Автор',
-      block: <OneMember roleName="Автор" />,
+      editable: false,
+      block: <OneMember editable={false} roleName={ROLES.author} />,
     },
     {
       id: uniqueId(),
       title: ROLES.responsible,
-      block: <OneMember editable roleName={ROLES.responsible} />,
+      editable: isRightsEditResponsible,
+      block: (
+        <OneMember
+          editable={isRightsEditResponsible}
+          roleName={ROLES.responsible}
+        />
+      ),
     },
     {
       id: uniqueId(),
       title: ROLES.implementer,
+      editable: isRightsEditImplementer,
       block: (
-        <MembersByOne roleName={ROLES.implementer} multiAdd usersMaxCount={3} />
+        <MembersByOne
+          editable={isRightsEditImplementer}
+          roleName={ROLES.implementer}
+          multiAdd
+          usersMaxCount={3}
+        />
       ),
     },
     {
       id: uniqueId(),
       title: ROLES.watcher,
+      editable: isRightsEditWatchers,
       block: (
-        <MembersByOne roleName={ROLES.watcher} multiAdd usersMaxCount={50} />
+        <MembersByOne
+          editable={isRightsEditWatchers}
+          roleName={ROLES.watcher}
+          multiAdd
+          usersMaxCount={50}
+        />
       ),
     },
   ];
@@ -46,7 +71,11 @@ const Info: React.FC = () => {
     <>
       {elements.map((el) => {
         return (
-          <MembersWrapperMulti key={el.id} roleName={el.title}>
+          <MembersWrapperMulti
+            key={el.id}
+            roleName={el.title}
+            editable={el.editable}
+          >
             {el.block}
           </MembersWrapperMulti>
         );
