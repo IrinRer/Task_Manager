@@ -4,7 +4,7 @@ import { Button, Col, Row } from 'antd';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { getOnlyMyTasksFlag } from 'store/tasks/selectors';
-import { showOnlyMyTasks, showAllTasks } from 'store/tasks/slice';
+import { showOnlyMyTasks, showAllTasks, resetTasks } from 'store/tasks/slice';
 import clockIcon from 'assets/icons/clock.svg';
 import personIcon from 'assets/icons/person.svg';
 import { getCurrentUser } from 'store/users/selectors';
@@ -14,9 +14,11 @@ import { generatePath, useNavigate } from 'react-router-dom';
 import { getNewTaskId, getNewTaskSuccess } from 'store/createTask/selectors';
 import { resetNewTaskSuccess } from 'store/createTask/slice';
 import { CaretDownOutlined } from '@ant-design/icons';
+import { filtersCleared } from 'store/filters/slice';
+import { fetchTasksAction } from 'store/tasks/thunk';
 import AddNewTask from './AddNewTask';
-import styles from './index.module.scss';
 import UserMenu from './UserMenu';
+import styles from './index.module.scss';
 
 const tasksButtonClass = (flag: boolean): string => {
   return flag ? styles.inactive : styles.active;

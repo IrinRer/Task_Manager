@@ -4,6 +4,8 @@ import { resetToken } from 'helpers/cookies';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { addVerifyToken } from 'store/auth/token/slice';
+import { filtersCleared } from 'store/filters/slice';
+import { resetTasks } from 'store/tasks/slice';
 import style from './index.module.scss';
 
 interface ITitleSignOut {
@@ -16,6 +18,8 @@ const Signout: React.FC<ITitleSignOut> = ({ title }) => {
   const userSignOut = () => {
     resetToken();
     dispatch(addVerifyToken(null));
+    dispatch(resetTasks());
+    dispatch(filtersCleared());
   };
 
   return (

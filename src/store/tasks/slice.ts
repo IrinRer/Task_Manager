@@ -14,6 +14,7 @@ import {
   fetchTasksAction,
 } from 'store/tasks/thunk';
 import { SortField, TTask } from 'constants/types/common';
+import { ConsoleSqlOutlined } from '@ant-design/icons';
 
 const TASKS_ON_PAGE_DEFAULT = 3;
 
@@ -52,6 +53,14 @@ export const tasksSlice = createSlice({
     showOnlyMyTasks: (state: ITasksReducer) => {
       state.onlyMyTasks = true;
     },
+    // resetState: (state: ITasksReducer) => {
+    //   state.viewParameters = { ...initialState.viewParameters };
+    //   state.onlyMyTasks = initialState.onlyMyTasks;
+    //   // state.viewParameters = initialState.viewParameters;
+    //   // state.itemsTotal = initialState.itemsTotal;
+    //   console.log('I RESET STATE', initialState);
+    // },
+    resetTasks: () => initialState,
     showAllTasks: (state: ITasksReducer) => {
       state.onlyMyTasks = false;
     },
@@ -157,5 +166,6 @@ export const {
   setTasksOnPage,
   addTask,
   resetPages,
+  resetTasks,
 } = tasksSlice.actions;
 export default tasksSlice.reducer;
