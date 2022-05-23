@@ -8,6 +8,8 @@ import ruRU from 'antd/lib/locale/ru_RU';
 import 'styles/antd.less';
 import 'styles/global.scss';
 
+ruRU.DatePicker!.lang.locale = 'ru';
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

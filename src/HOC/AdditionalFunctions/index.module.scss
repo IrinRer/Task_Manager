@@ -1,0 +1,15 @@
+@import 'src/styles/colors';
+
+:global(.ant-btn).btn {
+  border: none !important;
+  background: none;
+  box-shadow: none;
+
+  &:hover {
+    background: none;
+  }
+
+  :global(.anticon) {
+    color: $gray-600;
+  }
+}
