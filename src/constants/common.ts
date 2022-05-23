@@ -29,6 +29,10 @@ export const MY_TASKS_ROLES = [
   UserRoles.watcher,
   UserRoles.responsible,
 ];
+// TODO: Длина обрезки заголовка будет зависеть от разрешения экрана
+// переделается в дальшейшем
+export const TITLE_LENGTH = 100;
+
 export const PARTICIPANTS_INPUT_MAX_LENGTH = 50;
 
 export const TAGS_INPUT_MAX_LENGTH = 20;

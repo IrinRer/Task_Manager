@@ -40,6 +40,13 @@ export const editTaskSlice = createSlice({
   reducers: {
     clearEditDataTask: () => initialState,
 
+    setModalVisible: (
+      state: IEditTaskReducer,
+      action: PayloadAction<boolean>,
+    ) => {
+      state.modalVisible = action.payload;
+    },
+
     setNewSelectedMembers: (
       state: IEditTaskReducer,
       action: PayloadAction<string[]>,
@@ -177,5 +184,6 @@ export const {
   clearEditDataTask,
   setNewSelectedMembers,
   setUnselectedMembers,
+  setModalVisible,
 } = editTaskSlice.actions;
 export default editTaskSlice.reducer;

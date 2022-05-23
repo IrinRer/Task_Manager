@@ -35,7 +35,7 @@ const App: React.FC = () => {
     if (verifyToken) {
       dispatch(fetchUsersAction());
       dispatch(fetchTagsAction());
-      dispatch(fetchTasksAction());
+      // dispatch(fetchTasksAction());
       dispatch(fetchPrioritiesAction());
       dispatch(fetchStatusesAction());
       dispatch(fetchAllRoles());
@@ -43,10 +43,10 @@ const App: React.FC = () => {
   }, [dispatch, verifyToken]);
 
   useEffect(() => {
-    if (!modalVisible && verifyToken) {
+    if (verifyToken && !modalVisible) {
       dispatch(fetchTasksAction());
     }
-  }, [dispatch, modalVisible]);
+  }, [dispatch, modalVisible, verifyToken]);
 
   return <CreateRoutes />;
 };

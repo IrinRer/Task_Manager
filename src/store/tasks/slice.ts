@@ -123,7 +123,6 @@ export const tasksSlice = createSlice({
       state: ITasksReducer,
       { payload }: PayloadAction<AxiosError>,
     ) => {
-      // state.response = null;
       state.loading = false;
       state.error = payload;
     },
