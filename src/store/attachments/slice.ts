@@ -1,3 +1,4 @@
+import { deleteFile } from 'store/attachments/thunk';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   ATTACHMENTS_SLICE_ALIAS,
@@ -5,7 +6,7 @@ import {
   IPayloadFile,
 } from 'store/attachments/types';
 import { AxiosError } from 'axios';
-import { createPlaceFile } from './thunk';
+import { assignFile } from './thunk';
 
 const initialState: IAttachmentsReducer = {
   data: [],
@@ -23,20 +24,38 @@ export const attachmentsSlice = createSlice({
     },
   },
   extraReducers: {
-    [createPlaceFile.pending.type]: (state) => {
+    [assignFile.pending.type]: (state) => {
       state.loading = false;
       state.error = null;
     },
 
-    [createPlaceFile.fulfilled.type]: (
+    [assignFile.fulfilled.type]: (
       state,
       { payload }: PayloadAction<IPayloadFile>,
     ) => {
-      state.data = payload;
+      state.data = state.data.concat(payload);
       state.loading = false;
     },
 
-    [createPlaceFile.rejected.type]: (
+    [assignFile.rejected.type]: (
+      state,
+      { payload }: PayloadAction<AxiosError>,
+    ) => {
+      state.loading = false;
+      state.error = payload;
+    },
+
+    [deleteFile.pending.type]: (state) => {
+      state.loading = false;
+      state.error = null;
+    },
+
+    [deleteFile.fulfilled.type]: (state, { payload }: PayloadAction<any>) => {
+      state.data = state.data?.filter((item) => item.name_original !== payload);
+      state.loading = false;
+    },
+
+    [deleteFile.rejected.type]: (
       state,
       { payload }: PayloadAction<AxiosError>,
     ) => {

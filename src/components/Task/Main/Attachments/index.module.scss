@@ -53,3 +53,12 @@
     }
   }
 }
+
+:global(.ant-upload.ant-upload-drag.ant-upload-drag-hover).upload { 
+  background-color: #f1f1f5;
+  border: 1px dashed #b5b5be;
+
+  .btn {
+    background-color: white;
+  }
+}

@@ -1,18 +1,18 @@
 import { RcFile } from 'antd/lib/upload';
 
-export interface IFileList {
+export interface IFileList extends Blob, RcFile {
   name: string;
   lastModified: number;
   lastModifiedDate: Date;
-  originFileObj: RcFile;
-  percent: number;
-  response: string;
+  originFileObj?: RcFile;
+  percent?: number;
+  response?: string;
   size: number;
-  status: undefined;
-  thumbUrl: string;
+  status?: undefined;
+  thumbUrl?: string;
   type: string;
   uid: string;
-  xhr: undefined;
+  xhr?: undefined;
 }
 
 export interface IOptions {
@@ -23,3 +23,5 @@ export interface IOptions {
 }
 
 export const colorProgress = '#0062ff';
+
+export const acceptFormat = ".doc,.png,.jpg,.jpeg,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"; 

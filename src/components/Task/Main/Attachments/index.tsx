@@ -1,28 +1,43 @@
 import React, { useState } from 'react';
-import { Button, Upload, Col } from 'antd';
+import { Button, Upload, Col, notification } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+import type { RcFile, UploadFile } from 'antd/es/upload/interface';
+import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import { createPlaceFile } from 'store/attachments/thunk';
+import { assignFile, deleteFile, downloadFile } from 'store/attachments/thunk';
 import {
-  IFileList,
   IOptions,
   colorProgress,
+  acceptFormat,
 } from 'constants/types/attachments/attachments';
-
+import { getTaskId } from 'store/editTask/selectors';
+import { getfileName, getStorageFile } from 'store/attachments/selectors';
 import styles from './index.module.scss';
 
 const Attachments = () => {
   const dispatch = useAppDispatch();
-  const [fileList, setFileList] = useState<Array<IFileList>>([]);
+  const taskId = useAppSelector(getTaskId);
+  const allFile = useAppSelector(getStorageFile);
+  const fileName = useAppSelector(getfileName);
+
+  const [fileList, setFile] = useState<Array<UploadFile>>([]);
   const [, setProgress] = useState(0);
 
-  const beforeUpload = () => {
+  const determineIndex = (file: UploadFile) => {
+    return fileName.indexOf(file?.originFileObj?.name || '')
+  }
+
+   const beforeUpload = (file: RcFile) => {
+    if (fileName.indexOf(file.name) !== -1) {
+      notification.error({ message: 'Вы уже добавили этот файл' });
+      return Upload.LIST_IGNORE;
+    }
     return true;
   };
 
   const progress = {
     strokeWidth: 5,
-    showInfo: true,
+    showInfo: false,
     strokeColor: {
       '0%': colorProgress,
       '100%': colorProgress,
@@ -31,7 +46,28 @@ const Attachments = () => {
   };
 
   const handleUpload = ({ fileList }) => {
-    setFileList(fileList);
+    setFile(fileList);
+  };
+
+  const onRemove = (file: UploadFile) => {
+    const index = determineIndex(file);
+    dispatch(
+      deleteFile({
+        fileId: allFile[index].storageId,
+        taskId,
+        name: file?.originFileObj?.name,
+      }),
+    );
+  };
+
+  const onDownload = (file: UploadFile) => {
+    const index = determineIndex(file); 
+    dispatch(
+      downloadFile({
+        fileId: allFile[index].storageId,
+        name: file?.originFileObj?.name,
+      }),
+    );
   };
 
   const handleSubmit = (options: IOptions) => {
@@ -50,11 +86,13 @@ const Attachments = () => {
     };
 
     dispatch(
-      createPlaceFile({
-        fileList: fileList[0].originFileObj,
+      assignFile({
+        // последний файл в fileList новый, его и отпправляю
+        fileList: fileList[fileList.length - 1].originFileObj,
         onSuccess,
         onError,
         config,
+        taskId,
       }),
     );
   };
@@ -64,14 +102,16 @@ const Attachments = () => {
       <p className={styles.text}>Вложения</p>
       <Upload.Dragger
         className={styles.upload}
-        multiple
         fileList={fileList}
+        accept={acceptFormat}
         listType="picture"
         progress={progress}
-        showUploadList={{ showRemoveIcon: true }}
+        showUploadList={{ showRemoveIcon: true, showDownloadIcon: true }}
         beforeUpload={beforeUpload}
         customRequest={handleSubmit}
         onChange={handleUpload}
+        onRemove={onRemove}
+        onDownload={onDownload}
       >
         <Button className={styles.btn}>
           <PlusOutlined />
