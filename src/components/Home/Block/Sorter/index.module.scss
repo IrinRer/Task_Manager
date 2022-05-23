@@ -2,9 +2,17 @@
 @import 'src/styles/font-variables.scss';
 @import 'src/styles/colors';
 
-.selector {
-  :global(.ant-select-selection-item) {
-    font-weight: 700;
-    color: $text-dark;
+.wrapper {
+  font-size: $font-size-m;
+  line-height: 24px;
+  span {
+    font-weight: 300;
+    color: $dark-primary;
+  }
+  .selector {
+    :global(.ant-select-selection-item) {
+      font-weight: 600;
+      color: $text-dark;
+    }
   }
 }

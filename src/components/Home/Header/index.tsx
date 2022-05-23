@@ -38,7 +38,7 @@ const Header: React.FC = () => {
       const path = generatePath(ROUTES.editTask.route, { id: newTaskId });
       navigate(path);
     }
-  }, [newTaskSuccess, dispatch, navigate]);
+  }, [newTaskSuccess, newTaskId, dispatch, navigate]);
 
   const allTasksButtonStyle = classnames(tasksButtonClass(onlyMyTasks));
   const onlyMyTasksButtonStyle = classnames(tasksButtonClass(!onlyMyTasks));
@@ -65,6 +65,7 @@ const Header: React.FC = () => {
           <Button
             type={onlyMyTasks ? 'text' : 'default'}
             className={allTasksButtonStyle}
+            disabled={!onlyMyTasks}
             onClick={handleAllTasksClick}
           >
             <img src={clockIcon} alt="clockIcon" />
@@ -73,6 +74,7 @@ const Header: React.FC = () => {
           <Button
             type={onlyMyTasks ? 'default' : 'text'}
             className={onlyMyTasksButtonStyle}
+            disabled={onlyMyTasks}
             onClick={handleOnlyMyTasksClick}
           >
             <img src={personIcon} alt="personIcon" />

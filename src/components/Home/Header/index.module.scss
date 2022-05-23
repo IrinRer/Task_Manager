@@ -6,8 +6,11 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  min-height: 65px;
   h1 {
     color: $text-dark;
+    font-size: $font-size-xxxl;
+    line-height: 40px;
     font-weight: 700;
   }
   .user {
@@ -29,19 +32,25 @@
     display: flex;
     flex-direction: row;
     :global(.ant-btn) {
-      border-radius: 10px;
+      border-radius: 8px;
       height: 36px;
       border: 0px solid;
       color: $text-dark;
       display: flex;
       align-items: center;
-      font-weight: 700;
+      font-size: $font-size-m;
+      line-height: $line-height-m;
+      font-weight: 600;
       margin-right: 20px;
       span {
         padding-left: 10px;
       }
       &.active {
         box-shadow: 0 1px 4px 0px rgba($text-dark, 0.1);
+      }
+      &:disabled {
+        background-color: $white;
+        cursor: default;
       }
     }
   }

@@ -9,6 +9,8 @@ import { changeEditTaskStatusAction } from 'store/editTask/thunk';
 import { getVerifyIdUser } from 'store/auth/verify/selectors';
 import { getTaskById } from 'store/tasks/selectors';
 import { canUserChangeTaskStatus } from 'helpers/userRoles';
+import classnames from 'classnames';
+import { StatusClass } from 'constants/common';
 import styles from './index.module.scss';
 
 interface IProps {
@@ -35,13 +37,20 @@ const StatusChange: React.FC<IProps> = ({ task_id, edit = false }) => {
       dispatch(changeTaskStatusAction({ task_id, task_status_id }));
     }
   };
+
   return (
     <div className={styles.wrapper}>
       {statuses?.map((status: TStatus) => {
+        const current = status.task_status_id === task?.status.task_status_id;
+        const classNames = classnames(
+          styles.button,
+          current ? styles[StatusClass[status.name]] : '',
+        );
         return (
           <Button
-            className={styles.button}
+            className={classNames}
             type="text"
+            disabled={current}
             key={status.task_status_id}
             onClick={() => handleClick(status.task_status_id)}
           >

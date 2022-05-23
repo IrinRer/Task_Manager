@@ -1,7 +1,7 @@
+import { StatusClass } from 'constants/common';
 import { TaskStatusName } from 'constants/types/common';
 import React from 'react';
 import styles from './index.module.scss';
-import { StatusClass } from './service';
 
 interface IProps {
   statusName: string;

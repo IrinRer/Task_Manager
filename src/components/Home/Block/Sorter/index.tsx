@@ -13,7 +13,7 @@ interface IProps {
 
 const Sorter: React.FC<IProps> = ({ onSelect, selectValue, blockType }) => {
   return (
-    <div>
+    <div className={styles.wrapper}>
       <span>Упорядочить по:</span>
       <Select
         className={styles.selector}

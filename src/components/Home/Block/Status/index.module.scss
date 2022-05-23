@@ -1,6 +1,7 @@
 @import 'src/styles/color-variables.scss';
 @import 'src/styles/font-variables.scss';
 @import 'src/styles/colors';
+@import 'src/styles/mixins';
 
 .wrapper {
   font-size: $font-size-s;
@@ -21,55 +22,6 @@
     padding-left: 10px;
     padding-right: 10px;
   }
-}
 
-.created {
-  border: 1px solid $blue-secondary;
-  background-color: $blue-secondary;
-  &:hover {
-    border: 1px solid lighten($blue-secondary, 10%);
-    background-color: lighten($blue-secondary, 10%);
-  }
-  &:focus {
-    border: 1px solid $blue-secondary;
-    background-color: $blue-secondary;
-  }
-}
-.work {
-  border: 1px solid $success;
-  background-color: $success;
-  &:hover {
-    border: 1px solid lighten($success, 10%);
-    background-color: lighten($success, 10%);
-  }
-  &:focus {
-    border: 1px solid $success;
-    background-color: $success;
-  }
-}
-
-.done {
-  border: 1px solid $purple;
-  background-color: $purple;
-  &:hover {
-    border: 1px solid lighten($purple, 10%);
-    background-color: lighten($purple, 10%);
-  }
-  &:focus {
-    border: 1px solid $purple;
-    background-color: $purple;
-  }
-}
-
-.paused {
-  border: 1px solid $red;
-  background-color: $red;
-  &:hover {
-    border: 1px solid lighten($red, 10%);
-    background-color: lighten($red, 10%);
-  }
-  &:focus {
-    border: 1px solid $red;
-    background-color: $red;
-  }
+  @include statuses;
 }
