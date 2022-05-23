@@ -30,6 +30,7 @@ const initialState: IEditTaskReducer = {
     delMembers: null,
   },
 };
+// TODO: Добавить additionalFunctions к editTaskReducer
 
 export const editTaskSlice = createSlice({
   name: EDIT_TASK_SLICE_ALIAS,
