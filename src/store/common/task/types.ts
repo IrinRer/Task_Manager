@@ -31,7 +31,7 @@ export interface IResponseTask {
   tags: [];
   progress: null;
   check_lists: [];
-  storage_files: [];
+  storage_files: any;
   storage_files_meta: {
     total: number;
   };

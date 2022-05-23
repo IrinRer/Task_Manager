@@ -10,7 +10,9 @@ import {
   colorProgress,
   acceptFormat,
 } from 'constants/types/attachments/attachments';
+import { uniqueId } from 'lodash';
 import { getTaskId } from 'store/editTask/selectors';
+import { getTaskFile } from 'store/common/task/selectors';
 import { getfileName, getStorageFile } from 'store/attachments/selectors';
 import styles from './index.module.scss';
 
@@ -18,10 +20,28 @@ const Attachments = () => {
   const dispatch = useAppDispatch();
   const taskId = useAppSelector(getTaskId);
   const allFile = useAppSelector(getStorageFile);
-  const fileName = useAppSelector(getfileName);
+  // const fileName = useAppSelector(getfileName);
+  const taskFile = useAppSelector(getTaskFile);
 
-  const [fileList, setFile] = useState<Array<UploadFile>>([]);
+  const taskFileAll = taskFile.map(item => {
+    return {
+    uid: uniqueId(),
+    name: item.name_original,
+    originFileObj: { name: item.name_original},
+    size: item.size,
+    thumbUrl: item.image_thumbnail,
+    storageId: item.storage_file_id
+    }
+  })
+
+ 
+
+  const [fileList, setFile] = useState<Array<UploadFile>>(taskFileAll);
   const [, setProgress] = useState(0);
+
+  const fileName = fileList.map(({name}) => name);
+
+  console.log(fileList)
 
   const determineIndex = (file: UploadFile) => {
     return fileName.indexOf(file?.originFileObj?.name || '')
@@ -50,6 +70,9 @@ const Attachments = () => {
   };
 
   const onRemove = (file: UploadFile) => {
+    // eslint-disable-next-line
+    debugger
+  
     const index = determineIndex(file);
     dispatch(
       deleteFile({
@@ -103,6 +126,7 @@ const Attachments = () => {
       <Upload.Dragger
         className={styles.upload}
         fileList={fileList}
+        // defaultFileList={[...defaultFileList(taskFile)]}
         accept={acceptFormat}
         listType="picture"
         progress={progress}

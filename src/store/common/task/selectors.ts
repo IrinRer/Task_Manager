@@ -62,4 +62,7 @@ export const getTaskWatchersID = createSelector(taskRoles, (roles) =>
 
 export const getTaskLoading = (state: RootState) =>
   state.common.onetask.loading;
+
 export const getTaskError = (state: RootState) => state.common.onetask.error;
+
+export const getTaskFile = (state: RootState) => state.common.onetask?.data?.storage_files;
