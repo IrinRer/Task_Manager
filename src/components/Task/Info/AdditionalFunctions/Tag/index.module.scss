@@ -1,0 +1,295 @@
+@import 'src/styles/color-variables';
+@import 'src/styles/colors';
+@import 'src/styles/font-variables';
+
+.wrapper_flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  :global(.ant-btn-primary).btn {
+    margin-right: 14%;
+  }
+}
+
+.wrapper_grid {
+  display: grid;
+  grid-template-columns: 47% 50%;
+  align-items: center;
+
+  :global(.ant-btn-primary).btn {
+    margin-left: 96%;
+  }
+}
+
+:global(.ant-btn-primary).btn,
+:global(.ant-btn-primary).btn:hover,
+:global(.ant-btn-primary).btn:active,
+:global(.ant-btn-primary).btn:focus {
+  background: none;
+  font-weight: 600;
+  text-shadow: none;
+  box-shadow: none;
+  border: none;
+  color: $button-main;
+
+  span {
+    font-size: $font-size-m;
+    font-weight: 500;
+    color: $blue;
+  }
+}
+
+.modalTag {
+  :global(.ant-modal-content),
+  :global(.ant-modal),
+  :global(.ant-modal-body) {
+    border-radius: 16px !important;
+  }
+
+  :global(.ant-modal-body) {
+    padding: 24px !important;
+  }
+
+  :global(.ant-modal-header) {
+    border-radius: 16px !important;
+    border-bottom: none !important;
+  }
+
+  :global(.ant-modal-footer) {
+    text-align: left !important;
+    display: flex;
+    padding: 24px;
+    padding-top: 0;
+  }
+
+  :global(.ant-modal-body) {
+    padding-bottom: 10px !important;
+  }
+
+  :global(.ant-modal-footer) > .btn {
+    background: $button-main;
+    border-radius: 8px;
+    color: white;
+    font-weight: 700;
+    text-align: left;
+
+    &:disabled {
+      background: $gray-500;
+    }
+  }
+
+  :global(.ant-modal-footer) {
+    border-top: none !important;
+  }
+
+  :global(.ant-input).input {
+    border: none;
+    border-bottom: 1px solid black;
+
+    &:focus {
+      border: none;
+      box-shadow: none;
+      border-bottom: 1px solid $button-main;
+    }
+  }
+
+  :global(.ant-radio-button-wrapper) {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px !important;
+  }
+
+  :global(.ant-radio-group) {
+    display: flex !important;
+    justify-content: space-between;
+  }
+
+  :global(.ant-radio-inner),
+  :global(.ant-radio-checked::after) {
+    border: none !important;
+    background: none !important;
+    text-align: center;
+    top: 10% !important;
+  }
+
+  :global(.ant-checkbox-wrapper-checked) {
+    justify-content: center !important;
+    align-items: stretch !important;
+  }
+
+  :global(label.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)) {
+    border: none;
+    background-image: url(../../../../../assets/icons/arrow.svg);
+    background-repeat: no-repeat;
+    background-size: 15px;
+    background-position: 50%;
+  }
+
+  .wrapper[color='red'] > :global(.ant-radio-button-wrapper) {
+    background-color: $red;
+  }
+  .wrapper[color='orange'] > :global(.ant-radio-button-wrapper) {
+    background-color: $orange;
+  }
+  .wrapper[color='green'] > :global(.ant-radio-button-wrapper) {
+    background-color: $salad;
+  }
+  .wrapper[color='purple'] > :global(.ant-radio-button-wrapper) {
+    background-color: $purple;
+  }
+  .wrapper[color='pink'] > :global(.ant-radio-button-wrapper) {
+    background-color: $pink;
+  }
+  .wrapper[color='blue'] > :global(.ant-radio-button-wrapper) {
+    background-color: $blue-secondary;
+  }
+  .wrapper[color='yellow'] > :global(.ant-radio-button-wrapper) {
+    background-color: $yellow;
+  }
+
+  :global(.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)),
+  :global(.ant-radio-button-wrapper) {
+    &::before {
+      display: none !important;
+    }
+  }
+}
+
+:global(.ant-tag).tag {
+  border-radius: 16px;
+  padding: 2px 5px;
+  margin-bottom: 4px;
+  font-size: $font-size-m;
+  font-weight: 500;
+  text-transform: none;
+
+  :global(.ant-tag-close-icon) {
+    font-size: 14px;
+  }
+}
+
+:global(.ant-tag-orange) {
+  :global(.ant-tag-close-icon) {
+    color: $orange;
+
+    &:hover {
+      color: $orange;
+    }
+  }
+}
+
+:global(.ant-tag-red) {
+  :global(.ant-tag-close-icon) {
+    color: $red;
+
+    &:hover {
+      color: $red;
+    }
+  }
+}
+
+:global(.ant-tag-green) {
+  :global(.ant-tag-close-icon) {
+    color: $salad;
+
+    &:hover {
+      color: $salad;
+    }
+  }
+}
+
+:global(.ant-tag-purple) {
+  :global(.ant-tag-close-icon) {
+    color: $purple;
+
+    &:hover {
+      color: $purple;
+    }
+  }
+}
+
+:global(.ant-tag-pink) {
+  :global(.ant-tag-close-icon) {
+    color: $pink;
+
+    &:hover {
+      color: $pink;
+    }
+  }
+}
+
+:global(.ant-tag-blue) {
+  :global(.ant-tag-close-icon) {
+    color: $blue-secondary;
+
+    &:hover {
+      color: $blue-secondary;
+    }
+  }
+}
+
+:global(.ant-tag-yellow) {
+  :global(.ant-tag-close-icon) {
+    color: $yellow;
+
+    &:hover {
+      color: $yellow;
+    }
+  }
+}
+
+:global(.ant-menu-submenu-title) {
+  display: flex !important;
+  align-items: center !important;
+  flex-direction: row-reverse !important;
+  justify-content: flex-end;
+  text-transform: none;
+  font-size: $font-size-m;
+  font-weight: normal;
+  padding: 0 !important;
+  width: 100px;
+
+  &:active {
+    background: none !important;
+  }
+
+  :global(.anticon > svg) {
+    width: 14px;
+  }
+
+  span {
+    margin-left: 0 !important;
+  }
+}
+
+:global(.ant-menu-sub:not([class*='-active'])) {
+  border: none;
+  border-radius: 16px !important;
+}
+
+:global(.ant-btn).btn_modal {
+  border-radius: 8px;
+  height: 40px;
+}
+
+:global(.ant-menu-submenu-arrow) {
+  display: none;
+}
+
+.iconColor {
+  margin-left: 8px;
+  color: $gray-600 !important;
+}
+
+:global(.ant-menu-vertical) {
+  border-right: none;
+  :global(.ant-menu-sub:not([class*='-active'])) {
+    max-height: 300px;
+  }
+}
+
+:global(.ant-menu) {
+  background: none;
+  padding-left: 0;
+}

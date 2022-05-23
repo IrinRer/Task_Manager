@@ -9,19 +9,19 @@ export interface ICommonTagsReducer {
 }
 
 export interface ITag {
-  task_tag_id: string;
+  task_tag_id?: string;
   name: string;
   color: string;
-  created: Date;
-  updated: Date;
+  created?: Date;
+  updated?: Date;
 }
 
 export interface IPopulatedTag {
-  task_tag_id: string;
+  task_tag_id?: string;
   name: string;
   color: string;
-  created: Date;
-  updated: Date;
+  created?: Date;
+  updated?: Date;
   value: string;
-  key: string;
+  key: string | undefined;
 }

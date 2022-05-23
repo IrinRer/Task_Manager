@@ -61,3 +61,4 @@ export const getDoneTasksSortedPaginated = createSelector(
   (tasks, viewParameters) =>
     getTasksSortedPaginated(tasks, viewParameters, BlockType.done),
 );
+
