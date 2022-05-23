@@ -115,7 +115,9 @@ const ListMemberMulti: FC<TProps> = ({
         {...options.common}
         mode="multiple"
         menuItemSelectedIcon={editable ? <CloseOutlined /> : null}
-        dropdownClassName={styles.dropdown}
+        dropdownClassName={classnames(
+          editable ? styles.dropdown : stylesList.dropdownList,
+        )}
         defaultValue={generateValue()}
         suffixIcon={
           <span
