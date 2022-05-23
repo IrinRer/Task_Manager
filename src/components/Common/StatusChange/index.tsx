@@ -16,6 +16,8 @@ interface IProps {
   edit?: boolean;
 }
 
+// флаг edit = true при изменении статуса в модальном окне. диспатчится другой экшн
+
 const StatusChange: React.FC<IProps> = ({ task_id, edit = false }) => {
   const dispatch = useAppDispatch();
   const statuses = useAppSelector(selectStatuses);

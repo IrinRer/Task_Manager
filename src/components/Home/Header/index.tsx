@@ -10,8 +10,8 @@ import personIcon from 'assets/icons/person.svg';
 import { getCurrentUser } from 'store/users/selectors';
 import UserAvatar from 'components/Common/UserAvatar';
 import { ROUTES } from 'constants/routes';
-import { useNavigate } from 'react-router-dom';
-import { getNewTaskSuccess } from 'store/createTask/selectors';
+import { generatePath, useNavigate } from 'react-router-dom';
+import { getNewTaskId, getNewTaskSuccess } from 'store/createTask/selectors';
 import { resetNewTaskSuccess } from 'store/createTask/slice';
 import { CaretDownOutlined } from '@ant-design/icons';
 import AddNewTask from './AddNewTask';
@@ -25,15 +25,18 @@ const tasksButtonClass = (flag: boolean): string => {
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
   const onlyMyTasks = useAppSelector(getOnlyMyTasksFlag);
+  // Получаем пользователя для отображения данных - аватара и тд
   const user = useAppSelector(getCurrentUser);
 
   const newTaskSuccess = useAppSelector(getNewTaskSuccess);
+  const newTaskId = useAppSelector(getNewTaskId);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (newTaskSuccess) {
-      navigate(ROUTES.editTask.path);
       dispatch(resetNewTaskSuccess());
+      const path = generatePath(ROUTES.editTask.route, { id: newTaskId });
+      navigate(path);
     }
   }, [newTaskSuccess, dispatch, navigate]);
 
