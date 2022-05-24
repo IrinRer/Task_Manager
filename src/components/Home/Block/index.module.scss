@@ -51,6 +51,28 @@
     :global(.ant-pagination-next) button {
       border-radius: 10px;
       background: transparent;
+      svg {
+        display: none;
+      }
+      background-image: url('../../../assets/icons/pageUp.svg');
+      background-position: center;
+      background-repeat: no-repeat;
+      &:disabled {
+        background-image: url('../../../assets/icons/pageUpDisabled.svg');
+      }
+    }
+    :global(.ant-pagination-prev) button {
+      border-radius: 10px;
+      background: transparent;
+      svg {
+        display: none;
+      }
+      background-image: url('../../../assets/icons/pageDown.svg');
+      background-position: center;
+      background-repeat: no-repeat;
+      &:disabled {
+        background-image: url('../../../assets/icons/pageDownDisabled.svg');
+      }
     }
   }
 }

@@ -1,6 +1,8 @@
 @import 'src/styles/color-variables.scss';
 @import 'src/styles/font-variables.scss';
 @import 'src/styles/colors';
+@import 'src/styles/mixins';
+
 .wrapper {
   :global(.ant-tag) {
     display: flex;
@@ -13,61 +15,24 @@
   }
 
   :global(.ant-tag).salad {
-    border: 1px solid $salad;
-    background-color: rgba($salad, 0.1);
-    color: $salad;
-    svg {
-      color: $salad;
-    }
+    @include tag-css($salad, 0.05);
   }
-
   :global(.ant-tag).blue {
-    border: 1px solid $blue-secondary;
-    background-color: rgba($blue-secondary, 0.1);
-    color: $blue-secondary;
-    svg {
-      color: $blue-secondary;
-    }
+    @include tag-css($blue-secondary, 0.1);
   }
-
   :global(.ant-tag).red {
-    border: 1px solid $red;
-    background-color: rgba($red, 0.05);
-    color: $red;
-    svg {
-      color: $red;
-    }
+    @include tag-css($red, 0.05);
   }
   :global(.ant-tag).purple {
-    border: 1px solid $purple;
-    background-color: rgba($purple, 0.05);
-    color: $purple;
-    svg {
-      color: $purple;
-    }
+    @include tag-css($purple, 0.05);
   }
   :global(.ant-tag).pink {
-    border: 1px solid $pink;
-    background-color: rgba($pink, 0.05);
-    color: $pink;
-    svg {
-      color: $pink;
-    }
+    @include tag-css($pink, 0.05);
   }
   :global(.ant-tag).orange {
-    border: 1px solid $orange;
-    background-color: rgba($orange, 0.05);
-    color: $orange;
-    svg {
-      color: $orange;
-    }
+    @include tag-css($orange, 0.05);
   }
   :global(.ant-tag).yellow {
-    border: 1px solid $yellow;
-    background-color: rgba($yellow, 0.05);
-    color: $yellow;
-    svg {
-      color: $yellow;
-    }
+    @include tag-css($yellow, 0.05);
   }
 }

@@ -14,7 +14,6 @@ import {
   fetchTasksAction,
 } from 'store/tasks/thunk';
 import { SortField, TTask } from 'constants/types/common';
-import { ConsoleSqlOutlined } from '@ant-design/icons';
 
 const TASKS_ON_PAGE_DEFAULT = 3;
 

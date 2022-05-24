@@ -14,5 +14,15 @@
       font-weight: 600;
       color: $text-dark;
     }
+    :global(.ant-select-suffix) {
+      width: 10px;
+      height: 8px;
+      background-image: url('../../../../assets/icons/selectDown.svg');
+      background-position: center bottom;
+      background-repeat: no-repeat;
+      svg {
+        display: none;
+      }
+    }
   }
 }

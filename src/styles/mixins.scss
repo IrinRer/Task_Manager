@@ -121,3 +121,12 @@
     @include status-change-current($red);
   }
 }
+
+@mixin tag-css($color, $bg-opacity) {
+  border: 1px solid $color;
+  background-color: rgba($color, $bg-opacity);
+  color: $color;
+  svg {
+    color: $color;
+  }
+}
