@@ -14,8 +14,8 @@
     margin: 5px;
   }
 
-  :global(.ant-tag).salad {
-    @include tag-css($salad, 0.05);
+  :global(.ant-tag).green {
+    @include tag-css($salad, 0.1);
   }
   :global(.ant-tag).blue {
     @include tag-css($blue-secondary, 0.1);

@@ -52,7 +52,7 @@ const FormAuth: React.FC = () => {
       >
         <Input.Password />
       </Form.Item>
-
+ 
       <Form.Item>
         <Button type="primary" htmlType="submit">
           Войти

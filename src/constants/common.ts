@@ -2,6 +2,9 @@ import { UserRoles } from './types/common';
 
 export const BASE_DATE_FORMAT = 'DD.MM.YYYY' as const;
 
+export const DATE_FORMAT_UI = 'dd MMM yyyy';
+export const DATE_FORMAT_SERVER = 'yyyy-MM-dd';
+
 export const AVATAR_COLORS = [
   '#64D9D1',
   '#C3AEFF',

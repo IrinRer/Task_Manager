@@ -5,11 +5,13 @@ import {
   combineReducers,
   CombinedState,
 } from '@reduxjs/toolkit';
-
-import tasksReducer from './tasks/slice';
-import filtersReducer from './filters/slice';
-import tokenReducer from './auth/token/slice';
-import verifyReducer from './auth/verify/slice';
+import tasksReducer from 'store/tasks/slice';
+import priorityReducer from 'store/editTask/additionalFunctions/priority/slice';
+import dateReducer from 'store/editTask/additionalFunctions/date/slice';
+import tagReducer from 'store/editTask/additionalFunctions/tag/slice';
+import filtersReducer from 'store/filters/slice';
+import tokenReducer from 'store/auth/token/slice';
+import verifyReducer from 'store/auth/verify/slice';
 import commonRolesReducer from './common/roles/slice';
 import usersReducer from './users/slice';
 import commonTagsReducer from './common/tags/slice';
@@ -33,11 +35,21 @@ import { IEditTaskReducer } from './editTask/types';
 import { IAuthReducer } from './auth/token/types';
 import { IVerifyReducer } from './auth/verify/types';
 import { ICreateTaskReducer } from './createTask/types';
+import { ITagReducer } from './editTask/additionalFunctions/tag/types';
+import { IDateReducer } from './editTask/additionalFunctions/date/types';
+import { IPriorityReducer } from './editTask/additionalFunctions/priority/types';
 
 export const store = configureStore({
   reducer: {
     tasks: tasksReducer,
-    editTask: editTaskReducer,
+    editTask: combineReducers({
+      editTaskReducer,
+      additionalFunctions: combineReducers({
+        priority: priorityReducer,
+        date: dateReducer,
+        tags: tagReducer,
+      }),
+    }),
     users: usersReducer,
     filters: filtersReducer,
     auth: combineReducers({
@@ -61,7 +73,14 @@ export type AppDispatch = typeof store.dispatch;
 
 export type RootState = {
   tasks: ITasksReducer;
-  editTask: IEditTaskReducer;
+  editTask: CombinedState<{
+    editTaskReducer: IEditTaskReducer;
+    additionalFunctions: CombinedState<{
+      priority: IPriorityReducer;
+      date: IDateReducer;
+      tags: ITagReducer;
+    }>;
+  }>;
   users: IUsersReducer;
   filters: IFiltersReducer;
   auth: CombinedState<{
