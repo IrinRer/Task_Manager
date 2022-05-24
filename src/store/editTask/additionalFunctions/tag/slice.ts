@@ -45,9 +45,7 @@ export const tagSlice = createSlice({
       state,
       { payload }: PayloadAction<any>,
     ) => {
-      state.sentTag = state.sentTag?.concat(
-        payload.tags.map(({ task_tag }) => task_tag),
-      );
+      state.sentTag = payload.tags.map(({ task_tag }) => task_tag);
       state.loading = false;
     },
 
