@@ -20,7 +20,7 @@ const Attachments = () => {
   const dispatch = useAppDispatch();
   const taskId = useAppSelector(getTaskId);
   const allFile = useAppSelector(getStorageFile);
-  // const fileName = useAppSelector(getfileName);
+  const fileName = useAppSelector(getfileName);
   const taskFile = useAppSelector(getTaskFile);
 
   const taskFileAll = taskFile.map(item => {
@@ -34,14 +34,10 @@ const Attachments = () => {
     }
   })
 
- 
-
   const [fileList, setFile] = useState<Array<UploadFile>>(taskFileAll);
   const [, setProgress] = useState(0);
 
-  const fileName = fileList.map(({name}) => name);
-
-  console.log(fileList)
+  // const fileName = fileList.map(({name}) => name);
 
   const determineIndex = (file: UploadFile) => {
     return fileName.indexOf(file?.originFileObj?.name || '')
@@ -126,7 +122,6 @@ const Attachments = () => {
       <Upload.Dragger
         className={styles.upload}
         fileList={fileList}
-        // defaultFileList={[...defaultFileList(taskFile)]}
         accept={acceptFormat}
         listType="picture"
         progress={progress}
@@ -137,7 +132,7 @@ const Attachments = () => {
         onRemove={onRemove}
         onDownload={onDownload}
       >
-        <Button className={styles.btn}>
+        <Button className={styles.btnAttachment}>
           <PlusOutlined />
         </Button>
         Перетащите сюда или загрузите файл

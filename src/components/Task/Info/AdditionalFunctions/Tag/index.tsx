@@ -83,7 +83,7 @@ const SelectTag = () => {
         className={styles.modalTag}
         footer={
           <Button
-            className={styles.btn}
+            className={styles.btnTag}
             onClick={handleOk}
             htmlType="submit"
             disabled={!isUniqueTag}

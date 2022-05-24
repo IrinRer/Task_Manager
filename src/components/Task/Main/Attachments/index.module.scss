@@ -10,7 +10,7 @@
   font-size: $font-size-l;
 }
 
-.btn {
+:global(.ant-btn).btnAttachment {
   width: 32px;
   padding-top: 8px;
   padding-bottom: 8px;
@@ -48,7 +48,7 @@
     background-color: #f1f1f5;
     border: 1px dashed #b5b5be;
 
-    .btn {
+    .btnAttachment {
       background-color: white;
     }
   }
@@ -58,7 +58,7 @@
   background-color: #f1f1f5;
   border: 1px dashed #b5b5be;
 
-  .btn {
+  .btnAttachment {
     background-color: white;
   }
 }

@@ -22,10 +22,10 @@
   }
 }
 
-:global(.ant-btn-primary).btn,
-:global(.ant-btn-primary).btn:hover,
-:global(.ant-btn-primary).btn:active,
-:global(.ant-btn-primary).btn:focus {
+:global(.ant-btn-primary).btnTag,
+:global(.ant-btn-primary).btnTag:hover,
+:global(.ant-btn-primary).btnTag:active,
+:global(.ant-btn-primary).btnTag:focus {
   background: none;
   font-weight: 600;
   text-shadow: none;
@@ -120,6 +120,7 @@
 
   :global(label.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)) {
     border: none;
+    // нельзя записать без относительных путей
     background-image: url(../../../../../assets/icons/arrow.svg);
     background-repeat: no-repeat;
     background-size: 15px;

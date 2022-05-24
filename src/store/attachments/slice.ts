@@ -1,3 +1,4 @@
+import { fetchTaskAction } from 'store/common/task/thunk';
 import { deleteFile } from 'store/attachments/thunk';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
@@ -43,6 +44,16 @@ export const attachmentsSlice = createSlice({
     ) => {
       state.loading = false;
       state.error = payload;
+    },
+
+      // нужен, чтобы получить вложения для задачи, если они у нее уже есть
+    // и отобразить их
+    [fetchTaskAction.fulfilled.type]: (
+      state,
+      { payload }: PayloadAction<any>,
+    ) => {
+      state.data = state.data.concat(payload.storage_files);
+      state.loading = false;
     },
 
     [deleteFile.pending.type]: (state) => {
