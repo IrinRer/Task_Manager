@@ -52,7 +52,7 @@ export type TTag = {
   task_tag: {
     task_tag_id: string;
     name: string;
-    color: string;
+    color: TagColor;
     created: string;
     updated: string;
   };
@@ -102,4 +102,14 @@ export enum UserRoles {
 export interface IStatusChangeArg {
   task_id: string;
   task_status_id: string;
+}
+
+export enum TagColor {
+  blue = 'blue',
+  orange = 'orange',
+  pink = 'pink',
+  purple = 'purple',
+  red = 'red',
+  salad = 'salad',
+  yellow = 'yellow',
 }

@@ -69,3 +69,6 @@ export const getEditMembersLoading = (state: RootState) =>
 
 export const getEditTaskError = (state: RootState) =>
   state.editTask.editTaskReducer.editError.task;
+
+export const getEditStatusLoading = (state: RootState) =>
+  state.editTask.editTaskReducer.editLoading.status;

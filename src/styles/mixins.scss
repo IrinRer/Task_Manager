@@ -129,4 +129,7 @@
   svg {
     color: $color;
   }
+  &.noBackground {
+    background-color: transparent;
+  }
 }

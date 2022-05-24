@@ -1,6 +1,6 @@
+import CustomTag from 'components/Common/CustomTag';
 import { TTag } from 'constants/types/common';
 import React from 'react';
-import TagWrapper from '../TagWrapper';
 import styles from './index.module.scss';
 
 interface IProps {
@@ -14,10 +14,11 @@ const Tags: React.FC<IProps> = ({ tags }) => {
       <>
         {renderedTags.map((tag) => {
           return (
-            <TagWrapper
+            <CustomTag
               key={tag.task_to_tag_id}
               title={tag.task_tag.name}
               color={tag.task_tag.color}
+              closable={false}
             />
           );
         })}
