@@ -11,6 +11,7 @@ import {
 import Preloader from 'components/Common/Preloader';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { addVerifyToken } from 'store/auth/token/slice';
+import { getToken } from 'helpers/cookies';
 
 interface IRouteProps {
   children: ReactElement;
@@ -24,16 +25,17 @@ const PrivateRoute: React.FC = ({ children: Component }: IRouteProps) => {
   const verifyError = useAppSelector(getVerifyError);
   const authError = useAppSelector(getAuthError);
   const error = verifyError || authError;
+  const token = getToken();
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (error || !verifyToken) {
+    if (error || !token) {
       dispatch(addVerifyToken(null));
       navigate(ROUTES.login.path);
     }
-  }, [dispatch, error, navigate, verifyToken]);
+  }, [dispatch, error, navigate, token]);
 
   if (loading) {
     return <Preloader size="large" />;
