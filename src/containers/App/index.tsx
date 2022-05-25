@@ -25,7 +25,6 @@ const App: React.FC = () => {
   const verifyError = useAppSelector(getVerifyError);
   const authError = useAppSelector(getAuthError);
   const error = verifyError || authError;
-
   const noAuth = error || !token;
 
   useEffect(() => {
