@@ -2,7 +2,6 @@ import { AxiosError } from 'axios';
 import { IUser } from 'store/users/types';
 import { IPriority } from '../priorities/types';
 import { IRoles } from '../roles/types';
-import { ITag } from '../tags/types';
 
 export const ONETASK_SLICE_ALIAS = 'onetask';
 
@@ -30,7 +29,7 @@ export interface IResponseTask {
   form_available: false;
   form_result: null;
   roles: Array<ITaskRoles> | null;
-  tags: Array<ITag>;
+  tags: [];
   progress: null;
   check_lists: [];
   storage_files: any;

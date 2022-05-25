@@ -4,9 +4,12 @@ import {
 } from 'store/editTask/additionalFunctions/tag/thunk';
 import { AxiosError } from 'axios';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ITag } from '../../../common/tags/types';
+import { ITag } from 'store/common/tags/types';
+import { fetchTaskAction } from 'store/common/task/thunk';
+import { IResponseTask } from 'store/common/task/types';
 import { TAG_SLICE_ALIAS, ITagReducer } from './types';
-import { fetchTaskAction } from '../../../common/task/thunk';
+
+
 
 const initialState: ITagReducer = {
   sentTag: [],
@@ -43,7 +46,7 @@ export const tagSlice = createSlice({
     // и отобразить их
     [fetchTaskAction.fulfilled.type]: (
       state,
-      { payload }: PayloadAction<any>,
+      { payload }: PayloadAction<IResponseTask>,
     ) => {
       state.sentTag = state.sentTag?.concat(
         payload.tags.map(({ task_tag }) => task_tag),
