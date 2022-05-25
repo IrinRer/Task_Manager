@@ -21,9 +21,7 @@ const Title: React.FC = () => {
   const taskId = useAppSelector(getTaskId);
   const editLoading = useAppSelector(getEditTitleLoading);
 
-  const inputRef:
-    | Ref<TextAreaRef>
-    | undefined /*: MutableRefObject<typeof TextArea | null> */ = useRef(null);
+  const inputRef: Ref<TextAreaRef> | undefined = useRef(null);
   const [newTitle, setNewTitle] = useState<string | undefined>(title);
   const [isReadonly, setIsReadonly] = useState<boolean>(true);
 

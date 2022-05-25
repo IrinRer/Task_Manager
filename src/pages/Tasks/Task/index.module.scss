@@ -2,7 +2,7 @@
 @import 'src/styles/color-variables';
 @import 'src/components/Common/Spinner/index.module.scss';
 
-///////////глобальные!
+//глобальные!
 :global(.ant-modal-content) {
   height: 100%;
   border-top-left-radius: 16px !important;

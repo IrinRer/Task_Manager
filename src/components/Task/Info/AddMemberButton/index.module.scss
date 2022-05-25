@@ -47,4 +47,7 @@
   :global(.ant-select-selector) {
     padding: 3px 5px !important;
   }
+  :global(.ant-select-selection-item) {
+    display: none;
+  }
 }

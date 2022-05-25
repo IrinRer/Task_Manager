@@ -4,6 +4,7 @@ import { IResponseTask } from 'store/common/task/types';
 export const EDIT_TASK_SLICE_ALIAS = 'edittask';
 
 export interface IEditTaskReducer {
+  modalVisible: boolean;
   data: IResponseTask | null;
   editLoading: {
     task: boolean;

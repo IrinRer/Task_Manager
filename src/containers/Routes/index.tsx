@@ -25,10 +25,13 @@ const CreateRoutes: React.FC = () => {
               }
             />
             <Route
-              path={ROUTES.editTask.path}
+              path={ROUTES.editTask.route}
               element={
                 <PrivateRoute>
-                  <Task />
+                  <>
+                    <Home />
+                    <Task />
+                  </>
                 </PrivateRoute>
               }
             />

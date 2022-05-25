@@ -5,7 +5,7 @@ import { IPopulatedTag, ITag } from './types';
 const selectTags = (state: RootState): Array<ITag> => state.common.tags.tags;
 
 const selectUniqueTags = createSelector(selectTags, (tags): Array<ITag> => {
-  const uniqueTagsIds: Array<string> = [];
+  const uniqueTagsIds: Array<string | undefined> = [];
   const uniqueTags: Array<ITag> = [];
 
   tags.forEach((tag) => {
@@ -20,7 +20,7 @@ const selectUniqueTags = createSelector(selectTags, (tags): Array<ITag> => {
 
 export const selectPopulatedTags = createSelector(
   selectUniqueTags,
-  (tags): Array<IPopulatedTag> =>
+  (tags): Array<IPopulatedTag>  =>
     tags.map((tag) => {
       return { ...tag, value: tag.name, key: tag.task_tag_id };
     }),
