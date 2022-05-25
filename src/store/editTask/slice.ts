@@ -273,8 +273,10 @@ export const editTaskSlice = createSlice({
       state: IEditTaskReducer,
       { payload }: PayloadAction<ICheckList>,
     ) => {
-      state.data!.check_lists[0].title = payload.title;
-      state.data!.check_lists[0].updated = payload.updated;
+      if (state.data?.check_lists) {
+        state.data.check_lists[0].title = payload.title;
+        state.data.check_lists[0].updated = payload.updated;
+      }
 
       state.editLoading.checkListTitle = false;
     },

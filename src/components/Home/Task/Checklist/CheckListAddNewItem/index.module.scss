@@ -20,15 +20,14 @@
 
 .newItemInput {
   :global {
-    font-size: $font-size-l;
+    font-size: $font-size-m;
     line-height: $line-height-l;
     color: $heading;
     box-shadow: none;
     overflow: hidden;
-    padding: 5px 11px 3px;
-    border-radius: 8px;
-    margin-left: 30px;
+    padding: 0 0 1px 0;
     width: auto;
+    border-bottom: 1px solid $button-main;
   }
 
   &:focus,
@@ -36,6 +35,8 @@
   &:focus-visible {
     box-shadow: none;
     color: $text-color;
+    border-bottom: 1px solid $button-main;
+    border-radius: 0;
   }
 }
 

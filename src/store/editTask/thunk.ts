@@ -200,7 +200,7 @@ export const setCompleteCheckListItemAction = createAsyncThunk(
 
 export const setCheckListTitle = createAsyncThunk(
   `${EDIT_TASK_SLICE_ALIAS}/setCheckListTitle`,
-  async (ctitle: string, { getState, rejectWithValue }) => {
+  async (title: string, { getState, rejectWithValue }) => {
     const check_list_id = getCheckListId(getState() as RootState);
 
     try {
@@ -209,11 +209,10 @@ export const setCheckListTitle = createAsyncThunk(
         null,
         {
           params: {
-            title: ctitle,
+            title,
           },
         },
       );
-
       return response.data.data;
     } catch (error) {
       notification.error({

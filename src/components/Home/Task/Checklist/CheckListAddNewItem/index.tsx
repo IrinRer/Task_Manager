@@ -28,20 +28,6 @@ const CheckListAddNewItem = () => {
     setIsEditMode(true);
   };
 
-  if (isEditMode) {
-    return (
-      <Input
-        maxLength={100}
-        className={styles.newItemInput}
-        value={inputValue}
-        autoFocus
-        onChange={handleInputChange}
-        onBlur={handleAddCheckListItem}
-        onPressEnter={handleAddCheckListItem}
-      />
-    );
-  }
-
   return (
     <button
       type="button"
@@ -49,7 +35,20 @@ const CheckListAddNewItem = () => {
       onClick={handleAddButtonClick}
     >
       <PlusIcon className={styles.newItemButtonIcon} />
-      <p className={styles.newItemButtonText}>Добавить новый пункт</p>
+      {isEditMode ? (
+        <Input
+          autoFocus
+          bordered={false}
+          maxLength={100}
+          value={inputValue}
+          className={styles.newItemInput}
+          onChange={handleInputChange}
+          onBlur={handleAddCheckListItem}
+          onPressEnter={handleAddCheckListItem}
+        />
+      ) : (
+        <p className={styles.newItemButtonText}>Добавить новый пункт</p>
+      )}
     </button>
   );
 };

@@ -12,9 +12,9 @@ import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { deleteCheckListAction } from 'store/editTask/thunk';
 import { Popconfirm } from 'antd';
 import CheckListItem from './CheckListItem';
-import styles from './index.module.scss';
-import Index from './CheckListAddNewItem';
+import CheckListAddNewItem from './CheckListAddNewItem';
 import CheckListTitle from './CheckListTitle';
+import styles from './index.module.scss';
 
 const Checklist: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -39,11 +39,15 @@ const Checklist: React.FC = () => {
         {isTaskEditable && (
           <Popconfirm
             title="Вы уверены?"
-            cancelText="Отменить"
             okText="Удалить чек-лист"
+            cancelText="Отменить"
             placement="bottomRight"
             onConfirm={handleDeleteCheckListClick}
+            icon={null}
             overlayClassName={styles.confirmationPopup}
+            okButtonProps={{
+              icon: <RecycleBinIcon className={styles.buttonIcon} />,
+            }}
           >
             <RecycleBinIcon className={styles.headerIconButton} />
           </Popconfirm>
@@ -69,14 +73,9 @@ const Checklist: React.FC = () => {
             />
           ))}
       </div>
-      {isTaskEditable && <Index />}
+      {isTaskEditable && <CheckListAddNewItem />}
     </div>
   );
 };
 
 export default Checklist;
-
-// TODO: при рустом тайтле он сохраняется в локальный стейт компонента
-// ошибка при сохранении тайтла и клике за пределами модалки
-// иконка корзины серой
-// модалку удаления переверстать

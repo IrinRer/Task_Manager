@@ -14,7 +14,7 @@ import styles from './index.module.scss';
 const CheckListTitle = () => {
   const dispatch = useAppDispatch();
 
-  const title: string | undefined = useAppSelector(getCheckListTitle);
+  const title: string = useAppSelector(getCheckListTitle);
   const isTaskEditable: boolean = useAppSelector(getIsTaskEditable);
   const isTitleLoading: boolean = useAppSelector(getIsCheckListTitleLoading);
 
@@ -26,6 +26,10 @@ const CheckListTitle = () => {
   const handleInputSubmit = () => {
     if (newTitle && newTitle !== title) {
       dispatch(setCheckListTitle(newTitle));
+    }
+
+    if (!newTitle) {
+      setNewTitle(title);
     }
 
     setIsEditMode(false);

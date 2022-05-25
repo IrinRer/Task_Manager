@@ -80,8 +80,9 @@ export const getCheckListId = (state: RootState): string | undefined =>
 export const getCheckListProgress = createSelector(
   getCheckList,
   (checkList): TProgress => {
-    if (checkList && checkList.items.length > 0) {
-      const total = checkList.items.length;
+    const total = checkList?.items.length;
+
+    if (total) {
       const completed = checkList.items.filter((item) => item.complete).length;
       const percent = Math.round((completed / total) * 100);
 
@@ -117,5 +118,5 @@ export const getIsTaskEditable = createSelector(
   },
 );
 
-export const getCheckListTitle = (state: RootState): string | undefined =>
-  state.editTask.data?.check_lists[0].title;
+export const getCheckListTitle = (state: RootState): string =>
+  state.editTask.data!.check_lists[0].title;

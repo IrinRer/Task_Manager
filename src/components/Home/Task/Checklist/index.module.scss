@@ -23,7 +23,7 @@
 
   &Button {
     cursor: pointer;
-    fill: $coral;
+    fill: $text-light;
     border: none;
     background-color: $bg-secondary;
     padding: 0;
@@ -73,11 +73,19 @@
     }
 
     .ant-popover-inner-content {
-      padding: 20px 27px;
+      padding: 16px 25px 32px;
     }
 
     .ant-popover-arrow {
       display: none;
+    }
+
+    .ant-popover-message-title {
+      padding: 0 0 32px ;
+      font-weight: 500;
+      font-size: $font-size-xl;
+      line-height: $font-size-s;
+      color: $text-title;
     }
 
     .ant-popover-message {
@@ -89,15 +97,43 @@
       top: 6px;
     }
 
+    .ant-popover-buttons {
+      display: flex;
+      flex-direction: row-reverse;
+      column-gap: 8px;
+    }
+
     .ant-btn {
       box-sizing: content-box;
-      padding: 3px 15px;
+      margin: 0;
+      padding: 11px 17px;
       border-radius: 8px;
       font-size: $font-size-m;
+      line-height: $line-height-xs;
     }
 
     .ant-btn-primary {
-      margin-left: 12px;
+      display: flex;
+      align-items: center;
+      border: none;
+      column-gap: 10px;
+      background-color: $red;
+      font-weight: 600;
+
+      &:hover {
+        background-color: darken($red, 10%);
+      }
     }
+
+    .ant-btn-default {
+      font-weight: 400;
+      color: $heading;
+    }
+  }
+
+  .buttonIcon {
+    width: 16px;
+    height: 16px;
+    fill: $bg-secondary
   }
 }
