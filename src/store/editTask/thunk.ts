@@ -11,6 +11,7 @@ import {
 } from 'store/editTask/types';
 import { getCheckListId, getTaskId } from './selectors';
 import { RootState } from '../index';
+import { DEFAULT_CHECK_LIST_TITLE } from '../../constants/common';
 
 export const setTaskDescription = createAsyncThunk(
   `${EDIT_TASK_SLICE_ALIAS}/setDescription`,
@@ -115,7 +116,7 @@ export const addCheckListAction = createAsyncThunk(
       const newCheckList: AxiosResponse = await api().post(
         `/api/v1.0/check-list/check-lists`,
         {
-          title: 'Чек-лист',
+          title: DEFAULT_CHECK_LIST_TITLE,
         },
       );
 

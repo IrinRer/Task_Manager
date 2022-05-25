@@ -10,7 +10,7 @@ import History from '../History';
 import InputWrapper from './InputWrapper';
 import Description from '../Description';
 import Title from '../Title';
-import Checklist from '../../Home/Task/Checklist';
+import Checklist from '../Checklist';
 
 const Main: React.FC = () => {
   return (

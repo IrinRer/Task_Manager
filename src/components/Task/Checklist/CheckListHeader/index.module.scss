@@ -2,13 +2,6 @@
 @import 'src/styles/_colors.scss';
 @import 'src/styles/_font-variables.scss';
 
-.checklist {
-  display: flex;
-  flex-direction: column;
-  row-gap: 18px;
-  width: 100%;
-}
-
 .headerSection {
   display: flex;
   height: 24px;
@@ -34,34 +27,6 @@
       fill: darken($coral, 10%);
     }
   }
-}
-
-.progressPercentage {
-  font-weight: 400;
-  font-size: $font-size-m;
-  line-height: $line-height-s;
-  color: $heading;
-  margin: 0;
-}
-
-.progressBar {
-  width: 100%;
-  height: 8px;
-  background-color: $dark-secondary;
-  border-radius: 4px;
-}
-
-.progress {
-  background-color: $checkbox-checked;
-  height: 8px;
-  border-radius: 4px;
-}
-
-.checklistItems {
-  display: flex;
-  flex-direction: column;
-  row-gap: 16px;
-  margin: 8px 0 4px;
 }
 
 .confirmationPopup {
