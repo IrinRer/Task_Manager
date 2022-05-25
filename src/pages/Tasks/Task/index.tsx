@@ -53,12 +53,6 @@ const Task: React.FC = () => {
     return <Navigate to={ROUTES.tasks.path} />;
   }
 
-  /* const img = (
-    <svg>
-      <use xlinkHref={`${close}`} />
-    </svg>
-  ); */
-
   return modalVisible ? (
     <Modal
       visible={modalVisible}

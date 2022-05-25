@@ -12,7 +12,9 @@ const initialState: IVerifyReducer = {
 export const verifySlice = createSlice({
   name: VERIFY_SLICE_ALIAS,
   initialState,
-  reducers: {},
+  reducers: {
+    resetVerify: () => initialState,
+  },
   extraReducers: {
     [fetchVerifyAction.pending.type]: (state: IVerifyReducer) => {
       state.loading = true;
@@ -34,5 +36,7 @@ export const verifySlice = createSlice({
     },
   },
 });
+
+export const { resetVerify } = verifySlice.actions;
 
 export default verifySlice.reducer;

@@ -1,19 +1,16 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ROUTES } from 'constants/routes';
-import {
-  getVerifyError,
-  getVerifyIdUser,
-  getVerifyLoading,
-} from 'store/auth/verify/selectors';
+import { getVerifyError, getVerifyLoading } from 'store/auth/verify/selectors';
 import {
   getAuthError,
   getAuthLoading,
   getVerifyToken,
 } from 'store/auth/token/selectors';
 import Preloader from 'components/Common/Preloader';
-import { getToken } from 'helpers/cookies';
+import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
+import { addVerifyToken } from 'store/auth/token/slice';
 
 interface IRouteProps {
   children: ReactElement;
@@ -24,17 +21,21 @@ const PrivateRoute: React.FC = ({ children: Component }: IRouteProps) => {
   const authLoading = useAppSelector(getAuthLoading);
   const loading = verifyLoading || authLoading;
   const verifyToken = useAppSelector(getVerifyToken);
-  const userID = useAppSelector(getVerifyIdUser);
-  const token = getToken();
   const verifyError = useAppSelector(getVerifyError);
   const authError = useAppSelector(getAuthError);
   const error = verifyError || authError;
 
-  if (error || !token) {
-    return <Navigate to={ROUTES.login.path} />;
-  }
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  if (loading || (!verifyToken && userID)) {
+  useEffect(() => {
+    if (error || !verifyToken) {
+      dispatch(addVerifyToken(null));
+      navigate(ROUTES.login.path);
+    }
+  }, [dispatch, error, navigate, verifyToken]);
+
+  if (loading) {
     return <Preloader size="large" />;
   }
 
