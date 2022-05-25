@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { fetchAllRoles } from 'store/common/roles/thunk';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { getVerifyError, getVerifyIdUser } from 'store/auth/verify/selectors';
+import { getVerifyError } from 'store/auth/verify/selectors';
 import { getToken } from 'helpers/cookies';
 import { fetchVerifyAction } from 'store/auth/verify/thunk';
 import { getAuthError, getVerifyToken } from 'store/auth/token/selectors';

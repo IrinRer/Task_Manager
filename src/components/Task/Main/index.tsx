@@ -1,10 +1,5 @@
 import React from 'react';
 import TextArea from 'antd/lib/input/TextArea';
-import {
-  AlignLeftOutlined,
-  CommentOutlined,
-  ContainerOutlined,
-} from '@ant-design/icons';
 import uniqueId from 'lodash/uniqueId';
 import description from 'assets/icons/description.png';
 import comments from 'assets/icons/comments.png';
