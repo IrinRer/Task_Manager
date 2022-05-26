@@ -6,7 +6,7 @@ import { ATTACHMENTS_SLICE_ALIAS, IFileThunk } from './types';
 
 export const assignFile = createAsyncThunk(
   `${ATTACHMENTS_SLICE_ALIAS}/create-assign`,
-  async (file: IFileThunk , { rejectWithValue }) => {
+  async (file: IFileThunk, { rejectWithValue }) => {
     try {
       const formData = new FormData();
       formData.append('file', file.fileList || '');
@@ -32,7 +32,7 @@ export const assignFile = createAsyncThunk(
       return responseFile.data.data;
     } catch (error) {
       notification.error({ message: 'Ошибка добавления файла' });
-      file.onError({ error } );
+      file.onError({ error });
       return rejectWithValue(error);
     }
   },
@@ -47,9 +47,10 @@ export const deleteFile = createAsyncThunk(
         { storage_file_id: file.fileId },
       );
 
+      notification.success({ message: 'Файл успешно удален' });
+
       // нужно, чтобы удалить из store те вложения, которые удалились
       // response.data возвращает целую задачу
-      notification.success({ message: 'Файл успешно удален' });
       return file.name;
     } catch (error) {
       notification.error({ message: 'Ошибка удаления файла' });
@@ -72,8 +73,11 @@ export const downloadFile = createAsyncThunk(
       link.href = url;
       link.click();
       URL.revokeObjectURL(link.href);
+
       notification.success({ message: 'Файл успешно скачен' });
-      return {url, name: file.name};
+
+      // в store не сохраняю информацию о файле, который был скачен
+      return file;
     } catch (error) {
       notification.error({ message: 'Ошибка скачивания файла' });
       return rejectWithValue(error);

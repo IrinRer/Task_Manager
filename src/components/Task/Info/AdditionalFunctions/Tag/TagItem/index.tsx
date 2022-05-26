@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Tag, Modal, Button, Menu } from 'antd';
-import { DeleteOutlined, CaretRightOutlined } from '@ant-design/icons';
+import { Tag, Menu } from 'antd';
+import { CaretRightOutlined } from '@ant-design/icons';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { deleteTagAction } from 'store/editTask/additionalFunctions/tag/thunk';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { getTag } from 'store/editTask/additionalFunctions/tag/selectors';
 import { uniqueId } from 'lodash';
-
+import ModalDelete from 'constants/ModalDelete';
 import styles from '../index.module.scss';
 
 const TagItem = () => {
@@ -49,10 +49,6 @@ const TagItem = () => {
     setIsVisible(false);
   };
 
-  const handleCancel = () => {
-    setIsVisible(false);
-  };
-
   return (
     <>
       <Menu mode="vertical" className={styles.menu}>
@@ -67,36 +63,14 @@ const TagItem = () => {
         </Menu.SubMenu>
       </Menu>
       <div className={styles.tag}>{tag?.slice(0, 3)}</div>
-      <Modal
-        title="Вы уверены?"
+      <ModalDelete
         visible={isVisible}
-        width={310}
-        className={styles.modalTag}
-        footer={[
-          <Button
-            className={styles.btn_modal}
-            key="submit"
-            danger
-            type="primary"
-            icon={<DeleteOutlined />}
-            onClick={handleOk}
-          >
-            Удалить метку
-          </Button>,
-          <Button
-            key="back"
-            className={styles.btn_modal}
-            onClick={handleCancel}
-          >
-            Отмена
-          </Button>,
-        ]}
-        onCancel={handleCancel}
-      >
-        <p>
-          Метка {name} будет удалена из списка меток и из всех задач проекта
-        </p>
-      </Modal>
+        textMain={`Метка ${name} будет удалена из списка меток и из всех задач проекта`}
+        textButton="Удалить метку"
+        setVisibleModalDelete={setIsVisible}
+        file={id}
+        action={handleOk}
+      />
     </>
   );
 };

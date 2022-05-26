@@ -4,19 +4,17 @@ import { IFileList } from 'constants/types/attachments/attachments';
 export const ATTACHMENTS_SLICE_ALIAS = 'attachments';
 
 export interface IAttachmentsReducer {
-  data: any;
+  data: IPayloadFile[];
   isClicked: boolean;
   loading: boolean;
   error: AxiosError | null;
 }
 
-
-export interface IFileThunk  {
+export interface IFileThunk {
   config?: AxiosRequestConfig<FormData>;
-  // fileList?: IFileList | undefined;
   fileList?: IFileList | undefined;
   taskId?: string | undefined;
-  
+
   // onSuccess?: (xhr?: XMLHttpRequest) => void
   // onError?: (event: UploadRequestError | ProgressEvent) => void;
 
@@ -24,7 +22,6 @@ export interface IFileThunk  {
   onError?: any;
   fileId?: string;
   name?: string | undefined;
-
 }
 
 export interface IPayloadFile {

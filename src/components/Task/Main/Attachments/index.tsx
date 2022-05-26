@@ -17,19 +17,20 @@ import { getTaskId } from 'store/editTask/selectors';
 import { getTaskFile } from 'store/common/task/selectors';
 import { getfileName, getStorageFile } from 'store/attachments/selectors';
 import Preview from './Preview';
-import ModalDelete from './ModalDelete';
+import ModalDelete from '../../../../constants/ModalDelete';
 import styles from './index.module.scss';
 
 const Attachments = () => {
   const dispatch = useAppDispatch();
   const taskId = useAppSelector(getTaskId);
-  const allFile = useAppSelector(getStorageFile);
+  const allFileId = useAppSelector(getStorageFile);
   const fileName = useAppSelector(getfileName);
   const taskFile = useAppSelector(getTaskFile);
 
   const taskFileAll = taskFile.map((item: IPayloadFile) => {
+    // формат в котором вложения поступают с бэка и формат вложений
+    // при загрузки разный, поэтому приходится приводить к одному виду
     const id = uniqueId();
-
     return {
       uid: id,
       name: item.name_original,
@@ -54,9 +55,11 @@ const Attachments = () => {
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
   const [visibleModalDelete, setVisibleModalDelete] = useState(false);
-  const [fileForDelete, setfileForDelete] = useState<any>();
+  const [fileForDelete, setfileForDelete] = useState<UploadFile>();
 
   const determineIndex = (file: UploadFile) => {
+    // определяется индекс вложения, потом по этому индексу будет удаляться
+    // или скачиваться
     return fileName.indexOf(file?.originFileObj?.name || '');
   };
 
@@ -77,7 +80,7 @@ const Attachments = () => {
     setFile(fileList?.filter((item) => item.name !== file.name));
     dispatch(
       deleteFile({
-        fileId: allFile[index].storageId,
+        fileId: allFileId[index].storageId,
         taskId,
         name: file?.originFileObj?.name,
       }),
@@ -85,12 +88,10 @@ const Attachments = () => {
   };
 
   const onDownload = (file: UploadFile) => {
-    // eslint-disable-next-line
-    debugger;
     const index = determineIndex(file);
     dispatch(
       downloadFile({
-        fileId: allFile[index].storageId,
+        fileId: allFileId[index].storageId,
         name: file?.originFileObj?.name,
       }),
     );
@@ -99,6 +100,7 @@ const Attachments = () => {
   const handleSubmit = (options: IOptions) => {
     const { onSuccess, onError, onProgress } = options;
 
+    // config нужен для того, чтобы отображался progress bar загрузки файла
     const config = {
       onUploadProgress: (event: ProgressEvent) => {
         const definePercent = (event.loaded / event.total) * 100;

@@ -1,5 +1,5 @@
 import { fetchTaskAction } from 'store/common/task/thunk';
-import { IResponseTask} from 'store/common/task/types';
+import { IResponseTask } from 'store/common/task/types';
 import { deleteFile } from 'store/attachments/thunk';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
@@ -47,7 +47,7 @@ export const attachmentsSlice = createSlice({
       state.error = payload;
     },
 
-      // нужен, чтобы получить вложения для задачи, если они у нее уже есть
+    // нужен, чтобы получить вложения для задачи, если они у нее уже есть
     // и отобразить их
     [fetchTaskAction.fulfilled.type]: (
       state,
@@ -62,7 +62,10 @@ export const attachmentsSlice = createSlice({
       state.error = null;
     },
 
-    [deleteFile.fulfilled.type]: (state, { payload }: PayloadAction<string>) => {
+    [deleteFile.fulfilled.type]: (
+      state,
+      { payload }: PayloadAction<string>,
+    ) => {
       state.data = state.data?.filter((item) => item.name_original !== payload);
       state.loading = false;
     },
@@ -71,7 +74,7 @@ export const attachmentsSlice = createSlice({
       state,
       { payload }: PayloadAction<AxiosError>,
     ) => {
-      state.loading = false;  
+      state.loading = false;
       state.error = payload;
     },
   },
