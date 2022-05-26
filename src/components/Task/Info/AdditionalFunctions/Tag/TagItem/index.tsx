@@ -3,20 +3,16 @@ import { Tag, Modal, Button, Menu } from 'antd';
 import { DeleteOutlined, CaretRightOutlined } from '@ant-design/icons';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { deleteTagAction } from 'store/editTask/additionalFunctions/tag/thunk';
-import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { getTag } from 'store/editTask/additionalFunctions/tag/selectors';
 import { uniqueId } from 'lodash';
 
 import styles from '../index.module.scss';
 
-const TagItem = () => {
+const TagItem = ({tagSelect}) => {
   const [isVisible, setIsVisible] = useState(false);
   const [name, setName] = useState('');
   const [id, setId] = useState<string | undefined>('');
 
   const dispatch = useAppDispatch();
-
-  const tagSelect = useAppSelector(getTag);
 
   const handleClose = (
     e: React.MouseEvent<HTMLElement>,

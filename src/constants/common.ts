@@ -36,3 +36,5 @@ export const PRIORITY_COLORS = {
   Средний: 'Orange',
   Низкий: 'Green',
 };
+
+export const STYLES = ['high', 'middle', 'low'];

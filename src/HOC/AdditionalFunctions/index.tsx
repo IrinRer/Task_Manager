@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
 import { Button } from 'antd';
-
+import { ITag } from 'store/common/tags/types';
 import styles from './index.module.scss';
 
+interface IProps {
+  dateStop?: string;
+  tagSelect?: TPropsTag;
+  defaultPriority?: string;
+}
+
+type TPropsTag = ITag[] | null | undefined;
+
 export const withAdditionalFunctions = (
-  BaseComponent: React.FC,
+  BaseComponent: React.FC<IProps>,
   Icon: React.FC,
+  value: TPropsTag | string,
 ) => {
-  return () => {
+  return (props: IProps) => {
     const [isClick, setClick] = useState(false);
 
     const creatButton = () => {
@@ -16,8 +25,8 @@ export const withAdditionalFunctions = (
 
     return (
       <>
-        {isClick ? (
-          <BaseComponent />
+        {isClick || ( value && value.length !== 0)? (
+          <BaseComponent {...props} />
         ) : (
           <Button
             icon={<Icon />}

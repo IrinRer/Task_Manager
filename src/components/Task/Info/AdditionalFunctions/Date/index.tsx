@@ -6,16 +6,16 @@ import { DATE_FORMAT_SERVER, DATE_FORMAT_UI } from 'constants/common';
 import { format, parse } from 'date-fns';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import DatePicker from 'constants/additionalFunctions/DatePicker';
-import { getTaskInfoDateStop } from 'store/common/task/selectors';
+// import { getTaskInfoDateStop } from 'store/common/task/selectors';
 import { getTaskId } from 'store/editTask/selectors';
 import styles from './index.module.scss';
 
 const { Text } = Typography;
 
-const SelectDate = () => {
+const SelectDate = ({dateStop}) => {
   const dispatch = useAppDispatch();
 
-  const dateStop = useAppSelector(getTaskInfoDateStop);
+  // const dateStop = useAppSelector(getTaskInfoDateStop);
   const taskId = useAppSelector(getTaskId);
 
   const onChange = (date: Date | null) => {

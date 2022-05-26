@@ -13,7 +13,7 @@ import styles from './index.module.scss';
 
 const { Text } = Typography;
 
-const SelectTag = () => {
+const SelectTag = ({tagSelect}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [colorTag, setColor] = useState('');
   const [inputValue, setInputValue] = useState('');
@@ -66,7 +66,7 @@ const SelectTag = () => {
 
   return (
     <div className={className}>
-      <TagItem />
+      <TagItem tagSelect = {tagSelect}/>
       <Button
         type="primary"
         onClick={showModal}
