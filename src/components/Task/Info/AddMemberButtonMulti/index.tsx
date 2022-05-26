@@ -16,10 +16,8 @@ import {
   setNewSelectedMembers,
   setUnselectedMembers,
 } from 'store/editTask/slice';
-import {
-  deleteTaskMemberAction,
-  setTaskMemberAction,
-} from 'store/editTask/thunk';
+import { setTaskMemberAction } from 'store/editTask/thunks/setTaskMemberAction';
+import { deleteTaskMemberAction } from 'store/editTask/thunks/deleteTaskMemberAction';
 import { selectPopulatedUsers } from 'store/users/selectors';
 import { IPopulatedUser } from 'store/users/types';
 import debounce from 'lodash/debounce';

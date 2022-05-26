@@ -6,7 +6,7 @@ import {
   getIsCheckListTitleLoading,
   getIsTaskEditable,
 } from 'store/editTask/selectors';
-import { setCheckListTitle } from 'store/editTask/thunk';
+import { setCheckListTitleAction } from 'store/editTask/thunks/checkLists/setCheckListTitleAction';
 import Spinner from 'components/Common/Spinner';
 import { Input } from 'antd';
 import styles from './index.module.scss';
@@ -25,7 +25,7 @@ const CheckListTitle = () => {
 
   const handleInputSubmit = () => {
     if (newTitle && newTitle !== title) {
-      dispatch(setCheckListTitle(newTitle));
+      dispatch(setCheckListTitleAction(newTitle));
     }
 
     if (!newTitle) {

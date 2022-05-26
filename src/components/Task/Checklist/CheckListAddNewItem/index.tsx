@@ -1,8 +1,8 @@
 import { Input } from 'antd';
 import React, { ChangeEvent, useState } from 'react';
 import { ReactComponent as PlusIcon } from 'assets/icons/plus.svg';
-import { addCheckListItemAction } from 'store/editTask/thunk';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
+import { addCheckListItemAction } from 'store/editTask/thunks/checkLists/addCheckListItemAction';
 import styles from './index.module.scss';
 
 const CheckListAddNewItem = () => {

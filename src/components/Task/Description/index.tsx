@@ -6,8 +6,8 @@ import {
   getEditDescLoading,
   getTaskId,
 } from 'store/editTask/selectors';
+import { setTaskDescription } from 'store/editTask/thunks/setTaskDescription';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { setTaskDescription } from 'store/editTask/thunk';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import Spinner from 'components/Common/Spinner';
 import classnames from 'classnames';

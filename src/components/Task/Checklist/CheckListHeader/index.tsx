@@ -4,8 +4,8 @@ import { ReactComponent as CheckMarkIcon } from 'assets/icons/checkMark.svg';
 import { ReactComponent as RecycleBinIcon } from 'assets/icons/recycleBin.svg';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { getCheckList, getIsTaskEditable } from 'store/editTask/selectors';
-import { deleteCheckListAction } from 'store/editTask/thunk';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
+import { deleteCheckListAction } from 'store/editTask/thunks/checkLists/deleteCheckListAction';
 import CheckListTitle from '../CheckListTitle';
 import styles from './index.module.scss';
 

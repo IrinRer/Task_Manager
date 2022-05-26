@@ -5,10 +5,6 @@ import { ReactComponent as MoreIcon } from 'assets/icons/more.svg';
 import filterStyles from 'components/Home/Filters/index.module.scss';
 import { ICheckListItem } from 'store/common/task/types';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import {
-  deleteCheckListItemAction,
-  setCompleteCheckListItemAction,
-} from 'store/editTask/thunk';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { ICheckListChangeCompleteStatus } from 'store/editTask/types';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
@@ -16,6 +12,8 @@ import {
   getIsCheckListItemLoading,
   getIsTaskEditable,
 } from 'store/editTask/selectors';
+import { setCompleteCheckListItemAction } from 'store/editTask/thunks/checkLists/setCompleteCheckListItemAction';
+import { deleteCheckListItemAction } from 'store/editTask/thunks/checkLists/deleteCheckListItemAction';
 import Spinner from 'components/Common/Spinner';
 import styles from './index.module.scss';
 

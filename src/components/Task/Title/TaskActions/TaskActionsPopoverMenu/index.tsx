@@ -1,8 +1,8 @@
 import React from 'react';
-import { addCheckListAction } from 'store/editTask/thunk';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { getCheckList, getIsCheckListLoading } from 'store/editTask/selectors';
+import { addCheckListAction } from 'store/editTask/thunks/checkLists/addCheckListAction';
 import classnames from 'classnames';
 import Spinner from 'components/Common/Spinner';
 import styles from './index.module.scss';

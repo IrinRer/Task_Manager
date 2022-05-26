@@ -1,25 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { IEditTaskReducer, EDIT_TASK_SLICE_ALIAS } from 'store/editTask/types';
-import {
-  addCheckListAction,
-  addCheckListItemAction,
-  deleteCheckListAction,
-  deleteCheckListItemAction,
-  deleteTaskMemberAction,
-  setCheckListTitle,
-  setCompleteCheckListItemAction,
-  setTaskDescription,
-  setTaskMemberAction,
-  setTaskTitle,
-} from 'store/editTask/thunk';
 import { AxiosError } from 'axios';
-import {
-  ICheckList,
-  ICheckListItem,
-  IResponseTask,
-} from 'store/common/task/types';
+import { IResponseTask } from 'store/common/task/types';
 import { fetchTaskAction } from 'store/common/task/thunk';
+import { setCompleteCheckListItemsActionExtraReducers } from './thunks/checkLists/setCompleteCheckListItemAction';
+import { setCheckListTitleActionExtraReducers } from './thunks/checkLists/setCheckListTitleAction';
+import { deleteCheckListItemActionExtraReducers } from './thunks/checkLists/deleteCheckListItemAction';
+import { addCheckListItemActionExtraReducers } from './thunks/checkLists/addCheckListItemAction';
+import { addCheckListActionExtraReducers } from './thunks/checkLists/addCheckListAction';
+import { deleteCheckListActionExtraReducers } from './thunks/checkLists/deleteCheckListAction';
+import { setTaskDescriptionExtraReducers } from './thunks/setTaskDescription';
+import { setTaskTitleExtraReducers } from './thunks/setTaskTitle';
+import { setTaskMemberActionExtraReducers } from './thunks/setTaskMemberAction';
+import { deleteTaskMemberActionExtraReducers } from './thunks/deleteTaskMemberAction';
 
 const initialState: IEditTaskReducer = {
   modalVisible: false,
@@ -95,206 +89,16 @@ export const editTaskSlice = createSlice({
       state.editError.task = payload;
     },
 
-    [setTaskDescription.pending.type]: (state: IEditTaskReducer) => {
-      state.editError.desc = null;
-      state.editLoading.desc = true;
-    },
-    [setTaskDescription.fulfilled.type]: (
-      state: IEditTaskReducer,
-      { payload }: PayloadAction<IResponseTask>,
-    ) => {
-      state.data = payload;
-      state.editLoading.desc = false;
-    },
-    [setTaskDescription.rejected.type]: (
-      state: IEditTaskReducer,
-      { payload }: PayloadAction<AxiosError>,
-    ) => {
-      state.editLoading.desc = false;
-      state.editError.desc = payload;
-    },
-
-    [setTaskTitle.pending.type]: (state: IEditTaskReducer) => {
-      state.editLoading.title = true;
-      state.editError.title = null;
-    },
-    [setTaskTitle.fulfilled.type]: (
-      state: IEditTaskReducer,
-      { payload }: PayloadAction<IResponseTask>,
-    ) => {
-      state.data = payload;
-      state.editLoading.title = false;
-    },
-    [setTaskTitle.rejected.type]: (
-      state: IEditTaskReducer,
-      { payload }: PayloadAction<AxiosError>,
-    ) => {
-      state.editLoading.title = false;
-      state.editError.title = payload;
-    },
-
-    [setTaskMemberAction.pending.type]: (state: IEditTaskReducer) => {
-      state.editLoading.members = true;
-      state.editError.setMembers = null;
-    },
-    [setTaskMemberAction.fulfilled.type]: (
-      state: IEditTaskReducer,
-      { payload }: PayloadAction<IResponseTask>,
-    ) => {
-      state.data = payload;
-      state.editLoading.members = false;
-    },
-    [setTaskMemberAction.rejected.type]: (
-      state: IEditTaskReducer,
-      { payload }: PayloadAction<AxiosError>,
-    ) => {
-      state.editError.setMembers = payload;
-      state.selectedMembers = null;
-      state.editLoading.members = false;
-    },
-
-    [deleteTaskMemberAction.pending.type]: (state: IEditTaskReducer) => {
-      state.editLoading.members = true;
-      state.editError.delMembers = null;
-    },
-    [deleteTaskMemberAction.fulfilled.type]: (
-      state: IEditTaskReducer,
-      { payload }: PayloadAction<IResponseTask>,
-    ) => {
-      state.data = payload;
-      state.editLoading.members = false;
-    },
-    [deleteTaskMemberAction.rejected.type]: (
-      state: IEditTaskReducer,
-      { payload }: PayloadAction<AxiosError>,
-    ) => {
-      state.editError.delMembers = payload;
-      state.unselectedMembers = null;
-      state.editLoading.members = false;
-    },
-
-    [deleteCheckListAction.pending.type]: (state: IEditTaskReducer) => {
-      state.editLoading.checkList = true;
-    },
-    [deleteCheckListAction.fulfilled.type]: (
-      state: IEditTaskReducer,
-      { payload }: PayloadAction<IResponseTask>,
-    ) => {
-      state.data = payload;
-      state.editLoading.checkList = false;
-    },
-    [deleteCheckListAction.rejected.type]: (
-      state: IEditTaskReducer,
-      { payload }: PayloadAction<AxiosError>,
-    ) => {
-      state.editError.checkList = payload;
-      state.editLoading.checkList = false;
-    },
-
-    [addCheckListAction.pending.type]: (state: IEditTaskReducer) => {
-      state.editLoading.checkList = true;
-    },
-    [addCheckListAction.fulfilled.type]: (
-      state: IEditTaskReducer,
-      { payload }: PayloadAction<IResponseTask>,
-    ) => {
-      state.data = payload;
-      state.editLoading.checkList = false;
-    },
-    [addCheckListAction.rejected.type]: (
-      state: IEditTaskReducer,
-      { payload }: PayloadAction<AxiosError>,
-    ) => {
-      state.editError.checkList = payload;
-      state.editLoading.checkList = false;
-    },
-
-    [addCheckListItemAction.pending.type]: (state: IEditTaskReducer) => {
-      state.editLoading.checkListItem = true;
-    },
-    [addCheckListItemAction.fulfilled.type]: (
-      state: IEditTaskReducer,
-      { payload }: PayloadAction<ICheckListItem>,
-    ) => {
-      state.data?.check_lists[0].items.push(payload);
-      state.editLoading.checkListItem = false;
-    },
-    [addCheckListItemAction.rejected.type]: (
-      state: IEditTaskReducer,
-      { payload }: PayloadAction<AxiosError>,
-    ) => {
-      state.editError.checkListItem = payload;
-      state.editLoading.checkListItem = false;
-    },
-
-    [deleteCheckListItemAction.pending.type]: (state: IEditTaskReducer) => {
-      state.editLoading.checkListItem = true;
-    },
-    [deleteCheckListItemAction.fulfilled.type]: (
-      state: IEditTaskReducer,
-      { payload }: PayloadAction<ICheckListItem>,
-    ) => {
-      state.data!.check_lists[0].items =
-        state.data!.check_lists[0].items.filter(
-          (item) => item.check_list_item_id !== payload.check_list_item_id,
-        );
-      state.editLoading.checkListItem = false;
-    },
-    [deleteCheckListItemAction.rejected.type]: (
-      state: IEditTaskReducer,
-      { payload }: PayloadAction<AxiosError>,
-    ) => {
-      state.editError.checkListItem = payload;
-      state.editLoading.checkListItem = false;
-    },
-
-    [setCompleteCheckListItemAction.pending.type]: (
-      state: IEditTaskReducer,
-    ) => {
-      state.editLoading.checkListItem = true;
-    },
-    [setCompleteCheckListItemAction.fulfilled.type]: (
-      state: IEditTaskReducer,
-      { payload }: PayloadAction<ICheckListItem>,
-    ) => {
-      const checkListItemIndex: number =
-        state.data!.check_lists[0].items.findIndex(
-          (item) => item.check_list_item_id === payload.check_list_item_id,
-        );
-
-      state.data!.check_lists[0].items[checkListItemIndex] = payload;
-
-      state.editLoading.checkListItem = false;
-    },
-    [setCompleteCheckListItemAction.rejected.type]: (
-      state: IEditTaskReducer,
-      { payload }: PayloadAction<AxiosError>,
-    ) => {
-      state.editError.checkListItem = payload;
-      state.editLoading.checkListItem = false;
-    },
-
-    [setCheckListTitle.pending.type]: (state: IEditTaskReducer) => {
-      state.editLoading.checkListTitle = true;
-    },
-    [setCheckListTitle.fulfilled.type]: (
-      state: IEditTaskReducer,
-      { payload }: PayloadAction<ICheckList>,
-    ) => {
-      if (state.data?.check_lists) {
-        state.data.check_lists[0].title = payload.title;
-        state.data.check_lists[0].updated = payload.updated;
-      }
-
-      state.editLoading.checkListTitle = false;
-    },
-    [setCheckListTitle.rejected.type]: (
-      state: IEditTaskReducer,
-      { payload }: PayloadAction<AxiosError>,
-    ) => {
-      state.editError.checkListTitle = payload;
-      state.editLoading.checkListTitle = false;
-    },
+    ...setTaskDescriptionExtraReducers,
+    ...setTaskTitleExtraReducers,
+    ...setTaskMemberActionExtraReducers,
+    ...deleteTaskMemberActionExtraReducers,
+    ...deleteCheckListActionExtraReducers,
+    ...addCheckListActionExtraReducers,
+    ...addCheckListItemActionExtraReducers,
+    ...deleteCheckListItemActionExtraReducers,
+    ...setCompleteCheckListItemsActionExtraReducers,
+    ...setCheckListTitleActionExtraReducers,
   },
 });
 
@@ -304,4 +108,5 @@ export const {
   setUnselectedMembers,
   setModalVisible,
 } = editTaskSlice.actions;
+
 export default editTaskSlice.reducer;
