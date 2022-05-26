@@ -6,7 +6,7 @@ interface IProps {
   priority: PriorityName | null;
 }
 
-const STYLES: string[] = ['low', 'middle', 'high'];
+const STYLES: string[] = ['high', 'middle', 'low'];
 
 const Priority: React.FC<IProps> = ({ priority }) => {
   return (

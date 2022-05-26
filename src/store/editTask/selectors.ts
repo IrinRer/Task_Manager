@@ -9,26 +9,29 @@ import {
   isWatcher,
 } from 'store/common/task/selectors';
 
+export const getModalVisible = (state: RootState) =>
+  state.editTask.editTaskReducer.modalVisible;
+
 export const getNewSelectedMembers = (state: RootState) =>
-  state.editTask.selectedMembers;
+  state.editTask.editTaskReducer.selectedMembers;
 
 export const getOneNewSelectedMembers = (state: RootState) =>
-  state.editTask.selectedMembers?.pop();
+  state.editTask.editTaskReducer.selectedMembers?.pop();
 
 export const getUnselectedMembers = (state: RootState) =>
-  state.editTask.unselectedMembers;
+  state.editTask.editTaskReducer.unselectedMembers;
 
-export const taskRoles = (state: RootState) => state.editTask.data?.roles;
+export const taskRoles = (state: RootState) => state.editTask.editTaskReducer.data?.roles;
 
-export const getTaskId = (state: RootState) => state.editTask.data?.task_id;
+export const getTaskId = (state: RootState) => state.editTask.editTaskReducer.data?.task_id;
 
-export const getTitle = (state: RootState) => state.editTask.data?.title;
+export const getTitle = (state: RootState) => state.editTask.editTaskReducer.data?.title;
 
 export const getDescription = (state: RootState) =>
-  state.editTask.data?.description;
+  state.editTask.editTaskReducer.data?.description;
 
 export const getTaskStatus = (state: RootState) =>
-  state.editTask.data?.status?.name;
+  state.editTask.editTaskReducer.data?.status?.name;
 
 export const getTaskAuthor = createSelector(
   taskRoles,
@@ -50,16 +53,16 @@ export const getTaskWatchersID = createSelector(taskRoles, (roles) =>
 );
 
 export const getEditTaskLoading = (state: RootState) =>
-  state.editTask.editLoading.task;
+  state.editTask.editTaskReducer.editLoading.task;
 
 export const getEditTitleLoading = (state: RootState) =>
-  state.editTask.editLoading.title;
+  state.editTask.editTaskReducer.editLoading.title;
 
 export const getEditDescLoading = (state: RootState) =>
-  state.editTask.editLoading.desc;
+  state.editTask.editTaskReducer.editLoading.desc;
 
 export const getEditMembersLoading = (state: RootState) =>
-  state.editTask.editLoading.members;
+  state.editTask.editTaskReducer.editLoading.members;
 
 export const getEditTaskError = (state: RootState) =>
-  state.editTask.editError.task;
+  state.editTask.editTaskReducer.editError.task;
