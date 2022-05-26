@@ -37,7 +37,7 @@ const ListMemberMulti: FC<TProps> = ({ roleName, isActive, setIsActive }) => {
   };
 
   const onChange = (value: string[]) => {
-    if (selectedMembers && Array.isArray(selectedMembers)) {
+    if (selectedMembers) {
       dispatch(
         setUnselectedMembers(
           selectedMembers.filter((elem: string) => isUnassignUser(value, elem)),
@@ -74,7 +74,7 @@ const ListMemberMulti: FC<TProps> = ({ roleName, isActive, setIsActive }) => {
   };
 
   const generateValue = () => {
-    if (selectedMembers && Array.isArray(selectedMembers)) {
+    if (selectedMembers) {
       return selectedMembers.filter((elem: string) =>
         roleUnassign ? isUnassignUser(roleUnassign, elem) : true,
       );
@@ -84,12 +84,11 @@ const ListMemberMulti: FC<TProps> = ({ roleName, isActive, setIsActive }) => {
 
   const unselectedMembersWithNew = generateValue();
 
-  const users =
-    usersData?.users && Array.isArray(usersData?.users)
-      ? usersData?.users.filter((el) => {
-          return !isUnassignUser(unselectedMembersWithNew || [], el.user_id);
-        })
-      : null;
+  const users = usersData?.users
+    ? usersData?.users.filter((el) => {
+        return !isUnassignUser(unselectedMembersWithNew || [], el.user_id);
+      })
+    : null;
 
   return (
     <div

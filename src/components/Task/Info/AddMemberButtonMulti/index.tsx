@@ -77,7 +77,7 @@ const AddMemberButtonMulti: FC<TProps> = ({ roleName, usersMaxCount }) => {
   };
 
   const onChange = (value: string[]) => {
-    if (selectedMembers && Array.isArray(selectedMembers)) {
+    if (selectedMembers) {
       const newSelectedMembers = value.filter((elem: string) =>
         isNewUser(selectedMembers, elem),
       );
@@ -151,7 +151,7 @@ const AddMemberButtonMulti: FC<TProps> = ({ roleName, usersMaxCount }) => {
   };
 
   const generateValue = () => {
-    if (selectedMembers && Array.isArray(selectedMembers)) {
+    if (selectedMembers) {
       return selectedMembers
         .concat(roleAssign || [])
         .filter((elem: string) =>

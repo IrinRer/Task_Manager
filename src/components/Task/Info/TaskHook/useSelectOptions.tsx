@@ -1,4 +1,7 @@
-import { DEBOUNCE_TIMEOUT } from 'constants/common';
+import {
+  DEBOUNCE_TIMEOUT,
+  PARTICIPANTS_INPUT_MAX_LENGTH,
+} from 'constants/common';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { debounce } from 'lodash';
 import { useCallback, useMemo, useState } from 'react';
@@ -24,8 +27,8 @@ const useSelectOptions = () => {
   };
 
   const getSearchValue = (query: string): string => {
-    if (query.length > 50) {
-      return query.slice(0, 50);
+    if (query.length > PARTICIPANTS_INPUT_MAX_LENGTH) {
+      return query.slice(0, PARTICIPANTS_INPUT_MAX_LENGTH);
     }
     return query;
   };
@@ -52,7 +55,7 @@ const useSelectOptions = () => {
 
   const handleSearch = (query: string) => {
     setQueryValue(getSearchValue(query));
-    if (query.length <= 50 && query !== queryValue) {
+    if (query.length <= PARTICIPANTS_INPUT_MAX_LENGTH && query !== queryValue) {
       debouncedFetchUsers(queryValue);
     }
   };

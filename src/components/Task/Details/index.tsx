@@ -16,7 +16,7 @@ const Info: React.FC = () => {
       </div>
       <div className={styles.infoLine}>
         <span>{ROLES.responsible}</span>
-        <span>{responsible ? responsible.name : null}</span>
+        {responsible ? <span>{responsible.name}</span> : null}
       </div>
     </>
   );
