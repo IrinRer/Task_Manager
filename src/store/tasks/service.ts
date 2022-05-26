@@ -6,6 +6,7 @@ import {
   TaskStatuses,
   TTask,
 } from 'constants/types/common';
+import { compareDates, compareStrings } from 'helpers/compareTasks';
 import { TAllViewParameters, TViewParameters } from './types';
 
 export const getMyTasks = (
@@ -62,18 +63,15 @@ export const isFirstGTSecond = (
       (secondTask.priority ? +PriorityName[secondTask.priority.name] : 3)
     );
   }
+  if (sortField === 'title') {
+    return compareStrings(firstTask.title, secondTask.title);
+  }
+  // console.log('SortField', sortField);
 
-  if (
-    firstTask[sortField].toLowerCase() < secondTask[sortField].toLowerCase()
-  ) {
-    return -1;
+  if (sortField === 'created' || sortField === 'exec_stop') {
+    return compareDates(firstTask[sortField], secondTask[sortField]);
   }
-  if (
-    firstTask[sortField].toLowerCase() === secondTask[sortField].toLowerCase()
-  ) {
-    return 0;
-  }
-  return 1;
+  return 0;
 };
 
 // Возвращает сортированный список задач обрезанный по странице page с числом задач на странице tasksOnPage

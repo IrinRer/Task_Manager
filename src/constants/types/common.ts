@@ -89,7 +89,7 @@ export enum SortField {
   title = 'title',
   created = 'created',
   priority = 'priority',
-  endDate = 'created',
+  endDate = 'exec_stop',
 }
 export enum UserRoles {
   executor = 'Исполнитель',

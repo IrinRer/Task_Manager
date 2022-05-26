@@ -23,7 +23,9 @@ const Sorter: React.FC<IProps> = ({ onSelect, selectValue, blockType }) => {
       >
         <Option value={SortField.created}>дате создания</Option>
         <Option value={SortField.title}>названию</Option>
-        {blockType === BlockType.done ? null : (
+        {blockType === BlockType.done ? (
+          <Option value={SortField.endDate}>дате завершения</Option>
+        ) : (
           <Option value={SortField.priority}>приоритету</Option>
         )}
       </Select>

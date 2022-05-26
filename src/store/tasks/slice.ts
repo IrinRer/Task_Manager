@@ -27,17 +27,17 @@ const initialState: ITasksReducer = {
   onlyMyTasks: false,
   viewParameters: {
     in: {
-      sortField: SortField.endDate,
+      sortField: SortField.created,
       page: 1,
       tasksOnPage: TASKS_ON_PAGE_DEFAULT,
     },
     work: {
-      sortField: SortField.endDate,
+      sortField: SortField.created,
       page: 1,
       tasksOnPage: TASKS_ON_PAGE_DEFAULT,
     },
     done: {
-      sortField: SortField.endDate,
+      sortField: SortField.created,
       page: 1,
       tasksOnPage: TASKS_ON_PAGE_DEFAULT,
     },
