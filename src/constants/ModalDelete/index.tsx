@@ -47,3 +47,5 @@ const ModalDelete = ({
     </Modal>
   );
 };
+
+export default ModalDelete;
