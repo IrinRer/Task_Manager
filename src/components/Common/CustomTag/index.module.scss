@@ -3,13 +3,6 @@
 @import 'src/styles/colors';
 @import 'src/styles/mixins';
 
-// 'orange',
-// 'red',
-// 'green',
-// 'purple',
-// 'pink',
-// 'blue',
-// 'yellow',
 .wrapper {
   :global(.ant-tag) {
     width: fit-content;

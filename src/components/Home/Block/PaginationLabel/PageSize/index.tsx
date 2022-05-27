@@ -8,7 +8,7 @@ interface IProps {
 }
 const PageSize: React.FC<IProps> = ({ pageSize, handleChange }) => {
   const [editMode, setEditMode] = useState<boolean>(false);
-  const [newPageSize, setNewPageSize] = useState<string>(pageSize.toString());
+  const [newPageSize, setNewPageSize] = useState(pageSize.toString());
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -19,7 +19,9 @@ const PageSize: React.FC<IProps> = ({ pageSize, handleChange }) => {
     setNewPageSize(pageSize.toString());
   }, [pageSize]);
 
-  const handleInput: React.ChangeEventHandler = (e: any) => {
+  const handleInput: React.ChangeEventHandler = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     if (validNumber(e.target.value)) {
       setNewPageSize(e.target.value);
     } else {

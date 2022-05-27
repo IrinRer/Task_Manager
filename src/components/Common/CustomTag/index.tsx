@@ -6,11 +6,11 @@ import styles from './index.module.scss';
 
 interface IProps {
   title: string;
-  color: TagColor | string;
+  color: TagColor;
   closable?: boolean;
   noBackground?: boolean;
   id?: string;
-  onClose?: (e: any) => void;
+  onClose?: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
 // CustomTag потому что Tag зарезервировано в antd. wrapper нужен чтобы принять свойство color тэга и фон

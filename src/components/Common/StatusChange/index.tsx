@@ -26,7 +26,7 @@ const StatusChange: React.FC<IProps> = ({ task_id, edit = false }) => {
   const userId = useAppSelector(getVerifyIdUser);
   const task = useAppSelector((state) => getTaskById(state, task_id));
 
-  const handleClick = (task_status_id) => {
+  const handleClick = (task_status_id: string) => {
     if (!(task && canUserChangeTaskStatus(userId, task))) {
       notification.warn({ message: 'У Вас нет прав на изменение статуса' });
       return;

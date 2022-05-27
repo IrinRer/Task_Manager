@@ -52,3 +52,5 @@ export enum StatusClass {
   'Выполнена' = 'done',
   'Не выполнена' = 'paused',
 }
+
+export const PRIORITY_STYLES: string[] = ['high', 'middle', 'low'];

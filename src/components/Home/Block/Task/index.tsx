@@ -2,6 +2,7 @@ import React from 'react';
 import { Col, Row, Popover } from 'antd';
 import { BlockType, TTask } from 'constants/types/common';
 import moreIcon from 'assets/icons/more.svg';
+import StatusChange from 'components/Common/StatusChange';
 import Attached from '../Attached';
 import Progress from '../Progress';
 import DateString from '../Date';
@@ -10,7 +11,6 @@ import Tags from '../Tags';
 import Roles from '../Roles';
 import Priority from '../Priority';
 import Title from '../Title';
-import StatusChange from '../../../Common/StatusChange';
 import TaskOptions from '../TaskOptions';
 import styles from './index.module.scss';
 

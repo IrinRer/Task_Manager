@@ -25,15 +25,6 @@ const Tag: FC<ITagProps> = ({ tag }) => {
       onClose={handleClose}
     />
   );
-
-  // return (
-  //   <div className={styles.tag}>
-  //     <p className={styles.text}>{tag.name}</p>
-  //     <button className={styles.button} type="button" onClick={handleClose}>
-  //       <CloseOutlined className={styles.icon} />
-  //     </button>
-  //   </div>
-  // );
 };
 
 export default Tag;
