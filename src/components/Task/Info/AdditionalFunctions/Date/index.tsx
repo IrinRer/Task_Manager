@@ -21,11 +21,6 @@ const SelectDate = () => {
   const onChange = (date: Date | null) => {
     dispatch(
       createDateAction({
-        // если date выбрана, то в dateStart пойдет сегодняшняя отформатированная дата,
-        // если нет, то отправляется null
-
-        // dateStart и dateStop отправляются вместе, так как в thunk идут два запроса.
-        // Начальная дата (dateStart) должна отправляться первой, иначе ошибка
         dateStart: date ? format(Date.now(), DATE_FORMAT_SERVER) : null,
         dateStop: date ? format(date, DATE_FORMAT_SERVER) : null,
         task_id: taskId,

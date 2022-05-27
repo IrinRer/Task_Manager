@@ -31,13 +31,9 @@ const SelectTag = () => {
 
   const handleOk = () => {
     setIsModalVisible(false);
-    // после того, как нажали на кнопку 'Cохранить' colorTag очищается и никакой цвет не выбран
-    // и очищается форма
     setColor('');
     form.resetFields();
 
-    // если inputValue не содержится в uniqueTag, то createTagAction делает post запрос
-    // нужно, чтобы не было одинаковых тегов
     if (inputValue && isUniqueTag && uniqueTagName.length < 50) {
       dispatch(
         createTagAction({ name: inputValue, color: colorTag, task_id: taskId }),
@@ -51,7 +47,6 @@ const SelectTag = () => {
 
   const onChecked = (e) => {
     if (e.target.checked) {
-      // если checked = true, то устанавливаем в color тот checkbox(цвет), который был выбран
       setColor(e.target.value);
     } else setColor('');
   };

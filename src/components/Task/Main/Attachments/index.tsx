@@ -10,6 +10,7 @@ import {
   IOptions,
   acceptFormat,
   progress,
+  oneGB,
 } from 'constants/types/attachments/attachments';
 import { IPayloadFile } from 'store/attachments/types';
 import { uniqueId } from 'lodash';
@@ -64,6 +65,11 @@ const Attachments = () => {
   };
 
   const beforeUpload = (file: RcFile) => {
+    if (file.size > oneGB) {
+      notification.error({ message: 'Максимальный размер файла 1ГБ' });
+      return Upload.LIST_IGNORE;
+    }
+
     if (fileName.indexOf(file.name) !== -1) {
       notification.error({ message: 'Вы уже добавили этот файл' });
       return Upload.LIST_IGNORE;
@@ -115,7 +121,6 @@ const Attachments = () => {
 
     dispatch(
       assignFile({
-        // последний файл в fileList новый, его и отпправляю
         fileList: fileList[fileList.length - 1].originFileObj,
         onSuccess,
         onError,
@@ -154,6 +159,7 @@ const Attachments = () => {
         fileList={fileList}
         accept={acceptFormat}
         listType="picture"
+        directory
         progress={progress}
         showUploadList={{ showRemoveIcon: true, showDownloadIcon: true }}
         beforeUpload={beforeUpload}
