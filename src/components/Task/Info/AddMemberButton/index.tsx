@@ -10,8 +10,8 @@ import { setTaskMemberAction } from 'store/editTask/thunk';
 import { selectPopulatedUsers } from 'store/users/selectors';
 import { IPopulatedUser } from 'store/users/types';
 import { ROLES } from 'constants/task';
+import SimpleSelect from 'components/Common/SimpleSelect';
 import styles from './index.module.scss';
-import SimpleSelect from '../../../Common/SimpleSelect';
 import useSelectOptions from '../TaskHook/useSelectOptions';
 import useMembersProps from '../MembersHook/useMembersProps';
 
@@ -66,12 +66,6 @@ const AddMemberButton: FC<TProps> = ({ roleName }) => {
 
   return (
     <div className={styles.addmemberWrapper}>
-      {!isVisible ? (
-        <Button className={styles.addmember} onClick={showMemberModal}>
-          + добавить участника
-        </Button>
-      ) : null}
-
       {isVisible ? (
         <SimpleSelect
           list={allUsers}
@@ -94,7 +88,11 @@ const AddMemberButton: FC<TProps> = ({ roleName }) => {
           onBlur={onBlur}
           onSearch={options.particular.handleSearch}
         />
-      ) : null}
+      ) : (
+        <Button className={styles.addmember} onClick={showMemberModal}>
+          + добавить участника
+        </Button>
+      )}
     </div>
   );
 };

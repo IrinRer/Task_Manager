@@ -19,8 +19,8 @@ import { IUser } from 'store/users/types';
 type TRoleData = {
   name: string;
   roleId: string;
-  users: IUser[] | undefined;
-  usersID: string[] | undefined;
+  users: Array<IUser> | undefined;
+  usersID: Array<string> | undefined;
 };
 
 const useMembersProps = (roleName: string) => {
@@ -40,12 +40,12 @@ const useMembersProps = (roleName: string) => {
   const responsibleID = responsible?.user_id;
   const responsibleRoleID = useAppSelector(getResponsibleRoleID);
 
-  const userToArray = (user: IUser[] | IUser | undefined) => {
+  const userToArray = (user: Array<IUser> | IUser | undefined) => {
     if (user === undefined) return undefined;
     return Array.isArray(user) ? user : [user];
   };
 
-  const userIDToArray = (userID: string[] | string | undefined) => {
+  const userIDToArray = (userID: Array<string> | string | undefined) => {
     if (userID === undefined) return undefined;
     return Array.isArray(userID) ? userID : [userID];
   };

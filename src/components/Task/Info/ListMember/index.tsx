@@ -9,9 +9,9 @@ import { setUnselectedMembers } from 'store/editTask/slice';
 import { deleteTaskMemberAction } from 'store/editTask/thunk';
 import classnames from 'classnames';
 import { ROLES } from 'constants/task';
+import SimpleSelect from 'components/Common/SimpleSelect';
 import styles from '../AddMemberButton/index.module.scss';
 import stylesList from './index.module.scss';
-import SimpleSelect from '../../../Common/SimpleSelect';
 import useSelectOptions from '../TaskHook/useSelectOptions';
 import useMembersProps from '../MembersHook/useMembersProps';
 
@@ -32,11 +32,11 @@ const ListMemberMulti: FC<TProps> = ({ roleName, isActive, setIsActive }) => {
   const dispatch = useAppDispatch();
   const taskId = useAppSelector(getTaskId);
 
-  const isUnassignUser = (users: string[] | string, elem: string) => {
+  const isUnassignUser = (users: Array<string> | string, elem: string) => {
     return users?.indexOf(elem) === -1;
   };
 
-  const onChange = (value: string[]) => {
+  const onChange = (value: Array<string>) => {
     if (selectedMembers) {
       dispatch(
         setUnselectedMembers(

@@ -16,14 +16,13 @@ import {
   setUnselectedMembers,
 } from 'store/editTask/slice';
 import {
-  deleteTaskMemberAction,
-  setTaskMemberAction,
+  deleteTaskMemberGroupAction,
+  setTaskMemberGroupAction,
 } from 'store/editTask/thunk';
 import { selectPopulatedUsers } from 'store/users/selectors';
 import { IPopulatedUser } from 'store/users/types';
-import { ROLES } from 'constants/task';
+import SimpleSelect from 'components/Common/SimpleSelect';
 import styles from '../AddMemberButton/index.module.scss';
-import SimpleSelect from '../../../Common/SimpleSelect';
 import useSelectOptions from '../TaskHook/useSelectOptions';
 import useMembersProps from '../MembersHook/useMembersProps';
 
@@ -46,9 +45,8 @@ const AddMemberButtonMulti: FC<TProps> = ({ roleName, usersMaxCount }) => {
   const usersData = useMembersProps(roleName);
   const selectedMembers = usersData?.usersID;
   const roleId = usersData?.roleId;
-  const watcherRoleId = useMembersProps(ROLES.watcher)?.roleId;
 
-  const isNewUser = (users: string[] | string, elem: string) => {
+  const isNewUser = (users: Array<string> | string, elem: string) => {
     return users?.indexOf(elem) === -1;
   };
 
@@ -58,8 +56,8 @@ const AddMemberButtonMulti: FC<TProps> = ({ roleName, usersMaxCount }) => {
 
   const addNewMembersToArr = (
     countSelectedMembers: number,
-    newSelectedMembers: string[],
-    newUnselectedMembers: string[],
+    newSelectedMembers: Array<string>,
+    newUnselectedMembers: Array<string>,
   ) => {
     if (countSelectedMembers > usersMaxCount) {
       setIsDisabled(true);
@@ -76,7 +74,7 @@ const AddMemberButtonMulti: FC<TProps> = ({ roleName, usersMaxCount }) => {
     }
   };
 
-  const onChange = (value: string[]) => {
+  const onChange = (value: Array<string>) => {
     if (selectedMembers) {
       const newSelectedMembers = value.filter((elem: string) =>
         isNewUser(selectedMembers, elem),
@@ -98,32 +96,6 @@ const AddMemberButtonMulti: FC<TProps> = ({ roleName, usersMaxCount }) => {
     }
   };
 
-  const updateNewMemberApi = (
-    task_id: string,
-    user_id: string,
-    role_id: string,
-    type: 'add' | 'del',
-  ) => {
-    if (type === 'add') {
-      dispatch(
-        setTaskMemberAction({
-          task_id,
-          assign_user_id: user_id,
-          task_role_id: role_id,
-        }),
-      );
-    }
-    if (type === 'del') {
-      dispatch(
-        deleteTaskMemberAction({
-          task_id,
-          assign_user_id: user_id,
-          task_role_id: role_id,
-        }),
-      );
-    }
-  };
-
   const onBlur = () => {
     options.common.onBlur();
     setIsVisible(!isVisible);
@@ -133,18 +105,20 @@ const AddMemberButtonMulti: FC<TProps> = ({ roleName, usersMaxCount }) => {
       taskId &&
       roleId
     ) {
-      roleAssign?.forEach((element) => {
-        updateNewMemberApi(taskId, element, roleId, 'add');
-        if (roleName !== ROLES.watcher && watcherRoleId) {
-          updateNewMemberApi(taskId, element, watcherRoleId, 'add');
-        }
-      });
-      roleUnassign?.forEach((element) => {
-        updateNewMemberApi(taskId, element, roleId, 'del');
-        if (roleName !== ROLES.watcher && watcherRoleId) {
-          updateNewMemberApi(taskId, element, watcherRoleId, 'del');
-        }
-      });
+      dispatch(
+        setTaskMemberGroupAction({
+          task_id: taskId,
+          assign_users_ids: roleAssign,
+          task_role_id: roleId,
+        }),
+      );
+      dispatch(
+        deleteTaskMemberGroupAction({
+          task_id: taskId,
+          assign_users_ids: roleUnassign,
+          task_role_id: roleId,
+        }),
+      );
       dispatch(setNewSelectedMembers([]));
       dispatch(setUnselectedMembers([]));
     }
@@ -171,12 +145,6 @@ const AddMemberButtonMulti: FC<TProps> = ({ roleName, usersMaxCount }) => {
 
   return (
     <div className={styles.addmemberWrapper}>
-      {!isVisible ? (
-        <Button className={styles.addmember} onClick={showMemberModal}>
-          + добавить участника
-        </Button>
-      ) : null}
-
       {isVisible ? (
         <SimpleSelect
           list={isDisabled ? getOnlySelectedUsers() : allUsers}
@@ -200,7 +168,11 @@ const AddMemberButtonMulti: FC<TProps> = ({ roleName, usersMaxCount }) => {
           onBlur={onBlur}
           onSearch={options.particular.handleSearch}
         />
-      ) : null}
+      ) : (
+        <Button className={styles.addmember} onClick={showMemberModal}>
+          + добавить участника
+        </Button>
+      )}
     </div>
   );
 };

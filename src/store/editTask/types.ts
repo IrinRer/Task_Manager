@@ -28,3 +28,9 @@ export interface ITaskAssignUser {
   assign_user_id: string;
   task_role_id: string;
 }
+
+export interface ITaskAssignGroupUser {
+  task_id: string;
+  assign_users_ids: Array<string>;
+  task_role_id: string;
+}

@@ -23,7 +23,7 @@ export function isResponsible(element: ITaskRoles): boolean {
 }
 
 export function getUsersFromRoles(roles: Array<ITaskRoles> | undefined) {
-  const arr: IUser[] = roles?.map((element) => element.assign_user) || [];
+  const arr: Array<IUser> = roles?.map((element) => element.assign_user) || [];
   return arr;
 }
 
