@@ -25,3 +25,22 @@ export const canUserChangeTaskStatus = (
     ) !== undefined
   );
 };
+
+export const canUserDuplicateTask = (
+  userId: string | null,
+  task: TTask,
+): boolean => {
+  const validRoles = [
+    ROLES.author,
+    ROLES.implementer,
+    ROLES.responsible,
+    ROLES.watcher,
+  ];
+  return (
+    task.roles.find(
+      (role) =>
+        validRoles.includes(role.task_role.name) &&
+        role.assign_user.user_id === userId,
+    ) !== undefined
+  );
+};

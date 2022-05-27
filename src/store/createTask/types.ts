@@ -15,3 +15,7 @@ export interface ICreateTaskArg {
   title: string;
   task_status_id: string;
 }
+
+export interface TTaskCloneResponse {
+  clone: TTask;
+}

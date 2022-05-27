@@ -52,13 +52,6 @@ export const tasksSlice = createSlice({
     showOnlyMyTasks: (state: ITasksReducer) => {
       state.onlyMyTasks = true;
     },
-    // resetState: (state: ITasksReducer) => {
-    //   state.viewParameters = { ...initialState.viewParameters };
-    //   state.onlyMyTasks = initialState.onlyMyTasks;
-    //   // state.viewParameters = initialState.viewParameters;
-    //   // state.itemsTotal = initialState.itemsTotal;
-    //   console.log('I RESET STATE', initialState);
-    // },
     resetTasks: () => initialState,
     showAllTasks: (state: ITasksReducer) => {
       state.onlyMyTasks = false;
