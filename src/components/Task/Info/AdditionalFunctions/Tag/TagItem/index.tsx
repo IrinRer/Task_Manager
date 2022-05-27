@@ -4,10 +4,11 @@ import { DeleteOutlined, CaretRightOutlined } from '@ant-design/icons';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { deleteTagAction } from 'store/editTask/additionalFunctions/tag/thunk';
 import { uniqueId } from 'lodash';
+import { minNumberTagsOnPage } from 'constants/additionalFunctions/tag';
 
 import styles from '../index.module.scss';
 
-const TagItem = ({tagSelect}) => {
+const TagItem = ({ tagSelect }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [name, setName] = useState('');
   const [id, setId] = useState<string | undefined>('');
@@ -62,7 +63,7 @@ const TagItem = ({tagSelect}) => {
           })}
         </Menu.SubMenu>
       </Menu>
-      <div className={styles.tag}>{tag?.slice(0, 3)}</div>
+      <div className={styles.tag}>{tag?.slice(0, minNumberTagsOnPage)}</div>
       <Modal
         title="Вы уверены?"
         visible={isVisible}

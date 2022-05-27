@@ -7,13 +7,14 @@ import { allColorTag } from 'constants/additionalFunctions/color';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { uniqueTagNameSelector } from 'store/editTask/additionalFunctions/tag/selectors';
 import { getTaskId } from 'store/editTask/selectors';
+import { maxNumberTags } from 'constants/additionalFunctions/tag';
 import TagItem from './TagItem';
 
 import styles from './index.module.scss';
 
 const { Text } = Typography;
 
-const SelectTag = ({tagSelect}) => {
+const SelectTag = ({ tagSelect }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [colorTag, setColor] = useState('');
   const [inputValue, setInputValue] = useState('');
@@ -38,7 +39,7 @@ const SelectTag = ({tagSelect}) => {
 
     // если inputValue не содержится в uniqueTag, то createTagAction делает post запрос
     // нужно, чтобы не было одинаковых тегов
-    if (inputValue && isUniqueTag && uniqueTagName.length < 50) {
+    if (inputValue && isUniqueTag && uniqueTagName.length < maxNumberTags) {
       dispatch(
         createTagAction({ name: inputValue, color: colorTag, task_id: taskId }),
       );
@@ -66,7 +67,7 @@ const SelectTag = ({tagSelect}) => {
 
   return (
     <div className={className}>
-      <TagItem tagSelect = {tagSelect}/>
+      <TagItem tagSelect={tagSelect} />
       <Button
         type="primary"
         onClick={showModal}

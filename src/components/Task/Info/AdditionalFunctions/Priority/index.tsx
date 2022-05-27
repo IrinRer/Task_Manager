@@ -10,11 +10,10 @@ import { STYLES } from 'constants/common';
 
 import styles from './index.module.scss';
 
-
 const { Text } = Typography;
 const { Option } = Select;
 
-const SelectPriority = ({defaultPriority}) => {
+const SelectPriority = ({ defaultPriority }) => {
   const dispatch = useAppDispatch();
   const priorityValue = useAppSelector(selectPopulatedPriorities);
   const taskId = useAppSelector(getTaskId);
