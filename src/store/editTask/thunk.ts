@@ -1,8 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { notification } from 'antd';
 import { AxiosResponse } from 'axios';
-import useMembersProps from 'components/Task/Info/MembersHook/useMembersProps';
-import { ROLES } from 'constants/task';
 
 import { api } from 'network';
 
