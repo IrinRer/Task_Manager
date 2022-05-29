@@ -22,6 +22,7 @@ import {
 import { selectPopulatedUsers } from 'store/users/selectors';
 import { IPopulatedUser } from 'store/users/types';
 import SimpleSelect from 'components/Common/SimpleSelect';
+import { ROLES } from 'constants/task';
 import styles from '../AddMemberButton/index.module.scss';
 import useSelectOptions from '../TaskHook/useSelectOptions';
 import useMembersProps from '../MembersHook/useMembersProps';
@@ -45,6 +46,7 @@ const AddMemberButtonMulti: FC<TProps> = ({ roleName, usersMaxCount }) => {
   const usersData = useMembersProps(roleName);
   const selectedMembers = usersData?.usersID;
   const roleId = usersData?.roleId;
+  const watcherRoleId = useMembersProps(ROLES.watcher)?.roleId;
 
   const isNewUser = (users: Array<string> | string, elem: string) => {
     return users?.indexOf(elem) === -1;
@@ -103,13 +105,15 @@ const AddMemberButtonMulti: FC<TProps> = ({ roleName, usersMaxCount }) => {
       Array.isArray(roleAssign) &&
       Array.isArray(roleUnassign) &&
       taskId &&
-      roleId
+      roleId &&
+      watcherRoleId
     ) {
       dispatch(
         setTaskMemberGroupAction({
           task_id: taskId,
           assign_users_ids: roleAssign,
           task_role_id: roleId,
+          watcher_role_id: watcherRoleId,
         }),
       );
       dispatch(
@@ -117,6 +121,7 @@ const AddMemberButtonMulti: FC<TProps> = ({ roleName, usersMaxCount }) => {
           task_id: taskId,
           assign_users_ids: roleUnassign,
           task_role_id: roleId,
+          watcher_role_id: watcherRoleId,
         }),
       );
       dispatch(setNewSelectedMembers([]));

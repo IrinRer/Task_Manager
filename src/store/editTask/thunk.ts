@@ -89,25 +89,21 @@ export const setTaskMemberGroupAction = createAsyncThunk(
   `${EDIT_TASK_SLICE_ALIAS}/setMemberGroup`,
   async (data: ITaskAssignGroupUser, { rejectWithValue, dispatch }) => {
     try {
-      const { task_id } = data;
-      const role_id = data.task_role_id;
-      const watcherRoleId = useMembersProps(ROLES.watcher)?.roleId;
-
       data.assign_users_ids?.forEach((element) => {
         dispatch(
           setTaskMemberAction({
-            task_id,
+            task_id: data.task_id,
             assign_user_id: element,
-            task_role_id: role_id,
+            task_role_id: data.task_role_id,
           }),
         );
 
-        if (role_id !== watcherRoleId && watcherRoleId) {
+        if (data.task_role_id !== data.watcher_role_id) {
           dispatch(
             setTaskMemberAction({
-              task_id,
+              task_id: data.task_id,
               assign_user_id: element,
-              task_role_id: watcherRoleId,
+              task_role_id: data.watcher_role_id,
             }),
           );
         }
@@ -125,25 +121,21 @@ export const deleteTaskMemberGroupAction = createAsyncThunk(
   `${EDIT_TASK_SLICE_ALIAS}/deleteMemberGroup`,
   async (data: ITaskAssignGroupUser, { rejectWithValue, dispatch }) => {
     try {
-      const { task_id } = data;
-      const role_id = data.task_role_id;
-      const watcherRoleId = useMembersProps(ROLES.watcher)?.roleId;
-
       data.assign_users_ids?.forEach((element) => {
         dispatch(
           deleteTaskMemberAction({
-            task_id,
+            task_id: data.task_id,
             assign_user_id: element,
-            task_role_id: role_id,
+            task_role_id: data.task_role_id,
           }),
         );
 
-        if (role_id !== watcherRoleId && watcherRoleId) {
+        if (data.task_role_id !== data.watcher_role_id) {
           dispatch(
             deleteTaskMemberAction({
-              task_id,
+              task_id: data.task_id,
               assign_user_id: element,
-              task_role_id: watcherRoleId,
+              task_role_id: data.watcher_role_id,
             }),
           );
         }
