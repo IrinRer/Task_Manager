@@ -1,6 +1,6 @@
 import { CloseOutlined, SearchOutlined } from '@ant-design/icons';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 
 import { getUnselectedMembers, getTaskId } from 'store/editTask/selectors';
 
@@ -73,22 +73,22 @@ const ListMemberMulti: FC<TProps> = ({ roleName, isActive, setIsActive }) => {
     }
   };
 
-  const generateValue = () => {
+  const unselectedMembersWithNew = useMemo(() => {
     if (selectedMembers) {
       return selectedMembers.filter((elem: string) =>
         roleUnassign ? isUnassignUser(roleUnassign, elem) : true,
       );
     }
     return null;
-  };
+  }, [roleUnassign, selectedMembers]);
 
-  const unselectedMembersWithNew = generateValue();
-
-  const users = usersData?.users
-    ? usersData?.users.filter((el) => {
-        return !isUnassignUser(unselectedMembersWithNew || [], el.user_id);
-      })
-    : null;
+  const users = useMemo(() => {
+    return usersData?.users
+      ? usersData?.users.filter((el) => {
+          return !isUnassignUser(unselectedMembersWithNew || [], el.user_id);
+        })
+      : null;
+  }, [unselectedMembersWithNew, usersData?.users]);
 
   return (
     <div
@@ -106,7 +106,7 @@ const ListMemberMulti: FC<TProps> = ({ roleName, isActive, setIsActive }) => {
         mode="multiple"
         menuItemSelectedIcon={<CloseOutlined />}
         dropdownClassName={styles.dropdown}
-        defaultValue={generateValue()}
+        defaultValue={unselectedMembersWithNew}
         suffixIcon={
           <span
             role="img"

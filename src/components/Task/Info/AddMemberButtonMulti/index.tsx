@@ -2,7 +2,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import React, { FC, useState } from 'react';
+import React, { FC, useMemo, useState } from 'react';
 
 import {
   getNewSelectedMembers,
@@ -129,7 +129,7 @@ const AddMemberButtonMulti: FC<TProps> = ({ roleName, usersMaxCount }) => {
     }
   };
 
-  const generateValue = () => {
+  const selectedMembersWithNew = useMemo(() => {
     if (selectedMembers) {
       return selectedMembers
         .concat(roleAssign || [])
@@ -138,28 +138,26 @@ const AddMemberButtonMulti: FC<TProps> = ({ roleName, usersMaxCount }) => {
         );
     }
     return null;
-  };
+  }, [roleAssign, roleUnassign, selectedMembers]);
 
-  const getOnlySelectedUsers = () => {
-    const selectedMembersWithNew = generateValue();
-
+  const getOnlySelectedUsers = useMemo(() => {
     return allUsers.filter((el) => {
       return !isNewUser(selectedMembersWithNew || [], el.user_id);
     });
-  };
+  }, [allUsers, selectedMembersWithNew]);
 
   return (
     <div className={styles.addmemberWrapper}>
       {isVisible ? (
         <SimpleSelect
-          list={isDisabled ? getOnlySelectedUsers() : allUsers}
+          list={isDisabled ? getOnlySelectedUsers : allUsers}
           itemKey="key"
           itemLabel="name"
           itemValue="user_id"
           {...options.common}
           mode="multiple"
           dropdownClassName={styles.dropdown}
-          defaultValue={generateValue()}
+          defaultValue={selectedMembersWithNew}
           suffixIcon={
             <span
               role="img"
