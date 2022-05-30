@@ -2,10 +2,10 @@ import React from 'react';
 
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { getCheckList, getIsTaskEditable } from 'store/editTask/selectors';
-import CheckListAddNewItem from './CheckListAddNewItem';
-import CheckListItems from './CheckListItems';
-import CheckListHeader from './CheckListHeader';
-import CheckListProgress from './CheckListProgress';
+import CheckListAddNewItem from './AddNewItem';
+import CheckListItems from './Items';
+import CheckListHeader from './Header';
+import CheckListProgress from './Progress';
 import styles from './index.module.scss';
 
 const Checklist: React.FC = () => {

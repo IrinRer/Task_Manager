@@ -8,13 +8,11 @@ import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { ICheckListChangeCompleteStatus } from 'store/editTask/types';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import {
-  getIsCheckListItemLoading,
-  getIsTaskEditable,
-} from 'store/editTask/selectors';
-import { setCompleteCheckListItemAction } from 'store/editTask/thunks/checkLists/setCompleteCheckListItemAction';
-import { deleteCheckListItemAction } from 'store/editTask/thunks/checkLists/deleteCheckListItemAction';
+import { getIsTaskEditable } from 'store/editTask/selectors';
+import { isDeleteCheckListItemLoading } from 'store/editTask/checkLists/deleteCheckListItem/selectors';
+import { setCompleteCheckListItem } from 'store/editTask/checkLists/setCompleteCheckListItem/thunk';
 import Spinner from 'components/Common/Spinner';
+import { deleteCheckListItem } from 'store/editTask/checkLists/deleteCheckListItem/thunk';
 import styles from './index.module.scss';
 
 interface IProps {
@@ -27,7 +25,7 @@ const CheckListItem: React.FC<IProps> = ({ checkListItem }) => {
   const { check_list_item_id, message, complete } = checkListItem;
 
   const isTaskEditable = useAppSelector(getIsTaskEditable);
-  const isCheckListItemLoading = useAppSelector(getIsCheckListItemLoading);
+  const isCheckListItemLoading = useAppSelector(isDeleteCheckListItemLoading);
 
   const checkBoxClassName = classnames(
     filterStyles.checkboxGroup,
@@ -39,7 +37,7 @@ const CheckListItem: React.FC<IProps> = ({ checkListItem }) => {
   });
 
   const handleDeleteCheckListItem = () => {
-    dispatch(deleteCheckListItemAction(check_list_item_id));
+    dispatch(deleteCheckListItem(check_list_item_id));
   };
 
   const toggleCheckListItemComplete = (evt: CheckboxChangeEvent) => {
@@ -47,7 +45,7 @@ const CheckListItem: React.FC<IProps> = ({ checkListItem }) => {
       check_list_item_id,
       complete: evt.target.checked,
     };
-    dispatch(setCompleteCheckListItemAction(data));
+    dispatch(setCompleteCheckListItem(data));
   };
 
   return (

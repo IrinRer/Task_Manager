@@ -5,8 +5,8 @@ import { ReactComponent as RecycleBinIcon } from 'assets/icons/recycleBin.svg';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { getCheckList, getIsTaskEditable } from 'store/editTask/selectors';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import { deleteCheckListAction } from 'store/editTask/thunks/checkLists/deleteCheckListAction';
-import CheckListTitle from '../CheckListTitle';
+import { deleteCheckList } from 'store/editTask/checkLists/deleteCheckList/thunk';
+import CheckListTitle from '../Title';
 import styles from './index.module.scss';
 
 const CheckListHeader: React.FC = () => {
@@ -17,7 +17,7 @@ const CheckListHeader: React.FC = () => {
   const isTaskEditable = useAppSelector(getIsTaskEditable);
 
   const handleDeleteCheckListClick = () => {
-    dispatch(deleteCheckListAction(checkList!.check_list_id));
+    dispatch(deleteCheckList(checkList!.check_list_id));
   };
 
   return (

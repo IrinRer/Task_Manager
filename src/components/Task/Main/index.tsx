@@ -5,6 +5,9 @@ import {
   CommentOutlined,
   ContainerOutlined,
 } from '@ant-design/icons';
+import { useAppSelector } from 'customHooks/redux/useAppSelector';
+import Spinner from 'components/Common/Spinner';
+import { isDeleteCheckListLoading } from 'store/editTask/checkLists/deleteCheckList/selectors';
 import styles from './index.module.scss';
 import History from '../History';
 import InputWrapper from './InputWrapper';
@@ -13,6 +16,8 @@ import Title from '../Title';
 import Checklist from '../Checklist';
 
 const Main: React.FC = () => {
+  const isCheckListLoading = useAppSelector(isDeleteCheckListLoading);
+
   return (
     <div className={styles.taskMain}>
       <Title />
@@ -21,7 +26,7 @@ const Main: React.FC = () => {
         <Description />
       </InputWrapper>
 
-      <Checklist />
+      {isCheckListLoading ? <Spinner /> : <Checklist />}
 
       <InputWrapper labelText="Комментарии" icon={<CommentOutlined />}>
         <TextArea

@@ -5,7 +5,7 @@ import {
   getTaskId,
   getTitle,
 } from 'store/editTask/selectors';
-import { setTaskTitle } from 'store/editTask/thunks/setTaskTitle';
+import { setTaskTitle } from 'store/editTask/thunk';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { EditOutlined } from '@ant-design/icons';

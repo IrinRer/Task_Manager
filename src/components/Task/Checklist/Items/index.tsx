@@ -1,6 +1,6 @@
 import React from 'react';
 import { ICheckListItem } from 'store/common/task/types';
-import CheckListItem from './CheckListItem';
+import CheckListItem from './Item';
 import styles from './index.module.scss';
 
 interface IProps {

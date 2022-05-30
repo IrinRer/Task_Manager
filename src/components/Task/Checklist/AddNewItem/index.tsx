@@ -2,11 +2,16 @@ import { Input } from 'antd';
 import React, { ChangeEvent, useState } from 'react';
 import { ReactComponent as PlusIcon } from 'assets/icons/plus.svg';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import { addCheckListItemAction } from 'store/editTask/thunks/checkLists/addCheckListItemAction';
+import { addCheckListItem } from 'store/editTask/checkLists/addCheckListItem/thunk';
+import { useAppSelector } from 'customHooks/redux/useAppSelector';
+import { isAddCheckListItemLoading } from 'store/editTask/checkLists/addCheckListItem/selectors';
+import Spinner from 'components/Common/Spinner';
 import styles from './index.module.scss';
 
 const CheckListAddNewItem = () => {
   const dispatch = useAppDispatch();
+
+  const isLoading = useAppSelector(isAddCheckListItemLoading);
 
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>('');
@@ -17,7 +22,7 @@ const CheckListAddNewItem = () => {
 
   const handleAddCheckListItem = () => {
     if (inputValue) {
-      dispatch(addCheckListItemAction(inputValue));
+      dispatch(addCheckListItem(inputValue));
       setInputValue('');
     }
 
@@ -35,7 +40,9 @@ const CheckListAddNewItem = () => {
       onClick={handleAddButtonClick}
     >
       <PlusIcon className={styles.newItemButtonIcon} />
-      {isEditMode ? (
+      {isLoading ? (
+        <Spinner size="small" className={styles.spinner} />
+      ) : isEditMode ? (
         <Input
           autoFocus
           bordered={false}

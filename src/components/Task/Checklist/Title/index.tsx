@@ -1,14 +1,11 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import {
-  getCheckListTitle,
-  getIsCheckListTitleLoading,
-  getIsTaskEditable,
-} from 'store/editTask/selectors';
-import { setCheckListTitleAction } from 'store/editTask/thunks/checkLists/setCheckListTitleAction';
+import { getCheckListTitle, getIsTaskEditable } from 'store/editTask/selectors';
+import { setCheckListTitle } from 'store/editTask/checkLists/setCheckListTitle/thunk';
 import Spinner from 'components/Common/Spinner';
 import { Input } from 'antd';
+import { isSetCheckListTitleLoading } from 'store/editTask/checkLists/setCheckListTitle/selectors';
 import styles from './index.module.scss';
 
 const CheckListTitle = () => {
@@ -16,7 +13,7 @@ const CheckListTitle = () => {
 
   const title: string = useAppSelector(getCheckListTitle);
   const isTaskEditable: boolean = useAppSelector(getIsTaskEditable);
-  const isTitleLoading: boolean = useAppSelector(getIsCheckListTitleLoading);
+  const isTitleLoading: boolean = useAppSelector(isSetCheckListTitleLoading);
 
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [newTitle, setNewTitle] = useState<string>(title || '');
@@ -25,7 +22,7 @@ const CheckListTitle = () => {
 
   const handleInputSubmit = () => {
     if (newTitle && newTitle !== title) {
-      dispatch(setCheckListTitleAction(newTitle));
+      dispatch(setCheckListTitle(newTitle));
     }
 
     if (!newTitle) {
