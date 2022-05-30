@@ -69,6 +69,11 @@
     border: 1px solid $color;
     background-color: $color;
   }
+  &.disabled:hover {
+    cursor: default;
+    border: 1px solid $color;
+    background-color: $color;
+  }
 }
 
 @mixin statuses {

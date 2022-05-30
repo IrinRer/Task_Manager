@@ -24,6 +24,9 @@ export const getUnselectedMembers = (state: RootState) =>
 export const taskRoles = (state: RootState) =>
   state.editTask.editTaskReducer.data?.roles;
 
+export const getTask = (state: RootState) =>
+  state.editTask.editTaskReducer.data;
+
 export const getTaskId = (state: RootState) =>
   state.editTask.editTaskReducer.data?.task_id;
 

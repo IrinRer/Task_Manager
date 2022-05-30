@@ -2,17 +2,16 @@ import React from 'react';
 import { Col, Row, Popover } from 'antd';
 import { BlockType, TTask } from 'constants/types/common';
 import moreIcon from 'assets/icons/more.svg';
-import StatusChange from 'components/Common/StatusChange';
 import Attached from '../Attached';
 import Progress from '../Progress';
 import DateString from '../Date';
-import Status from '../Status';
 import Tags from '../Tags';
 import Roles from '../Roles';
 import Priority from '../Priority';
 import Title from '../Title';
 import TaskOptions from '../TaskOptions';
 import styles from './index.module.scss';
+import StatusWithPopover from '../../../Common/StatusWithPopover/StatusWithPopover';
 
 interface IProps {
   task: TTask;
@@ -32,15 +31,7 @@ const Task: React.FC<IProps> = ({ task, type }) => {
       </Col>
       {/* Статус со всплывающим селектором смены статуса */}
       <Col span={3} className={styles.status}>
-        <Popover
-          overlayClassName="popover"
-          content={<StatusChange task_id={task.task_id} />}
-          trigger="click"
-        >
-          <div>
-            <Status statusName={task.status.name} />
-          </div>
-        </Popover>
+        <StatusWithPopover taskId={task.task_id} />
       </Col>
       {/* Дата */}
       {type !== BlockType.done && (

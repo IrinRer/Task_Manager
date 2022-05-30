@@ -1,21 +1,17 @@
 import React from 'react';
-import { Popover } from 'antd';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import {
-  getTaskStatus,
   getTaskResponsible,
   getTaskId,
   getEditStatusLoading,
 } from 'store/editTask/selectors';
-import Status from 'components/Home/Block/Status';
-import StatusChange from 'components/Common/StatusChange';
+import StatusWithPopover from 'components/Common/StatusWithPopover/StatusWithPopover';
 import Spinner from 'components/Common/Spinner';
 import styles from './index.module.scss';
 
 const Info: React.FC = () => {
   const responsible = useAppSelector(getTaskResponsible);
-  const status = useAppSelector(getTaskStatus);
-  const task_id = useAppSelector(getTaskId);
+  const taskId = useAppSelector(getTaskId);
   const editLoading = useAppSelector(getEditStatusLoading);
 
   return (
@@ -30,14 +26,8 @@ const Info: React.FC = () => {
             <div className={styles.spinner}>
               <Spinner size="large" />
             </div>
-          ) : task_id ? (
-            <Popover
-              overlayClassName="popover"
-              content={<StatusChange task_id={task_id} edit />}
-              trigger="click"
-            >
-              <div>{status ? <Status statusName={status} /> : ''}</div>
-            </Popover>
+          ) : taskId ? (
+            <StatusWithPopover taskId={taskId} edit />
           ) : (
             ''
           )}
