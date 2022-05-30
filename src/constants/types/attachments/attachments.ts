@@ -50,4 +50,3 @@ export const progress = {
   style: { top: 10, borderRadius: 8 },
 };
 
-export const oneGB = 8589934592;
