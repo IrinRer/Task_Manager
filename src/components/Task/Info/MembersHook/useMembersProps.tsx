@@ -1,4 +1,4 @@
-import { ROLES } from 'constants/task';
+import { ROLES } from 'constants/types/common';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import {
   getAuthorRoleID,

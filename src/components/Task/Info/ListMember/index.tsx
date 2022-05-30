@@ -8,7 +8,7 @@ import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { setUnselectedMembers } from 'store/editTask/slice';
 import { deleteTaskMemberAction } from 'store/editTask/thunk';
 import classnames from 'classnames';
-import { ROLES } from 'constants/task';
+import { ROLES } from 'constants/types/common';
 import SimpleSelect from 'components/Common/SimpleSelect';
 import styles from '../AddMemberButton/index.module.scss';
 import stylesList from './index.module.scss';

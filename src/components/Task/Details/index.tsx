@@ -2,7 +2,7 @@ import React from 'react';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { getTaskStatus, getTaskResponsible } from 'store/editTask/selectors';
 
-import { ROLES } from 'constants/task';
+import { ROLES } from 'constants/types/common';
 import styles from './index.module.scss';
 
 const Info: React.FC = () => {

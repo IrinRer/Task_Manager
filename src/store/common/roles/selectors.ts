@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { ROLES } from 'constants/task';
+import { ROLES } from 'constants/types/common';
 import { RootState } from 'store';
 import { IRoles } from './types';
 

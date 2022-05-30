@@ -3,7 +3,7 @@ import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { getEditMembersLoading } from 'store/editTask/selectors';
 import uniqueId from 'lodash/uniqueId';
 import Spinner from 'components/Common/Spinner';
-import { ROLES } from 'constants/task';
+import { ROLES } from 'constants/types/common';
 import OneMember from './OneMember';
 import MembersWrapperMulti from './MembersWrapperMulti';
 import MembersByOne from './MembersByOne';

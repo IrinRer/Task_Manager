@@ -22,7 +22,7 @@ import {
 import { selectPopulatedUsers } from 'store/users/selectors';
 import { IPopulatedUser } from 'store/users/types';
 import SimpleSelect from 'components/Common/SimpleSelect';
-import { ROLES } from 'constants/task';
+import { ROLES } from 'constants/types/common';
 import styles from '../AddMemberButton/index.module.scss';
 import useSelectOptions from '../TaskHook/useSelectOptions';
 import useMembersProps from '../MembersHook/useMembersProps';

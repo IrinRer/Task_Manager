@@ -1,7 +1,7 @@
 import { DATE_FORMAT_UI } from 'constants/common';
 import { createSelector } from '@reduxjs/toolkit';
 import { format } from 'date-fns';
-import { ROLES } from 'constants/task';
+import { ROLES } from 'constants/types/common';
 import { RootState } from 'store';
 import { ITaskRoles } from 'store/common/task/types';
 import { IUser } from 'store/users/types';

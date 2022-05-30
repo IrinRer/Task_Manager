@@ -9,7 +9,7 @@ import { setNewSelectedMembers } from 'store/editTask/slice';
 import { setTaskMemberAction } from 'store/editTask/thunk';
 import { selectPopulatedUsers } from 'store/users/selectors';
 import { IPopulatedUser } from 'store/users/types';
-import { ROLES } from 'constants/task';
+import { ROLES } from 'constants/types/common';
 import SimpleSelect from 'components/Common/SimpleSelect';
 import styles from './index.module.scss';
 import useSelectOptions from '../TaskHook/useSelectOptions';
