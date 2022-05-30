@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/no-identical-functions */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { IEditTaskReducer, EDIT_TASK_SLICE_ALIAS } from 'store/editTask/types';
