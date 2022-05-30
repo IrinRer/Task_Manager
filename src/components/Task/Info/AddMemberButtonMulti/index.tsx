@@ -150,11 +150,11 @@ const AddMemberButtonMulti: FC<TProps> = ({ roleName, usersMaxCount }) => {
     <div className={styles.addmemberWrapper}>
       {isVisible ? (
         <SimpleSelect
+          {...options.common}
           list={isDisabled ? getOnlySelectedUsers : allUsers}
           itemKey="key"
           itemLabel="name"
           itemValue="user_id"
-          {...options.common}
           mode="multiple"
           dropdownClassName={styles.dropdown}
           defaultValue={selectedMembersWithNew}

@@ -98,11 +98,11 @@ const ListMemberMulti: FC<TProps> = ({ roleName, isActive, setIsActive }) => {
       )}
     >
       <SimpleSelect
+        {...options.common}
         list={users}
         itemKey="user_id"
         itemLabel="name"
         itemValue="user_id"
-        {...options.common}
         mode="multiple"
         menuItemSelectedIcon={<CloseOutlined />}
         dropdownClassName={styles.dropdown}
