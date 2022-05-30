@@ -7,6 +7,8 @@ import { allColorTag } from 'constants/additionalFunctions/color';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { uniqueTagNameSelector } from 'store/editTask/additionalFunctions/tag/selectors';
 import { getTaskId } from 'store/editTask/selectors';
+import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
+import { getRights } from 'helpers/rights';
 import TagItem from './TagItem';
 
 import styles from './index.module.scss';
@@ -21,6 +23,9 @@ const SelectTag = () => {
 
   const dispatch = useAppDispatch();
   const taskId = useAppSelector(getTaskId);
+
+  const myMaxRole = useAppSelector(getMyMaxRoleForTask);
+  const isRights = getRights(myMaxRole, 'tag');
 
   const uniqueTagName = useAppSelector(uniqueTagNameSelector);
   const isUniqueTag = uniqueTagName?.indexOf(inputValue) === -1;
@@ -66,15 +71,17 @@ const SelectTag = () => {
 
   return (
     <div className={className}>
-      <TagItem />
-      <Button
-        type="primary"
-        onClick={showModal}
-        className={styles.btn}
-        shape="round"
-      >
-        + Добавить метку
-      </Button>
+      <TagItem editable={isRights} />
+      {isRights ? (
+        <Button
+          type="primary"
+          onClick={showModal}
+          className={styles.btn}
+          shape="round"
+        >
+          + Добавить метку
+        </Button>
+      ) : null}
 
       <Modal
         title="Новая метка"

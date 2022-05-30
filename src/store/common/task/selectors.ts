@@ -69,6 +69,9 @@ export const getTaskError = (state: RootState) => state.common.onetask.error;
 export const getTaskInfoPriority = (state: RootState) =>
   state.common.onetask.data?.priority?.task_priority_id;
 
+export const getTaskInfoPriorityName = (state: RootState) =>
+  state.common.onetask.data?.priority?.name;
+
 export const getTaskInfoDateStop = (state: RootState) =>
   state.common.onetask.data?.exec_stop
     ? format(new Date(state.common.onetask.data?.exec_stop), DATE_FORMAT_UI)

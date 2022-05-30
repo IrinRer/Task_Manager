@@ -8,6 +8,8 @@ import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import DatePicker from 'constants/additionalFunctions/DatePicker';
 import { getTaskInfoDateStop } from 'store/common/task/selectors';
 import { getTaskId } from 'store/editTask/selectors';
+import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
+import { getRights } from 'helpers/rights';
 import styles from './index.module.scss';
 
 const { Text } = Typography;
@@ -17,6 +19,8 @@ const SelectDate = () => {
 
   const dateStop = useAppSelector(getTaskInfoDateStop);
   const taskId = useAppSelector(getTaskId);
+  const myMaxRole = useAppSelector(getMyMaxRoleForTask);
+  const isRights = getRights(myMaxRole, 'date');
 
   const onChange = (date: Date | null) => {
     dispatch(
@@ -40,6 +44,7 @@ const SelectDate = () => {
         defaultValue={
           dateStop ? parse(dateStop, DATE_FORMAT_UI, new Date()) : undefined
         }
+        disabled={!isRights}
         format={DATE_FORMAT_UI}
         bordered={false}
         placeholder="+ Добавить срок"

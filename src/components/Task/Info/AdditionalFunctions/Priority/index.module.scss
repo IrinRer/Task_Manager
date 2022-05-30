@@ -25,6 +25,13 @@
     font-weight: 500;
     text-transform: none;
   }
+
+  span {
+    font-weight: normal;
+    font-size: $font-size-m;
+    width: 56%;
+    text-transform: none;
+  }
 }
 
 .drop {
