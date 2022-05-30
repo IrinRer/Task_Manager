@@ -33,6 +33,7 @@ const SelectTag = ({ tagSelect }) => {
   const handleOk = () => {
     setIsModalVisible(false);
     setColor('');
+    setInputValue('');
     form.resetFields();
 
     if (inputValue && isUniqueTag && uniqueTagName.length < maxNumberTags) {

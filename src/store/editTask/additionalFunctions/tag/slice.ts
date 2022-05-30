@@ -34,7 +34,6 @@ export const tagSlice = createSlice({
       state,
       { payload }: PayloadAction<AxiosError>,
     ) => {
-      state.sentTag = null;
       state.loading = false;
       state.error = payload;
     },
