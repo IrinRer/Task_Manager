@@ -9,12 +9,12 @@ interface IProps {
   defaultPriority?: string;
 }
 
-type TPropsTag = ITag[] | null | undefined;
+type TPropsTag = ITag[] | null;
 
 export const withAdditionalFunctions = (
   BaseComponent: React.FC<IProps>,
   Icon: React.FC,
-  value: TPropsTag | string,
+  value: TPropsTag | string | undefined,
 ) => {
   return (props: IProps) => {
     const [isClick, setClick] = useState(false);
