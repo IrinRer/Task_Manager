@@ -25,7 +25,7 @@ export const withAdditionalFunctions = (
 
     return (
       <>
-        {isClick || ( value && value.length !== 0)? (
+        {isClick || (value && value.length !== 0) ? (
           <BaseComponent {...props} />
         ) : (
           <Button
