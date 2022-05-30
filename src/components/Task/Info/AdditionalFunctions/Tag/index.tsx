@@ -7,14 +7,19 @@ import { allColorTag } from 'constants/additionalFunctions/color';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { uniqueTagNameSelector } from 'store/editTask/additionalFunctions/tag/selectors';
 import { getTaskId } from 'store/editTask/selectors';
-import { maxNumberTags } from 'constants/additionalFunctions/tag';
+import { MAX_NUMBER_TAGS } from 'constants/additionalFunctions/tag';
+import { ITag } from 'store/common/tags/types';
 import TagItem from './TagItem';
 
 import styles from './index.module.scss';
 
 const { Text } = Typography;
 
-const SelectTag = ({ tagSelect }) => {
+interface IProps {
+  tagSelect: ITag[];
+}
+
+const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [colorTag, setColor] = useState('');
   const [inputValue, setInputValue] = useState('');
@@ -36,7 +41,7 @@ const SelectTag = ({ tagSelect }) => {
     setInputValue('');
     form.resetFields();
 
-    if (inputValue && isUniqueTag && uniqueTagName.length < maxNumberTags) {
+    if (inputValue && isUniqueTag && uniqueTagName.length < MAX_NUMBER_TAGS) {
       dispatch(
         createTagAction({ name: inputValue, color: colorTag, task_id: taskId }),
       );

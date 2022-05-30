@@ -13,7 +13,11 @@ import styles from './index.module.scss';
 const { Text } = Typography;
 const { Option } = Select;
 
-const SelectPriority = ({ defaultPriority }) => {
+interface IProps {
+  defaultPriority: string;
+}
+
+const SelectPriority: React.FC<IProps> = ({ defaultPriority }) => {
   const dispatch = useAppDispatch();
   const priorityValue = useAppSelector(selectPopulatedPriorities);
   const taskId = useAppSelector(getTaskId);

@@ -3,7 +3,16 @@ import { Modal, Button } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import styles from './index.module.scss';
 
-const ModalDelete = ({
+interface IProps {
+  textMain: string;
+  textButton: string;
+  visible: boolean;
+  setVisibleModalDelete: React.Dispatch<React.SetStateAction<boolean>>;
+  action: (arg: string | undefined) => void;
+  file: string | undefined;
+}
+
+const ModalDelete: React.FC<IProps> = ({
   textMain,
   textButton,
   visible,

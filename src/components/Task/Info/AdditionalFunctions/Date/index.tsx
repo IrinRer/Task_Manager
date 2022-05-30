@@ -11,7 +11,11 @@ import styles from './index.module.scss';
 
 const { Text } = Typography;
 
-const SelectDate = ({ dateStop }) => {
+interface IProps {
+  dateStop: string;
+}
+
+const SelectDate: React.FC<IProps> = ({ dateStop }) => {
   const dispatch = useAppDispatch();
   const taskId = useAppSelector(getTaskId);
 
