@@ -33,6 +33,7 @@
     "no-shadow": "off",
     "no-prototype-builtins": "off",
     "curly": "error",
+    
     "import/no-unresolved": [
       "error",
       {
