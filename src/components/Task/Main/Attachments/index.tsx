@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Upload, Col, notification } from 'antd';
+import { Button, Upload, Col, notification, Row} from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import type { RcFile, UploadFile } from 'antd/es/upload/interface';
 // import type {UploadRequestOption} from 'rc-upload/lib/interface';
@@ -30,15 +30,11 @@ const Attachments = () => {
   const taskFileAll = taskFile.map((item: IPayloadFile) => {
     // формат в котором вложения поступают с бэка и формат вложений
     // при загрузки разный, поэтому приходится приводить к одному виду
-    const id = uniqueId();
     return {
-      uid: id,
+      uid: uniqueId(),
       name: item.name_original,
       originFileObj: {
         name: item.name_original,
-        uid: id,
-        size: item.size,
-        type: item.content_type,
       },
       size: item.size,
       type: item.content_type,
@@ -152,7 +148,7 @@ const Attachments = () => {
         className={styles.upload}
         fileList={fileList}
         accept={acceptFormat}
-        listType="picture"
+        listType='picture'
         progress={progress}
         showUploadList={{ showRemoveIcon: true, showDownloadIcon: true }}
         beforeUpload={beforeUpload}

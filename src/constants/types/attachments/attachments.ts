@@ -42,7 +42,6 @@ export const acceptFormat = ".doc,.png,.jpg,.jpeg,.docx,.xml,application/msword,
 
 export const progress = {
   strokeWidth: 5,
-  showInfo: false,
   strokeColor: {
     '0%': colorProgress,
     '100%': colorProgress,
