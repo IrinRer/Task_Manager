@@ -18,8 +18,6 @@ export const selectTasksTotalCount = (state: RootState) =>
 export const getOnlyMyTasksFlag = (state: RootState) => state.tasks.onlyMyTasks;
 export const getViewParameters = (state: RootState) =>
   state.tasks.viewParameters;
-// тест для роутинга
-export const getTasksAuth = (state: RootState) => state.tasks.auth;
 
 // Возвращает либо все задачи либо мои задачи в зависимости от флага tasks.onlyMyTasks
 export const getTasksToShow = createSelector(
@@ -62,4 +60,3 @@ export const getDoneTasksSortedPaginated = createSelector(
   (tasks, viewParameters) =>
     getTasksSortedPaginated(tasks, viewParameters, BlockType.done),
 );
-

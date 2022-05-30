@@ -1,6 +1,6 @@
-export const ROLES = {
-  watcher: 'Наблюдатель',
-  responsible: 'Ответственный',
-  implementer: 'Исполнитель',
-  author: 'Автор задачи',
-};
+export enum ROLES {
+  watcher = 'Наблюдатель',
+  responsible = 'Ответственный',
+  implementer = 'Исполнитель',
+  author = 'Автор задачи',
+}

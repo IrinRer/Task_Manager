@@ -1,4 +1,4 @@
-import { UserRoles } from './types/common';
+import { ROLES } from './task';
 
 export const BASE_DATE_FORMAT = 'DD.MM.YYYY' as const;
 
@@ -27,10 +27,10 @@ export const DEBOUNCE_TIMEOUT = 500;
 
 // для проверки ролей моих задач
 export const MY_TASKS_ROLES = [
-  UserRoles.author,
-  UserRoles.executor,
-  UserRoles.watcher,
-  UserRoles.responsible,
+  ROLES.author,
+  ROLES.implementer,
+  ROLES.watcher,
+  ROLES.responsible,
 ];
 // TODO: Длина обрезки заголовка будет зависеть от разрешения экрана
 // переделается в дальшейшем

@@ -1,4 +1,5 @@
 import { notification } from 'antd';
+import { isValidPageSize } from 'constants/rules';
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './index.module.scss';
 
@@ -12,17 +13,16 @@ const PageSize: React.FC<IProps> = ({ pageSize, handleChange }) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (editMode) inputRef.current?.focus();
-  }, [editMode]);
-
-  useEffect(() => {
+    if (editMode) {
+      inputRef.current?.focus();
+    }
     setNewPageSize(pageSize.toString());
-  }, [pageSize]);
+  }, [editMode, pageSize]);
 
   const handleInput: React.ChangeEventHandler = (
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    if (validNumber(e.target.value)) {
+    if (isValidPageSize(e.target.value)) {
       setNewPageSize(e.target.value);
     } else {
       notification.warn({ message: 'Введите число от 1 до 100' });
@@ -34,20 +34,26 @@ const PageSize: React.FC<IProps> = ({ pageSize, handleChange }) => {
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' || e.key === 'Escape') {
-      if (e.key === 'Enter') {
-        if (Number(newPageSize) > 0) {
-          handleChange(Number(newPageSize));
-          setEditMode(false);
-        }
-      } else if (e.key === 'Escape') {
-        setNewPageSize(pageSize.toString());
+    switch (true) {
+      case e.key === 'Enter' && Number(newPageSize) > 0: {
+        handleChange(Number(newPageSize));
         setEditMode(false);
-      } else {
+        break;
+      }
+      case e.key === 'Enter' && Number(newPageSize) <= 0: {
         notification.warn({
           message: 'Неверное число',
         });
+        break;
       }
+      case e.key === 'Escape': {
+        setNewPageSize(pageSize.toString());
+        setEditMode(false);
+        break;
+      }
+
+      default:
+        break;
     }
   };
 
@@ -61,12 +67,6 @@ const PageSize: React.FC<IProps> = ({ pageSize, handleChange }) => {
     }
   };
 
-  const validNumber = (value: string): boolean => {
-    return (
-      (/^\d{1,3}$/.test(value) && Number(value) > 0 && Number(value) <= 100) ||
-      value.length === 0
-    );
-  };
   return (
     <div className={styles.pageSize}>
       {editMode ? (

@@ -17,7 +17,6 @@ export interface ITasksReducer {
   tasks: Array<TTask>;
   itemsTotal: number;
   loading: boolean;
-  auth: boolean;
   error: AxiosError | null;
   onlyMyTasks: boolean;
   viewParameters: TAllViewParameters;

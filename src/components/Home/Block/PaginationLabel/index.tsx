@@ -1,6 +1,7 @@
 import React from 'react';
 import paginationArrowUp from 'assets/icons/paginationArrowUp.svg';
 import paginationArrowDown from 'assets/icons/paginationArrowDown.svg';
+import { MAX_TASKS_ON_PAGE } from 'constants/rules';
 import PageSize from './PageSize';
 import styles from './index.module.scss';
 
@@ -10,6 +11,15 @@ interface IProps {
 }
 
 const PaginationLabel: React.FC<IProps> = ({ pageSize, handler }) => {
+  const handleIncrease = (): void => {
+    if (pageSize < MAX_TASKS_ON_PAGE - 1) handler(pageSize + 1);
+  };
+  const handleDecrease = (): void => {
+    if (pageSize > 1) {
+      handler(pageSize - 1);
+    }
+  };
+
   return (
     <div className={styles.wrapper}>
       <PageSize pageSize={pageSize} handleChange={handler} />
@@ -17,14 +27,14 @@ const PaginationLabel: React.FC<IProps> = ({ pageSize, handler }) => {
         <button
           type="button"
           className={styles.increase}
-          onClick={() => handler(pageSize + 1)}
+          onClick={handleIncrease}
         >
           <img src={paginationArrowUp} alt="increase" />
         </button>
         <button
           type="button"
           className={styles.decrease}
-          onClick={() => handler(pageSize - 1)}
+          onClick={handleDecrease}
         >
           <img src={paginationArrowDown} alt="decrease" />
         </button>

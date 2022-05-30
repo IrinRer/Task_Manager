@@ -21,8 +21,6 @@ const initialState: ITasksReducer = {
   tasks: [],
   itemsTotal: 0,
   loading: false,
-  // auth временное свойство, необходимое на данном этапе для корректной работы роута
-  auth: true,
   error: null,
   onlyMyTasks: false,
   viewParameters: {

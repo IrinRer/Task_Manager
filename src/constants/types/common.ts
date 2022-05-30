@@ -1,9 +1,11 @@
+import { ROLES } from 'constants/task';
+
 export type TRole = {
   task_to_role_id: string;
   task: { task_id: string };
   task_role: {
     task_role_id: string;
-    name: UserRoles;
+    name: ROLES;
     name_group: string;
     max_user_assigned: number;
     is_author: boolean;
@@ -90,12 +92,6 @@ export enum SortField {
   created = 'created',
   priority = 'priority',
   endDate = 'exec_stop',
-}
-export enum UserRoles {
-  executor = 'Исполнитель',
-  author = 'Автор задачи',
-  watcher = 'Наблюдатель',
-  responsible = 'Ответственный',
 }
 
 // используется в thunk для изменения статуса
