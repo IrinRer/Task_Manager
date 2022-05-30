@@ -8,10 +8,10 @@ import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { setUnselectedMembers } from 'store/editTask/slice';
 import { deleteTaskMemberAction } from 'store/editTask/thunk';
 import classnames from 'classnames';
-import { ROLES } from 'constants/task';
+import { ROLES } from 'constants/types/common';
+import SimpleSelect from 'components/Common/SimpleSelect';
 import styles from '../AddMemberButton/index.module.scss';
 import stylesList from './index.module.scss';
-import SimpleSelect from '../../../Common/SimpleSelect';
 import useSelectOptions from '../TaskHook/useSelectOptions';
 import useMembersProps from '../MembersHook/useMembersProps';
 
@@ -38,12 +38,12 @@ const ListMemberMulti: FC<TProps> = ({
   const dispatch = useAppDispatch();
   const taskId = useAppSelector(getTaskId);
 
-  const isUnassignUser = (users: string[] | string, elem: string) => {
+  const isUnassignUser = (users: Array<string> | string, elem: string) => {
     return users?.indexOf(elem) === -1;
   };
 
-  const onChange = (value: string[]) => {
-    if (selectedMembers && Array.isArray(selectedMembers)) {
+  const onChange = (value: Array<string>) => {
+    if (selectedMembers) {
       dispatch(
         setUnselectedMembers(
           selectedMembers.filter((elem: string) => isUnassignUser(value, elem)),
@@ -83,7 +83,7 @@ const ListMemberMulti: FC<TProps> = ({
   };
 
   const generateValue = () => {
-    if (selectedMembers && Array.isArray(selectedMembers)) {
+    if (selectedMembers) {
       return selectedMembers.filter((elem: string) =>
         roleUnassign ? isUnassignUser(roleUnassign, elem) : true,
       );
@@ -93,12 +93,11 @@ const ListMemberMulti: FC<TProps> = ({
 
   const unselectedMembersWithNew = generateValue();
 
-  const users =
-    usersData?.users && Array.isArray(usersData?.users)
-      ? usersData?.users.filter((el) => {
-          return !isUnassignUser(unselectedMembersWithNew || [], el.user_id);
-        })
-      : null;
+  const users = usersData?.users
+    ? usersData?.users.filter((el) => {
+        return !isUnassignUser(unselectedMembersWithNew || [], el.user_id);
+      })
+    : null;
 
   return (
     <div

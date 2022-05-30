@@ -16,7 +16,7 @@ export const fetchTaskAction = createAsyncThunk(
       return response.data.data;
     } catch (error) {
       notification.error({ message: 'Ошибка открытия задачи' });
-      return rejectWithValue(error);
+      return rejectWithValue(error.message);
     }
   },
 );

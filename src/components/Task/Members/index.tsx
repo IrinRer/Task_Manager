@@ -3,7 +3,7 @@ import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { getEditMembersLoading } from 'store/editTask/selectors';
 import uniqueId from 'lodash/uniqueId';
 import Spinner from 'components/Common/Spinner';
-import { ROLES } from 'constants/task';
+import { ROLES } from 'constants/types/common';
 import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
 import { getRights } from 'helpers/rights';
 import OneMember from './OneMember';

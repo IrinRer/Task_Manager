@@ -13,10 +13,7 @@ type TProps = {
 
 const OneMember: FC<TProps> = ({ user, roleName, editable }) => {
   const usersData = useMembersProps(roleName);
-  const userFromTaskRole =
-    usersData?.users && !Array.isArray(usersData?.users)
-      ? usersData?.users
-      : undefined;
+  const userFromTaskRole = usersData?.users ? usersData?.users[0] : undefined;
 
   const member = user || userFromTaskRole;
 

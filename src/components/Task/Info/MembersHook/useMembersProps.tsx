@@ -1,4 +1,4 @@
-import { ROLES } from 'constants/task';
+import { ROLES } from 'constants/types/common';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import {
   getAuthorRoleID,
@@ -19,8 +19,8 @@ import { IUser } from 'store/users/types';
 type TRoleData = {
   name: string;
   roleId: string;
-  users: IUser[] | IUser | undefined;
-  usersID: string[] | string | undefined;
+  users: Array<IUser> | undefined;
+  usersID: Array<string> | undefined;
 };
 
 const useMembersProps = (roleName: string) => {
@@ -40,12 +40,22 @@ const useMembersProps = (roleName: string) => {
   const responsibleID = responsible?.user_id;
   const responsibleRoleID = useAppSelector(getResponsibleRoleID);
 
+  const userToArray = (user: Array<IUser> | IUser | undefined) => {
+    if (user === undefined) return undefined;
+    return Array.isArray(user) ? user : [user];
+  };
+
+  const userIDToArray = (userID: Array<string> | string | undefined) => {
+    if (userID === undefined) return undefined;
+    return Array.isArray(userID) ? userID : [userID];
+  };
+
   const RoleData: Array<TRoleData> = [
     {
       name: ROLES.author,
       roleId: authorRoleID || '',
-      users: author,
-      usersID: authorID,
+      users: userToArray(author),
+      usersID: userIDToArray(authorID),
     },
     {
       name: ROLES.watcher,
@@ -62,8 +72,8 @@ const useMembersProps = (roleName: string) => {
     {
       name: ROLES.responsible,
       roleId: responsibleRoleID || '',
-      users: responsible,
-      usersID: responsibleID,
+      users: userToArray(responsible),
+      usersID: userIDToArray(responsibleID),
     },
   ];
 

@@ -97,3 +97,10 @@ export enum UserRoles {
   watcher = 'Наблюдатель',
   responsible = 'Ответственный',
 }
+
+export enum ROLES {
+  implementer = 'Исполнитель',
+  author = 'Автор задачи',
+  watcher = 'Наблюдатель',
+  responsible = 'Ответственный',
+}

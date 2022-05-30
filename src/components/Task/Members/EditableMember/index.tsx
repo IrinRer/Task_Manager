@@ -6,7 +6,7 @@ import { deleteTaskMemberAction } from 'store/editTask/thunk';
 import { getTaskId } from 'store/editTask/selectors';
 import useMembersProps from 'components/Task/Info/MembersHook/useMembersProps';
 import { IUser } from 'store/users/types';
-import { ROLES } from 'constants/task';
+import { ROLES } from 'constants/types/common';
 import styles from './index.module.scss';
 
 type TProps = {

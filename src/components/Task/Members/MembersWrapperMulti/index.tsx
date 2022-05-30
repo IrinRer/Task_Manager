@@ -1,6 +1,7 @@
 import { CaretRightOutlined } from '@ant-design/icons';
 import ListMember from 'components/Task/Info/ListMember';
 import useMembersProps from 'components/Task/Info/MembersHook/useMembersProps';
+import { USERS_BY_ONE_MAX_COUNT } from 'constants/common';
 import React, { FC, useState } from 'react';
 import styles from './index.module.scss';
 
@@ -16,14 +17,14 @@ const MembersWrapperMulti: FC<TProps> = (props: TProps) => {
 
   const usersData = useMembersProps(roleName);
   const users = usersData?.users;
-  const isManyUsers = Array.isArray(users) && users ? users.length > 3 : false;
+  const isManyUsers = users ? users.length > USERS_BY_ONE_MAX_COUNT : false;
 
   const expandChange = (e) => {
     e.preventDefault();
     setIsActive(!isActive);
   };
 
-  return isManyUsers && Array.isArray(users) ? (
+  return isManyUsers ? (
     <div className={styles.infoLine}>
       <span onMouseDownCapture={expandChange} className={styles.expand}>
         {`${roleName} ${users?.length}`}

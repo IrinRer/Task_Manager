@@ -36,3 +36,5 @@ export const PRIORITY_COLORS = {
   Средний: 'Orange',
   Низкий: 'Green',
 };
+
+export const USERS_BY_ONE_MAX_COUNT = 3;
