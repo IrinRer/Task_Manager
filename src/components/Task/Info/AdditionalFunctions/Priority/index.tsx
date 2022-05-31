@@ -40,7 +40,7 @@ const SelectPriority = () => {
   return (
     <div className={styles.priority}>
       <Text className={styles.text}>Приоритет</Text>
-      {isRights ? (
+      {!isRights ? (
         <Select
           placeholder="+ Добавить приоритет"
           defaultValue={defaultPriority}
@@ -60,7 +60,7 @@ const SelectPriority = () => {
           })}
         </Select>
       ) : (
-        <div>
+        <div className={styles.noedit}>
           <div
             className={styles[STYLES[PriorityName[defaultPriorityName || '']]]}
           />
