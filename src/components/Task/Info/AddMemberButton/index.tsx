@@ -68,11 +68,11 @@ const AddMemberButton: FC<TProps> = ({ roleName }) => {
     <div className={styles.addmemberWrapper}>
       {isVisible ? (
         <SimpleSelect
+          {...options.common}
           list={allUsers}
           itemKey="key"
           itemLabel="name"
           itemValue="user_id"
-          {...options.common}
           defaultValue={roleAssign}
           dropdownClassName={styles.dropdown}
           suffixIcon={
