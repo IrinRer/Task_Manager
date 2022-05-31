@@ -5,7 +5,7 @@ import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { deleteTagAction } from 'store/editTask/additionalFunctions/tag/thunk';
 import { uniqueId } from 'lodash';
 import { MIN_NUMBER_TAGS_ON_PAGE } from 'constants/additionalFunctions/tag';
-import ModalDelete from 'containers/ModalDelete';
+import ModalDelete from 'components/Common/ModalDelete';
 import { ITag } from 'store/common/tags/types';
 
 import styles from '../index.module.scss';
