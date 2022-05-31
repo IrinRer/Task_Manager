@@ -6,7 +6,7 @@
   display: flex;
   align-items: center;
   border-radius: 20px;
-  padding: 14px 20px;
+  padding: 14px 25px;
   margin: 4px 0px;
   background-color: $white;
   min-width: 1080px;
@@ -30,44 +30,12 @@
   :global(.ant-col).tags {
     max-width: 150px;
   }
-  :global(.ant-col).options {
+  :global(.ant-col.ant-col-1).options {
     cursor: pointer;
-    width: 30px;
+    text-align: right;
+    width: 20px;
   }
 }
 .flex {
   display: flex;
-}
-
-:global(.ant-popover.popover.ant-popover-placement-top) {
-  :global(.ant-popover-inner) {
-    border-radius: 8px;
-    padding: 16px 0px 16px 0px;
-    padding-bottom: 16px;
-    width: 160px;
-    .options {
-      width: 500px;
-    }
-    :global(.ant-popover-inner-content) {
-      padding: 0px;
-      :global(.ant-btn.ant-btn-text) {
-        height: 32px;
-        color: $text-dark;
-        font-weight: 700;
-        font-size: $font-size-s;
-        padding-left: 20px;
-        padding-right: 20px;
-        &:hover {
-          background-color: rgba($blue, 0.05);
-        }
-      }
-    }
-  }
-}
-
-:global(.ant-popover.popover.options.ant-popover-placement-top),
-:global(.ant-popover.popover.ant-popover-placement-bottom) {
-  :global(.ant-popover-inner) {
-    width: 200px;
-  }
 }

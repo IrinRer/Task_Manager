@@ -1,17 +1,17 @@
 import React from 'react';
-import { Col, Row, Popover } from 'antd';
+import { Col, Row } from 'antd';
 import { BlockType, TTask } from 'constants/types/common';
-import moreIcon from 'assets/icons/more.svg';
+
 import Attached from '../Attached';
 import Progress from '../Progress';
 import DateString from '../Date';
+import StatusWithPopover from '../../../Common/StatusWithPopover/StatusWithPopover';
 import Tags from '../Tags';
 import Roles from '../Roles';
 import Priority from '../Priority';
 import Title from '../Title';
-import TaskOptions from '../TaskOptions';
+import Options from '../Options/Options';
 import styles from './index.module.scss';
-import StatusWithPopover from '../../../Common/StatusWithPopover/StatusWithPopover';
 
 interface IProps {
   task: TTask;
@@ -55,15 +55,7 @@ const Task: React.FC<IProps> = ({ task, type }) => {
       </Col>
       {/* Кнопка ... со всплывающими опциями для задачи */}
       <Col span={1} className={styles.options}>
-        <Popover
-          overlayClassName="popover options"
-          content={<TaskOptions task={task} />}
-          trigger="click"
-        >
-          <div>
-            <img src={moreIcon} alt="moreIcon" />
-          </div>
-        </Popover>
+        <Options task={task} />
       </Col>
     </Row>
   );

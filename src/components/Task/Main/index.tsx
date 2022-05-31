@@ -11,6 +11,7 @@ import History from '../History';
 import InputWrapper from './InputWrapper';
 import Description from '../Description';
 import Title from '../Title';
+import Options from '../Options/Options';
 
 const Main: React.FC = () => {
   const elements = [
@@ -42,7 +43,15 @@ const Main: React.FC = () => {
 
   return (
     <div className={styles.taskMain}>
-      <Title />
+      <div className={styles.titleWrapper}>
+        <div className={styles.title}>
+          <Title />
+        </div>
+        <div className={styles.options}>
+          <Options />
+        </div>
+      </div>
+
       {elements.map((el) => {
         return (
           <InputWrapper key={el.id} labelText={el.title} icon={el.icon}>

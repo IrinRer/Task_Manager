@@ -2,16 +2,21 @@
 @import 'src/styles/font-variables.scss';
 @import 'src/styles/colors';
 
-.wrapper {
+.titleRow,
+.buttonsRow {
   width: 100%;
+  padding: 0px 3px;
   display: flex;
   justify-content: space-between;
-  min-height: 65px;
+  align-items: center;
+  min-height: 5px;
+  margin-bottom: 30px;
   h1 {
     color: $text-dark;
     font-size: $font-size-xxxl;
     line-height: 40px;
     font-weight: 700;
+    margin-bottom: 0px;
   }
   .user {
     position: relative;
@@ -59,4 +64,8 @@
     display: flex;
     justify-content: flex-end;
   }
+}
+
+.titleRow {
+  margin-bottom: 15px;
 }

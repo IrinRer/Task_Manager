@@ -2,7 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 import { TTask } from 'constants/types/common';
 import { cloneTaskAction, createTaskAction } from './thunk';
-import { CREATE_TASK_SLICE_ALIAS, ICreateTaskReducer } from './types';
+import {
+  CREATE_TASK_SLICE_ALIAS,
+  ICloneTaskAction,
+  ICreateTaskReducer,
+} from './types';
 
 const initialState: ICreateTaskReducer = {
   task: null,
@@ -46,10 +50,11 @@ export const createTaskSlice = createSlice({
     },
     [cloneTaskAction.fulfilled.type]: (
       state: ICreateTaskReducer,
-      { payload }: PayloadAction<TTask>,
+      { payload }: PayloadAction<ICloneTaskAction>,
     ) => {
       state.loading = false;
-      state.task = payload;
+      state.task = payload.task;
+      state.success = payload.edit;
     },
     [cloneTaskAction.rejected.type]: (
       state: ICreateTaskReducer,

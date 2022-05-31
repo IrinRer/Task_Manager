@@ -9,6 +9,10 @@ import {
 import { compareDates, compareStrings } from 'helpers/compareTasks';
 import { TAllViewParameters, TViewParameters } from './types';
 
+// const isMyTask = (role:TRole):boolean => {
+//   return MY_TASKS_ROLES.includes(role.task_role.name) && role.assign_user.user_id === userId;
+//   }
+
 export const getMyTasks = (
   tasks: TTask[],
   onlyMyTasks: boolean,

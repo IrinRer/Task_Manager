@@ -3,7 +3,11 @@ import { notification } from 'antd';
 import { ROLES } from 'constants/task';
 import { addTask } from 'store/tasks/slice';
 import { api } from '../../network';
-import { CREATE_TASK_SLICE_ALIAS, ICreateTaskArg } from './types';
+import {
+  CREATE_TASK_SLICE_ALIAS,
+  ICreateTaskArg,
+  ICloneTaskArg,
+} from './types';
 
 export const createTaskAction = createAsyncThunk(
   `${CREATE_TASK_SLICE_ALIAS}/createTask`,
@@ -24,10 +28,13 @@ export const createTaskAction = createAsyncThunk(
 
 export const cloneTaskAction = createAsyncThunk(
   `${CREATE_TASK_SLICE_ALIAS}/cloneTask`,
-  async (id: string, { rejectWithValue, dispatch }) => {
+  async (args: ICloneTaskArg, { rejectWithValue, dispatch }) => {
     try {
       // Клонируем задачу
-      const response = await api().post(`/api/v1.0/task/tasks/${id}/clone`, {});
+      const response = await api().post(
+        `/api/v1.0/task/tasks/${args.id}/clone`,
+        {},
+      );
       let task = { ...response.data.clone };
       // Удаляем всех кроме автора
       response.data.clone.roles.forEach(async (role) => {
@@ -53,7 +60,7 @@ export const cloneTaskAction = createAsyncThunk(
       // Пишем в таски чтоб не обновлять список с бэкэнда
       dispatch(addTask(responseResponsible.data.data));
       notification.success({ message: 'Копия задачи создана' });
-      return responseResponsible.data.data;
+      return { task: responseResponsible.data.data, edit: args.edit };
     } catch (error) {
       notification.error({ message: 'Ошибка дублирования задачи' });
       return rejectWithValue(error.message);

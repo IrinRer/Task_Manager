@@ -49,7 +49,7 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <Row className={styles.wrapper}>
+      <Row className={styles.titleRow}>
         <h1>Задачи</h1>
 
         <div className={styles.user}>
@@ -60,7 +60,7 @@ const Header: React.FC = () => {
       </Row>
 
       {/* Кнопки все задачи - мои задачи */}
-      <Row className={styles.wrapper} justify="space-between">
+      <Row className={styles.buttonsRow} justify="space-between">
         <div className={styles.buttons}>
           <Button
             type={onlyMyTasks ? 'text' : 'default'}

@@ -1,32 +1,28 @@
 import React from 'react';
-import { Button, notification } from 'antd';
-import { TTask } from 'constants/types/common';
+import { Button } from 'antd';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { canUserDuplicateTask, isUserTaskAuthor } from 'helpers/userRoles';
-import { getVerifyIdUser } from 'store/auth/verify/selectors';
 import { cloneTaskAction } from 'store/createTask/thunk';
 import { deleteTaskAction } from 'store/tasks/thunk';
+import { IResponseTask } from 'store/common/task/types';
 import styles from './index.module.scss';
 
 interface IProps {
-  task: TTask;
+  task: IResponseTask | null;
 }
 
-const TaskOptions: React.FC<IProps> = ({ task }) => {
+const OptionsMenu: React.FC<IProps> = ({ task }) => {
   const dispatch = useAppDispatch();
-  const userId = useAppSelector(getVerifyIdUser);
 
   const handleCloneTask = (): void => {
-    if (canUserDuplicateTask(userId, task)) {
-      dispatch(cloneTaskAction(task.task_id));
-    } else notification.warn({ message: 'Нет прав на дублирование задачи' });
+    if (task) {
+      dispatch(cloneTaskAction({ id: task.task_id, edit: true }));
+    }
   };
 
   const handleDeleteTask = (): void => {
-    if (isUserTaskAuthor(userId, task)) {
+    if (task) {
       dispatch(deleteTaskAction(task.task_id));
-    } else notification.warn({ message: 'Удалить задачу может только автор' });
+    }
   };
 
   return (
@@ -35,7 +31,7 @@ const TaskOptions: React.FC<IProps> = ({ task }) => {
         Дублировать задачу
       </Button>
       <Button className={styles.button} type="text">
-        Отслеживать задачу
+        Переместить в архив
       </Button>
       <Button className={styles.button} type="text" onClick={handleDeleteTask}>
         Удалить задачу
@@ -44,4 +40,4 @@ const TaskOptions: React.FC<IProps> = ({ task }) => {
   );
 };
 
-export default TaskOptions;
+export default OptionsMenu;

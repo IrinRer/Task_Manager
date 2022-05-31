@@ -30,12 +30,15 @@
       }
     }
   }
-}
-:global(.ant-select-dropdown .ant-select-dropdown-placement-bottomLeft) {
-  width: 160px !important;
-  :global(.ant-select-item-option-content) {
-    font-weight: 600;
-    width: 160px;
-    color: red !important;
+  :global(.ant-select-dropdown .ant-select-dropdown-placement-bottomLeft) {
+    width: 260px !important;
+    border-radius: 8px;
+    padding: 28px;
+    margin: 28px;
+    :global(.ant-select-item-option-content) {
+      font-weight: 600;
+      width: 160px;
+      color: red !important;
+    }
   }
 }
