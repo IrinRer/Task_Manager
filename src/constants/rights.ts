@@ -9,6 +9,9 @@ export const RIGHTS = {
   /* право на отписку от задачи (через кнопку в виде глаза); */
   unsubscribe: [ROLES.watcher],
 
+  /* создание задачи */
+  createTask: ['any'],
+
   /* дублирование задачи */
   copyTask: [
     'any',
@@ -17,6 +20,12 @@ export const RIGHTS = {
     ROLES.implementer,
     ROLES.responsible,
   ],
+
+  /* перемещение задачи в архив */
+  archive: [ROLES.author],
+
+  /* удаление задачи */
+  deleteTask: [ROLES.author],
 
   /* просмотр и скачивание вложений */
   showAttached: [
@@ -68,10 +77,4 @@ export const RIGHTS = {
 
   /* добавление и удаление участника в роли ответственного */
   editResponsible: [ROLES.author],
-
-  /* перемещение задачи в архив */
-  archive: [ROLES.author],
-
-  /* удаление задачи */
-  deleteTask: [ROLES.author],
 };

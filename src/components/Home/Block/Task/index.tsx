@@ -2,6 +2,9 @@ import React from 'react';
 import { Col, Row, Popover } from 'antd';
 import { BlockType, TTask } from 'constants/types/common';
 import moreIcon from 'assets/icons/more.svg';
+import { useAppSelector } from 'customHooks/redux/useAppSelector';
+import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
+import { getRights } from 'helpers/rights';
 import Attached from '../Attached';
 import Progress from '../Progress';
 import DateString from '../Date';
@@ -20,11 +23,14 @@ interface IProps {
 }
 
 const Task: React.FC<IProps> = ({ task, type }) => {
+  const myMaxRole = useAppSelector(getMyMaxRoleForTask);
+  const isRights = getRights(myMaxRole, 'status');
+
   return (
     <Row className={styles.wrapper} justify="space-between">
       {/* Заголовок задачи с указателями вложений и прогресса */}
       <Col span={7} className={styles.title}>
-        <Title title={task.title} type={type} task_id={task.task_id}/>
+        <Title title={task.title} type={type} task_id={task.task_id} />
         <div className={styles.flex}>
           <Attached attached={task.storage_files_meta.total} />
           <Progress progress={task.progress} />
@@ -32,15 +38,19 @@ const Task: React.FC<IProps> = ({ task, type }) => {
       </Col>
       {/* Статус со всплывающим селектором смены статуса */}
       <Col span={3} className={styles.status}>
-        <Popover
-          overlayClassName="popover"
-          content={<StatusChange task_id={task.task_id} />}
-          trigger="click"
-        >
-          <div>
-            <Status statusName={task.status.name} />
-          </div>
-        </Popover>
+        {isRights ? (
+          <Popover
+            overlayClassName="popover"
+            content={<StatusChange task_id={task.task_id} />}
+            trigger="click"
+          >
+            <div>
+              <Status statusName={task.status.name} />
+            </div>
+          </Popover>
+        ) : (
+          <Status statusName={task.status.name} />
+        )}
       </Col>
       {/* Дата */}
       {type !== BlockType.done && (
