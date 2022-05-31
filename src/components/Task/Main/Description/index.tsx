@@ -13,6 +13,10 @@ import Spinner from 'components/Common/Spinner';
 import classnames from 'classnames';
 import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
 import { getRights } from 'helpers/rights';
+import {
+  DESCRIPTION_LENGTH_EXPAND,
+  DESCRIPTION_MAX_LENGTH,
+} from 'constants/common';
 import styles from './index.module.scss';
 
 const Description: React.FC = () => {
@@ -33,7 +37,7 @@ const Description: React.FC = () => {
   const [isReadonly, setIsReadonly] = useState<boolean>(true);
 
   const isBigDesc = (str: string) => {
-    return str ? str.length > 300 : false;
+    return str ? str.length > DESCRIPTION_LENGTH_EXPAND : false;
   };
 
   const [isFullText, setIsFullText] = useState<boolean>(
@@ -47,7 +51,7 @@ const Description: React.FC = () => {
   };
 
   const getShortDesc = () => {
-    return `${newDesc?.slice(0, 300).trim()} ...`;
+    return `${newDesc?.slice(0, DESCRIPTION_LENGTH_EXPAND).trim()} ...`;
   };
 
   const setInitialExpand = () => {
@@ -103,7 +107,7 @@ const Description: React.FC = () => {
 
       <TextArea
         autoSize
-        maxLength={500}
+        maxLength={DESCRIPTION_MAX_LENGTH}
         placeholder="Введите описание, чтобы сделать задачу понятнее"
         className={classnames(styles.desc, {
           [styles.readonly]: isReadonly,

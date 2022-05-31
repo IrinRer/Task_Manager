@@ -15,6 +15,7 @@ import classnames from 'classnames';
 import { Button } from 'antd';
 import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
 import { getRights } from 'helpers/rights';
+import { TITLE_TASK_MAX_LENGTH } from 'constants/common';
 import styles from './index.module.scss';
 
 const Title: React.FC = () => {
@@ -67,7 +68,7 @@ const Title: React.FC = () => {
         <TextArea
           ref={inputRef}
           autoSize
-          maxLength={150}
+          maxLength={TITLE_TASK_MAX_LENGTH}
           placeholder="Введите название"
           className={classnames(styles.name, {
             [styles.readonly]: isReadonly,
