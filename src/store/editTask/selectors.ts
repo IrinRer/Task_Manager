@@ -117,11 +117,11 @@ export const getIsCheckListTitleLoading = (state: RootState): boolean =>
 
 export const getIsTaskEditable = createSelector(
   getTaskAuthor,
-  getTaskImplementer,
+  getTaskImplementers,
   getTaskResponsible,
   getVerifyIdUser,
-  (author, implementer, responsible, authUserId): boolean => {
-    return !![author, implementer, responsible].find(
+  (author, implementers, responsible, authUserId): boolean => {
+    return !![author, ...implementers, responsible].find(
       (user) => user?.user_id === authUserId,
     );
   },
