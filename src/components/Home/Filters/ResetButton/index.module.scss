@@ -3,11 +3,14 @@
 
 .button {
   :global {
-    border-color: $border-primary;
-    border-radius: 8px;
-    color: $heading;
-    font-size: $font-size-m;
-    line-height: $line-height-m;
+    .ant-btn {
+      width: 100%;
+      border-color: $border-primary;
+      border-radius: 8px;
+      color: $heading;
+      font-size: $font-size-m;
+      line-height: $line-height-m;
+    }
   }
 }
 
