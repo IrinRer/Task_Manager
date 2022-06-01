@@ -3,8 +3,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IEditTaskReducer, EDIT_TASK_SLICE_ALIAS } from 'store/editTask/types';
 import {
   deleteTaskMemberAction,
+  deleteTaskMemberGroupAction,
   setTaskDescription,
   setTaskMemberAction,
+  setTaskMemberGroupAction,
   setTaskTitle,
 } from 'store/editTask/thunk';
 import { AxiosError } from 'axios';
@@ -23,6 +25,7 @@ const initialState: IEditTaskReducer = {
     title: false,
     desc: false,
     members: false,
+    membersGroup: false,
     checkList: false,
     checkListTitle: false,
     checkListItem: false,
@@ -35,6 +38,8 @@ const initialState: IEditTaskReducer = {
     desc: null,
     setMembers: null,
     delMembers: null,
+    setMembersGroup: null,
+    delMembersGroup: null,
     checkList: null,
     checkListTitle: null,
     checkListItem: null,
@@ -56,14 +61,14 @@ export const editTaskSlice = createSlice({
 
     setNewSelectedMembers: (
       state: IEditTaskReducer,
-      action: PayloadAction<string[]>,
+      action: PayloadAction<Array<string>>,
     ) => {
       state.selectedMembers = action.payload;
     },
 
     setUnselectedMembers: (
       state: IEditTaskReducer,
-      action: PayloadAction<string[]>,
+      action: PayloadAction<Array<string>>,
     ) => {
       state.unselectedMembers = action.payload;
     },
@@ -203,6 +208,38 @@ export const editTaskSlice = createSlice({
       state.editError.delMembers = payload;
       state.unselectedMembers = null;
       state.editLoading.members = false;
+    },
+
+    [setTaskMemberGroupAction.pending.type]: (state: IEditTaskReducer) => {
+      state.editLoading.membersGroup = true;
+      state.editError.setMembersGroup = null;
+    },
+    [setTaskMemberGroupAction.fulfilled.type]: (state: IEditTaskReducer) => {
+      state.editLoading.membersGroup = false;
+    },
+    [setTaskMemberGroupAction.rejected.type]: (
+      state: IEditTaskReducer,
+      { payload }: PayloadAction<AxiosError>,
+    ) => {
+      state.editError.setMembersGroup = payload;
+      state.selectedMembers = null;
+      state.editLoading.membersGroup = false;
+    },
+
+    [deleteTaskMemberGroupAction.pending.type]: (state: IEditTaskReducer) => {
+      state.editLoading.membersGroup = true;
+      state.editError.delMembersGroup = null;
+    },
+    [deleteTaskMemberGroupAction.fulfilled.type]: (state: IEditTaskReducer) => {
+      state.editLoading.membersGroup = false;
+    },
+    [deleteTaskMemberGroupAction.rejected.type]: (
+      state: IEditTaskReducer,
+      { payload }: PayloadAction<AxiosError>,
+    ) => {
+      state.editError.delMembersGroup = payload;
+      state.unselectedMembers = null;
+      state.editLoading.membersGroup = false;
     },
   },
 });

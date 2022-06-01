@@ -1,21 +1,12 @@
 import { RootState } from 'store/';
 import { createSelector } from '@reduxjs/toolkit';
+import { selectUniqueObjectsFromArray } from 'helpers/selectUniqueObjectsFromArray';
 import { IPopulatedUser, IUser } from './types';
 
 const selectUsers = (state: RootState): Array<IUser> => state.users.users;
 
 const selectUniqueUsers = createSelector(selectUsers, (users): Array<IUser> => {
-  const uniqueUsersIds: Array<string> = [];
-  const uniqueUsers: Array<IUser> = [];
-
-  users.forEach((user) => {
-    if (!uniqueUsersIds.includes(user.user_id)) {
-      uniqueUsersIds.push(user.user_id);
-      uniqueUsers.push(user);
-    }
-  });
-
-  return uniqueUsers;
+  return selectUniqueObjectsFromArray(users, 'user_id');
 });
 
 export const selectPopulatedUsers = createSelector(

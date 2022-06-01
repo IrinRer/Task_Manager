@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import classnames from 'classnames';
-import filterStyles from '../../Home/Filters/index.module.scss';
+import filterStyles from 'components/Home/Filters/index.module.scss';
 
 type TFilterWrapperProps = {
   header: string;

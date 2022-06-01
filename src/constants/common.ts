@@ -29,12 +29,14 @@ export const TITLE_LENGTH = 100;
 
 export const PARTICIPANTS_INPUT_MAX_LENGTH = 50;
 
-export const TAGS_INPUT_MAX_LENGTH = 20;
+export const TAGS_INPUT_MAX_LENGTH = 15;
 
 export const PRIORITY_COLORS = {
   Высокий: 'Red',
   Средний: 'Orange',
   Низкий: 'Green',
 };
+
+export const USERS_BY_ONE_MAX_COUNT = 3;
 
 export const DEFAULT_CHECK_LIST_TITLE = 'Чек-лист';

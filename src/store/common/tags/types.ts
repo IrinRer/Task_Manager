@@ -16,12 +16,7 @@ export interface ITag {
   updated?: Date;
 }
 
-export interface IPopulatedTag {
-  task_tag_id?: string;
-  name: string;
-  color: string;
-  created?: Date;
-  updated?: Date;
+export interface IPopulatedTag extends ITag {
   value: string;
   key: string | undefined;
 }

@@ -121,6 +121,7 @@ export type RootState = {
     roles: IRolesReducer;
   }>;
 };
+
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,

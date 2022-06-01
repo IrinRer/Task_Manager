@@ -1,9 +1,10 @@
 import { DATE_FORMAT_UI } from 'constants/common';
 import { createSelector } from '@reduxjs/toolkit';
 import { format } from 'date-fns';
-import { ROLES } from 'constants/task';
+import { ROLES } from 'constants/types/common';
 import { RootState } from 'store';
 import { ITaskRoles } from 'store/common/task/types';
+import { IUser } from 'store/users/types';
 
 export function isAuthor(element: ITaskRoles): boolean {
   return element.task_role.name === ROLES.author;
@@ -22,7 +23,8 @@ export function isResponsible(element: ITaskRoles): boolean {
 }
 
 export function getUsersFromRoles(roles: Array<ITaskRoles> | undefined) {
-  return roles?.map((element) => element.assign_user) || [];
+  const arr: Array<IUser> = roles?.map((element) => element.assign_user) || [];
+  return arr;
 }
 
 export function getUsersIdFromRoles(roles: Array<ITaskRoles> | undefined) {

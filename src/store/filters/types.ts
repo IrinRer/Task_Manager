@@ -10,11 +10,13 @@ export interface IFiltersReducer {
 }
 
 export interface IFilters {
-  searchQuery: string | undefined;
+  searchQuery: string;
   users: Array<IUser>;
   statuses: Array<string>;
   tags: Array<ITag>;
   attachments: boolean;
   progress: TProgressValue;
   priorities: Array<string>;
+  usersInputValue: string;
+  tagsInputValue: string;
 }
