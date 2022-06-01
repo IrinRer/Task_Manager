@@ -2,13 +2,12 @@ import { SearchOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import React, { FC, useState } from 'react';
+import React, { FC, useMemo, useState } from 'react';
 
 import {
   getNewSelectedMembers,
   getUnselectedMembers,
   getTaskId,
-  getTaskWatchersID,
 } from 'store/editTask/selectors';
 
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
@@ -17,35 +16,39 @@ import {
   setUnselectedMembers,
 } from 'store/editTask/slice';
 import {
-  deleteTaskMemberAction,
-  setTaskMemberAction,
+  deleteTaskMemberGroupAction,
+  setTaskMemberGroupAction,
 } from 'store/editTask/thunk';
 import { selectPopulatedUsers } from 'store/users/selectors';
 import { IPopulatedUser } from 'store/users/types';
-import debounce from 'lodash/debounce';
-import { DEBOUNCE_TIMEOUT } from 'constants/common';
-import { fetchUsersAction } from 'store/users/thunk';
+import SimpleSelect from 'components/Common/SimpleSelect';
+import { ROLES } from 'constants/types/common';
 import styles from '../AddMemberButton/index.module.scss';
-import SimpleSelect from '../../../Common/SimpleSelect';
 import useSelectOptions from '../TaskHook/useSelectOptions';
+import useMembersProps from '../MembersHook/useMembersProps';
 
 type TProps = {
-  roleId: string;
+  roleName: string;
+  usersMaxCount: number;
 };
 
-const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
-  const { roleId } = props;
+const AddMemberButtonMulti: FC<TProps> = ({ roleName, usersMaxCount }) => {
   const dispatch = useAppDispatch();
   const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const options = useSelectOptions();
   const allUsers: Array<IPopulatedUser> = useAppSelector(selectPopulatedUsers);
   const taskId = useAppSelector(getTaskId);
 
   const roleAssign = useAppSelector(getNewSelectedMembers);
   const roleUnassign = useAppSelector(getUnselectedMembers);
-  const selectedMembers = useAppSelector(getTaskWatchersID);
 
-  const isNewUser = (users: string[] | string, elem: string) => {
+  const usersData = useMembersProps(roleName);
+  const selectedMembers = usersData?.usersID;
+  const roleId = usersData?.roleId;
+  const watcherRoleId = useMembersProps(ROLES.watcher)?.roleId;
+
+  const isNewUser = (users: Array<string> | string, elem: string) => {
     return users?.indexOf(elem) === -1;
   };
 
@@ -53,52 +56,80 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
     setIsVisible(true);
   };
 
-  const onChange = (value: string[]) => {
+  const addNewMembersToArr = (
+    countSelectedMembers: number,
+    newSelectedMembers: Array<string>,
+    newUnselectedMembers: Array<string>,
+  ) => {
+    if (countSelectedMembers > usersMaxCount) {
+      setIsDisabled(true);
+    }
+    if (countSelectedMembers === usersMaxCount) {
+      setIsDisabled(true);
+      dispatch(setNewSelectedMembers(newSelectedMembers));
+      dispatch(setUnselectedMembers(newUnselectedMembers));
+    }
+    if (countSelectedMembers < usersMaxCount) {
+      setIsDisabled(false);
+      dispatch(setNewSelectedMembers(newSelectedMembers));
+      dispatch(setUnselectedMembers(newUnselectedMembers));
+    }
+  };
+
+  const onChange = (value: Array<string>) => {
     if (selectedMembers) {
-      dispatch(
-        setNewSelectedMembers(
-          value.filter((elem: string) => isNewUser(selectedMembers, elem)),
-        ),
+      const newSelectedMembers = value.filter((elem: string) =>
+        isNewUser(selectedMembers, elem),
       );
-      dispatch(
-        setUnselectedMembers(
-          selectedMembers.filter((elem: string) => isNewUser(value, elem)),
-        ),
+      const newUnselectedMembers = selectedMembers.filter((elem: string) =>
+        isNewUser(value, elem),
+      );
+
+      const countSelectedMembers =
+        selectedMembers.length +
+        newSelectedMembers.length -
+        newUnselectedMembers.length;
+
+      addNewMembersToArr(
+        countSelectedMembers,
+        newSelectedMembers,
+        newUnselectedMembers,
       );
     }
   };
 
-  const onSearch = (query: string) => {
-    dispatch(fetchUsersAction(query));
-  };
-
   const onBlur = () => {
+    options.common.onBlur();
     setIsVisible(!isVisible);
-    if (Array.isArray(roleAssign) && Array.isArray(roleUnassign) && taskId) {
-      roleAssign?.forEach((element) => {
-        dispatch(
-          setTaskMemberAction({
-            task_id: taskId,
-            assign_user_id: element,
-            task_role_id: roleId,
-          }),
-        );
-      });
-      roleUnassign?.forEach((element) => {
-        dispatch(
-          deleteTaskMemberAction({
-            task_id: taskId,
-            assign_user_id: element,
-            task_role_id: roleId,
-          }),
-        );
-      });
+    if (
+      Array.isArray(roleAssign) &&
+      Array.isArray(roleUnassign) &&
+      taskId &&
+      roleId &&
+      watcherRoleId
+    ) {
+      dispatch(
+        setTaskMemberGroupAction({
+          task_id: taskId,
+          assign_users_ids: roleAssign,
+          task_role_id: roleId,
+          watcher_role_id: watcherRoleId,
+        }),
+      );
+      dispatch(
+        deleteTaskMemberGroupAction({
+          task_id: taskId,
+          assign_users_ids: roleUnassign,
+          task_role_id: roleId,
+          watcher_role_id: watcherRoleId,
+        }),
+      );
       dispatch(setNewSelectedMembers([]));
       dispatch(setUnselectedMembers([]));
     }
   };
 
-  const generateValue = () => {
+  const selectedMembersWithNew = useMemo(() => {
     if (selectedMembers) {
       return selectedMembers
         .concat(roleAssign || [])
@@ -107,26 +138,26 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
         );
     }
     return null;
-  };
+  }, [roleAssign, roleUnassign, selectedMembers]);
+
+  const getOnlySelectedUsers = useMemo(() => {
+    return allUsers.filter((el) => {
+      return !isNewUser(selectedMembersWithNew || [], el.user_id);
+    });
+  }, [allUsers, selectedMembersWithNew]);
 
   return (
     <div className={styles.addmemberWrapper}>
-      {!isVisible ? (
-        <Button className={styles.addmember} onClick={showMemberModal}>
-          + добавить участника
-        </Button>
-      ) : null}
-
       {isVisible ? (
         <SimpleSelect
-          list={allUsers}
+          {...options.common}
+          list={isDisabled ? getOnlySelectedUsers : allUsers}
           itemKey="key"
           itemLabel="name"
           itemValue="user_id"
-          {...options}
           mode="multiple"
           dropdownClassName={styles.dropdown}
-          defaultValue={generateValue()}
+          defaultValue={selectedMembersWithNew}
           suffixIcon={
             <span
               role="img"
@@ -138,9 +169,13 @@ const AddMemberButtonMulti: FC<TProps> = (props: TProps) => {
           }
           onChange={onChange}
           onBlur={onBlur}
-          onSearch={debounce(onSearch, DEBOUNCE_TIMEOUT)}
+          onSearch={options.particular.handleSearch}
         />
-      ) : null}
+      ) : (
+        <Button className={styles.addmember} onClick={showMemberModal}>
+          + добавить участника
+        </Button>
+      )}
     </div>
   );
 };
