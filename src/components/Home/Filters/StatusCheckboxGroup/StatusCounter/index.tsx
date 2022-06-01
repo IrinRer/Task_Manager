@@ -5,7 +5,11 @@ import { selectStatusCounters } from 'store/filters/selectors';
 import { IStatusCounter } from 'store/filters/types';
 import styles from './index.module.scss';
 
-const StatusCounter = ({ task_status_id }) => {
+interface IProps {
+  task_status_id: string;
+}
+
+const StatusCounter: React.FC<IProps> = ({ task_status_id }) => {
   const counters: Array<IStatusCounter> = useAppSelector(selectStatusCounters);
 
   const counter: IStatusCounter | undefined = counters.find(
