@@ -1,4 +1,3 @@
-
 import { RootState } from 'store/index';
 import { createSelector } from '@reduxjs/toolkit';
 import { TaskStatuses, TaskStatusName } from 'constants/types/common';

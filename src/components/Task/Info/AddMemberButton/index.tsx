@@ -9,18 +9,17 @@ import { setNewSelectedMembers } from 'store/editTask/slice';
 import { setTaskMemberAction } from 'store/editTask/thunk';
 import { selectPopulatedUsers } from 'store/users/selectors';
 import { IPopulatedUser } from 'store/users/types';
-import { fetchUsersAction } from 'store/users/thunk';
-import debounce from 'lodash/debounce';
-import { DEBOUNCE_TIMEOUT } from 'constants/common';
+import { ROLES } from 'constants/types/common';
+import SimpleSelect from 'components/Common/SimpleSelect';
 import styles from './index.module.scss';
-import SimpleSelect from '../../../Common/SimpleSelect';
 import useSelectOptions from '../TaskHook/useSelectOptions';
+import useMembersProps from '../MembersHook/useMembersProps';
 
 type TProps = {
-  roleId: string;
+  roleName: string;
 };
 
-const AddMemberButton: FC<TProps> = ({ roleId }) => {
+const AddMemberButton: FC<TProps> = ({ roleName }) => {
   const dispatch = useAppDispatch();
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const options = useSelectOptions();
@@ -28,6 +27,10 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
   const taskId = useAppSelector(getTaskId);
 
   const roleAssign = useAppSelector(getNewSelectedMembers);
+
+  const usersData = useMembersProps(roleName);
+  const roleId = usersData?.roleId;
+  const watcherRoleId = useMembersProps(ROLES.watcher)?.roleId;
 
   const showMemberModal = () => {
     setIsVisible(true);
@@ -37,13 +40,10 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
     dispatch(setNewSelectedMembers([value]));
   };
 
-  const onSearch = (query: string) => {
-    dispatch(fetchUsersAction(query));
-  };
-
   const onBlur = () => {
+    options.common.onBlur();
     setIsVisible(!isVisible);
-    if (roleAssign && taskId) {
+    if (roleAssign && taskId && roleId) {
       dispatch(
         setTaskMemberAction({
           task_id: taskId,
@@ -51,25 +51,28 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
           task_role_id: roleId,
         }),
       );
+      if (roleName !== ROLES.watcher && watcherRoleId) {
+        dispatch(
+          setTaskMemberAction({
+            task_id: taskId,
+            assign_user_id: roleAssign[0],
+            task_role_id: watcherRoleId,
+          }),
+        );
+      }
       dispatch(setNewSelectedMembers([]));
     }
   };
 
   return (
     <div className={styles.addmemberWrapper}>
-      {!isVisible ? (
-        <Button className={styles.addmember} onClick={showMemberModal}>
-          + добавить участника
-        </Button>
-      ) : null}
-
       {isVisible ? (
         <SimpleSelect
+          {...options.common}
           list={allUsers}
           itemKey="key"
           itemLabel="name"
           itemValue="user_id"
-          {...options}
           defaultValue={roleAssign}
           dropdownClassName={styles.dropdown}
           suffixIcon={
@@ -83,9 +86,13 @@ const AddMemberButton: FC<TProps> = ({ roleId }) => {
           }
           onChange={onChange}
           onBlur={onBlur}
-          onSearch={debounce(onSearch, DEBOUNCE_TIMEOUT)}
+          onSearch={options.particular.handleSearch}
         />
-      ) : null}
+      ) : (
+        <Button className={styles.addmember} onClick={showMemberModal}>
+          + добавить участника
+        </Button>
+      )}
     </div>
   );
 };
