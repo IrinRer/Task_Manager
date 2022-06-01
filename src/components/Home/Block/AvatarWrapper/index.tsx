@@ -2,7 +2,7 @@ import React from 'react';
 import { TRole } from 'constants/types/common';
 import { Avatar } from 'antd';
 import { AVATAR_TEXT_COLOR } from 'constants/common';
-import { avatarColor, initials } from 'helpers/avatarHelper';
+import { getAvatarColor, getInitialsFromName } from 'helpers/avatarHelper';
 import styles from './index.module.scss';
 
 interface IProps {
@@ -20,9 +20,12 @@ const AvatarWrapper: React.FC<IProps> = ({ role }) => {
 
       return (
         <Avatar
-          style={{ color: AVATAR_TEXT_COLOR, backgroundColor: avatarColor() }}
+          style={{
+            color: AVATAR_TEXT_COLOR,
+            backgroundColor: getAvatarColor(),
+          }}
         >
-          {initials(role.assign_user.name)}
+          {getInitialsFromName(role.assign_user.name)}
         </Avatar>
       );
     }
