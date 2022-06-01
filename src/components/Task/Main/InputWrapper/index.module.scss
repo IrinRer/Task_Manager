@@ -1,4 +1,5 @@
 @import 'src/styles/font-variables';
+@import 'src/styles/color-variables';
 
 .section {
   font-size: $font-size-l;
@@ -13,4 +14,9 @@
 .wrapper {
   padding-left: 19px;
   width: 100%;
+}
+.wrapper .title {
+  font-weight: 500;
+  padding: 0;
+  color: $text-title;
 }

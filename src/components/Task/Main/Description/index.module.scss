@@ -14,10 +14,9 @@
     margin-bottom: 14px;
     border: none;
     padding: 0;
-    color: $text-color;
   }
   :global(.ant-input).readonly {
-    color: $dark-primary;
+    color: $heading;
   }
   :global(.ant-input).desc:focus,
   :global(.ant-input).desc:hover,
