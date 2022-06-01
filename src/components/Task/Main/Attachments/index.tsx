@@ -182,7 +182,7 @@ const Attachments = () => {
       />
       <ModalDelete
         visible={visibleModalDelete}
-        textMain="Файл будет удален из задачи"
+        textMain={`${fileForDelete?.name} будет безвозвратно удален`}
         textButton="Удалить файл"
         setVisibleModalDelete={setVisibleModalDelete}
         file={fileForDelete}

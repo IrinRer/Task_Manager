@@ -9,8 +9,6 @@ import { fetchTaskAction } from 'store/common/task/thunk';
 import { IResponseTask } from 'store/common/task/types';
 import { TAG_SLICE_ALIAS, ITagReducer } from './types';
 
-
-
 const initialState: ITagReducer = {
   sentTag: [],
   loading: false,
