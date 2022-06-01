@@ -39,7 +39,7 @@ const StatusCheckboxGroup: React.FC = () => {
         {statusCheckboxes.map((checkbox) => (
           <div className={styles.checkboxWrapper} key={checkbox.task_status_id}>
             <Checkbox value={checkbox.value} className={styles.checkbox}>
-              <p>{checkbox.name}</p>
+              <p className={styles.checkboxLabel}>{checkbox.name}</p>
             </Checkbox>
             <StatusCounter task_status_id={checkbox.task_status_id} />
           </div>
