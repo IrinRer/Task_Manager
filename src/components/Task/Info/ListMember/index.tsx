@@ -1,6 +1,6 @@
 import { CloseOutlined, SearchOutlined } from '@ant-design/icons';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 
 import { getUnselectedMembers, getTaskId } from 'store/editTask/selectors';
 
@@ -82,22 +82,22 @@ const ListMemberMulti: FC<TProps> = ({
     }
   };
 
-  const generateValue = () => {
+  const unselectedMembersWithNew = useMemo(() => {
     if (selectedMembers) {
       return selectedMembers.filter((elem: string) =>
         roleUnassign ? isUnassignUser(roleUnassign, elem) : true,
       );
     }
     return null;
-  };
+  }, [roleUnassign, selectedMembers]);
 
-  const unselectedMembersWithNew = generateValue();
-
-  const users = usersData?.users
-    ? usersData?.users.filter((el) => {
-        return !isUnassignUser(unselectedMembersWithNew || [], el.user_id);
-      })
-    : null;
+  const users = useMemo(() => {
+    return usersData?.users
+      ? usersData?.users.filter((el) => {
+          return !isUnassignUser(unselectedMembersWithNew || [], el.user_id);
+        })
+      : null;
+  }, [unselectedMembersWithNew, usersData?.users]);
 
   return (
     <div
@@ -107,17 +107,17 @@ const ListMemberMulti: FC<TProps> = ({
       )}
     >
       <SimpleSelect
+        {...options.common}
         list={users}
         itemKey="user_id"
         itemLabel="name"
         itemValue="user_id"
-        {...options.common}
         mode="multiple"
         menuItemSelectedIcon={editable ? <CloseOutlined /> : null}
         dropdownClassName={classnames(
           editable ? styles.dropdown : stylesList.dropdownList,
         )}
-        defaultValue={generateValue()}
+        defaultValue={unselectedMembersWithNew}
         suffixIcon={
           <span
             role="img"

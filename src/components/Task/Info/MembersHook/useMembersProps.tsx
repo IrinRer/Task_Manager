@@ -19,8 +19,8 @@ import { IUser } from 'store/users/types';
 type TRoleData = {
   name: string;
   roleId: string;
-  users: Array<IUser> | undefined;
-  usersID: Array<string> | undefined;
+  users?: Array<IUser>;
+  usersID?: Array<string>;
 };
 
 const useMembersProps = (roleName: string) => {
@@ -40,22 +40,17 @@ const useMembersProps = (roleName: string) => {
   const responsibleID = responsible?.user_id;
   const responsibleRoleID = useAppSelector(getResponsibleRoleID);
 
-  const userToArray = (user: Array<IUser> | IUser | undefined) => {
-    if (user === undefined) return undefined;
-    return Array.isArray(user) ? user : [user];
+  const objToArray = <T,>(obj: T | T[] | undefined): T[] | undefined => {
+    if (obj === undefined) return undefined;
+    return Array.isArray(obj) ? obj : [obj];
   };
 
-  const userIDToArray = (userID: Array<string> | string | undefined) => {
-    if (userID === undefined) return undefined;
-    return Array.isArray(userID) ? userID : [userID];
-  };
-
-  const RoleData: Array<TRoleData> = [
+  const ROLE_DATA: Array<TRoleData> = [
     {
       name: ROLES.author,
       roleId: authorRoleID || '',
-      users: userToArray(author),
-      usersID: userIDToArray(authorID),
+      users: objToArray(author),
+      usersID: objToArray(authorID),
     },
     {
       name: ROLES.watcher,
@@ -72,12 +67,12 @@ const useMembersProps = (roleName: string) => {
     {
       name: ROLES.responsible,
       roleId: responsibleRoleID || '',
-      users: userToArray(responsible),
-      usersID: userIDToArray(responsibleID),
+      users: objToArray(responsible),
+      usersID: objToArray(responsibleID),
     },
   ];
 
-  return RoleData.find((el) => {
+  return ROLE_DATA.find((el) => {
     return el.name === roleName;
   });
 };
