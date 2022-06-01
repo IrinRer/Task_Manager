@@ -37,3 +37,9 @@ export const selectFilterUsersNames = createSelector(
 );
 
 export const selectTaskQuery = (state: RootState) => state.filters.currentState;
+
+export const selectUsersInputValue = (state: RootState) =>
+  state.filters.currentState.usersInputValue;
+
+export const selectTagsInputValue = (state: RootState) =>
+  state.filters.currentState.tagsInputValue;
