@@ -7,7 +7,7 @@ import {
   PaperClipOutlined,
 } from '@ant-design/icons';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { isClickedAttachments } from 'store/attachments/selectors';
+import { isClickedAttachments } from 'store/editTask/attachments/selectors';
 import uniqueId from 'lodash/uniqueId';
 import styles from './index.module.scss';
 import History from '../History';

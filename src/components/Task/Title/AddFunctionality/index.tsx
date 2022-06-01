@@ -2,7 +2,7 @@ import React from 'react';
 import { Menu, Dropdown } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import { setClickedAttachments } from 'store/attachments/slice';
+import { setClickedAttachments } from 'store/editTask/attachments/slice';
 
 import styles from './index.module.scss';
 

@@ -15,9 +15,7 @@ export interface IFileThunk {
   fileList?: IFileList | undefined;
   taskId?: string | undefined;
 
-  // onSuccess?: (xhr?: XMLHttpRequest) => void
-  // onError?: (event: UploadRequestError | ProgressEvent) => void;
-
+  // не удается типизировать onSuccess, onError
   onSuccess?: any;
   onError?: any;
   fileId?: string;

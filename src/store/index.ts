@@ -1,4 +1,4 @@
-import { IAttachmentsReducer } from 'store/attachments/types';
+import { IAttachmentsReducer } from 'store/editTask/attachments/types';
 import {
   configureStore,
   ThunkAction,
@@ -21,7 +21,7 @@ import commonPrioritiesReducer from './common/priorities/slice';
 import commonStatusesReducer from './common/statuses/slice';
 import onetaskReducer from './common/task/slice';
 import editTaskReducer from './editTask/slice';
-import attachmentsReducer from './attachments/slice';
+import attachmentsReducer from './editTask/attachments/slice';
 
 import { ICommonTagsReducer } from './common/tags/types';
 import { ICommonProgressesReducer } from './common/progresses/types';
@@ -39,6 +39,7 @@ import { ITagReducer } from './editTask/additionalFunctions/tag/types';
 import { IDateReducer } from './editTask/additionalFunctions/date/types';
 import { IPriorityReducer } from './editTask/additionalFunctions/priority/types';
 
+
 export const store = configureStore({
   reducer: {
     tasks: tasksReducer,
@@ -48,11 +49,11 @@ export const store = configureStore({
         priority: priorityReducer,
         date: dateReducer,
         tags: tagReducer,
-      })
+      }),
+      attachments: attachmentsReducer
     }),
     users: usersReducer,
     filters: filtersReducer,
-    attachments: attachmentsReducer,
     auth: combineReducers({
       token: tokenReducer,
       verify: verifyReducer,
@@ -74,16 +75,16 @@ export type AppDispatch = typeof store.dispatch;
 export type RootState = {
   tasks: ITasksReducer;
   editTask:  CombinedState<{ 
-    editTaskReducer: IEditTaskReducer;
+    editTaskReducer: IEditTaskReducer,
     additionalFunctions: CombinedState<{
       priority: IPriorityReducer;
       date: IDateReducer;
       tags: ITagReducer;
     }>;
+    attachments: IAttachmentsReducer;
   }>;
   users: IUsersReducer;
   filters: IFiltersReducer;
-  attachments: IAttachmentsReducer;
   auth: CombinedState<{
     token: IAuthReducer;
     verify: IVerifyReducer;

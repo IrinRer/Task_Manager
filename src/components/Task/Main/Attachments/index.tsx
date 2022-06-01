@@ -1,21 +1,28 @@
 import React, { useState } from 'react';
-import { Button, Upload, Col, notification, Row} from 'antd';
+import { Button, Upload, Col, notification } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import type { RcFile, UploadFile } from 'antd/es/upload/interface';
 // import type {UploadRequestOption} from 'rc-upload/lib/interface';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import { assignFile, deleteFile, downloadFile } from 'store/attachments/thunk';
+import {
+  assignFile,
+  deleteFile,
+  downloadFile,
+} from 'store/editTask/attachments/thunk';
 import {
   IOptions,
   acceptFormat,
   progress,
 } from 'constants/types/attachments/attachments';
-import { IPayloadFile } from 'store/attachments/types';
+import { IPayloadFile } from 'store/editTask/attachments/types';
 import { uniqueId } from 'lodash';
 import { getTaskId } from 'store/editTask/selectors';
 import { getTaskFile } from 'store/common/task/selectors';
-import { getfileName, getStorageFile } from 'store/attachments/selectors';
+import {
+  getfileName,
+  getStorageFile,
+} from 'store/editTask/attachments/selectors';
 import Preview from './Preview';
 import ModalDelete from '../../../../constants/ModalDelete';
 import styles from './index.module.scss';
@@ -148,7 +155,7 @@ const Attachments = () => {
         className={styles.upload}
         fileList={fileList}
         accept={acceptFormat}
-        listType='picture'
+        listType="picture"
         progress={progress}
         showUploadList={{ showRemoveIcon: true, showDownloadIcon: true }}
         beforeUpload={beforeUpload}

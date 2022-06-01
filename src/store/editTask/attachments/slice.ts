@@ -1,12 +1,12 @@
 import { fetchTaskAction } from 'store/common/task/thunk';
 import { IResponseTask } from 'store/common/task/types';
-import { deleteFile } from 'store/attachments/thunk';
+import { deleteFile } from 'store/editTask/attachments/thunk';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   ATTACHMENTS_SLICE_ALIAS,
   IAttachmentsReducer,
   IPayloadFile,
-} from 'store/attachments/types';
+} from 'store/editTask/attachments/types';
 import { AxiosError } from 'axios';
 import { assignFile } from './thunk';
 
