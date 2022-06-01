@@ -7,6 +7,7 @@ import { getTaskId } from 'store/editTask/selectors';
 import useMembersProps from 'components/Task/Info/MembersHook/useMembersProps';
 import { IUser } from 'store/users/types';
 import { ROLES } from 'constants/types/common';
+import AvatarWrapper from 'components/Home/Block/AvatarWrapper';
 import styles from './index.module.scss';
 
 type TProps = {
@@ -44,6 +45,9 @@ const EditableMember: FC<TProps> = ({ user, roleName }) => {
   };
   return (
     <div className={styles.editMembers}>
+      <div className={styles.avatarWrapper}>
+        <AvatarWrapper role={user} />
+      </div>
       <span>{user?.name}</span>
       <CloseOutlined className={styles.delete} onClick={deleteMember} />
     </div>

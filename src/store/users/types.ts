@@ -11,14 +11,14 @@ export interface IUsersReducer {
 export interface IUser {
   user_id: string;
   name: string;
-  logo: string;
+  logo: string | null;
   permissions: Array<string>;
 }
 
 export interface IPopulatedUser {
   user_id: string;
   name: string;
-  logo: string;
+  logo: string | null;
   permissions: Array<string>;
   value: string;
   key: string;

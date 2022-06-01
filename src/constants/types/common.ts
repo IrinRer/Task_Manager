@@ -14,6 +14,7 @@ export type TRole = {
     user_id: string;
     name: string;
     logo: string | null;
+    permissions: Array<string>;
   };
 };
 

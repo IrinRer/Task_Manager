@@ -4,6 +4,7 @@ import { getTaskStatus, getTaskResponsible } from 'store/editTask/selectors';
 
 import { ROLES } from 'constants/types/common';
 import styles from './index.module.scss';
+import OneMember from '../Members/OneMember';
 
 const Info: React.FC = () => {
   const responsible = useAppSelector(getTaskResponsible);
@@ -16,7 +17,9 @@ const Info: React.FC = () => {
       </div>
       <div className={styles.infoLine}>
         <span>{ROLES.responsible}</span>
-        {responsible ? <span>{responsible.name}</span> : null}
+        {responsible ? (
+          <OneMember editable={false} roleName={ROLES.responsible} />
+        ) : null}
       </div>
     </>
   );

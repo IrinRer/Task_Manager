@@ -1,7 +1,19 @@
 .members {
   width: 56%;
-  .noeditMembers {
-    display: block;
+  .wrapper {
     padding-bottom: 16px;
+  }
+  .noeditMembers {
+    display: inline-block;
+  }
+  .avatarWrapper {
+    display: inline-block;
+  }
+  :global(.ant-avatar) {
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    margin-right: 8px;
+    vertical-align: sub;
   }
 }

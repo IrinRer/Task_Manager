@@ -1,3 +1,4 @@
+import AvatarWrapper from 'components/Home/Block/AvatarWrapper';
 import AddMemberButton from 'components/Task/Info/AddMemberButton';
 import useMembersProps from 'components/Task/Info/MembersHook/useMembersProps';
 import React, { FC } from 'react';
@@ -24,7 +25,12 @@ const OneMember: FC<TProps> = ({ user, roleName, editable }) => {
       ) : null}
 
       {!editable && member ? (
-        <span className={styles.noeditMembers}>{member.name}</span>
+        <div className={styles.wrapper}>
+          <div className={styles.avatarWrapper}>
+            <AvatarWrapper role={member} />
+          </div>
+          <span className={styles.noeditMembers}>{member.name}</span>
+        </div>
       ) : null}
 
       {!member && editable ? <AddMemberButton roleName={roleName} /> : null}

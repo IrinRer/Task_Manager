@@ -14,7 +14,9 @@ const Roles: React.FC<IProps> = ({ roles }) => {
     return (
       <>
         {renderedRoles.map((role) => {
-          return <AvatarWrapper key={role.task_to_role_id} role={role} />;
+          return (
+            <AvatarWrapper key={role.task_to_role_id} role={role.assign_user} />
+          );
         })}
         {roles.length > 2 && (
           <Avatar className={styles.plus}>+ {roles.length - 2}</Avatar>
