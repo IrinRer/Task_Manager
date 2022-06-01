@@ -2,10 +2,18 @@ import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from 'store';
 import { BlockType } from 'constants/types/common';
 import {
+  getUsersIdFromRoles,
+  isAuthor,
+  isImplementer,
+  isResponsible,
+  isWatcher,
+} from 'store/common/task/selectors';
+import {
   blockTasksTotal,
   getMyTasks,
   getTasksSortedPaginated,
 } from './service';
+import { TasksUsers } from './types';
 
 export const TEST_USER_ID = 51;
 
@@ -62,3 +70,46 @@ export const getDoneTasksSortedPaginated = createSelector(
     getTasksSortedPaginated(tasks, viewParameters, BlockType.done),
 );
 
+export const getTasksWatchersIDS = createSelector(selectTasks, (tasks) => {
+  const tasksWatchersID: TasksUsers[] = [];
+  tasks?.forEach((task) => {
+    tasksWatchersID?.push({
+      task_id: task.task_id,
+      users: getUsersIdFromRoles(task.roles.filter(isWatcher)),
+    });
+  });
+  return tasksWatchersID;
+});
+
+export const getTasksImplementersIDS = createSelector(selectTasks, (tasks) => {
+  const tasksWatchersID: TasksUsers[] = [];
+  tasks?.forEach((task) => {
+    tasksWatchersID?.push({
+      task_id: task.task_id,
+      users: getUsersIdFromRoles(task.roles.filter(isImplementer)),
+    });
+  });
+  return tasksWatchersID;
+});
+
+export const getTasksResponsiblesIDS = createSelector(selectTasks, (tasks) => {
+  const tasksWatchersID: TasksUsers[] = [];
+  tasks?.forEach((task) => {
+    tasksWatchersID?.push({
+      task_id: task.task_id,
+      users: [task.roles.find(isResponsible)?.assign_user.user_id || ''],
+    });
+  });
+  return tasksWatchersID;
+});
+
+export const getTasksAuthorsIDS = createSelector(selectTasks, (tasks) => {
+  const tasksWatchersID: TasksUsers[] = [];
+  tasks?.forEach((task) => {
+    tasksWatchersID?.push({
+      task_id: task.task_id,
+      users: [task.roles.find(isAuthor)?.assign_user.user_id || ''],
+    });
+  });
+  return tasksWatchersID;
+});

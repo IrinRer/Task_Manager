@@ -8,7 +8,13 @@ import {
   getTaskResponsibleID,
   getTaskWatchersID,
 } from 'store/editTask/selectors';
-import { IRoles } from './types';
+import {
+  getTasksAuthorsIDS,
+  getTasksImplementersIDS,
+  getTasksResponsiblesIDS,
+  getTasksWatchersIDS,
+} from 'store/tasks/selectors';
+import { IRoles, TasksMaxRole, TasksRoles } from './types';
 
 function isAuthorFromRoles(element: IRoles): boolean {
   return element.name === ROLES.author;
@@ -90,5 +96,83 @@ export const getMyMaxRoleForTask = createSelector(
       default:
         return 'any';
     }
+  },
+);
+
+export const findTaskRoleELem = (rolesArr: TasksRoles[], task_id: string) => {
+  return rolesArr.find((role_el) => {
+    return role_el.task_id === task_id;
+  });
+};
+
+export const getMyRolesForAllTasks = createSelector(
+  getTasksAuthorsIDS,
+  getTasksImplementersIDS,
+  getTasksResponsiblesIDS,
+  getTasksWatchersIDS,
+  getVerifyIdUser,
+  (authors, implementers, responsibles, watchers, authUserId): TasksRoles[] => {
+    const resultRoles: TasksRoles[] = [];
+
+    [
+      { name: ROLES.author, data: authors },
+      { name: ROLES.implementer, data: implementers },
+      { name: ROLES.responsible, data: responsibles },
+      { name: ROLES.watcher, data: watchers },
+    ].forEach((el) => {
+      el.data.forEach((task_el) => {
+        if (task_el.users.includes(authUserId || '')) {
+          const taskRoleELem = findTaskRoleELem(resultRoles, task_el.task_id);
+          if (taskRoleELem) {
+            taskRoleELem.roles.push(el.name);
+          } else {
+            resultRoles.push({ task_id: task_el.task_id, roles: [el.name] });
+          }
+        }
+      });
+    });
+    return resultRoles;
+  },
+);
+
+export const getMyMaxRoleForAllTasks = createSelector(
+  getMyRolesForAllTasks,
+  (resultRoles): TasksMaxRole[] => {
+    const resultMaxRoles: TasksMaxRole[] = [];
+
+    resultRoles.forEach((task_el) => {
+      switch (true) {
+        case task_el.roles.includes(ROLES.author):
+          resultMaxRoles.push({
+            task_id: task_el.task_id,
+            maxrole: ROLES.author,
+          });
+          break;
+        case task_el.roles.includes(ROLES.responsible):
+          resultMaxRoles.push({
+            task_id: task_el.task_id,
+            maxrole: ROLES.responsible,
+          });
+          break;
+        case task_el.roles.includes(ROLES.implementer):
+          resultMaxRoles.push({
+            task_id: task_el.task_id,
+            maxrole: ROLES.implementer,
+          });
+          break;
+        case task_el.roles.includes(ROLES.watcher):
+          resultMaxRoles.push({
+            task_id: task_el.task_id,
+            maxrole: ROLES.watcher,
+          });
+          break;
+        default:
+          resultMaxRoles.push({
+            task_id: task_el.task_id,
+            maxrole: 'any',
+          });
+      }
+    });
+    return resultMaxRoles;
   },
 );

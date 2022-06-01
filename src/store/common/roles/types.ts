@@ -16,3 +16,13 @@ export interface IRoles {
   created: Date;
   updated: Date;
 }
+
+export type TasksRoles = {
+  task_id: string;
+  roles: Array<string>;
+};
+
+export type TasksMaxRole = {
+  task_id: string;
+  maxrole: string;
+};

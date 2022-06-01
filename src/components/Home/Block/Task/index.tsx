@@ -3,7 +3,7 @@ import { Col, Row, Popover } from 'antd';
 import { BlockType, TTask } from 'constants/types/common';
 import moreIcon from 'assets/icons/more.svg';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
+import { getMyMaxRoleForAllTasks } from 'store/common/roles/selectors';
 import { getRights } from 'helpers/rights';
 import Attached from '../Attached';
 import Progress from '../Progress';
@@ -23,8 +23,13 @@ interface IProps {
 }
 
 const Task: React.FC<IProps> = ({ task, type }) => {
-  const myMaxRole = useAppSelector(getMyMaxRoleForTask);
-  const isRights = getRights(myMaxRole, 'status');
+  const myMaxRoleAllTasks = useAppSelector(getMyMaxRoleForAllTasks);
+
+  const myMaxRole = myMaxRoleAllTasks.find((el) => {
+    return el.task_id === task.task_id;
+  })?.maxrole;
+
+  const isRights = getRights(myMaxRole || 'any', 'status');
 
   return (
     <Row className={styles.wrapper} justify="space-between">

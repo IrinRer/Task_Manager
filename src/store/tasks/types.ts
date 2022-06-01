@@ -47,3 +47,8 @@ export interface IPagination {
   page_total: number;
   per_page: number;
 }
+
+export type TasksUsers = {
+  task_id: string;
+  users: Array<string>;
+};
