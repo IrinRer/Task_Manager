@@ -30,7 +30,7 @@ export interface IResponseTask {
   form_available: false;
   form_result: null;
   roles: Array<ITaskRoles> | null;
-  tags: Array<ITag>;
+  tags: [];
   progress: null;
   check_lists: [];
   storage_files: [];

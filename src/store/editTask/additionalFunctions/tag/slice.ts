@@ -3,6 +3,7 @@ import {
   deleteTagAction,
 } from 'store/editTask/additionalFunctions/tag/thunk';
 import { AxiosError } from 'axios';
+import { IResponseTask } from 'store/common/task/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ITag } from '../../../common/tags/types';
 import { TAG_SLICE_ALIAS, ITagReducer } from './types';
@@ -42,7 +43,7 @@ export const tagSlice = createSlice({
     // и отобразить их
     [fetchTaskAction.fulfilled.type]: (
       state,
-      { payload }: PayloadAction<any>,
+      { payload }: PayloadAction<IResponseTask>,
     ) => {
       state.sentTag = payload.tags.map(({ task_tag }) => task_tag);
       state.loading = false;
