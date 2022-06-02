@@ -57,3 +57,84 @@
     }
   }
 }
+// Кнопка статуса. цвет в зависимости от статуса.
+@mixin status-element($color) {
+  border: 1px solid $color;
+  background-color: $color;
+  &:hover {
+    border: 1px solid lighten($color, 10%);
+    background-color: lighten($color, 10%);
+  }
+  &:focus {
+    border: 1px solid $color;
+    background-color: $color;
+  }
+  &.disabled:hover {
+    cursor: default;
+    border: 1px solid $color;
+    background-color: $color;
+  }
+}
+
+@mixin statuses {
+  .created {
+    @include status-element($blue-secondary);
+  }
+  .work {
+    @include status-element($success);
+  }
+
+  .done {
+    @include status-element($purple);
+  }
+
+  .paused {
+    @include status-element($red);
+  }
+}
+
+//  Подсветка текущего статуса в зависимости от значения в StatusChange
+@mixin status-change-current($bg-color) {
+  background-color: $bg-color;
+  span {
+    color: $white;
+  }
+  &:hover {
+    background-color: $bg-color !important;
+    color: $white;
+    cursor: default;
+    span {
+      color: $white;
+    }
+  }
+}
+
+@mixin status-change {
+  // :global(.ant-btn.ant-btn-text).button
+  :global(.ant-btn.ant-btn-text).button.created {
+    @include status-change-current($blue-secondary);
+  }
+  .work {
+    @include status-change-current($success);
+  }
+
+  .done {
+    @include status-change-current($purple);
+  }
+
+  .paused {
+    @include status-change-current($red);
+  }
+}
+
+@mixin tag-css($color, $bg-opacity) {
+  border: 1px solid $color;
+  background-color: rgba($color, $bg-opacity);
+  color: $color;
+  svg {
+    color: $color;
+  }
+  &.noBackground {
+    background-color: transparent;
+  }
+}

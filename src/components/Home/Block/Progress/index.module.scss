@@ -1,0 +1,12 @@
+@import 'src/styles/color-variables.scss';
+@import 'src/styles/font-variables.scss';
+
+.wrapper {
+  color: $dark-primary;
+  font-size: $font-size-m;
+  line-height: 16px;
+  font-weight: 400;
+  img {
+    margin-right: 5px;
+  }
+}

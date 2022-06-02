@@ -1,0 +1,14 @@
+@import 'src/styles/color-variables';
+
+.row {
+  height: 100vh;
+  background-color: $border-secondary;
+}
+
+.img {
+  width: 400px;
+}
+
+.title {
+  text-align: center;
+}

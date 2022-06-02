@@ -1,1 +1,12 @@
 @import 'mixins';
+@import '../assets/fonts/fonts';
+@import './_color-variables.scss';
+@import './_font-variables.scss';
+
+body {
+  margin: 0;
+  font-family: $mainFont;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: $bg-primary;
+}

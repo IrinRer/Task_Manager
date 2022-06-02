@@ -1,0 +1,90 @@
+@import 'styles/mixins.scss';
+@import 'styles/color-variables';
+@import 'styles/font-variables';
+
+.auth,
+.ant-form {
+  width: 424px;
+  background-color: $bg-secondary;
+  border-radius: 16px;
+  padding: 56px !important;
+  text-align: center;
+  @include media-breakpoint-down(sm) {
+    width: 300px;
+    padding: 20px !important;
+  }
+
+  h2 {
+    text-align: left;
+    font-weight: 500;
+    font-size: $font-size-xxl;
+    line-height: 1;
+    color: $text-title;
+    margin-bottom: 40px;
+    padding: 0;
+    @include media-breakpoint-down(sm) {
+      margin-bottom: 15px;
+    }
+  }
+  :global {
+    .ant-form-item-label
+      > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+      font-size: 0px;
+      content: '';
+    }
+    .ant-form-item {
+      margin-bottom: 0 !important;
+      @include media-breakpoint-down(sm) {
+        flex-direction: row !important;
+      }
+    }
+    .ant-form-item-control {
+      height: 74px;
+    }
+    .ant-form-item-label {
+      label {
+        font-weight: 400;
+        font-size: $font-size-m;
+        line-height: 1;
+        color: $dark-primary;
+      }
+    }
+    .ant-input,
+    .ant-input-password {
+      outline: none;
+      border: 1px solid $dark-secondary;
+      border-radius: 8px;
+      width: 100%;
+      height: 48px;
+
+      @include media-breakpoint-down(sm) {
+        margin-bottom: 0px;
+      }
+    }
+    .ant-input-password {
+      padding-top: 0;
+      .ant-input {
+        border: none;
+        height: 46px;
+      }
+    }
+    .anticon svg {
+      display: none;
+    }
+    .ant-btn-primary {
+      width: 100%;
+      height: 48px;
+      padding: 0 16px;
+      background-color: $button-main;
+      border-radius: 8px;
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 600;
+      font-size: $font-size-m;
+      margin-top: 40px;
+      &:hover {
+        background-color: darken($button-main, 10%);
+      }
+    }
+  }
+}

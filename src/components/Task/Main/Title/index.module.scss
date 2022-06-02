@@ -1,0 +1,80 @@
+@import 'src/styles/font-variables';
+@import 'src/styles/color-variables';
+
+.wrapname {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+
+  span {
+    font-size: $font-size-xxl;
+    line-height: $line-height-xxxl;
+    margin-top: 16px;
+    margin-bottom: 30px;
+    color: $text-light;
+    cursor: pointer;
+  }
+
+  :global(textarea.ant-input).name {
+    max-width: 499px;
+    font-size: $font-size-xxl;
+    line-height: $line-height-s;
+    color: $text-color;
+    box-shadow: none;
+    border: none;
+    overflow: hidden;
+    padding: 0;
+    margin-top: 16px;
+    margin-bottom: 30px;
+  }
+  :global(.ant-input).name:focus,
+  :global(.ant-input).name:active,
+  :global(.ant-input).name:focus-visible {
+    border: none;
+    box-shadow: none;
+    border-bottom: 1px solid $button-main;
+  }
+  :global(textarea.ant-input-status-error).name {
+    border: none;
+    box-shadow: none;
+    border-bottom: 2px solid $alert;
+  }
+  :global(textarea.ant-input-status-error).name:focus,
+  :global(textarea.ant-input-status-error).name:active,
+  :global(textarea.ant-input-status-error).name:focus-visible {
+    border: none;
+    box-shadow: none !important;
+    border-bottom: 2px solid $alert;
+  }
+  :global(textarea.ant-input-status-error).name::placeholder {
+    color: $alert;
+  }
+  :global(textarea.ant-input).error {
+    border: none;
+    box-shadow: none;
+    border-bottom: 2px solid $alert;
+  }
+  :global(textarea.ant-input).error:focus,
+  :global(textarea.ant-input).error:active,
+  :global(textarea.ant-input).error:focus-visible {
+    border: none;
+    box-shadow: none !important;
+    border-bottom: 2px solid $alert;
+  }
+  :global(textarea.ant-input).error::placeholder {
+    color: $alert;
+  }
+  :global(.ant-input).readonly:focus,
+  :global(.ant-input).readonly:active,
+  :global(.ant-input).readonly:focus-visible {
+    border: none;
+  }
+  button {
+    border: none;
+    margin-bottom: 30px;
+    height: 28px !important;
+  }
+}
+.border {
+  border-bottom: 1px solid $dark-secondary;
+}

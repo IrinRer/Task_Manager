@@ -1,0 +1,73 @@
+@import 'src/styles/font-variables';
+@import 'src/styles/colors';
+
+:global(.ant-select-selection-item),
+:global(.ant-select-item-option-content) {
+  display: flex;
+  align-items: center;
+  width: 100px;
+  text-transform: none;
+}
+
+.priority {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 47% 50%;
+  //justify-content: space-between;
+
+  .text {
+    font-weight: normal;
+    font-size: $font-size-m;
+    width: 56%;
+    text-transform: none;
+  }
+
+  :global(.ant-select-selection-placeholder) {
+    color: $blue !important;
+    font-weight: 500;
+    text-transform: none;
+  }
+  .noedit {
+    width: 100%;
+    padding: 0 11px;
+  }
+  span {
+    font-weight: normal;
+    font-size: $font-size-m;
+    width: 56%;
+    text-transform: none;
+  }
+
+  :global(.ant-select-clear) {
+    background: none;
+  }
+}
+
+.drop {
+  border-radius: 8px !important;
+}
+
+.low {
+  display: inline-block;
+  margin-right: 5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: $salad;
+}
+.middle {
+  display: inline-block;
+  margin-right: 5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: $orange;
+}
+.high {
+  display: inline-block;
+  margin-right: 5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: $red;
+}

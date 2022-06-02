@@ -1,0 +1,46 @@
+@import 'src/styles/font-variables';
+@import 'src/styles/colors';
+
+.text {
+  font-weight: normal;
+  font-size: $font-size-m;
+  text-transform: none;
+  width: 56%;
+}
+
+.date {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 47% 48%;
+  padding-bottom: 17px;
+
+  :global(.ant-picker-input) {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 10px;
+  }
+
+  :global(input::placeholder) {
+    color: $blue !important;
+    font-size: $font-size-m !important;
+  }
+
+  :global(input[value=''] + span) {
+    display: none;
+  }
+
+  :global(.ant-picker-input > input) {
+    font-weight: 500;
+    font-size: $font-size-m;
+    width: auto;
+  }
+
+  :global(.ant-picker-input > input[disabled]) {
+    color: black;
+    cursor: default;
+  }
+}
+
+:global(.ant-picker-panel-container) {
+  border-radius: 16px !important;
+}

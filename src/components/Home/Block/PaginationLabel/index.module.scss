@@ -1,0 +1,43 @@
+@import 'src/styles/color-variables.scss';
+@import 'src/styles/font-variables.scss';
+@import 'src/styles/colors';
+
+.wrapper {
+  height: 32px;
+  width: 61px;
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  border: 1px solid $dark-secondary;
+  border-radius: 8px;
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 100%;
+  }
+  button {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    height: 50%;
+    border: none;
+    background: transparent;
+    &.increase {
+      padding-top: 6px;
+      img {
+        width: 9px;
+        height: 6px;
+      }
+    }
+    &.decrease {
+      padding-top: 2px;
+      img {
+        width: 9px;
+        height: 6px;
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+@import 'src/styles/color-variables.scss';
+@import 'src/styles/font-variables.scss';
+
+.progressGroup {
+  :global {
+    display: flex;
+    flex-wrap: nowrap;
+    border: 1px solid $border-secondary;
+    width: fit-content;
+    padding: 2px;
+    border-radius: 10px;
+
+    .ant-radio-button-wrapper {
+      border: none;
+      border-radius: 8px;
+      color: $heading;
+      font-size: $font-size-m;
+
+      &:not(:first-child)::before {
+        background-color: $bg-secondary;
+      }
+
+      &:hover {
+        color: $button-main;
+      }
+    }
+
+    .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+      border-color: red;
+      background-color: $button-main;
+
+      &:hover {
+        background-color: $button-main;
+      }
+    }
+  }
+}

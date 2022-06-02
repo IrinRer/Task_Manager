@@ -1,0 +1,14 @@
+@import 'src/styles/color-variables.scss';
+@import 'src/styles/font-variables.scss';
+@import 'src/styles/colors';
+
+.wrapper {
+  padding: 37px;
+  min-width: 1160px;
+  background-color: $bg-primary;
+  .blocks {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+}

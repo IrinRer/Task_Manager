@@ -1,0 +1,44 @@
+@import 'src/styles/color-variables.scss';
+@import 'src/styles/font-variables.scss';
+@import 'src/styles/colors';
+
+.wrapper {
+  font-size: $font-size-m;
+  line-height: 24px;
+  span {
+    font-weight: 300;
+    color: $dark-primary;
+  }
+  .selector {
+    :global(.ant-select-selection-item) {
+      font-size: $font-size-m;
+      line-height: 24px;
+      // width: 160px;
+      text-align: right;
+      font-weight: 600;
+      color: $text-dark;
+    }
+
+    :global(.ant-select-suffix) {
+      width: 10px;
+      height: 8px;
+      background-image: url('/assets/icons/selectDown.svg');
+      background-position: center top;
+      background-repeat: no-repeat;
+      svg {
+        display: none;
+      }
+    }
+  }
+  :global(.ant-select-dropdown .ant-select-dropdown-placement-bottomLeft) {
+    width: 260px !important;
+    border-radius: 8px;
+    padding: 28px;
+    margin: 28px;
+    :global(.ant-select-item-option-content) {
+      font-weight: 600;
+      width: 160px;
+      color: red !important;
+    }
+  }
+}

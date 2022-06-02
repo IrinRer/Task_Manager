@@ -1,0 +1,41 @@
+@import 'src/styles/color-variables.scss';
+@import 'src/styles/font-variables.scss';
+@import 'src/styles/colors';
+
+:global(.ant-row).wrapper {
+  display: flex;
+  align-items: center;
+  border-radius: 20px;
+  padding: 14px 25px;
+  margin: 4px 0px;
+  background-color: $white;
+  min-width: 1080px;
+  :global(.ant-col.ant-col-7).title {
+    min-width: 320px;
+    flex-shrink: 0;
+  }
+
+  :global(.ant-col).status {
+    min-width: 150px;
+  }
+  :global(.ant-col).date {
+    min-width: 90px;
+  }
+  :global(.ant-col).priority {
+    min-width: 90px;
+  }
+  :global(.ant-col).roles {
+    min-width: 60px;
+  }
+  :global(.ant-col).tags {
+    max-width: 150px;
+  }
+  :global(.ant-col.ant-col-1).options {
+    cursor: pointer;
+    text-align: right;
+    width: 20px;
+  }
+}
+.flex {
+  display: flex;
+}
