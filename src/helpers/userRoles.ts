@@ -1,5 +1,4 @@
-import { ROLES } from 'constants/task';
-import { TTask } from 'constants/types/common';
+import { ROLES, TTask } from 'constants/types/common';
 
 // если пользователь с userId является автором задачи, то true
 export const isUserTaskAuthor = (

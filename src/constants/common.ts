@@ -1,4 +1,4 @@
-import { ROLES } from './task';
+import { ROLES } from './types/common';
 
 export const BASE_DATE_FORMAT = 'DD.MM.YYYY' as const;
 

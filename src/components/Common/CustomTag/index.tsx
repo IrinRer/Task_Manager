@@ -2,6 +2,7 @@ import React from 'react';
 import { Tag } from 'antd';
 import { TagColor } from 'constants/types/common';
 import classnames from 'classnames';
+import { TAGS_INPUT_MAX_LENGTH } from 'constants/common';
 import styles from './index.module.scss';
 
 interface IProps {
@@ -29,7 +30,7 @@ const CustomTag: React.FC<IProps> = ({
   return (
     <div className={styles.wrapper}>
       <Tag className={classNames} closable={closable} id={id} onClose={onClose}>
-        {title}
+        {title.slice(0, TAGS_INPUT_MAX_LENGTH)}
       </Tag>
     </div>
   );

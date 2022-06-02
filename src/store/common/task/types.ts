@@ -19,8 +19,8 @@ export interface IResponseTask {
   description: string;
   exec_start: string | null;
   exec_stop: string | null;
-  created: Date;
-  updated: Date;
+  created: string;
+  updated: string;
   status: {
     task_status_id: string;
     name: string;

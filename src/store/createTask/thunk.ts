@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { notification } from 'antd';
-import { ROLES } from 'constants/task';
+import { ROLES } from 'constants/types/common';
 import { addTask } from 'store/tasks/slice';
 import { api } from '../../network';
 import {

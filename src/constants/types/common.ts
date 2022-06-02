@@ -1,4 +1,3 @@
-import { ROLES } from 'constants/task';
 import { IPriority } from 'store/common/priorities/types';
 
 export type TRole = {
