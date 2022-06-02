@@ -1,6 +1,7 @@
 import { AxiosError } from 'axios';
 import { IUser } from 'store/users/types';
 import { IPriority } from '../priorities/types';
+import { IProgress } from '../progresses/types';
 import { IRoles } from '../roles/types';
 import { ITag } from '../tags/types';
 
@@ -31,7 +32,7 @@ export interface IResponseTask {
   form_result: null;
   roles: Array<ITaskRoles> | null;
   tags: Array<ITag>;
-  progress: null;
+  progress: IProgress;
   check_lists: [];
   storage_files: [];
   storage_files_meta: {

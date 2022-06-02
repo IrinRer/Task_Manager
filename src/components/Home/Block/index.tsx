@@ -5,17 +5,13 @@ import { setPage, setSortField, setTasksOnPage } from 'store/tasks/slice';
 import { getViewParameters } from 'store/tasks/selectors';
 import { Col, Pagination, Row } from 'antd';
 import { BlockType, SortField, TTask } from 'constants/types/common';
-import styles from './index.module.scss';
+import { BlockTitle } from 'constants/common';
+import { TaskContext } from 'constants/taskContext';
 import Sorter from './Sorter';
 import Task from './Task';
 import PaginationLabel from './PaginationLabel';
 import { getTasksSelector, getTotalTasksSelector } from './service';
-
-enum BlockTitle {
-  in = 'Входящие',
-  work = 'В работе',
-  done = 'Завершено',
-}
+import styles from './index.module.scss';
 
 interface IProps {
   blockType: BlockType;
@@ -78,7 +74,11 @@ const Block: React.FC<IProps> = ({ blockType }) => {
       <Col span={24}>
         {tasks.length > 0 ? (
           tasks.map((task: TTask) => {
-            return <Task key={task.task_id} task={task} type={blockType} />;
+            return (
+              <TaskContext.Provider value={task}>
+                <Task key={task.task_id} type={blockType} />
+              </TaskContext.Provider>
+            );
           })
         ) : (
           <p>Нет задач для отображения</p>

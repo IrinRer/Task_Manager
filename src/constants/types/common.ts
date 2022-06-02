@@ -1,4 +1,5 @@
 import { ROLES } from 'constants/task';
+import { IPriority } from 'store/common/priorities/types';
 
 export type TRole = {
   task_to_role_id: string;
@@ -26,15 +27,40 @@ export type TProgress = {
 } | null;
 
 export type TTask = {
-  task_id: string;
-  title: string;
-  created: string;
+  // task_id: string;
+  // title: string;
+  // created: string;
   progress: TProgress;
   roles: TRole[];
-  status: { name: string; task_status_id: string };
-  priority: null | { name: PriorityName };
+  // status: { name: string; task_status_id: string };
+  // priority: null | { name: PriorityName };
   tags: TTag[];
-  storage_files_meta: { total: number };
+  // storage_files_meta: { total: number };
+  task_id: string;
+  title: string;
+  description: string;
+  exec_start: string | null;
+  exec_stop: string | null;
+  created: string;
+  updated: string;
+  status: {
+    task_status_id: string;
+    name: string;
+    form_result_required: false;
+  };
+  priority: IPriority | null;
+  form: null;
+  form_available: false;
+  form_result: null;
+  // roles: Array<ITaskRoles> | null;
+  // tags: Array<ITag>;
+  // progress: null;
+  check_lists: [];
+  storage_files: [];
+  storage_files_meta: {
+    total: number;
+  };
+  permissions: Array<string>;
 };
 
 export type TStatus = {

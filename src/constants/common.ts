@@ -54,3 +54,9 @@ export enum StatusClass {
 }
 
 export const PRIORITY_STYLES: string[] = ['high', 'middle', 'low'];
+
+export enum BlockTitle {
+  in = 'Входящие',
+  work = 'В работе',
+  done = 'Завершено',
+}
