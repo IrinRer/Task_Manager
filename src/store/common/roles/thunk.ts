@@ -14,7 +14,7 @@ export const fetchAllRoles = createAsyncThunk(
       return response.data.data;
     } catch (error) {
       notification.error({ message: error.message });
-      return rejectWithValue(error);
+      return rejectWithValue(error.message);
     }
   },
 );

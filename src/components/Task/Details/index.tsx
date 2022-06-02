@@ -7,6 +7,8 @@ import {
 } from 'store/editTask/selectors';
 import Spinner from 'components/Common/Spinner';
 import StatusWithPopover from 'components/Common/StatusWithPopover';
+
+import { ROLES } from 'constants/types/common';
 import styles from './index.module.scss';
 
 const Info: React.FC = () => {
@@ -34,8 +36,8 @@ const Info: React.FC = () => {
         </span>
       </div>
       <div className={styles.infoLine}>
-        <span>Ответственный</span>
-        <span>{responsible ? responsible.name : null}</span>
+        <span>{ROLES.responsible}</span>
+        {responsible ? <span>{responsible.name}</span> : null}
       </div>
     </>
   );

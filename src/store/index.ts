@@ -97,6 +97,7 @@ export type RootState = {
   }>;
   createTask: ICreateTaskReducer;
 };
+
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,

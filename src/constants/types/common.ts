@@ -135,3 +135,10 @@ export enum TagColor {
   salad = 'salad',
   yellow = 'yellow',
 }
+
+export enum ROLES {
+  implementer = 'Исполнитель',
+  author = 'Автор задачи',
+  watcher = 'Наблюдатель',
+  responsible = 'Ответственный',
+}
