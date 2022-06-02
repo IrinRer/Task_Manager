@@ -9,6 +9,7 @@ import { uniqueTagNameSelector } from 'store/editTask/additionalFunctions/tag/se
 import { getTaskId } from 'store/editTask/selectors';
 import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
 import { getRights } from 'helpers/rights';
+import { RIGHTS_NAMES } from 'constants/rights';
 import TagItem from './TagItem';
 
 import styles from './index.module.scss';
@@ -25,7 +26,7 @@ const SelectTag = () => {
   const taskId = useAppSelector(getTaskId);
 
   const myMaxRole = useAppSelector(getMyMaxRoleForTask);
-  const isRights = getRights(myMaxRole, 'tag');
+  const isRights = getRights(myMaxRole, RIGHTS_NAMES.editTag);
 
   const uniqueTagName = useAppSelector(uniqueTagNameSelector);
   const isUniqueTag = uniqueTagName?.indexOf(inputValue) === -1;

@@ -1,5 +1,8 @@
-import { RIGHTS } from 'constants/rights';
+import { RIGHTS, TRights, RIGHTS_NAMES } from 'constants/rights';
 
-export const getRights = (userRole: string, element: string): boolean => {
-  return RIGHTS[element].includes(userRole) || RIGHTS[element].includes('any');
+export const getRights = (
+  userRole: TRights,
+  element: RIGHTS_NAMES,
+): boolean => {
+  return RIGHTS[element].includes(userRole);
 };

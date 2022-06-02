@@ -1,9 +1,9 @@
 import React from 'react';
 import TextArea from 'antd/lib/input/TextArea';
 import uniqueId from 'lodash/uniqueId';
-import description from 'assets/icons/description.png';
-import comments from 'assets/icons/comments.png';
-import history from 'assets/icons/history.png';
+import descriptionIcon from 'assets/icons/description.svg';
+import commentsIcon from 'assets/icons/comments.svg';
+import historyIcon from 'assets/icons/history.svg';
 import styles from './index.module.scss';
 import History from './History';
 import InputWrapper from './InputWrapper';
@@ -15,13 +15,13 @@ const Main: React.FC = () => {
     {
       id: uniqueId(),
       title: 'Описание',
-      icon: <img src={description} alt="description" />,
+      icon: <img src={descriptionIcon} alt="description" />,
       block: <Description />,
     },
     {
       id: uniqueId(),
       title: 'Комментарии',
-      icon: <img src={comments} alt="comments" />,
+      icon: <img src={commentsIcon} alt="comments" />,
       block: (
         <TextArea
           autoSize
@@ -33,7 +33,7 @@ const Main: React.FC = () => {
     {
       id: uniqueId(),
       title: 'Действия',
-      icon: <img src={history} alt="history" />,
+      icon: <img src={historyIcon} alt="history" />,
       block: <History />,
     },
   ];

@@ -10,6 +10,7 @@ import { getTaskInfoDateStop } from 'store/common/task/selectors';
 import { getTaskId } from 'store/editTask/selectors';
 import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
 import { getRights } from 'helpers/rights';
+import { RIGHTS_NAMES } from 'constants/rights';
 import styles from './index.module.scss';
 
 const { Text } = Typography;
@@ -20,7 +21,7 @@ const SelectDate = () => {
   const dateStop = useAppSelector(getTaskInfoDateStop);
   const taskId = useAppSelector(getTaskId);
   const myMaxRole = useAppSelector(getMyMaxRoleForTask);
-  const isRights = getRights(myMaxRole, 'date');
+  const isRights = getRights(myMaxRole, RIGHTS_NAMES.editTaskDate);
 
   const onChange = (date: Date | null) => {
     dispatch(

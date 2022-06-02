@@ -16,6 +16,7 @@ import { Button } from 'antd';
 import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
 import { getRights } from 'helpers/rights';
 import { TITLE_TASK_MAX_LENGTH } from 'constants/common';
+import { RIGHTS_NAMES } from 'constants/rights';
 import styles from './index.module.scss';
 
 const Title: React.FC = () => {
@@ -29,7 +30,7 @@ const Title: React.FC = () => {
   const [isReadonly, setIsReadonly] = useState<boolean>(true);
 
   const myMaxRole = useAppSelector(getMyMaxRoleForTask);
-  const isRights = getRights(myMaxRole, 'title');
+  const isRights = getRights(myMaxRole, RIGHTS_NAMES.editTitle);
 
   const changeReadonly = () => {
     setIsReadonly(!isReadonly);

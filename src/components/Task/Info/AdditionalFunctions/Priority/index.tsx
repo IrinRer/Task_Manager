@@ -13,6 +13,7 @@ import { PriorityName } from 'constants/types/common';
 
 import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
 import { getRights } from 'helpers/rights';
+import { RIGHTS_NAMES } from 'constants/rights';
 import styles from './index.module.scss';
 
 const { Text } = Typography;
@@ -29,7 +30,7 @@ const SelectPriority = () => {
   const defaultPriorityName = useAppSelector(getTaskInfoPriorityName);
 
   const myMaxRole = useAppSelector(getMyMaxRoleForTask);
-  const isRights = getRights(myMaxRole, 'priority');
+  const isRights = getRights(myMaxRole, RIGHTS_NAMES.editPriority);
 
   const onChange = (checkedValues: string) => {
     dispatch(

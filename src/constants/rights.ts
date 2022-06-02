@@ -1,17 +1,47 @@
 import { ROLES } from './types/common';
 
-export const RIGHTS = {
+export enum RIGHTS_NAMES {
+  'subscription' = 'subscription',
+  'unsubscribe' = 'unsubscribe',
+  'copyTask' = 'copyTask',
+  'showAttached' = 'showAttached',
+  'editTitle' = 'editTitle',
+  'editDescription' = 'editDescription',
+  'addChecklist' = 'addChecklist',
+  'editChecklistItem' = 'editChecklistItem',
+  'editAttached' = 'editAttached',
+  'editComments' = 'editComments',
+  'deleteHistory' = 'deleteHistory',
+  'editStatus' = 'editStatus',
+  'editTaskDate' = 'editTaskDate',
+  'editPriority' = 'editPriority',
+  'editTag' = 'editTag',
+  'editWatcher' = 'editWatcher',
+  'editImplementer' = 'editImplementer',
+  'editResponsible' = 'editResponsible',
+  'moveToArchive' = 'moveToArchive',
+  'deleteTask' = 'deleteTask',
+}
+
+export type TRights =
+  | ROLES.any
+  | ROLES.author
+  | ROLES.watcher
+  | ROLES.implementer
+  | ROLES.responsible;
+
+export const RIGHTS: Record<RIGHTS_NAMES, Array<TRights>> = {
   /* any - любой авторизованный пользователь, может быть без роли для конкретной задачи */
 
   /* отслеживание задачи (через кнопку в виде глаза) */
-  subscription: ['any'],
+  subscription: [ROLES.any],
 
   /* право на отписку от задачи (через кнопку в виде глаза); */
   unsubscribe: [ROLES.watcher],
 
   /* дублирование задачи */
   copyTask: [
-    'any',
+    ROLES.any,
     ROLES.author,
     ROLES.watcher,
     ROLES.implementer,
@@ -20,7 +50,7 @@ export const RIGHTS = {
 
   /* просмотр и скачивание вложений */
   showAttached: [
-    'any',
+    ROLES.any,
     ROLES.author,
     ROLES.watcher,
     ROLES.implementer,
@@ -28,37 +58,42 @@ export const RIGHTS = {
   ],
 
   /* редактирование названия задачи */
-  title: [ROLES.author, ROLES.responsible],
+  editTitle: [ROLES.author, ROLES.responsible],
 
   /* добавление и изменение описания */
-  description: [ROLES.author, ROLES.responsible],
+  editDescription: [ROLES.author, ROLES.responsible],
 
   /* добавление и удаление чек-листа */
-  checklist: [ROLES.author, ROLES.implementer, ROLES.responsible],
+  addChecklist: [ROLES.author, ROLES.implementer, ROLES.responsible],
 
   /* добавление, пометка (как выполненную) и удаление задачи в чек-листе */
-  checklistItem: [ROLES.author, ROLES.implementer, ROLES.responsible],
+  editChecklistItem: [ROLES.author, ROLES.implementer, ROLES.responsible],
 
   /* добавление и удаление вложений */
   editAttached: [ROLES.author, ROLES.implementer, ROLES.responsible],
 
   /* добавление комментариев к задаче */
-  comments: [ROLES.author, ROLES.watcher, ROLES.implementer, ROLES.responsible],
+  editComments: [
+    ROLES.author,
+    ROLES.watcher,
+    ROLES.implementer,
+    ROLES.responsible,
+  ],
 
   /* удаление действий пользователей */
   deleteHistory: [ROLES.author, ROLES.responsible],
 
   /* изменение статуса задачи */
-  status: [ROLES.author, ROLES.implementer, ROLES.responsible],
+  editStatus: [ROLES.author, ROLES.implementer, ROLES.responsible],
 
   /* установление, изменение и удаление срока завершения задачи */
-  date: [ROLES.author, ROLES.responsible],
+  editTaskDate: [ROLES.author, ROLES.responsible],
 
   /* установление, изменение и удаление приоритета задачи */
-  priority: [ROLES.author, ROLES.responsible],
+  editPriority: [ROLES.author, ROLES.responsible],
 
   /* добавление и удаление меток */
-  tag: [ROLES.author, ROLES.responsible],
+  editTag: [ROLES.author, ROLES.responsible],
 
   /* добавление и удаление участника в роли наблюдателя */
   editWatcher: [ROLES.author, ROLES.responsible],
@@ -70,7 +105,7 @@ export const RIGHTS = {
   editResponsible: [ROLES.author],
 
   /* перемещение задачи в архив */
-  archive: [ROLES.author],
+  moveToArchive: [ROLES.author],
 
   /* удаление задачи */
   deleteTask: [ROLES.author],

@@ -17,6 +17,7 @@ import {
   DESCRIPTION_LENGTH_EXPAND,
   DESCRIPTION_MAX_LENGTH,
 } from 'constants/common';
+import { RIGHTS_NAMES } from 'constants/rights';
 import styles from './index.module.scss';
 
 const Description: React.FC = () => {
@@ -31,7 +32,7 @@ const Description: React.FC = () => {
   const editLoading = useAppSelector(getEditDescLoading);
 
   const myMaxRole = useAppSelector(getMyMaxRoleForTask);
-  const isRights = getRights(myMaxRole, 'description');
+  const isRights = getRights(myMaxRole, RIGHTS_NAMES.editDescription);
 
   const [newDesc, setNewDesc] = useState<string | undefined>(description);
   const [isReadonly, setIsReadonly] = useState<boolean>(true);
