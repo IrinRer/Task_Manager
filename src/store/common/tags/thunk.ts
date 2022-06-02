@@ -13,7 +13,6 @@ export const fetchTagsAction = createAsyncThunk(
           query: query || null,
         },
       });
-
       return response.data.data;
     } catch (error) {
       notification.error({ message: error.message });

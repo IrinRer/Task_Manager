@@ -1,7 +1,11 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { ROLES } from 'constants/task';
+import { ROLES } from 'constants/types/common';
 import { RootState } from 'store';
 import { IRoles } from './types';
+
+function isAuthorFromRoles(element: IRoles): boolean {
+  return element.name === ROLES.author;
+}
 
 function isWatcherFromRoles(element: IRoles): boolean {
   return element.name === ROLES.watcher;
@@ -15,6 +19,11 @@ function isImplementerFromRoles(element: IRoles): boolean {
 }
 
 const allroles = (state: RootState) => state.common.roles.allroles;
+
+export const getAuthorRoleID = createSelector(
+  allroles,
+  (roles) => roles?.find(isAuthorFromRoles)?.task_role_id,
+);
 
 export const getWatcherRoleID = createSelector(
   allroles,
