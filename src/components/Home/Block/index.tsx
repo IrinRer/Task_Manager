@@ -1,21 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { setPage, setSortField, setTasksOnPage } from 'store/tasks/slice';
 import { getViewParameters } from 'store/tasks/selectors';
 import { Col, Pagination, Row } from 'antd';
 import { BlockType, SortField, TTask } from 'constants/types/common';
-import styles from './index.module.scss';
+import { BlockTitle } from 'constants/common';
+import { TaskContext } from 'constants/taskContext';
 import Sorter from './Sorter';
 import Task from './Task';
 import PaginationLabel from './PaginationLabel';
 import { getTasksSelector, getTotalTasksSelector } from './service';
-
-enum BlockTitle {
-  in = 'Входящие',
-  work = 'В работе',
-  done = 'Завершено',
-}
+import styles from './index.module.scss';
 
 interface IProps {
   blockType: BlockType;
@@ -28,6 +24,14 @@ const Block: React.FC<IProps> = ({ blockType }) => {
 
   const { sortField, page, tasksOnPage } = viewParameters[blockType];
 
+  // Если число задач обновилось и страниц стало больше чем хватает задач, уменьшаем число страниц
+  useEffect(() => {
+    if (tasksTotal < tasksOnPage * (page - 1)) {
+      const newPage = Math.floor(tasksTotal / tasksOnPage) + 1;
+      dispatch(setPage({ blockType, page: newPage }));
+    }
+  }, [tasksOnPage, tasksTotal, page, blockType, dispatch]);
+
   // Хэндлеры для изменения параметров отображения - сортировки, страницы и задач на странице
 
   const handlePageChange = (
@@ -38,13 +42,12 @@ const Block: React.FC<IProps> = ({ blockType }) => {
     dispatch(setPage({ blockType, page: newPage }));
   };
 
-  const handleTasksOnPageChange = (newTasksOnPage: number) => {
-    if (newTasksOnPage < tasksTotal && newTasksOnPage > 0) {
-      // При увеличении числа задач на странице в конце нужно проверить что страница не выходит за диапазон задач
-      if (newTasksOnPage * page > tasksTotal) {
-        handlePageChange(Math.ceil(tasksTotal / newTasksOnPage));
-      }
-      dispatch(setTasksOnPage({ blockType, tasksOnPage: newTasksOnPage }));
+  const handleTasksOnPageChange = (value: number) => {
+    const newTasksOnPage = Math.min(value, tasksTotal - 1);
+    dispatch(setTasksOnPage({ blockType, tasksOnPage: newTasksOnPage }));
+    if (newTasksOnPage * page > tasksTotal) {
+      const lastPage = Math.ceil(tasksTotal / newTasksOnPage);
+      handlePageChange(lastPage);
     }
   };
 
@@ -60,14 +63,22 @@ const Block: React.FC<IProps> = ({ blockType }) => {
       {/* Шапка блока */}
       <Col className={styles.header}>
         <h2>{BlockTitle[blockType]}</h2>
-        <Sorter onSelect={handleSortFieldChange} selectValue={sortField} />
+        <Sorter
+          onSelect={handleSortFieldChange}
+          selectValue={sortField}
+          blockType={blockType}
+        />
       </Col>
 
       {/* Задачи */}
       <Col span={24}>
         {tasks.length > 0 ? (
           tasks.map((task: TTask) => {
-            return <Task key={task.task_id} task={task} type={blockType} />;
+            return (
+              <TaskContext.Provider value={task}>
+                <Task key={task.task_id} type={blockType} />
+              </TaskContext.Provider>
+            );
           })
         ) : (
           <p>Нет задач для отображения</p>

@@ -17,11 +17,11 @@ const Display: React.FC = () => {
       {loading ? (
         <Preloader size="large" />
       ) : (
-        <>
+        <div className={styles.blocks}>
           <Block blockType={BlockType.in} />
           <Block blockType={BlockType.work} />
           <Block blockType={BlockType.done} />
-        </>
+        </div>
       )}
     </Row>
   );

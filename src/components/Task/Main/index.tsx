@@ -7,6 +7,7 @@ import historyIcon from 'assets/icons/history.svg';
 import styles from './index.module.scss';
 import History from './History';
 import InputWrapper from './InputWrapper';
+import Options from '../Options';
 import Description from './Description';
 import Title from './Title';
 
@@ -40,7 +41,15 @@ const Main: React.FC = () => {
 
   return (
     <div className={styles.taskMain}>
-      <Title />
+      <div className={styles.titleWrapper}>
+        <div className={styles.title}>
+          <Title />
+        </div>
+        <div className={styles.options}>
+          <Options />
+        </div>
+      </div>
+
       {elements.map((el) => {
         return (
           <InputWrapper key={el.id} labelText={el.title} icon={el.icon}>

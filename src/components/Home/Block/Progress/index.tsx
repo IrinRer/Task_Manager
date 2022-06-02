@@ -1,20 +1,18 @@
-import React from 'react';
-import { TProgress } from 'constants/types/common';
+import React, { useContext } from 'react';
 import checkIcon from 'assets/icons/check.svg';
 import FlexWrapper from 'components/Common/FlexWrapper';
+import { TaskContext } from 'constants/taskContext';
 import styles from './index.module.scss';
 
-interface IProps {
-  progress: TProgress;
-}
+const Progress: React.FC = () => {
+  const task = useContext(TaskContext);
 
-const Progress: React.FC<IProps> = ({ progress }) => {
   return (
     <FlexWrapper wrapperClassName={styles.wrapper}>
-      {progress ? (
+      {task?.progress ? (
         <>
-          <img src={checkIcon} alt="checkIcon" /> {progress.completed}/
-          {progress.total}
+          <img src={checkIcon} alt="checkIcon" /> {task.progress.completed}/
+          {task.progress.total}
         </>
       ) : null}
     </FlexWrapper>

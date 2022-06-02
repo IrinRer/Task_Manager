@@ -23,3 +23,13 @@ export const selectPopulatedStatuses = createSelector(
       return { ...status, label: status.name, value: status.task_status_id };
     }),
 );
+
+export const getCreatedStatusID = createSelector(
+  selectStatuses,
+  (statuses): string => {
+    return (
+      statuses.find((status: IStatus) => status.name === TaskStatuses.Created)
+        ?.task_status_id || ''
+    ); // find может возвращать undefined, хотя в нашем случае этого не должно бы быть? а если statuses не загрузились?
+  },
+);

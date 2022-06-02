@@ -11,6 +11,7 @@ export interface IEditTaskReducer {
     title: boolean;
     desc: boolean;
     members: boolean;
+    status: boolean;
     membersGroup: boolean;
   };
   selectedMembers: Array<string> | null;
@@ -21,6 +22,7 @@ export interface IEditTaskReducer {
     desc: AxiosError | null;
     setMembers: AxiosError | null;
     delMembers: AxiosError | null;
+    status: AxiosError | null;
     setMembersGroup: AxiosError | null;
     delMembersGroup: AxiosError | null;
   };
