@@ -4,7 +4,7 @@ import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { canUserChangeTaskStatus } from 'helpers/userRoles';
 import React, { useMemo } from 'react';
 import { getVerifyIdUser } from 'store/auth/verify/selectors';
-import { selectTasks } from 'store/tasks/selectors';
+import { getTaskById, selectTasks } from 'store/tasks/selectors';
 import Status from './Status';
 
 interface IProps {
@@ -14,12 +14,8 @@ interface IProps {
 
 const StatusWithPopover: React.FC<IProps> = ({ taskId, edit = false }) => {
   const userId = useAppSelector(getVerifyIdUser);
-  // const task = useAppSelector((state) => getTaskById(state, taskId));
-  const tasks = useAppSelector(selectTasks);
-  const task = useMemo(
-    () => tasks.find((t) => t.task_id === taskId),
-    [tasks, taskId],
-  );
+  const task = useAppSelector((state) => getTaskById(state, taskId));
+
   const trigger = task && canUserChangeTaskStatus(userId, task) ? 'click' : '';
 
   return (
