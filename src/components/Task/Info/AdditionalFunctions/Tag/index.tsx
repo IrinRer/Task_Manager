@@ -7,6 +7,8 @@ import { allColorTag } from 'constants/additionalFunctions/color';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { uniqueTagNameSelector } from 'store/editTask/additionalFunctions/tag/selectors';
 import { getTaskId } from 'store/editTask/selectors';
+import { MAX_NUMBER_TAGS } from 'constants/additionalFunctions/tag';
+import { ITag } from 'store/common/tags/types';
 import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
 import { getRights } from 'helpers/rights';
 import { RIGHTS_NAMES } from 'constants/rights';
@@ -16,7 +18,11 @@ import styles from './index.module.scss';
 
 const { Text } = Typography;
 
-const SelectTag = () => {
+interface IProps {
+  tagSelect: ITag[] | undefined
+}
+
+const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [colorTag, setColor] = useState('');
   const [inputValue, setInputValue] = useState('');
@@ -29,7 +35,7 @@ const SelectTag = () => {
   const isRights = getRights(myMaxRole, RIGHTS_NAMES.editTag);
 
   const uniqueTagName = useAppSelector(uniqueTagNameSelector);
-  const isUniqueTag = uniqueTagName?.indexOf(inputValue) === -1;
+  const isUniqueTag = uniqueTagName?.indexOf(inputValue) === -1 && inputValue;
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -37,14 +43,11 @@ const SelectTag = () => {
 
   const handleOk = () => {
     setIsModalVisible(false);
-    // после того, как нажали на кнопку 'Cохранить' colorTag очищается и никакой цвет не выбран
-    // и очищается форма
     setColor('');
+    setInputValue('');
     form.resetFields();
 
-    // если inputValue не содержится в uniqueTag, то createTagAction делает post запрос
-    // нужно, чтобы не было одинаковых тегов
-    if (inputValue && isUniqueTag && uniqueTagName.length < 50) {
+    if (inputValue && isUniqueTag && uniqueTagName.length < MAX_NUMBER_TAGS) {
       dispatch(
         createTagAction({ name: inputValue, color: colorTag, task_id: taskId }),
       );
@@ -57,7 +60,6 @@ const SelectTag = () => {
 
   const onChecked = (e) => {
     if (e.target.checked) {
-      // если checked = true, то устанавливаем в color тот checkbox(цвет), который был выбран
       setColor(e.target.value);
     } else setColor('');
   };
@@ -72,7 +74,7 @@ const SelectTag = () => {
 
   return (
     <div className={className}>
-      <TagItem editable={isRights} />
+      <TagItem editable={isRights} tagSelect={tagSelect}/>
       {isRights ? (
         <Button
           type="primary"
@@ -83,7 +85,6 @@ const SelectTag = () => {
           + Добавить метку
         </Button>
       ) : null}
-
       <Modal
         title="Новая метка"
         visible={isModalVisible}

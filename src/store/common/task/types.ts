@@ -28,10 +28,10 @@ export interface IResponseTask {
   };
   priority: IPriority | null;
   form: null;
-  form_available: false;
+  form_available: boolean;
   form_result: null;
   roles: Array<ITaskRoles> | null;
-  tags: Array<ITag>;
+  tags: IResponseTags[];
   progress: IProgress;
   check_lists: [];
   storage_files: [];
@@ -39,6 +39,10 @@ export interface IResponseTask {
     total: number;
   };
   permissions: Array<string>;
+}
+
+interface IResponseTags {
+  task_tag: ITag;
 }
 
 export interface ITaskRoles {

@@ -48,6 +48,8 @@ export const PRIORITY_COLORS = {
   Низкий: 'Green',
 };
 
+export const STYLES = ['high', 'middle', 'low'];
+
 export enum StatusClass {
   'Создана' = 'created',
   'В работе' = 'work',
@@ -72,3 +74,4 @@ export const TITLE_TASK_MAX_LENGTH = 150;
 
 export const RoleContext = createContext<TRights | ''>('');
 export const EditableContext = createContext<boolean>(false);
+
