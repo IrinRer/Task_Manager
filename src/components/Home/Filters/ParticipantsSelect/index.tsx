@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import { Select } from 'antd';
 
@@ -16,26 +16,28 @@ import { IPopulatedUser, IUser } from 'store/users/types';
 import {
   selectFilterUsers,
   selectFilterUsersNames,
+  selectUsersInputValue,
 } from 'store/filters/selectors';
-import { usersUpdated } from 'store/filters/slice';
-import debounce from 'lodash/debounce';
+import { usersInputValueUpdated, usersUpdated } from 'store/filters/slice';
+import { debounce } from 'lodash';
 import FilterWrapper from '../../../Common/FilterWrapper';
 import ParticipantTag from './ParticipantTag';
 import styles from './index.module.scss';
 
 const ParticipantsSelect: React.FC = () => {
   const dispatch = useAppDispatch();
+
   const allUsers: Array<IPopulatedUser> = useAppSelector(selectPopulatedUsers);
   const selectedUsers: Array<IUser> = useAppSelector(selectFilterUsers);
   const selectedUsersNames: Array<String> = useAppSelector(
     selectFilterUsersNames,
   );
-
-  const [searchValue, setSearchValue] = useState<string>('');
+  const searchValue = useAppSelector(selectUsersInputValue);
 
   const handleChange = (_, query: Array<IPopulatedUser>): void => {
     dispatch(usersUpdated(query));
     dispatch(fetchTasksAction());
+    dispatch(usersInputValueUpdated(''));
   };
 
   const fetchUsers = useCallback(
@@ -53,7 +55,7 @@ const ParticipantsSelect: React.FC = () => {
   const handleSearch = (query: string) => {
     const trimmedQuery = query.slice(0, PARTICIPANTS_INPUT_MAX_LENGTH);
 
-    setSearchValue(trimmedQuery);
+    dispatch(usersInputValueUpdated(trimmedQuery));
     debouncedFetchUsers(trimmedQuery);
   };
 

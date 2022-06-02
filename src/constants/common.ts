@@ -1,5 +1,8 @@
 export const BASE_DATE_FORMAT = 'DD.MM.YYYY' as const;
 
+export const DATE_FORMAT_UI = 'dd MMM yyyy';
+export const DATE_FORMAT_SERVER = 'yyyy-MM-dd';
+
 export const AVATAR_COLORS = [
   '#64D9D1',
   '#C3AEFF',
@@ -20,12 +23,18 @@ export const AVATAR_TEXT_COLOR = '#ffffff';
 
 export const DEBOUNCE_TIMEOUT = 500;
 
+// TODO: Длина обрезки заголовка будет зависеть от разрешения экрана
+// переделается в дальшейшем
+export const TITLE_LENGTH = 100;
+
 export const PARTICIPANTS_INPUT_MAX_LENGTH = 50;
 
-export const TAGS_INPUT_MAX_LENGTH = 20;
+export const TAGS_INPUT_MAX_LENGTH = 15;
 
 export const PRIORITY_COLORS = {
   Высокий: 'Red',
   Средний: 'Orange',
   Низкий: 'Green',
 };
+
+export const USERS_BY_ONE_MAX_COUNT = 3;

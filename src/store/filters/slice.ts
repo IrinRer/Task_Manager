@@ -10,13 +10,15 @@ import { IUser } from '../users/types';
 import { ITag } from '../common/tags/types';
 
 const initialFiltersState: IFilters = {
-  searchQuery: undefined,
+  searchQuery: '',
   users: [],
   statuses: [],
   tags: [],
   attachments: false,
   progress: 0,
   priorities: [],
+  usersInputValue: '',
+  tagsInputValue: '',
 };
 
 const initialState: IFiltersReducer = {
@@ -42,6 +44,12 @@ export const filtersSlice = createSlice({
         (user) => user.user_id !== action.payload.user_id,
       );
     },
+    usersInputValueUpdated: (
+      state: IFiltersReducer,
+      action: PayloadAction<string>,
+    ) => {
+      state.currentState.usersInputValue = action.payload;
+    },
     tagsUpdated: (
       state: IFiltersReducer,
       action: PayloadAction<Array<ITag>>,
@@ -52,6 +60,12 @@ export const filtersSlice = createSlice({
       state.currentState.tags = state.currentState.tags.filter(
         (tag) => tag.task_tag_id !== action.payload.task_tag_id,
       );
+    },
+    tagsInputValueUpdated: (
+      state: IFiltersReducer,
+      action: PayloadAction<string>,
+    ) => {
+      state.currentState.tagsInputValue = action.payload;
     },
     statusesUpdated: (
       state: IFiltersReducer,
@@ -100,6 +114,8 @@ export const {
   priorityUpdated,
   tagRemoved,
   filtersCleared,
+  usersInputValueUpdated,
+  tagsInputValueUpdated,
   filtersRollBack,
   filtersSyncState,
 } = filtersSlice.actions;
