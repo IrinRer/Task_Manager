@@ -16,7 +16,7 @@
     justify-content: space-between;
     align-items: flex-end;
     h2 {
-      padding: 8px 0px 0px 0px;
+      padding-top: 8px;
       margin: 0;
       font-size: $font-size-xl;
       font-weight: 600;
@@ -56,11 +56,11 @@
       svg {
         display: none;
       }
-      background-image: url('../../../assets/icons/pageUp.svg');
+      background-image: url('/assets/icons/pageUp.svg');
       background-position: center;
       background-repeat: no-repeat;
       &:disabled {
-        background-image: url('../../../assets/icons/pageUpDisabled.svg');
+        background-image: url('/assets/icons/pageUpDisabled.svg');
       }
     }
     :global(.ant-pagination-prev) button {
@@ -69,11 +69,11 @@
       svg {
         display: none;
       }
-      background-image: url('../../../assets/icons/pageDown.svg');
+      background-image: url('/assets/icons/pageDown.svg');
       background-position: center;
       background-repeat: no-repeat;
       &:disabled {
-        background-image: url('../../../assets/icons/pageDownDisabled.svg');
+        background-image: url('/assets/icons/pageDownDisabled.svg');
       }
     }
   }

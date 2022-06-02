@@ -29,42 +29,32 @@ const PageSize: React.FC<IProps> = ({ pageSize, handleChange }) => {
     }
   };
 
-  const handleClick = (e: any) => {
+  const handleClick = () => {
     setEditMode(true);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    switch (true) {
-      case e.key === 'Enter' && Number(newPageSize) > 0: {
-        handleChange(Number(newPageSize));
-        setEditMode(false);
-        break;
-      }
-      case e.key === 'Enter' && Number(newPageSize) <= 0: {
-        notification.warn({
-          message: 'Неверное число',
-        });
-        break;
-      }
-      case e.key === 'Escape': {
-        setNewPageSize(pageSize.toString());
-        setEditMode(false);
-        break;
-      }
-
-      default:
-        break;
+    if (e.key === 'Enter' && Number(newPageSize) > 0) {
+      handleChange(Number(newPageSize));
+      setEditMode(false);
+    } else if (e.key === 'Enter' && Number(newPageSize) <= 0) {
+      notification.warn({
+        message: 'Неверное число',
+      });
+    } else if (e.key === 'Escape') {
+      setNewPageSize(pageSize.toString());
+      setEditMode(false);
     }
   };
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     if (Number(newPageSize) > 0) {
       handleChange(Number(newPageSize));
-      setEditMode(false);
     } else {
+      // восстанавливаем отображаемое значение
       setNewPageSize(pageSize.toString());
-      setEditMode(false);
     }
+    setEditMode(false);
   };
 
   return (

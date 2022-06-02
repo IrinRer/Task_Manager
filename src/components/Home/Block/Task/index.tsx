@@ -2,15 +2,15 @@ import React from 'react';
 import { Col, Row } from 'antd';
 import { BlockType, TTask } from 'constants/types/common';
 
+import StatusWithPopover from 'components/Common/StatusWithPopover';
 import Attached from '../Attached';
 import Progress from '../Progress';
 import DateString from '../Date';
-import StatusWithPopover from '../../../Common/StatusWithPopover/StatusWithPopover';
 import Tags from '../Tags';
 import Roles from '../Roles';
 import Priority from '../Priority';
 import Title from '../Title';
-import Options from '../Options/Options';
+import Options from '../Options';
 import styles from './index.module.scss';
 
 interface IProps {
@@ -23,7 +23,7 @@ const Task: React.FC<IProps> = ({ task, type }) => {
     <Row className={styles.wrapper} justify="space-between">
       {/* Заголовок задачи с указателями вложений и прогресса */}
       <Col span={7} className={styles.title}>
-        <Title title={task.title} type={type} task_id={task.task_id} />
+        <Title task={task} />
         <div className={styles.flex}>
           <Attached attached={task.storage_files_meta.total} />
           <Progress progress={task.progress} />

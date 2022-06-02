@@ -60,19 +60,18 @@ export const isFirstGTSecond = (
   secondTask: TTask,
   sortField: SortField,
 ): number => {
-  if (sortField === 'priority') {
+  if (sortField === SortField.priority) {
     // Если приоритета нет, то назначаем самый низкий рейтинг задаче - 3. Если есть - индекс приоритета
     return (
       (firstTask.priority ? +PriorityName[firstTask.priority.name] : 3) -
       (secondTask.priority ? +PriorityName[secondTask.priority.name] : 3)
     );
   }
-  if (sortField === 'title') {
+  if (sortField === SortField.title) {
     return compareStrings(firstTask.title, secondTask.title);
   }
-  // console.log('SortField', sortField);
 
-  if (sortField === 'created' || sortField === 'exec_stop') {
+  if (sortField === SortField.created || sortField === SortField.endDate) {
     return compareDates(firstTask[sortField], secondTask[sortField]);
   }
   return 0;

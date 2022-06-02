@@ -5,8 +5,8 @@ import {
   getTaskId,
   getEditStatusLoading,
 } from 'store/editTask/selectors';
-import StatusWithPopover from 'components/Common/StatusWithPopover/StatusWithPopover';
 import Spinner from 'components/Common/Spinner';
+import StatusWithPopover from 'components/Common/StatusWithPopover';
 import styles from './index.module.scss';
 
 const Info: React.FC = () => {

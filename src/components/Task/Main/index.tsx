@@ -11,7 +11,7 @@ import History from '../History';
 import InputWrapper from './InputWrapper';
 import Description from '../Description';
 import Title from '../Title';
-import Options from '../Options/Options';
+import Options from '../Options';
 
 const Main: React.FC = () => {
   const elements = [
