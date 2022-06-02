@@ -30,15 +30,26 @@
 
   .titleWrapper {
     display: flex;
-    gap: 20px;
-    .title {
-      flex-grow: 1;
-    }
-    .options {
-      display: flex;
-      justify-content: center;
-      padding-top: 20px;
-      width: 40px;
-    }
+    justify-content: space-between;
+    column-gap: 30px;
   }
+}
+
+.taskHeader {
+  display: flex;
+  flex-direction: column;
+}
+
+.titleRow {
+  display: flex;
+  column-gap: 30px;
+}
+
+.options {
+  display: flex;
+  column-gap: 22px;
+}
+
+.border {
+  border-bottom: 1px solid $dark-secondary;
 }

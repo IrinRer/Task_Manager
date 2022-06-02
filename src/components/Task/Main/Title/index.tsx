@@ -18,7 +18,6 @@ import { getRights } from 'helpers/rights';
 import { TITLE_TASK_MAX_LENGTH } from 'constants/common';
 import { RIGHTS_NAMES } from 'constants/rights';
 import styles from './index.module.scss';
-import TaskActions from './TaskActions';
 
 const Title: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -55,45 +54,37 @@ const Title: React.FC = () => {
 
   if (editLoading) {
     return (
-      <div>
-        <div className={styles.wrapname}>
-          <Spinner margin="0 auto" size="default" />
-        </div>
-        <div className={styles.border} />
+      <div className={styles.wrapname}>
+        <Spinner margin="0 auto" size="default" />
       </div>
     );
   }
 
   return (
-    <div>
-      <div className={styles.wrapname}>
-        <TextArea
-          ref={inputRef}
-          autoSize
-          maxLength={TITLE_TASK_MAX_LENGTH}
-          placeholder="Введите название"
-          className={classnames(styles.name, {
-            [styles.readonly]: isReadonly,
-            [styles.error]: !newTitle,
-          })}
-          onChange={changeTitle}
-          onPressEnter={onBlur}
-          onBlur={onBlur}
-          value={newTitle || ''}
-          readOnly={isReadonly}
+    <div className={styles.wrapname}>
+      <TextArea
+        ref={inputRef}
+        autoSize
+        maxLength={TITLE_TASK_MAX_LENGTH}
+        placeholder="Введите название"
+        className={classnames(styles.name, {
+          [styles.readonly]: isReadonly,
+          [styles.error]: !newTitle,
+        })}
+        onChange={changeTitle}
+        onPressEnter={onBlur}
+        onBlur={onBlur}
+        value={newTitle || ''}
+        readOnly={isReadonly}
+      />
+      {isReadonly && isRights && (
+        <Button
+          ghost
+          icon={<EditIcon />}
+          size="small"
+          onClick={changeReadonly}
         />
-        {isReadonly && isRights ? (
-          <Button
-            ghost
-            icon={<EditIcon />}
-            size="small"
-            onClick={changeReadonly}
-          />
-        ) : null}
-
-        <TaskActions />
-      </div>
-      <div className={styles.border} />
+      )}
     </div>
   );
 };

@@ -4,7 +4,7 @@
 .wrapname {
   display: flex;
   align-items: flex-end;
-  justify-content: flex-start;
+  width: 100%;
 
   span {
     font-size: $font-size-xxl;
@@ -15,14 +15,7 @@
     cursor: pointer;
   }
 
-  .taskActions {
-    display: flex;
-    column-gap: 22px;
-    padding-left: 40px;
-  }
-
   :global(textarea.ant-input).name {
-    max-width: 499px;
     font-size: $font-size-xxl;
     line-height: $line-height-s;
     color: $text-color;
@@ -30,7 +23,6 @@
     border: none;
     overflow: hidden;
     padding: 0;
-    margin-top: 16px;
     margin-bottom: 30px;
   }
 

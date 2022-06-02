@@ -8,7 +8,7 @@ import { addCheckList } from 'store/editTask/checkLists/addCheckList/thunk';
 import { isAddCheckListLoading } from 'store/editTask/checkLists/addCheckList/selectors';
 import styles from './index.module.scss';
 
-const TaskActionsPopoverMenu = () => {
+const ActionsPopoverMenu = () => {
   const dispatch = useAppDispatch();
 
   const checkList = useAppSelector(getCheckList);
@@ -41,4 +41,4 @@ const TaskActionsPopoverMenu = () => {
   );
 };
 
-export default TaskActionsPopoverMenu;
+export default ActionsPopoverMenu;
