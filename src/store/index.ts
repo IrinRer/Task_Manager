@@ -46,7 +46,7 @@ export const store = configureStore({
         priority: priorityReducer,
         date: dateReducer,
         tags: tagReducer,
-      })
+      }),
     }),
     users: usersReducer,
     filters: filtersReducer,
@@ -70,7 +70,7 @@ export type AppDispatch = typeof store.dispatch;
 
 export type RootState = {
   tasks: ITasksReducer;
-  editTask:  CombinedState<{ 
+  editTask: CombinedState<{
     editTaskReducer: IEditTaskReducer;
     additionalFunctions: CombinedState<{
       priority: IPriorityReducer;

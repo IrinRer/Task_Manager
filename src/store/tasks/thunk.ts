@@ -5,6 +5,7 @@ import { TASKS_SLICE_ALIAS } from 'store/tasks/types';
 import { api } from '../../network';
 import { selectTaskQuery } from '../filters/selectors';
 import { filtersRollBack, filtersSyncState } from '../filters/slice';
+import { fetchStatusCounters } from '../filters/thunk';
 
 export const fetchTasksAction = createAsyncThunk(
   `${TASKS_SLICE_ALIAS}/fetchAll`,
@@ -26,6 +27,8 @@ export const fetchTasksAction = createAsyncThunk(
           per_page: 50,
         },
       });
+
+      dispatch(fetchStatusCounters());
 
       dispatch(filtersSyncState());
 
