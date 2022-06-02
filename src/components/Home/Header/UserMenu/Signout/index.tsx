@@ -17,7 +17,6 @@ const Signout: React.FC<ITitleSignOut> = ({ title }) => {
     resetToken();
     dispatch(addVerifyToken(null));
   };
-
   return (
     <Link
       className={style.link}
