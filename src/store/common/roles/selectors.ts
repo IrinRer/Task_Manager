@@ -1,6 +1,14 @@
 import { createSelector } from '@reduxjs/toolkit';
+import { TRights } from 'constants/rights';
 import { ROLES } from 'constants/types/common';
 import { RootState } from 'store';
+import { getVerifyIdUser } from 'store/auth/verify/selectors';
+import {
+  getTaskAuthorID,
+  getTaskImplementersID,
+  getTaskResponsibleID,
+  getTaskWatchersID,
+} from 'store/editTask/selectors';
 import { IRoles } from './types';
 
 function isAuthorFromRoles(element: IRoles): boolean {
@@ -40,3 +48,38 @@ export const getImplementerRoleID = createSelector(
 
 export const getRolesLoading = (state: RootState) => state.common.roles.loading;
 export const getRolesError = (state: RootState) => state.common.roles.error;
+
+export const getMyRolesForTask = createSelector(
+  getTaskAuthorID,
+  getTaskImplementersID,
+  getTaskResponsibleID,
+  getTaskWatchersID,
+  getVerifyIdUser,
+  (author, implementers, responsible, watchers, authUserId): string[] => {
+    const resultRoles: string[] = [];
+    const usersIDwithRolesForTask = [
+      { name: ROLES.author, data: [author] },
+      { name: ROLES.implementer, data: implementers },
+      { name: ROLES.responsible, data: [responsible] },
+      { name: ROLES.watcher, data: watchers },
+    ];
+
+    usersIDwithRolesForTask.forEach((el) => {
+      if (el.data.includes(authUserId || undefined)) {
+        resultRoles.push(el.name);
+      }
+    });
+    return resultRoles;
+  },
+);
+
+export const getMyMaxRoleForTask = createSelector(
+  getMyRolesForTask,
+  (roles): TRights => {
+    if (roles.includes(ROLES.author)) return ROLES.author;
+    if (roles.includes(ROLES.responsible)) return ROLES.responsible;
+    if (roles.includes(ROLES.implementer)) return ROLES.implementer;
+    if (roles.includes(ROLES.watcher)) return ROLES.watcher;
+    return ROLES.any;
+  },
+);

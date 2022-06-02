@@ -10,21 +10,22 @@
     font-size: $font-size-xxl;
     line-height: $line-height-xxxl;
     margin-top: 16px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     color: $text-light;
     cursor: pointer;
   }
 
   :global(textarea.ant-input).name {
+    max-width: 499px;
     font-size: $font-size-xxl;
-    line-height: $line-height-l;
+    line-height: $line-height-s;
     color: $text-color;
     box-shadow: none;
     border: none;
     overflow: hidden;
     padding: 0;
     margin-top: 16px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
   }
   :global(.ant-input).name:focus,
   :global(.ant-input).name:active,
@@ -67,6 +68,11 @@
   :global(.ant-input).readonly:active,
   :global(.ant-input).readonly:focus-visible {
     border: none;
+  }
+  button {
+    border: none;
+    margin-bottom: 30px;
+    height: 28px !important;
   }
 }
 .border {

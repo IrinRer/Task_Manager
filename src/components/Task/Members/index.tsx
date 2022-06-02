@@ -4,36 +4,74 @@ import { getEditMembersLoading } from 'store/editTask/selectors';
 import uniqueId from 'lodash/uniqueId';
 import Spinner from 'components/Common/Spinner';
 import { ROLES } from 'constants/types/common';
+import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
+import { getRights } from 'helpers/rights';
+import { RIGHTS_NAMES } from 'constants/rights';
+import { EditableContext, RoleContext } from 'constants/common';
 import OneMember from './OneMember';
 import MembersWrapperMulti from './MembersWrapperMulti';
 import MembersByOne from './MembersByOne';
 
 const Info: React.FC = () => {
   const editLoading = useAppSelector(getEditMembersLoading);
+  const myMaxRole = useAppSelector(getMyMaxRoleForTask);
+  const isRightsEditWatchers = getRights(myMaxRole, RIGHTS_NAMES.editWatcher);
+  const isRightsEditImplementer = getRights(
+    myMaxRole,
+    RIGHTS_NAMES.editImplementer,
+  );
+  const isRightsEditResponsible = getRights(
+    myMaxRole,
+    RIGHTS_NAMES.editResponsible,
+  );
 
   const elements = [
     {
       id: uniqueId(),
-      title: 'Автор',
-      block: <OneMember roleName="Автор" />,
+      title: ROLES.author_short,
+      editable: false,
+      block: (
+        <RoleContext.Provider value={ROLES.author}>
+          <EditableContext.Provider value={false}>
+            <OneMember />
+          </EditableContext.Provider>
+        </RoleContext.Provider>
+      ),
     },
     {
       id: uniqueId(),
       title: ROLES.responsible,
-      block: <OneMember editable roleName={ROLES.responsible} />,
+      editable: isRightsEditResponsible,
+      block: (
+        <RoleContext.Provider value={ROLES.responsible}>
+          <EditableContext.Provider value={isRightsEditResponsible}>
+            <OneMember />
+          </EditableContext.Provider>
+        </RoleContext.Provider>
+      ),
     },
     {
       id: uniqueId(),
       title: ROLES.implementer,
+      editable: isRightsEditImplementer,
       block: (
-        <MembersByOne roleName={ROLES.implementer} multiAdd usersMaxCount={3} />
+        <RoleContext.Provider value={ROLES.implementer}>
+          <EditableContext.Provider value={isRightsEditImplementer}>
+            <MembersByOne multiAdd usersMaxCount={3} />
+          </EditableContext.Provider>
+        </RoleContext.Provider>
       ),
     },
     {
       id: uniqueId(),
       title: ROLES.watcher,
+      editable: isRightsEditWatchers,
       block: (
-        <MembersByOne roleName={ROLES.watcher} multiAdd usersMaxCount={50} />
+        <RoleContext.Provider value={ROLES.watcher}>
+          <EditableContext.Provider value={isRightsEditWatchers}>
+            <MembersByOne multiAdd usersMaxCount={50} />
+          </EditableContext.Provider>
+        </RoleContext.Provider>
       ),
     },
   ];
@@ -46,9 +84,13 @@ const Info: React.FC = () => {
     <>
       {elements.map((el) => {
         return (
-          <MembersWrapperMulti key={el.id} roleName={el.title}>
-            {el.block}
-          </MembersWrapperMulti>
+          <RoleContext.Provider
+            value={el.title === ROLES.author_short ? ROLES.author : el.title}
+          >
+            <EditableContext.Provider value={el.editable}>
+              <MembersWrapperMulti key={el.id}>{el.block}</MembersWrapperMulti>
+            </EditableContext.Provider>
+          </RoleContext.Provider>
         );
       })}
     </>

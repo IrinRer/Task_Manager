@@ -47,7 +47,7 @@ const useMembersProps = (roleName: string) => {
 
   const ROLE_DATA: Array<TRoleData> = [
     {
-      name: 'Автор',
+      name: ROLES.author,
       roleId: authorRoleID || '',
       users: objToArray(author),
       usersID: objToArray(authorID),

@@ -138,6 +138,9 @@ export enum TagColor {
 export enum ROLES {
   implementer = 'Исполнитель',
   author = 'Автор задачи',
+  author_short = 'Автор',
   watcher = 'Наблюдатель',
   responsible = 'Ответственный',
+  /* any - любой авторизованный пользователь, может быть без роли для конкретной задачи */
+  any = 'any',
 }

@@ -37,7 +37,7 @@ const Info: React.FC = () => {
       </div>
       <div className={styles.infoLine}>
         <span>{ROLES.responsible}</span>
-        {responsible ? <span>{responsible.name}</span> : null}
+        {responsible && <span>{responsible.name}</span>}
       </div>
     </>
   );

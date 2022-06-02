@@ -63,6 +63,7 @@
 
   :global(.ant-btn).change,
   :global(.ant-btn).change:focus {
+    box-shadow: none;
     border-radius: 8px;
     background-color: $border-secondary;
     font-size: $font-size-s;
@@ -77,6 +78,7 @@
   }
   :global(.ant-btn).change:hover,
   :global(.ant-btn).change:active {
+    box-shadow: none;
     background-color: $button-secondary-hover;
     color: $dark-primary;
     border: 1px solid $button-secondary-hover;
