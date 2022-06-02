@@ -15,27 +15,23 @@ export const fetchStatusCounters = createAsyncThunk(
       const tasksQuery = selectTaskQuery(state);
       const statuses = selectPopulatedStatuses(state);
 
-      const queries: Array<AxiosPromise> = [];
+      const queries: Array<AxiosPromise> = statuses.map((status) => {
+        return api().get('/api/v1.0/task/tasks', {
+          params: {
+            search: tasksQuery.searchQuery || null,
+            assign_user_id: tasksQuery.users.map((user) => user.user_id),
+            status_id: status.task_status_id,
+            tag_id: tasksQuery.tags.map((tag) => tag.task_tag_id),
+            storage_files_gte: tasksQuery.attachments ? 1 : null,
+            priority_id: tasksQuery.priorities,
+            progress_gte: tasksQuery.progress,
+            page: 1,
+            per_page: 1,
+          },
+        });
+      });
 
-      statuses.forEach((status) =>
-        queries.push(
-          api().get('/api/v1.0/task/tasks', {
-            params: {
-              search: tasksQuery.searchQuery || null,
-              assign_user_id: tasksQuery.users.map((user) => user.user_id),
-              status_id: status.task_status_id,
-              tag_id: tasksQuery.tags.map((tag) => tag.task_tag_id),
-              storage_files_gte: tasksQuery.attachments ? 1 : null,
-              priority_id: tasksQuery.priorities,
-              progress_gte: tasksQuery.progress,
-              page: 1,
-              per_page: 1,
-            },
-          }),
-        ),
-      );
-
-      return await Promise.all(queries).then((responses) =>
+      return Promise.all(queries).then((responses) =>
         responses.map((response) => ({
           task_status_id: response.config.params.status_id,
           value: response.data.pagination.items_total,
