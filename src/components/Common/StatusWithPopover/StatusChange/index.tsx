@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Button, notification } from 'antd';
 import { TStatus } from 'constants/types/common';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
@@ -7,7 +7,7 @@ import { selectStatuses } from 'store/common/statuses/selectors';
 import { changeTaskStatusAction } from 'store/tasks/thunk';
 import { changeEditTaskStatusAction } from 'store/editTask/thunk';
 import { getVerifyIdUser } from 'store/auth/verify/selectors';
-import { getTaskById, selectTasks } from 'store/tasks/selectors';
+import { getTaskById } from 'store/tasks/selectors';
 import { canUserChangeTaskStatus } from 'helpers/userRoles';
 import classnames from 'classnames';
 import { StatusClass } from 'constants/common';

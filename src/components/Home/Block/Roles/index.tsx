@@ -31,7 +31,7 @@ const Roles: React.FC = () => {
         );
       })}
       {roles.length > 2 && (
-        <Popover content={<AllUsersInTask roles={roles} />} trigger="hover">
+        <Popover content={<AllUsersInTask />} trigger="hover">
           <Avatar className={styles.plus}>+ {roles.length - 2}</Avatar>
         </Popover>
       )}

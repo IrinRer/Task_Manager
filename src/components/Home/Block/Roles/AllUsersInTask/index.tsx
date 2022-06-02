@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { TRole } from 'constants/types/common';
+import { TaskContext } from 'constants/taskContext';
 import style from './index.module.scss';
 
-interface IPropsRoles {
-  roles: TRole[];
-}
+const AllUsersInTask: React.FC = () => {
+  const task = useContext(TaskContext);
+  const roles = task?.roles;
 
-const AllUsersInTask: React.FC<IPropsRoles> = ({ roles }) => {
   return (
     <ul className={style.wrapper}>
-      {roles.map((role: TRole) => {
+      {roles!.map((role: TRole) => {
         return <li key={role.task_to_role_id}>{role.assign_user.name}</li>;
       })}
     </ul>
