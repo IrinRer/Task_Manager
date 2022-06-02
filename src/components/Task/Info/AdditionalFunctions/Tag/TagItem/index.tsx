@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Tag, Modal, Button, Menu } from 'antd';
+import { Modal, Button, Menu } from 'antd';
 import { DeleteOutlined, CaretRightOutlined } from '@ant-design/icons';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { deleteTagAction } from 'store/editTask/additionalFunctions/tag/thunk';

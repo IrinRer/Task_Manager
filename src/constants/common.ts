@@ -1,5 +1,5 @@
-import { ROLES } from './types/common';
 import { createContext } from 'react';
+import { ROLES } from './types/common';
 import { TRights } from './rights';
 
 export const BASE_DATE_FORMAT = 'DD.MM.YYYY' as const;
