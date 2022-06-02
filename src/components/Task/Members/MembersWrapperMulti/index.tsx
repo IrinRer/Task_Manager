@@ -1,18 +1,17 @@
 import { CaretRightOutlined } from '@ant-design/icons';
 import ListMember from 'components/Task/Info/ListMember';
 import useMembersProps from 'components/Task/Info/MembersHook/useMembersProps';
-import { USERS_BY_ONE_MAX_COUNT } from 'constants/common';
-import React, { FC, useState } from 'react';
+import { RoleContext, USERS_BY_ONE_MAX_COUNT } from 'constants/common';
+import React, { FC, useContext, useState } from 'react';
 import styles from './index.module.scss';
 
 type TProps = {
-  roleName: string;
   children: React.ReactNode;
-  editable: boolean;
 };
 
-const MembersWrapperMulti: FC<TProps> = (props: TProps) => {
-  const { roleName, children, editable } = props;
+const MembersWrapperMulti: FC<TProps> = ({ children }) => {
+  const roleName = useContext(RoleContext);
+
   const [isActive, setIsActive] = useState<boolean>(false);
 
   const usersData = useMembersProps(roleName);
@@ -31,12 +30,7 @@ const MembersWrapperMulti: FC<TProps> = (props: TProps) => {
         <CaretRightOutlined rotate={isActive ? 90 : 0} />
       </span>
       {isActive ? (
-        <ListMember
-          editable={editable}
-          roleName={roleName}
-          isActive={isActive}
-          setIsActive={setIsActive}
-        />
+        <ListMember isActive={isActive} setIsActive={setIsActive} />
       ) : (
         children
       )}
