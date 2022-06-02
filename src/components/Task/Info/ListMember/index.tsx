@@ -1,6 +1,6 @@
 import { CloseOutlined, SearchOutlined } from '@ant-design/icons';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import React, { FC, useMemo } from 'react';
+import React, { FC, useContext, useMemo } from 'react';
 
 import { getUnselectedMembers, getTaskId } from 'store/editTask/selectors';
 
@@ -10,18 +10,20 @@ import { deleteTaskMemberAction } from 'store/editTask/thunk';
 import classnames from 'classnames';
 import { ROLES } from 'constants/types/common';
 import SimpleSelect from 'components/Common/SimpleSelect';
+import { EditableContext, RoleContext } from 'constants/common';
 import styles from '../AddMemberButton/index.module.scss';
 import stylesList from './index.module.scss';
 import useSelectOptions from '../TaskHook/useSelectOptions';
 import useMembersProps from '../MembersHook/useMembersProps';
 
 type TProps = {
-  roleName: string;
   isActive: boolean;
   setIsActive: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const ListMemberMulti: FC<TProps> = ({ roleName, isActive, setIsActive }) => {
+const ListMemberMulti: FC<TProps> = ({ isActive, setIsActive }) => {
+  const roleName = useContext(RoleContext);
+  const editable = useContext(EditableContext);
   const options = useSelectOptions();
 
   const roleUnassign = useAppSelector(getUnselectedMembers);
@@ -46,10 +48,13 @@ const ListMemberMulti: FC<TProps> = ({ roleName, isActive, setIsActive }) => {
     }
   };
 
-  const onBlur = () => {
+  const closeList = () => {
     options.common.onBlur();
     setIsActive(!isActive);
+  };
 
+  const onBlur = () => {
+    closeList();
     if (Array.isArray(roleUnassign) && taskId && usersData?.roleId) {
       roleUnassign?.forEach((element) => {
         dispatch(
@@ -104,8 +109,10 @@ const ListMemberMulti: FC<TProps> = ({ roleName, isActive, setIsActive }) => {
         itemLabel="name"
         itemValue="user_id"
         mode="multiple"
-        menuItemSelectedIcon={<CloseOutlined />}
-        dropdownClassName={styles.dropdown}
+        menuItemSelectedIcon={editable ? <CloseOutlined /> : null}
+        dropdownClassName={classnames(
+          editable ? styles.dropdown : stylesList.dropdownList,
+        )}
         defaultValue={unselectedMembersWithNew}
         suffixIcon={
           <span
@@ -116,8 +123,8 @@ const ListMemberMulti: FC<TProps> = ({ roleName, isActive, setIsActive }) => {
             <SearchOutlined />
           </span>
         }
-        onChange={onChange}
-        onBlur={onBlur}
+        onChange={editable ? onChange : () => {}}
+        onBlur={editable ? onBlur : closeList}
       />
     </div>
   );

@@ -8,14 +8,11 @@ const SubmitButton: React.FC = () => {
   const tasksCount: number = useAppSelector(selectTasksTotalCount);
 
   return (
-    <Button
-      type="primary"
-      htmlType="button"
-      onClick={() => {}}
-      className={styles.button}
-    >
-      Показать {tasksCount} задач
-    </Button>
+    <div className={styles.button}>
+      <Button type="primary" htmlType="button" onClick={() => {}}>
+        Показать {tasksCount} задач
+      </Button>
+    </div>
   );
 };
 

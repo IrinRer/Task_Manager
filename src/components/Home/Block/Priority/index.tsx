@@ -1,22 +1,24 @@
 import { PriorityName } from 'constants/types/common';
-import React from 'react';
+import React, { useContext } from 'react';
+import classnames from 'classnames';
+import { PRIORITY_STYLES } from 'constants/common';
+import { TaskContext } from 'constants/taskContext';
 import styles from './index.module.scss';
 
-interface IProps {
-  priority: PriorityName | null;
-}
+const Priority: React.FC = () => {
+  const task = useContext(TaskContext);
+  if (!task) return null;
+  const priority = task.priority?.name;
 
-const STYLES: string[] = ['high', 'middle', 'low'];
-
-const Priority: React.FC<IProps> = ({ priority }) => {
-  return (
+  const classNames = classnames(
+    priority ? styles[PRIORITY_STYLES[PriorityName[priority]]] : '',
+  );
+  return priority ? (
     <div className={styles.wrapper}>
-      {priority ? (
-        <span className={styles[STYLES[PriorityName[priority]]]}> </span>
-      ) : null}
+      <span className={classNames} />
       <span>{priority}</span>
     </div>
-  );
+  ) : null;
 };
 
 export default Priority;

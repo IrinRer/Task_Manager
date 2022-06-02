@@ -53,9 +53,8 @@ export const getTaskResponsible = createSelector(
   (roles) => roles?.find(isResponsible)?.assign_user,
 );
 
-export const getTaskImplementer = createSelector(
-  taskRoles,
-  (roles) => roles?.find(isImplementer)?.assign_user,
+export const getTaskImplementers = createSelector(taskRoles, (roles) =>
+  getUsersFromRoles(roles?.filter(isImplementer)),
 );
 
 export const getTaskWatchers = createSelector(taskRoles, (roles) =>
@@ -73,6 +72,9 @@ export const getTaskError = (state: RootState) => state.common.onetask.error;
 
 export const getTaskInfoPriority = (state: RootState) =>
   state.common.onetask.data?.priority?.task_priority_id;
+
+export const getTaskInfoPriorityName = (state: RootState) =>
+  state.common.onetask.data?.priority?.name;
 
 export const getTaskInfoDateStop = (state: RootState) =>
   state.common.onetask.data?.exec_stop

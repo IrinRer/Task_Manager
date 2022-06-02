@@ -27,4 +27,18 @@
     box-shadow: none;
     color: $text-color;
   }
+
+  .titleWrapper {
+    display: flex;
+    gap: 20px;
+    .title {
+      flex-grow: 1;
+    }
+    .options {
+      display: flex;
+      justify-content: center;
+      padding-top: 20px;
+      width: 40px;
+    }
+  }
 }

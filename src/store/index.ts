@@ -20,6 +20,7 @@ import commonPrioritiesReducer from './common/priorities/slice';
 import commonStatusesReducer from './common/statuses/slice';
 import onetaskReducer from './common/task/slice';
 import editTaskReducer from './editTask/slice';
+import createTaskReducer from './createTask/slice';
 import addCheckListReducer from './editTask/checkLists/addCheckList/slice';
 import deleteCheckListReducer from './editTask/checkLists/deleteCheckList/slice';
 import addCheckListItemReducer from './editTask/checkLists/addCheckListItem/slice';
@@ -39,6 +40,7 @@ import { ITaskReducer } from './common/task/types';
 import { IEditTaskReducer } from './editTask/types';
 import { IAuthReducer } from './auth/token/types';
 import { IVerifyReducer } from './auth/verify/types';
+import { ICreateTaskReducer } from './createTask/types';
 import { ITagReducer } from './editTask/additionalFunctions/tag/types';
 import { IDateReducer } from './editTask/additionalFunctions/date/types';
 import { IPriorityReducer } from './editTask/additionalFunctions/priority/types';
@@ -82,6 +84,7 @@ export const store = configureStore({
       tags: commonTagsReducer,
       roles: commonRolesReducer,
     }),
+    createTask: createTaskReducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
 });
@@ -120,6 +123,7 @@ export type RootState = {
     tags: ICommonTagsReducer;
     roles: IRolesReducer;
   }>;
+  createTask: ICreateTaskReducer;
 };
 
 export type AppThunk<ReturnType = void> = ThunkAction<

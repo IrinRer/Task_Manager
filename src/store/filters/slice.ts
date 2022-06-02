@@ -4,10 +4,13 @@ import {
   FILTERS_SLICE_ALIAS,
   IFilters,
   IFiltersReducer,
+  IStatusCounter,
 } from 'store/filters/types';
 import { TProgressValue } from 'store/common/progresses/types';
-import { IUser } from '../users/types';
-import { ITag } from '../common/tags/types';
+import { IUser } from 'store/users/types';
+import { ITag } from 'store/common/tags/types';
+import { AxiosError } from 'axios';
+import { fetchStatusCounters } from './thunk';
 
 const initialFiltersState: IFilters = {
   searchQuery: '',
@@ -19,6 +22,11 @@ const initialFiltersState: IFilters = {
   priorities: [],
   usersInputValue: '',
   tagsInputValue: '',
+  statusCounters: {
+    counters: [],
+    isLoading: false,
+    error: null,
+  },
 };
 
 const initialState: IFiltersReducer = {
@@ -98,6 +106,26 @@ export const filtersSlice = createSlice({
       state.currentState = state.previousState;
     },
     filtersCleared: () => initialState,
+  },
+  extraReducers: {
+    [fetchStatusCounters.pending.type]: (state) => {
+      state.currentState.statusCounters.isLoading = true;
+      state.currentState.statusCounters.error = null;
+    },
+    [fetchStatusCounters.fulfilled.type]: (
+      state,
+      { payload }: PayloadAction<Array<IStatusCounter>>,
+    ) => {
+      state.currentState.statusCounters.counters = payload;
+      state.currentState.statusCounters.isLoading = false;
+    },
+    [fetchStatusCounters.rejected.type]: (
+      state,
+      { payload }: PayloadAction<AxiosError>,
+    ) => {
+      state.currentState.statusCounters.isLoading = false;
+      state.currentState.statusCounters.error = payload;
+    },
   },
 });
 

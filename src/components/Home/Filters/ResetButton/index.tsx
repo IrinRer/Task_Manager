@@ -14,14 +14,11 @@ const ResetButton: React.FC = () => {
   };
 
   return (
-    <Button
-      type="default"
-      htmlType="reset"
-      onClick={handleCLick}
-      className={styles.button}
-    >
-      Очистить фильтры
-    </Button>
+    <div className={styles.button}>
+      <Button type="default" htmlType="reset" onClick={handleCLick}>
+        Очистить фильтры
+      </Button>
+    </div>
   );
 };
 

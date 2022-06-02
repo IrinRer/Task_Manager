@@ -3,7 +3,12 @@
 @import 'src/styles/colors';
 
 .wrapper {
-  padding: 40px;
+  padding: 37px;
   min-width: 1160px;
   background-color: $bg-primary;
+  .blocks {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
 }

@@ -17,13 +17,7 @@ export interface IStatus {
   updated: string;
 }
 
-export interface IPopulatedStatus {
-  task_status_id: string;
+export interface IPopulatedStatus extends IStatus {
   value: string;
-  name: string;
   label: string;
-  name_group: string;
-  form_result_required: boolean;
-  created: string;
-  updated: string;
 }
