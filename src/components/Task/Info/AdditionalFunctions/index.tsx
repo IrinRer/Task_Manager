@@ -11,6 +11,7 @@ import {
   getTaskInfoPriority,
 } from 'store/common/task/selectors';
 import { getTag } from 'store/editTask/additionalFunctions/tag/selectors';
+import { ITag } from 'store/common/tags/types';
 import SelectPriority from './Priority';
 import SelectDate from './Date';
 import SelectTag from './Tag';
@@ -20,17 +21,33 @@ const AdditionalFunctions = () => {
   const defaultPriority = useAppSelector(getTaskInfoPriority);
   const tagSelect = useAppSelector(getTag);
 
-  const PriorityTasks = withAdditionalFunctions(
+  type TPriorityTasks = {
+    defaultPriority: string | undefined;
+  };
+
+  type TDateTasks = {
+    dateStop: string | undefined;
+  };
+
+  type TTagTasks = {
+    tagSelect: ITag[] | undefined;
+  };
+
+  const PriorityTasks = withAdditionalFunctions<string, TPriorityTasks>(
     SelectPriority,
     ExclamationCircleOutlined,
-    defaultPriority,
+    defaultPriority || '',
   );
-  const DateTasks = withAdditionalFunctions(
+  const DateTasks = withAdditionalFunctions<string, TDateTasks>(
     SelectDate,
     ClockCircleOutlined,
-    dateStop,
+    dateStop || '',
   );
-  const TagTasks = withAdditionalFunctions(SelectTag, TagOutlined, tagSelect);
+  const TagTasks = withAdditionalFunctions<ITag[] | undefined, TTagTasks>(
+    SelectTag,
+    TagOutlined,
+    tagSelect,
+  );
 
   return (
     <>

@@ -14,7 +14,7 @@ const { Text } = Typography;
 const { Option } = Select;
 
 interface IProps {
-  defaultPriority: string;
+  defaultPriority: string | undefined;
 }
 
 const SelectPriority: React.FC<IProps> = ({ defaultPriority }) => {

@@ -11,7 +11,7 @@ import { ITag } from 'store/common/tags/types';
 import styles from '../index.module.scss';
 
 interface IProps {
-  tagSelect: ITag[];
+  tagSelect?: ITag[];
 }
 
 const TagItem: React.FC<IProps> = ({ tagSelect }) => {

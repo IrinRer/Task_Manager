@@ -12,7 +12,7 @@ import styles from './index.module.scss';
 const { Text } = Typography;
 
 interface IProps {
-  dateStop: string;
+  dateStop: string | undefined;
 }
 
 const SelectDate: React.FC<IProps> = ({ dateStop }) => {

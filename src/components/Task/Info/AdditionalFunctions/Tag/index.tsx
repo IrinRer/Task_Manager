@@ -16,7 +16,7 @@ import styles from './index.module.scss';
 const { Text } = Typography;
 
 interface IProps {
-  tagSelect: ITag[];
+  tagSelect: ITag[] | undefined
 }
 
 const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
