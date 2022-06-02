@@ -75,8 +75,8 @@ const Block: React.FC<IProps> = ({ blockType }) => {
         {tasks.length > 0 ? (
           tasks.map((task: TTask) => {
             return (
-              <TaskContext.Provider value={task}>
-                <Task key={task.task_id} type={blockType} />
+              <TaskContext.Provider key={task.task_id} value={task}>
+                <Task type={blockType} />
               </TaskContext.Provider>
             );
           })
