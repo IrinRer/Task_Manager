@@ -21,7 +21,6 @@ const Signout: React.FC<ITitleSignOut> = ({ title }) => {
     dispatch(resetTasks());
     dispatch(filtersCleared());
   };
-
   return (
     <Link
       className={style.link}
