@@ -1,4 +1,3 @@
-import { notification } from 'antd';
 import { ROUTES } from 'constants/routes';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { resetToken } from 'helpers/cookies';
