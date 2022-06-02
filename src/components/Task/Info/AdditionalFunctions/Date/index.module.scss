@@ -34,6 +34,11 @@
     font-size: $font-size-m;
     width: auto;
   }
+
+  :global(.ant-picker-input > input[disabled]) {
+    color: black;
+    cursor: default;
+  }
 }
 
 :global(.ant-picker-panel-container) {

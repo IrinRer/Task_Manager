@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import scheduleIcon from 'assets/icons/schedule.svg';
 import FlexWrapper from 'components/Common/FlexWrapper';
+import { TaskContext } from 'constants/taskContext';
 import styles from './index.module.scss';
 
-interface IProps {
-  dateString: string;
-}
+const DateString: React.FC = () => {
+  const task = useContext(TaskContext);
 
-const DateString: React.FC<IProps> = ({ dateString }) => {
-  const date = new Date(dateString).toLocaleDateString('ru');
+  if (!task) return null;
+
+  const date = new Date(task.created).toLocaleDateString('ru');
+
   return (
     <FlexWrapper wrapperClassName={styles.wrapper}>
       <img src={scheduleIcon} alt="sheduleIcon" />

@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import classnames from 'classnames';
-import { Avatar, Button, Col, Row } from 'antd';
+import { Button, Col, Row } from 'antd';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { getOnlyMyTasksFlag } from 'store/tasks/selectors';
 import { showOnlyMyTasks, showAllTasks } from 'store/tasks/slice';
 import clockIcon from 'assets/icons/clock.svg';
 import personIcon from 'assets/icons/person.svg';
+import { getCurrentUser } from 'store/users/selectors';
+import UserAvatar from 'components/Common/UserAvatar';
+import { ROUTES } from 'constants/routes';
+import { generatePath, useNavigate } from 'react-router-dom';
+import { getNewTaskId, getNewTaskSuccess } from 'store/createTask/selectors';
+import { resetNewTaskSuccess } from 'store/createTask/slice';
 import { CaretDownOutlined } from '@ant-design/icons';
 import AddNewTask from './AddNewTask';
-import styles from './index.module.scss';
 import UserMenu from './UserMenu';
+import styles from './index.module.scss';
 
 const tasksButtonClass = (flag: boolean): string => {
   return flag ? styles.inactive : styles.active;
@@ -19,6 +25,20 @@ const tasksButtonClass = (flag: boolean): string => {
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
   const onlyMyTasks = useAppSelector(getOnlyMyTasksFlag);
+  // Получаем пользователя для отображения данных - аватара и тд
+  const user = useAppSelector(getCurrentUser);
+
+  const newTaskSuccess = useAppSelector(getNewTaskSuccess);
+  const newTaskId = useAppSelector(getNewTaskId);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (newTaskSuccess) {
+      dispatch(resetNewTaskSuccess());
+      const path = generatePath(ROUTES.editTask.route, { id: newTaskId });
+      navigate(path);
+    }
+  }, [newTaskSuccess, newTaskId, dispatch, navigate]);
 
   const allTasksButtonStyle = classnames(tasksButtonClass(onlyMyTasks));
   const onlyMyTasksButtonStyle = classnames(tasksButtonClass(!onlyMyTasks));
@@ -29,22 +49,23 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <Row className={styles.wrapper}>
+      <Row className={styles.titleRow}>
         <h1>Задачи</h1>
+
         <div className={styles.user}>
-          {/* аватар будет от реального пользователя */}
-          <Avatar src="https://vraki.net/sites/default/files/inline/images/30_55.jpg" />
+          <UserAvatar user={user} />
           <UserMenu />
           <CaretDownOutlined className={styles.menuicon} />
         </div>
       </Row>
 
       {/* Кнопки все задачи - мои задачи */}
-      <Row className={styles.wrapper} justify="space-between">
+      <Row className={styles.buttonsRow} justify="space-between">
         <div className={styles.buttons}>
           <Button
             type={onlyMyTasks ? 'text' : 'default'}
             className={allTasksButtonStyle}
+            disabled={!onlyMyTasks}
             onClick={handleAllTasksClick}
           >
             <img src={clockIcon} alt="clockIcon" />
@@ -53,6 +74,7 @@ const Header: React.FC = () => {
           <Button
             type={onlyMyTasks ? 'default' : 'text'}
             className={onlyMyTasksButtonStyle}
+            disabled={onlyMyTasks}
             onClick={handleOnlyMyTasksClick}
           >
             <img src={personIcon} alt="personIcon" />

@@ -1,0 +1,25 @@
+@import 'src/styles/color-variables.scss';
+@import 'src/styles/font-variables.scss';
+@import 'src/styles/colors';
+@import 'src/styles/mixins';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  :global(.ant-btn).button {
+    text-align: left;
+    text-transform: uppercase;
+    font-size: $font-size-s;
+    border-radius: 0px;
+    font-weight: 700;
+    color: $text-dark;
+    &:last-of-type {
+      border-top: 1px solid $gray-400;
+      padding-top: 8px;
+      height: 48px !important;
+    }
+  }
+  @include status-change;
+}

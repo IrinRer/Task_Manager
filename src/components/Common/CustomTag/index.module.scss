@@ -1,0 +1,42 @@
+@import 'src/styles/color-variables.scss';
+@import 'src/styles/font-variables.scss';
+@import 'src/styles/colors';
+@import 'src/styles/mixins';
+
+.wrapper {
+  :global(.ant-tag) {
+    width: fit-content;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    padding-left: 18px;
+    padding-right: 12px;
+    font-size: $font-size-s;
+    font-weight: 500;
+    border-radius: 16px;
+    margin: 5px;
+    gap: 5px;
+  }
+
+  :global(.ant-tag).green {
+    @include tag-css($salad, 0.1);
+  }
+  :global(.ant-tag).blue {
+    @include tag-css($blue-secondary, 0.1);
+  }
+  :global(.ant-tag).red {
+    @include tag-css($red, 0.05);
+  }
+  :global(.ant-tag).purple {
+    @include tag-css($purple, 0.05);
+  }
+  :global(.ant-tag).pink {
+    @include tag-css($pink, 0.05);
+  }
+  :global(.ant-tag).orange {
+    @include tag-css($orange, 0.05);
+  }
+  :global(.ant-tag).yellow {
+    @include tag-css($yellow, 0.05);
+  }
+}
