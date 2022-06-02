@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { Tag, Modal, Button, Menu } from 'antd';
 import { DeleteOutlined, CaretRightOutlined } from '@ant-design/icons';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
@@ -9,7 +9,11 @@ import { uniqueId } from 'lodash';
 
 import styles from '../index.module.scss';
 
-const TagItem = () => {
+type TProps = {
+  editable: boolean;
+};
+
+const TagItem: FC<TProps> = ({ editable }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [name, setName] = useState('');
   const [id, setId] = useState<string | undefined>('');
@@ -34,7 +38,7 @@ const TagItem = () => {
       <Tag
         className={styles.tag}
         color={color}
-        closable
+        closable={editable}
         key={name}
         id={id}
         onClose={(e) => handleClose(e, id, name)}

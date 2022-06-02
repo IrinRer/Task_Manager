@@ -56,6 +56,14 @@ export const getTaskWatchersID = createSelector(taskRoles, (roles) =>
 export const getTaskImplementersID = createSelector(taskRoles, (roles) =>
   getUsersIdFromRoles(roles?.filter(isImplementer)),
 );
+export const getTaskResponsibleID = createSelector(
+  taskRoles,
+  (roles) => roles?.find(isResponsible)?.assign_user.user_id,
+);
+export const getTaskAuthorID = createSelector(
+  taskRoles,
+  (roles) => roles?.find(isAuthor)?.assign_user.user_id,
+);
 
 export const getEditTaskLoading = (state: RootState) =>
   state.editTask.editTaskReducer.editLoading.task;

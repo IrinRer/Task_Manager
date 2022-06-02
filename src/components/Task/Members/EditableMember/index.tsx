@@ -1,20 +1,21 @@
 import { CloseOutlined } from '@ant-design/icons';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import { deleteTaskMemberAction } from 'store/editTask/thunk';
 import { getTaskId } from 'store/editTask/selectors';
 import useMembersProps from 'components/Task/Info/MembersHook/useMembersProps';
 import { IUser } from 'store/users/types';
 import { ROLES } from 'constants/types/common';
+import { RoleContext } from 'constants/common';
 import styles from './index.module.scss';
 
 type TProps = {
   user: IUser;
-  roleName: string;
 };
 
-const EditableMember: FC<TProps> = ({ user, roleName }) => {
+const EditableMember: FC<TProps> = ({ user }) => {
+  const roleName = useContext(RoleContext);
   const dispatch = useAppDispatch();
   const taskId = useAppSelector(getTaskId);
 

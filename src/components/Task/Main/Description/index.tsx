@@ -11,6 +11,13 @@ import { setTaskDescription } from 'store/editTask/thunk';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import Spinner from 'components/Common/Spinner';
 import classnames from 'classnames';
+import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
+import { getRights } from 'helpers/rights';
+import {
+  DESCRIPTION_LENGTH_EXPAND,
+  DESCRIPTION_MAX_LENGTH,
+} from 'constants/common';
+import { RIGHTS_NAMES } from 'constants/rights';
 import styles from './index.module.scss';
 
 const Description: React.FC = () => {
@@ -24,11 +31,14 @@ const Description: React.FC = () => {
   const taskId = useAppSelector(getTaskId);
   const editLoading = useAppSelector(getEditDescLoading);
 
+  const myMaxRole = useAppSelector(getMyMaxRoleForTask);
+  const isRights = getRights(myMaxRole, RIGHTS_NAMES.editDescription);
+
   const [newDesc, setNewDesc] = useState<string | undefined>(description);
   const [isReadonly, setIsReadonly] = useState<boolean>(true);
 
   const isBigDesc = (str: string) => {
-    return str ? str.length > 300 : false;
+    return str ? str.length > DESCRIPTION_LENGTH_EXPAND : false;
   };
 
   const [isFullText, setIsFullText] = useState<boolean>(
@@ -42,7 +52,7 @@ const Description: React.FC = () => {
   };
 
   const getShortDesc = () => {
-    return `${newDesc?.slice(0, 300).trim()} ...`;
+    return `${newDesc?.slice(0, DESCRIPTION_LENGTH_EXPAND).trim()} ...`;
   };
 
   const setInitialExpand = () => {
@@ -53,8 +63,12 @@ const Description: React.FC = () => {
 
   const handleSave = () => {
     if (taskId) {
+      setNewDesc(newDesc?.trim());
       dispatch(
-        setTaskDescription({ task_id: taskId, description: newDesc || '' }),
+        setTaskDescription({
+          task_id: taskId,
+          description: newDesc?.trim() || '',
+        }),
       );
     }
     setIsReadonly(true);
@@ -86,7 +100,7 @@ const Description: React.FC = () => {
 
   return (
     <div className={styles.description}>
-      {isReadonly ? (
+      {isReadonly && isRights ? (
         <Button className={styles.change} onClick={handleChange}>
           изменить
         </Button>
@@ -94,7 +108,7 @@ const Description: React.FC = () => {
 
       <TextArea
         autoSize
-        maxLength={500}
+        maxLength={DESCRIPTION_MAX_LENGTH}
         placeholder="Введите описание, чтобы сделать задачу понятнее"
         className={classnames(styles.desc, {
           [styles.readonly]: isReadonly,

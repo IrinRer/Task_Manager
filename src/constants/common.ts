@@ -1,3 +1,6 @@
+import { createContext } from 'react';
+import { TRights } from './rights';
+
 export const BASE_DATE_FORMAT = 'DD.MM.YYYY' as const;
 
 export const DATE_FORMAT_UI = 'dd MMM yyyy';
@@ -38,3 +41,12 @@ export const PRIORITY_COLORS = {
 };
 
 export const USERS_BY_ONE_MAX_COUNT = 3;
+
+export const DESCRIPTION_LENGTH_EXPAND = 300;
+
+export const DESCRIPTION_MAX_LENGTH = 500;
+
+export const TITLE_TASK_MAX_LENGTH = 150;
+
+export const RoleContext = createContext<TRights | ''>('');
+export const EditableContext = createContext<boolean>(false);
