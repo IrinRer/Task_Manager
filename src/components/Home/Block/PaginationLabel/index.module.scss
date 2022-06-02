@@ -9,31 +9,35 @@
   align-items: center;
   margin-left: 10px;
   border: 1px solid $dark-secondary;
-  border-radius: 10px;
+  border-radius: 8px;
   .buttons {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+    width: 24px;
     height: 100%;
   }
   button {
     cursor: pointer;
     display: flex;
-    align-items: center;
     justify-content: center;
-    padding-left: 5px;
-    line-height: 16px;
-    height: 16px;
+    height: 50%;
     border: none;
     background: transparent;
-  }
-  .pageSize {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    border-right: 1px solid $dark-secondary;
-    color: $dark-primary;
-    padding: 0px 10px;
-    margin: 0px;
+    &.increase {
+      padding-top: 6px;
+      img {
+        width: 9px;
+        height: 6px;
+      }
+    }
+    &.decrease {
+      padding-top: 2px;
+      img {
+        width: 9px;
+        height: 6px;
+      }
+    }
   }
 }

@@ -36,4 +36,16 @@ export const selectFilterUsersNames = createSelector(
   },
 );
 
+export const selectStatusCounters = (state: RootState) =>
+  state.filters.currentState.statusCounters.counters;
+
+export const selectStatusCountersAreLoading = (state: RootState) =>
+  state.filters.currentState.statusCounters.isLoading;
+
 export const selectTaskQuery = (state: RootState) => state.filters.currentState;
+
+export const selectUsersInputValue = (state: RootState) =>
+  state.filters.currentState.usersInputValue;
+
+export const selectTagsInputValue = (state: RootState) =>
+  state.filters.currentState.tagsInputValue;

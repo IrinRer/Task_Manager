@@ -1,4 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
+import { TRights } from 'constants/rights';
 import { ROLES } from 'constants/types/common';
 import { RootState } from 'store';
 import { getVerifyIdUser } from 'store/auth/verify/selectors';
@@ -62,13 +63,14 @@ export const getMyRolesForTask = createSelector(
   getVerifyIdUser,
   (author, implementers, responsible, watchers, authUserId): string[] => {
     const resultRoles: string[] = [];
-
-    [
+    const usersIDwithRolesForTask = [
       { name: ROLES.author, data: [author] },
       { name: ROLES.implementer, data: implementers },
       { name: ROLES.responsible, data: [responsible] },
       { name: ROLES.watcher, data: watchers },
-    ].forEach((el) => {
+    ];
+
+    usersIDwithRolesForTask.forEach((el) => {
       if (el.data.includes(authUserId || undefined)) {
         resultRoles.push(el.name);
       }
@@ -79,23 +81,12 @@ export const getMyRolesForTask = createSelector(
 
 export const getMyMaxRoleForTask = createSelector(
   getMyRolesForTask,
-  (roles): string => {
-    switch (true) {
-      case roles.includes(ROLES.author):
-        return ROLES.author;
-        break;
-      case roles.includes(ROLES.responsible):
-        return ROLES.responsible;
-        break;
-      case roles.includes(ROLES.implementer):
-        return ROLES.implementer;
-        break;
-      case roles.includes(ROLES.watcher):
-        return ROLES.watcher;
-        break;
-      default:
-        return 'any';
-    }
+  (roles): TRights => {
+    if (roles.includes(ROLES.author)) return ROLES.author;
+    if (roles.includes(ROLES.responsible)) return ROLES.responsible;
+    if (roles.includes(ROLES.implementer)) return ROLES.implementer;
+    if (roles.includes(ROLES.watcher)) return ROLES.watcher;
+    return ROLES.any;
   },
 );
 
@@ -169,7 +160,7 @@ export const getMyMaxRoleForAllTasks = createSelector(
         default:
           resultMaxRoles.push({
             task_id: task_el.task_id,
-            maxrole: 'any',
+            maxrole: ROLES.any,
           });
       }
     });

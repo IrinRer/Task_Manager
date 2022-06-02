@@ -4,17 +4,19 @@
 
 .wrapper {
   width: 100%;
-  padding: 14px 25px;
+  padding: 14px 6px 14px 6px;
   border: 1px solid $border-primary;
   border-radius: 10px;
-  margin-top: 30px;
   .header {
     width: 100%;
+    margin-bottom: 17px;
+    margin-left: 8px;
+    margin-right: 9px;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
     h2 {
-      padding: 8px 0px 0px 20px;
+      padding-top: 8px;
       margin: 0;
       font-size: $font-size-xl;
       font-weight: 600;
@@ -28,6 +30,8 @@
     margin-top: 5px;
     :global(.ant-pagination) {
       color: $heading;
+      font-size: $font-size-m;
+      line-height: $line-height-m;
     }
     :global(.ant-pagination-prev) button {
       border-radius: 10px;
@@ -49,6 +53,28 @@
     :global(.ant-pagination-next) button {
       border-radius: 10px;
       background: transparent;
+      svg {
+        display: none;
+      }
+      background-image: url('/assets/icons/pageUp.svg');
+      background-position: center;
+      background-repeat: no-repeat;
+      &:disabled {
+        background-image: url('/assets/icons/pageUpDisabled.svg');
+      }
+    }
+    :global(.ant-pagination-prev) button {
+      border-radius: 10px;
+      background: transparent;
+      svg {
+        display: none;
+      }
+      background-image: url('/assets/icons/pageDown.svg');
+      background-position: center;
+      background-repeat: no-repeat;
+      &:disabled {
+        background-image: url('/assets/icons/pageDownDisabled.svg');
+      }
     }
   }
 }

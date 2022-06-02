@@ -1,7 +1,11 @@
+@import 'src/styles/font-variables.scss';
 @import 'src/styles/color-variables.scss';
 
 .attached {
-  color: $heading;
+  color: $dark-primary;
+  font-size: $font-size-m;
+  line-height: 16px;
+  font-weight: 400;
   margin-right: 15px;
   img {
     margin-right: 3px;

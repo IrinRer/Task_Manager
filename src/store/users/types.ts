@@ -15,11 +15,7 @@ export interface IUser {
   permissions: Array<string>;
 }
 
-export interface IPopulatedUser {
-  user_id: string;
-  name: string;
-  logo: string | null;
-  permissions: Array<string>;
+export interface IPopulatedUser extends IUser {
   value: string;
   key: string;
 }

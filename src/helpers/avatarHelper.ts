@@ -6,10 +6,19 @@ export const initials = (name: string): string => {
 
   // Берём первую букву первого слова и если есть второе, то первую букву его.
   return `${names[0][0].toUpperCase()}${
-    names[1] ? names[1][0].toUpperCase() : null
+    names[1] ? names[1][0].toUpperCase() : ''
   }`;
 };
 
-export const avatarColor = (): string => {
+export const getInitialsFromName = (name: string): string => {
+  return name
+    .trim()
+    .split(' ')
+    .map((name) => name[0])
+    .join('')
+    .toUpperCase();
+};
+
+export const getAvatarColor = (): string => {
   return AVATAR_COLORS[Math.floor(Math.random() * AVATAR_COLORS.length)];
 };

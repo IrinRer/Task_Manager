@@ -1,49 +1,54 @@
-import React from 'react';
-import { Col, Row, Popover } from 'antd';
-import { BlockType, TTask } from 'constants/types/common';
-import moreIcon from 'assets/icons/more.svg';
+import React, { useContext } from 'react';
+import { Col, Row } from 'antd';
+import { BlockType, ROLES } from 'constants/types/common';
+import StatusWithPopover from 'components/Common/StatusWithPopover';
+import { TaskContext } from 'constants/taskContext';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { getMyMaxRoleForAllTasks } from 'store/common/roles/selectors';
 import { getRights } from 'helpers/rights';
+import { RIGHTS_NAMES } from 'constants/rights';
+import { getMyMaxRoleForAllTasks } from 'store/common/roles/selectors';
 import Attached from '../Attached';
 import Progress from '../Progress';
 import DateString from '../Date';
-import Status from '../Status';
 import Tags from '../Tags';
 import Roles from '../Roles';
 import Priority from '../Priority';
 import Title from '../Title';
-import StatusChange from '../StatusChange';
-import TaskOptions from '../TaskOptions';
+import Options from '../Options';
 import styles from './index.module.scss';
 
 interface IProps {
-  task: TTask;
   type: BlockType;
 }
 
-const Task: React.FC<IProps> = ({ task, type }) => {
+const Task: React.FC<IProps> = ({ type }) => {
+  const task = useContext(TaskContext);
+
   const myMaxRoleAllTasks = useAppSelector(getMyMaxRoleForAllTasks);
 
-  const myMaxRole = myMaxRoleAllTasks.find((el) => {
-    return el.task_id === task.task_id;
-  })?.maxrole;
+  const myMaxRole =
+    myMaxRoleAllTasks.find((el) => {
+      return el.task_id === task?.task_id;
+    })?.maxrole || ROLES.any;
 
-  const isRights = getRights(myMaxRole || 'any', 'status');
+  const isRights = getRights(myMaxRole, RIGHTS_NAMES.editStatus);
+
+  if (!task) return null;
 
   return (
     <Row className={styles.wrapper} justify="space-between">
       {/* Заголовок задачи с указателями вложений и прогресса */}
       <Col span={7} className={styles.title}>
-        <Title title={task.title} type={type} task_id={task.task_id} />
+        <Title />
         <div className={styles.flex}>
-          <Attached attached={task.storage_files_meta.total} />
-          <Progress progress={task.progress} />
+          <Attached />
+          <Progress />
         </div>
       </Col>
       {/* Статус со всплывающим селектором смены статуса */}
       <Col span={3} className={styles.status}>
-        {isRights ? (
+        <StatusWithPopover taskId={task.task_id} />
+        {/* isRights ? (
           <Popover
             overlayClassName="popover"
             content={<StatusChange task_id={task.task_id} />}
@@ -55,39 +60,31 @@ const Task: React.FC<IProps> = ({ task, type }) => {
           </Popover>
         ) : (
           <Status statusName={task.status.name} />
-        )}
+        ) */}
       </Col>
       {/* Дата */}
       {type !== BlockType.done && (
         <Col span={3} className={styles.date}>
-          <DateString dateString={task.created} />
+          <DateString />
         </Col>
       )}
       {/* Приоритет */}
       {type !== BlockType.done && (
         <Col span={2} className={styles.priority}>
-          <Priority priority={task.priority?.name || null} />
+          <Priority />
         </Col>
       )}
       {/* Тэги */}
       <Col span={3} className={styles.tags}>
-        <Tags tags={task.tags} />
+        <Tags />
       </Col>
       {/* Роли */}
       <Col span={3} className={styles.roles}>
-        <Roles roles={task.roles} />
+        <Roles />
       </Col>
       {/* Кнопка ... со всплывающими опциями для задачи */}
       <Col span={1} className={styles.options}>
-        <Popover
-          overlayClassName="popover"
-          content={<TaskOptions task_id={task.task_id} />}
-          trigger="click"
-        >
-          <div>
-            <img src={moreIcon} alt="moreIcon" />
-          </div>
-        </Popover>
+        <Options />
       </Col>
     </Row>
   );

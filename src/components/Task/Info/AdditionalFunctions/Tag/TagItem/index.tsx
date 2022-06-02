@@ -1,26 +1,26 @@
 import React, { FC, useState } from 'react';
-import { Tag, Modal, Button, Menu } from 'antd';
-import { DeleteOutlined, CaretRightOutlined } from '@ant-design/icons';
+import { Menu } from 'antd';
+import { CaretRightOutlined } from '@ant-design/icons';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { deleteTagAction } from 'store/editTask/additionalFunctions/tag/thunk';
-import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { getTag } from 'store/editTask/additionalFunctions/tag/selectors';
 import { uniqueId } from 'lodash';
-
+import { MIN_NUMBER_TAGS_ON_PAGE } from 'constants/additionalFunctions/tag';
+import ModalDelete from 'components/Common/ModalDelete';
+import { ITag } from 'store/common/tags/types';
+import CustomTag from 'components/Common/CustomTag';
 import styles from '../index.module.scss';
 
 type TProps = {
-  editable: boolean;
+  editable: boolean,
+  tagSelect?: ITag[]
 };
 
-const TagItem: FC<TProps> = ({ editable }) => {
+const TagItem: FC<TProps> = ({ editable, tagSelect }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [name, setName] = useState('');
   const [id, setId] = useState<string | undefined>('');
 
   const dispatch = useAppDispatch();
-
-  const tagSelect = useAppSelector(getTag);
 
   const handleClose = (
     e: React.MouseEvent<HTMLElement>,
@@ -35,25 +35,19 @@ const TagItem: FC<TProps> = ({ editable }) => {
 
   const tag = tagSelect?.map(({ name, color, task_tag_id: id }) => {
     return (
-      <Tag
-        className={styles.tag}
+      <CustomTag
+        title={name}
         color={color}
         closable={editable}
         key={name}
         id={id}
         onClose={(e) => handleClose(e, id, name)}
-      >
-        {name}
-      </Tag>
+      />
     );
   });
 
   const handleOk = () => {
     dispatch(deleteTagAction(id));
-    setIsVisible(false);
-  };
-
-  const handleCancel = () => {
     setIsVisible(false);
   };
 
@@ -70,37 +64,15 @@ const TagItem: FC<TProps> = ({ editable }) => {
           })}
         </Menu.SubMenu>
       </Menu>
-      <div className={styles.tag}>{tag?.slice(0, 3)}</div>
-      <Modal
-        title="Вы уверены?"
+      <div className={styles.tag}>{tag?.slice(0, MIN_NUMBER_TAGS_ON_PAGE)}</div>
+      <ModalDelete
         visible={isVisible}
-        width={310}
-        className={styles.modalTag}
-        footer={[
-          <Button
-            className={styles.btn_modal}
-            key="submit"
-            danger
-            type="primary"
-            icon={<DeleteOutlined />}
-            onClick={handleOk}
-          >
-            Удалить метку
-          </Button>,
-          <Button
-            key="back"
-            className={styles.btn_modal}
-            onClick={handleCancel}
-          >
-            Отмена
-          </Button>,
-        ]}
-        onCancel={handleCancel}
-      >
-        <p>
-          Метка {name} будет удалена из списка меток и из всех задач проекта
-        </p>
-      </Modal>
+        textMain={`Метка ${name} будет удалена из списка меток и из всех задач проекта`}
+        textButton="Удалить метку"
+        setVisibleModalDelete={setIsVisible}
+        file={id}
+        action={handleOk}
+      />
     </>
   );
 };

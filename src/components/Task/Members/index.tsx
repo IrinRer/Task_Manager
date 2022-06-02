@@ -6,6 +6,8 @@ import Spinner from 'components/Common/Spinner';
 import { ROLES } from 'constants/types/common';
 import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
 import { getRights } from 'helpers/rights';
+import { RIGHTS_NAMES } from 'constants/rights';
+import { EditableContext, RoleContext } from 'constants/common';
 import OneMember from './OneMember';
 import MembersWrapperMulti from './MembersWrapperMulti';
 import MembersByOne from './MembersByOne';
@@ -13,26 +15,39 @@ import MembersByOne from './MembersByOne';
 const Info: React.FC = () => {
   const editLoading = useAppSelector(getEditMembersLoading);
   const myMaxRole = useAppSelector(getMyMaxRoleForTask);
-  const isRightsEditWatchers = getRights(myMaxRole, 'editWatcher');
-  const isRightsEditImplementer = getRights(myMaxRole, 'editImplementer');
-  const isRightsEditResponsible = getRights(myMaxRole, 'editResponsible');
+  const isRightsEditWatchers = getRights(myMaxRole, RIGHTS_NAMES.editWatcher);
+  const isRightsEditImplementer = getRights(
+    myMaxRole,
+    RIGHTS_NAMES.editImplementer,
+  );
+  const isRightsEditResponsible = getRights(
+    myMaxRole,
+    RIGHTS_NAMES.editResponsible,
+  );
 
   const elements = [
     {
       id: uniqueId(),
-      title: 'Автор',
+      title: ROLES.author_short,
       editable: false,
-      block: <OneMember editable={false} roleName={ROLES.author} />,
+      block: (
+        <RoleContext.Provider value={ROLES.author}>
+          <EditableContext.Provider value={false}>
+            <OneMember />
+          </EditableContext.Provider>
+        </RoleContext.Provider>
+      ),
     },
     {
       id: uniqueId(),
       title: ROLES.responsible,
       editable: isRightsEditResponsible,
       block: (
-        <OneMember
-          editable={isRightsEditResponsible}
-          roleName={ROLES.responsible}
-        />
+        <RoleContext.Provider value={ROLES.responsible}>
+          <EditableContext.Provider value={isRightsEditResponsible}>
+            <OneMember />
+          </EditableContext.Provider>
+        </RoleContext.Provider>
       ),
     },
     {
@@ -40,12 +55,11 @@ const Info: React.FC = () => {
       title: ROLES.implementer,
       editable: isRightsEditImplementer,
       block: (
-        <MembersByOne
-          editable={isRightsEditImplementer}
-          roleName={ROLES.implementer}
-          multiAdd
-          usersMaxCount={3}
-        />
+        <RoleContext.Provider value={ROLES.implementer}>
+          <EditableContext.Provider value={isRightsEditImplementer}>
+            <MembersByOne multiAdd usersMaxCount={3} />
+          </EditableContext.Provider>
+        </RoleContext.Provider>
       ),
     },
     {
@@ -53,12 +67,11 @@ const Info: React.FC = () => {
       title: ROLES.watcher,
       editable: isRightsEditWatchers,
       block: (
-        <MembersByOne
-          editable={isRightsEditWatchers}
-          roleName={ROLES.watcher}
-          multiAdd
-          usersMaxCount={50}
-        />
+        <RoleContext.Provider value={ROLES.watcher}>
+          <EditableContext.Provider value={isRightsEditWatchers}>
+            <MembersByOne multiAdd usersMaxCount={50} />
+          </EditableContext.Provider>
+        </RoleContext.Provider>
       ),
     },
   ];
@@ -71,13 +84,13 @@ const Info: React.FC = () => {
     <>
       {elements.map((el) => {
         return (
-          <MembersWrapperMulti
-            key={el.id}
-            roleName={el.title}
-            editable={el.editable}
+          <RoleContext.Provider
+            value={el.title === ROLES.author_short ? ROLES.author : el.title}
           >
-            {el.block}
-          </MembersWrapperMulti>
+            <EditableContext.Provider value={el.editable}>
+              <MembersWrapperMulti key={el.id}>{el.block}</MembersWrapperMulti>
+            </EditableContext.Provider>
+          </RoleContext.Provider>
         );
       })}
     </>

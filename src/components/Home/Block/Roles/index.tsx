@@ -1,32 +1,27 @@
 import { Avatar } from 'antd';
-import { TRole } from 'constants/types/common';
-import React from 'react';
+import React, { useContext } from 'react';
+import { TaskContext } from 'constants/taskContext';
 import AvatarWrapper from '../AvatarWrapper';
 import styles from './index.module.scss';
 
-interface IProps {
-  roles: TRole[];
-}
+const Roles: React.FC = () => {
+  const task = useContext(TaskContext);
+  const roles = task?.roles;
 
-const Roles: React.FC<IProps> = ({ roles }) => {
-  const renderRoles = (roles: TRole[]): React.ReactElement => {
-    const renderedRoles = roles.length > 2 ? roles.slice(0, 2) : [...roles];
-    return (
-      <>
-        {renderedRoles.map((role) => {
-          return (
-            <AvatarWrapper key={role.task_to_role_id} role={role.assign_user} />
-          );
-        })}
-        {roles.length > 2 && (
-          <Avatar className={styles.plus}>+ {roles.length - 2}</Avatar>
-        )}
-      </>
-    );
-  };
+  if (!roles || roles.length === 0) return null;
+
+  // рендерим только первые три роли по ТЗ
+  const renderedRoles = roles.length > 2 ? roles.slice(0, 2) : [...roles];
 
   return (
-    <div className={styles.wrapper}>{roles.length && renderRoles(roles)}</div>
+    <div className={styles.wrapper}>
+      {renderedRoles.map((role) => {
+        return <AvatarWrapper key={role.task_to_role_id} role={role} />;
+      })}
+      {roles.length > 2 && (
+        <Avatar className={styles.plus}>+ {roles.length - 2}</Avatar>
+      )}
+    </div>
   );
 };
 

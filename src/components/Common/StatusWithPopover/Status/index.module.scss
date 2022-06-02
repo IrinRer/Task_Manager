@@ -1,0 +1,27 @@
+@import 'src/styles/color-variables.scss';
+@import 'src/styles/font-variables.scss';
+@import 'src/styles/colors';
+@import 'src/styles/mixins';
+
+.wrapper {
+  font-size: $font-size-s;
+  line-height: $line-height-s;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  div {
+    color: $white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    width: fit-content;
+    border-radius: 16px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  @include statuses;
+}

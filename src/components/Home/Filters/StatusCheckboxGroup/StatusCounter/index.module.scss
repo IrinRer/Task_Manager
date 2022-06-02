@@ -1,0 +1,28 @@
+@import 'src/styles/color-variables';
+@import 'src/styles/font-variables';
+
+.counter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  margin: 0;
+  font-weight: 400;
+  font-size: $font-size-xs;
+  line-height: $line-height-xs;
+  color: $heading;
+  background-color: $border-secondary;
+  border-radius: 4px;
+}
+
+.skeleton {
+  :global {
+    .ant-skeleton-avatar {
+      width: 26px;
+      height: 26px;
+      border-radius: 4px;
+    }
+  }
+}

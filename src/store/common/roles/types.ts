@@ -1,4 +1,5 @@
 import { AxiosError } from 'axios';
+import { TRights } from 'constants/rights';
 
 export const ONETASK_SLICE_ROLES = 'roles';
 
@@ -24,5 +25,5 @@ export type TasksRoles = {
 
 export type TasksMaxRole = {
   task_id: string;
-  maxrole: string;
+  maxrole: TRights;
 };
