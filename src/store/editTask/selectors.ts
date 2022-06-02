@@ -21,11 +21,14 @@ export const getOneNewSelectedMembers = (state: RootState) =>
 export const getUnselectedMembers = (state: RootState) =>
   state.editTask.editTaskReducer.unselectedMembers;
 
-export const taskRoles = (state: RootState) => state.editTask.editTaskReducer.data?.roles;
+export const taskRoles = (state: RootState) =>
+  state.editTask.editTaskReducer.data?.roles;
 
-export const getTaskId = (state: RootState) => state.editTask.editTaskReducer.data?.task_id;
+export const getTaskId = (state: RootState) =>
+  state.editTask.editTaskReducer.data?.task_id;
 
-export const getTitle = (state: RootState) => state.editTask.editTaskReducer.data?.title;
+export const getTitle = (state: RootState) =>
+  state.editTask.editTaskReducer.data?.title;
 
 export const getDescription = (state: RootState) =>
   state.editTask.editTaskReducer.data?.description;

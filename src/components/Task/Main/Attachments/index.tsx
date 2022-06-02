@@ -23,7 +23,6 @@ import {
   getfileName,
   getStorageFile,
 } from 'store/editTask/attachments/selectors';
-import Preview from './Preview';
 import ModalDelete from '../../../../constants/ModalDelete';
 import styles from './index.module.scss';
 
@@ -54,9 +53,6 @@ const Attachments = () => {
 
   const [fileList, setFile] = useState<Array<UploadFile>>(taskFileAll);
   const [, setProgress] = useState(0);
-  const [previewVisible, setPreviewVisible] = useState(false);
-  const [previewImage, setPreviewImage] = useState('');
-  const [previewTitle, setPreviewTitle] = useState('');
   const [visibleModalDelete, setVisibleModalDelete] = useState(false);
   const [fileForDelete, setfileForDelete] = useState<UploadFile>();
 
@@ -79,6 +75,12 @@ const Attachments = () => {
   };
 
   const onRemove = (file: UploadFile) => {
+    setVisibleModalDelete(true);
+    setfileForDelete(file);
+    return false;
+  };
+
+  const onDeleteFile = (file: UploadFile) => {
     const index = determineIndex(file);
     setFile(fileList?.filter((item) => item.name !== file.name));
     dispatch(
@@ -127,27 +129,6 @@ const Attachments = () => {
     );
   };
 
-  const getBase64 = (file: RcFile): Promise<string> =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = (error) => reject(error);
-    });
-
-  const handlePreview = async (file: UploadFile) => {
-    if (!file.url && !file.preview) {
-      // eslint-disable-next-line
-      file.preview = await getBase64(file.originFileObj as RcFile);
-    }
-
-    setPreviewImage(file.url || (file.preview as string));
-    setPreviewVisible(true);
-    setPreviewTitle(
-      file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1),
-    );
-  };
-
   return (
     <Col className={styles.col}>
       <p className={styles.text}>Вложения</p>
@@ -161,32 +142,21 @@ const Attachments = () => {
         beforeUpload={beforeUpload}
         customRequest={handleSubmit}
         onChange={handleUpload}
-        onRemove={(file) => {
-          setVisibleModalDelete(true);
-          setfileForDelete(file);
-          return false;
-        }}
+        onRemove={onRemove}
         onDownload={onDownload}
-        onPreview={handlePreview}
       >
         <Button className={styles.btnAttachment}>
           <PlusOutlined />
         </Button>
         Перетащите сюда или загрузите файл
       </Upload.Dragger>
-      <Preview
-        visible={previewVisible}
-        previewTitle={previewTitle}
-        image={previewImage}
-        setPreviewVisible={setPreviewVisible}
-      />
       <ModalDelete
         visible={visibleModalDelete}
         textMain={`${fileForDelete?.name} будет безвозвратно удален`}
         textButton="Удалить файл"
         setVisibleModalDelete={setVisibleModalDelete}
         file={fileForDelete}
-        action={onRemove}
+        action={onDeleteFile}
       />
     </Col>
   );

@@ -1,38 +1,35 @@
 @import 'src/styles/font-variables';
 @import 'src/styles/colors';
 
-
 .col {
-    margin-top: 40px;
+  margin-top: 40px;
 
-    .btnAttachment {
-      width: 32px;
-      padding-top: 8px;
-      padding-bottom: 8px;
-      display: inline-flex;
-      align-content: center;
-      justify-content: center;
-      border-radius: 8px;
-      margin-left: 10px;
-      border: none;
+  .btnAttachment {
+    width: 32px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    display: inline-flex;
+    align-content: center;
+    justify-content: center;
+    border-radius: 8px;
+    margin-left: 10px;
+    border: none;
+    background-color: #f1f1f5;
+
+    &:hover {
       background-color: #f1f1f5;
-    
-      &:hover {
-        background-color: #f1f1f5;
-        border: none;
-      }
-    
-      :global(.anticon-plus) {
-        font-size: 16px !important;
-      }
+      border: none;
     }
-    
+
+    :global(.anticon-plus) {
+      font-size: 16px !important;
+    }
+  }
 }
 
 .text {
   font-size: $font-size-l;
 }
-
 
 :global(.ant-upload.ant-upload-drag).upload {
   max-width: 250px;
@@ -56,7 +53,7 @@
   }
 }
 
-:global(.ant-upload.ant-upload-drag.ant-upload-drag-hover).upload { 
+:global(.ant-upload.ant-upload-drag.ant-upload-drag-hover).upload {
   background-color: #f1f1f5;
   border: 1px dashed #b5b5be;
 
@@ -67,7 +64,7 @@
 
 .col {
   :global(.ant-upload-list) {
-    display:flex;
+    display: flex;
     flex-wrap: wrap;
   }
 

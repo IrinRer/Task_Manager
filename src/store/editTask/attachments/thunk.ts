@@ -73,7 +73,7 @@ export const downloadFile = createAsyncThunk(
       link.href = url;
       link.click();
       URL.revokeObjectURL(link.href);
-      
+
       // в store не сохраняю информацию о файле, который был скачен
       return file;
     } catch (error) {
