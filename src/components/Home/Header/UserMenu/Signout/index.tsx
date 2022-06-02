@@ -15,10 +15,8 @@ const Signout: React.FC<ITitleSignOut> = ({ title }) => {
   const dispatch = useAppDispatch();
 
   const userSignOut = () => {
-    if (navigator.onLine) {
-      resetToken();
-      dispatch(addVerifyToken(null));
-    } else notification.error({ message: 'Отсутствует интернет-соединение!' });
+    resetToken();
+    dispatch(addVerifyToken(null));
   };
   return (
     <Link
