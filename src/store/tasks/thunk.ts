@@ -1,10 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { notification } from 'antd';
+import { IStatusChangeArg } from 'constants/types/common';
 import { RootState } from 'store';
 import { TASKS_SLICE_ALIAS } from 'store/tasks/types';
 import { api } from '../../network';
 import { selectTaskQuery } from '../filters/selectors';
 import { filtersRollBack, filtersSyncState } from '../filters/slice';
+import { fetchStatusCounters } from '../filters/thunk';
 
 export const fetchTasksAction = createAsyncThunk(
   `${TASKS_SLICE_ALIAS}/fetchAll`,
@@ -27,6 +29,8 @@ export const fetchTasksAction = createAsyncThunk(
         },
       });
 
+      dispatch(fetchStatusCounters());
+
       dispatch(filtersSyncState());
 
       return response.data;
@@ -39,14 +43,9 @@ export const fetchTasksAction = createAsyncThunk(
   },
 );
 
-interface IArg {
-  task_id: string;
-  task_status_id: string;
-}
-
 export const changeTaskStatusAction = createAsyncThunk(
   `${TASKS_SLICE_ALIAS}/changeTaskStatus`,
-  async (arg: IArg, { rejectWithValue }) => {
+  async (arg: IStatusChangeArg, { rejectWithValue }) => {
     try {
       const response = await api().post(
         `/api/v1.0/task/tasks/${arg.task_id}/status-change`,
@@ -57,6 +56,19 @@ export const changeTaskStatusAction = createAsyncThunk(
       return response.data.data;
     } catch (error) {
       notification.error({ message: 'Ошибка изменения статуса' });
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
+export const deleteTaskAction = createAsyncThunk(
+  `${TASKS_SLICE_ALIAS}/deleteTask`,
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const response = await api().delete(`/api/v1.0/task/tasks/${id}`);
+      return response.data.data;
+    } catch (error) {
+      notification.error({ message: 'Ошибка удаления задачи' });
       return rejectWithValue(error.message);
     }
   },

@@ -8,32 +8,34 @@ import {
   TsetPagePayload,
   TsetSortFieldPayload,
 } from 'store/tasks/types';
-import { changeTaskStatusAction, fetchTasksAction } from 'store/tasks/thunk';
+import {
+  changeTaskStatusAction,
+  deleteTaskAction,
+  fetchTasksAction,
+} from 'store/tasks/thunk';
 import { SortField, TTask } from 'constants/types/common';
 
 const TASKS_ON_PAGE_DEFAULT = 3;
 
 const initialState: ITasksReducer = {
-  tasks: null,
+  tasks: [],
   itemsTotal: 0,
   loading: false,
-  // auth временное свойство, необходимое на данном этапе для корректной работы роута
-  auth: true,
   error: null,
   onlyMyTasks: false,
   viewParameters: {
     in: {
-      sortField: SortField.endDate,
+      sortField: SortField.created,
       page: 1,
       tasksOnPage: TASKS_ON_PAGE_DEFAULT,
     },
     work: {
-      sortField: SortField.endDate,
+      sortField: SortField.created,
       page: 1,
       tasksOnPage: TASKS_ON_PAGE_DEFAULT,
     },
     done: {
-      sortField: SortField.endDate,
+      sortField: SortField.created,
       page: 1,
       tasksOnPage: TASKS_ON_PAGE_DEFAULT,
     },
@@ -48,6 +50,7 @@ export const tasksSlice = createSlice({
     showOnlyMyTasks: (state: ITasksReducer) => {
       state.onlyMyTasks = true;
     },
+    resetTasks: () => initialState,
     showAllTasks: (state: ITasksReducer) => {
       state.onlyMyTasks = false;
     },
@@ -61,12 +64,20 @@ export const tasksSlice = createSlice({
     setPage: (state: ITasksReducer, action: PayloadAction<TsetPagePayload>) => {
       state.viewParameters[action.payload.blockType].page = action.payload.page;
     },
+    resetPages: (state: ITasksReducer) => {
+      Object.keys(state.viewParameters).forEach((key) => {
+        state.viewParameters[key].page = 1;
+      });
+    },
     setTasksOnPage: (
       state: ITasksReducer,
       action: PayloadAction<TsetTasksOnPagePayload>,
     ) => {
       state.viewParameters[action.payload.blockType].tasksOnPage =
         action.payload.tasksOnPage;
+    },
+    addTask: (state: ITasksReducer, action: PayloadAction<TTask>) => {
+      state.tasks?.push(action.payload);
     },
   },
   extraReducers: {
@@ -88,7 +99,7 @@ export const tasksSlice = createSlice({
       state: ITasksReducer,
       { payload }: PayloadAction<AxiosError>,
     ) => {
-      state.tasks = null;
+      state.tasks = [];
       state.loading = false;
       state.error = payload;
     },
@@ -114,6 +125,26 @@ export const tasksSlice = createSlice({
       state.loading = false;
       state.error = payload;
     },
+    [deleteTaskAction.pending.type]: (state: ITasksReducer) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [deleteTaskAction.fulfilled.type]: (
+      state: ITasksReducer,
+      { payload }: PayloadAction<TTask>,
+    ) => {
+      state.tasks = state.tasks.filter(
+        (task) => task.task_id !== payload.task_id,
+      );
+      state.loading = false;
+    },
+    [deleteTaskAction.rejected.type]: (
+      state: ITasksReducer,
+      { payload }: PayloadAction<AxiosError>,
+    ) => {
+      state.loading = false;
+      state.error = payload;
+    },
   },
 });
 
@@ -123,5 +154,8 @@ export const {
   setSortField,
   setPage,
   setTasksOnPage,
+  addTask,
+  resetPages,
+  resetTasks,
 } = tasksSlice.actions;
 export default tasksSlice.reducer;

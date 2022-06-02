@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
-import { Tag, Modal, Button, Menu } from 'antd';
+import React, { FC, useState } from 'react';
+import { Modal, Button, Menu } from 'antd';
 import { DeleteOutlined, CaretRightOutlined } from '@ant-design/icons';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { deleteTagAction } from 'store/editTask/additionalFunctions/tag/thunk';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { getTag } from 'store/editTask/additionalFunctions/tag/selectors';
 import { uniqueId } from 'lodash';
-
+import CustomTag from 'components/Common/CustomTag';
 import styles from '../index.module.scss';
 
-const TagItem = () => {
+type TProps = {
+  editable: boolean;
+};
+
+const TagItem: FC<TProps> = ({ editable }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [name, setName] = useState('');
   const [id, setId] = useState<string | undefined>('');
@@ -31,16 +35,14 @@ const TagItem = () => {
 
   const tag = tagSelect?.map(({ name, color, task_tag_id: id }) => {
     return (
-      <Tag
-        className={styles.tag}
+      <CustomTag
+        title={name}
         color={color}
-        closable
+        closable={editable}
         key={name}
         id={id}
         onClose={(e) => handleClose(e, id, name)}
-      >
-        {name}
-      </Tag>
+      />
     );
   });
 

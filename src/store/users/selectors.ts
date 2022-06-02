@@ -1,5 +1,6 @@
 import { RootState } from 'store/';
 import { createSelector } from '@reduxjs/toolkit';
+import { getVerifyIdUser } from 'store/auth/verify/selectors';
 import { selectUniqueObjectsFromArray } from 'helpers/selectUniqueObjectsFromArray';
 import { IPopulatedUser, IUser } from './types';
 
@@ -19,4 +20,10 @@ export const selectPopulatedUsers = createSelector(
         key: user.user_id,
       };
     }),
+);
+
+export const getCurrentUser = createSelector(
+  selectUsers,
+  getVerifyIdUser,
+  (users, id) => users.find((user) => user.user_id === id),
 );
