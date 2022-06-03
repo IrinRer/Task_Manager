@@ -22,7 +22,7 @@ import commonStatusesReducer from './common/statuses/slice';
 import onetaskReducer from './common/task/slice';
 import editTaskReducer from './editTask/slice';
 import attachmentsReducer from './editTask/attachments/slice';
-
+import createTaskReducer from './createTask/slice';
 import { ICommonTagsReducer } from './common/tags/types';
 import { ICommonProgressesReducer } from './common/progresses/types';
 import { ICommonPrioritiesReducer } from './common/priorities/types';
@@ -35,10 +35,10 @@ import { ITaskReducer } from './common/task/types';
 import { IEditTaskReducer } from './editTask/types';
 import { IAuthReducer } from './auth/token/types';
 import { IVerifyReducer } from './auth/verify/types';
+import { ICreateTaskReducer } from './createTask/types';
 import { ITagReducer } from './editTask/additionalFunctions/tag/types';
 import { IDateReducer } from './editTask/additionalFunctions/date/types';
 import { IPriorityReducer } from './editTask/additionalFunctions/priority/types';
-
 
 export const store = configureStore({
   reducer: {
@@ -50,7 +50,7 @@ export const store = configureStore({
         date: dateReducer,
         tags: tagReducer,
       }),
-      attachments: attachmentsReducer
+      attachments: attachmentsReducer,
     }),
     users: usersReducer,
     filters: filtersReducer,
@@ -66,6 +66,7 @@ export const store = configureStore({
       tags: commonTagsReducer,
       roles: commonRolesReducer,
     }),
+    createTask: createTaskReducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
 });
@@ -74,8 +75,8 @@ export type AppDispatch = typeof store.dispatch;
 
 export type RootState = {
   tasks: ITasksReducer;
-  editTask:  CombinedState<{ 
-    editTaskReducer: IEditTaskReducer,
+  editTask: CombinedState<{
+    editTaskReducer: IEditTaskReducer;
     additionalFunctions: CombinedState<{
       priority: IPriorityReducer;
       date: IDateReducer;
@@ -97,6 +98,7 @@ export type RootState = {
     tags: ICommonTagsReducer;
     roles: IRolesReducer;
   }>;
+  createTask: ICreateTaskReducer;
 };
 
 export type AppThunk<ReturnType = void> = ThunkAction<

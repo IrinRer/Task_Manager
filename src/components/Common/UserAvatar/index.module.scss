@@ -1,0 +1,7 @@
+@import 'src/styles/colors';
+
+.wrapper {
+  :global(.ant-avatar).avatar {
+    color: $white;
+  }
+}

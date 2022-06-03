@@ -1,26 +1,35 @@
+import { MY_TASKS_ROLES } from 'constants/common';
 import {
   BlockType,
   PriorityName,
   SortField,
   TaskStatuses,
   TTask,
-  UserRoles,
 } from 'constants/types/common';
-import { TEST_USER_ID } from './selectors';
+import { compareDates, compareStrings } from 'helpers/compareTasks';
 import { TAllViewParameters, TViewParameters } from './types';
 
-export const getMyTasks = (tasks: TTask[], onlyMyTasks: boolean): TTask[] =>
-  onlyMyTasks
+// const isMyTask = (role:TRole):boolean => {
+//   return MY_TASKS_ROLES.includes(role.task_role.name) && role.assign_user.user_id === userId;
+//   }
+
+export const getMyTasks = (
+  tasks: TTask[],
+  onlyMyTasks: boolean,
+  userId: string,
+): TTask[] => {
+  return onlyMyTasks
     ? tasks.filter((task) => {
         return (
           task.roles.find(
             (role) =>
-              role.task_role.name === UserRoles.executor &&
-              Number(role.assign_user.user_id) === TEST_USER_ID,
+              MY_TASKS_ROLES.includes(role.task_role.name) &&
+              role.assign_user.user_id === userId,
           ) !== undefined
         );
       })
     : tasks;
+};
 
 export const blockTasks = (tasks: TTask[], blockType: BlockType): TTask[] => {
   if (blockType === BlockType.in) {
@@ -51,25 +60,21 @@ export const isFirstGTSecond = (
   secondTask: TTask,
   sortField: SortField,
 ): number => {
-  if (sortField === 'priority') {
+  if (sortField === SortField.priority) {
     // Если приоритета нет, то назначаем самый низкий рейтинг задаче - 3. Если есть - индекс приоритета
     return (
       (firstTask.priority ? +PriorityName[firstTask.priority.name] : 3) -
       (secondTask.priority ? +PriorityName[secondTask.priority.name] : 3)
     );
   }
+  if (sortField === SortField.title) {
+    return compareStrings(firstTask.title, secondTask.title);
+  }
 
-  if (
-    firstTask[sortField].toLowerCase() < secondTask[sortField].toLowerCase()
-  ) {
-    return -1;
+  if (sortField === SortField.created || sortField === SortField.endDate) {
+    return compareDates(firstTask[sortField], secondTask[sortField]);
   }
-  if (
-    firstTask[sortField].toLowerCase() === secondTask[sortField].toLowerCase()
-  ) {
-    return 0;
-  }
-  return 1;
+  return 0;
 };
 
 // Возвращает сортированный список задач обрезанный по странице page с числом задач на странице tasksOnPage
@@ -78,9 +83,11 @@ export const sortPaginate = (
   viewParameters: TViewParameters,
 ): TTask[] => {
   const { sortField, page, tasksOnPage } = viewParameters;
-  return tasks
-    .sort((a, b) => isFirstGTSecond(a, b, sortField))
-    .slice((page - 1) * tasksOnPage, page * tasksOnPage);
+  const sortedTasks = tasks.sort((a, b) => isFirstGTSecond(a, b, sortField));
+  if (sortField === SortField.created) {
+    sortedTasks.reverse();
+  }
+  return sortedTasks.slice((page - 1) * tasksOnPage, page * tasksOnPage);
 };
 
 export const getTasksSortedPaginated = (

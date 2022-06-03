@@ -10,6 +10,7 @@
 
 .date {
   display: grid;
+  align-items: center;
   grid-template-columns: 47% 48%;
   padding-bottom: 17px;
 
@@ -32,6 +33,11 @@
     font-weight: 500;
     font-size: $font-size-m;
     width: auto;
+  }
+
+  :global(.ant-picker-input > input[disabled]) {
+    color: black;
+    cursor: default;
   }
 }
 

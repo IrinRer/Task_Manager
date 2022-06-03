@@ -1,6 +1,8 @@
+import { ITag } from 'store/common/tags/types';
 import { AxiosError } from 'axios';
 import { IUser } from 'store/users/types';
 import { IPriority } from '../priorities/types';
+import { IProgress } from '../progresses/types';
 import { IRoles } from '../roles/types';
 
 export const ONETASK_SLICE_ALIAS = 'onetask';
@@ -17,8 +19,8 @@ export interface IResponseTask {
   description: string;
   exec_start: string | null;
   exec_stop: string | null;
-  created: Date;
-  updated: Date;
+  created: string;
+  updated: string;
   status: {
     task_status_id: string;
     name: string;
@@ -26,17 +28,21 @@ export interface IResponseTask {
   };
   priority: IPriority | null;
   form: null;
-  form_available: false;
+  form_available: boolean;
   form_result: null;
   roles: Array<ITaskRoles> | null;
-  tags: [];
-  progress: null;
-  check_lists: [];
+  tags: IResponseTags[];
+  progress: IProgress;
+  check_lists: []; 
   storage_files: any;
   storage_files_meta: {
     total: number;
   };
   permissions: Array<string>;
+}
+
+interface IResponseTags {
+  task_tag: ITag;
 }
 
 export interface ITaskRoles {

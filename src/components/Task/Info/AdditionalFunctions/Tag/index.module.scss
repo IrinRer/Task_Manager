@@ -22,10 +22,10 @@
   }
 }
 
-:global(.ant-btn-primary).btnTag,
-:global(.ant-btn-primary).btnTag:hover,
-:global(.ant-btn-primary).btnTag:active,
-:global(.ant-btn-primary).btnTag:focus {
+:global(.ant-btn).btnTag,
+:global(.ant-btn).btnTag:hover,
+:global(.ant-btn).btnTag:active,
+:global(.ant-btn).btnTag:focus {
   background: none;
   font-weight: 600;
   text-shadow: none;
@@ -67,7 +67,7 @@
     padding-bottom: 10px !important;
   }
 
-  :global(.ant-modal-footer) > .btnTag {
+  :global(.ant-modal-footer) > .btn {
     background: $button-main;
     border-radius: 8px;
     color: white;
@@ -120,8 +120,7 @@
 
   :global(label.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)) {
     border: none;
-    // нельзя записать без относительных путей
-    background-image: url(../../../../../assets/icons/arrow.svg);
+    background-image: url('/assets/icons/arrow.svg');
     background-repeat: no-repeat;
     background-size: 15px;
     background-position: 50%;

@@ -1,0 +1,27 @@
+@import 'src/styles/color-variables.scss';
+@import 'src/styles/font-variables.scss';
+@import 'src/styles/colors';
+
+.pageSize {
+  width: 36px;
+  height: 100%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid $dark-secondary;
+  color: $dark-primary;
+  font-size: $font-size-m;
+  line-height: $line-height-m;
+  span {
+    width: 100%;
+    text-align: center;
+  }
+  input {
+    max-width: 26px;
+    border: 1px solid $dark-secondary;
+    &:focus {
+      border: 1px solid $dark-secondary;
+    }
+  }
+}

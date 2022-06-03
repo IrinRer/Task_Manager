@@ -1,7 +1,7 @@
 import { DATE_FORMAT_UI } from 'constants/common';
 import { createSelector } from '@reduxjs/toolkit';
 import { format } from 'date-fns';
-import { ROLES } from 'constants/task';
+import { ROLES } from 'constants/types/common';
 import { RootState } from 'store';
 import { ITaskRoles } from 'store/common/task/types';
 import { IUser } from 'store/users/types';
@@ -23,7 +23,7 @@ export function isResponsible(element: ITaskRoles): boolean {
 }
 
 export function getUsersFromRoles(roles: Array<ITaskRoles> | undefined) {
-  const arr: IUser[] = roles?.map((element) => element.assign_user) || [];
+  const arr: Array<IUser> = roles?.map((element) => element.assign_user) || [];
   return arr;
 }
 
@@ -51,9 +51,8 @@ export const getTaskResponsible = createSelector(
   taskRoles,
   (roles) => roles?.find(isResponsible)?.assign_user,
 );
-export const getTaskImplementer = createSelector(
-  taskRoles,
-  (roles) => roles?.find(isImplementer)?.assign_user,
+export const getTaskImplementers = createSelector(taskRoles, (roles) =>
+  getUsersFromRoles(roles?.filter(isImplementer)),
 );
 export const getTaskWatchers = createSelector(taskRoles, (roles) =>
   getUsersFromRoles(roles?.filter(isWatcher)),
@@ -69,6 +68,9 @@ export const getTaskError = (state: RootState) => state.common.onetask.error;
 
 export const getTaskInfoPriority = (state: RootState) =>
   state.common.onetask.data?.priority?.task_priority_id;
+
+export const getTaskInfoPriorityName = (state: RootState) =>
+  state.common.onetask.data?.priority?.name;
 
 export const getTaskInfoDateStop = (state: RootState) =>
   state.common.onetask.data?.exec_stop

@@ -6,17 +6,23 @@ import { DATE_FORMAT_SERVER, DATE_FORMAT_UI } from 'constants/common';
 import { format, parse } from 'date-fns';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import DatePicker from 'constants/additionalFunctions/DatePicker';
-import { getTaskInfoDateStop } from 'store/common/task/selectors';
 import { getTaskId } from 'store/editTask/selectors';
+import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
+import { getRights } from 'helpers/rights';
+import { RIGHTS_NAMES } from 'constants/rights';
 import styles from './index.module.scss';
 
 const { Text } = Typography;
 
-const SelectDate = () => {
-  const dispatch = useAppDispatch();
+interface IProps {
+  dateStop: string | undefined;
+}
 
-  const dateStop = useAppSelector(getTaskInfoDateStop);
+const SelectDate: React.FC<IProps> = ({ dateStop }) => {
+  const dispatch = useAppDispatch();
   const taskId = useAppSelector(getTaskId);
+  const myMaxRole = useAppSelector(getMyMaxRoleForTask);
+  const isRights = getRights(myMaxRole, RIGHTS_NAMES.editTaskDate);
 
   const onChange = (date: Date | null) => {
     dispatch(
@@ -35,6 +41,7 @@ const SelectDate = () => {
         defaultValue={
           dateStop ? parse(dateStop, DATE_FORMAT_UI, new Date()) : undefined
         }
+        disabled={!isRights}
         format={DATE_FORMAT_UI}
         bordered={false}
         placeholder="+ Добавить срок"

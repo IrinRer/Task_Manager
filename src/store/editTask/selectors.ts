@@ -24,6 +24,9 @@ export const getUnselectedMembers = (state: RootState) =>
 export const taskRoles = (state: RootState) =>
   state.editTask.editTaskReducer.data?.roles;
 
+export const getTask = (state: RootState) =>
+  state.editTask.editTaskReducer.data;
+
 export const getTaskId = (state: RootState) =>
   state.editTask.editTaskReducer.data?.task_id;
 
@@ -44,15 +47,25 @@ export const getTaskResponsible = createSelector(
   taskRoles,
   (roles) => roles?.find(isResponsible)?.assign_user,
 );
-export const getTaskImplementer = createSelector(
-  taskRoles,
-  (roles) => roles?.find(isImplementer)?.assign_user,
+export const getTaskImplementers = createSelector(taskRoles, (roles) =>
+  getUsersFromRoles(roles?.filter(isImplementer)),
 );
 export const getTaskWatchers = createSelector(taskRoles, (roles) =>
   getUsersFromRoles(roles?.filter(isWatcher)),
 );
 export const getTaskWatchersID = createSelector(taskRoles, (roles) =>
   getUsersIdFromRoles(roles?.filter(isWatcher)),
+);
+export const getTaskImplementersID = createSelector(taskRoles, (roles) =>
+  getUsersIdFromRoles(roles?.filter(isImplementer)),
+);
+export const getTaskResponsibleID = createSelector(
+  taskRoles,
+  (roles) => roles?.find(isResponsible)?.assign_user.user_id,
+);
+export const getTaskAuthorID = createSelector(
+  taskRoles,
+  (roles) => roles?.find(isAuthor)?.assign_user.user_id,
 );
 
 export const getEditTaskLoading = (state: RootState) =>
@@ -69,3 +82,6 @@ export const getEditMembersLoading = (state: RootState) =>
 
 export const getEditTaskError = (state: RootState) =>
   state.editTask.editTaskReducer.editError.task;
+
+export const getEditStatusLoading = (state: RootState) =>
+  state.editTask.editTaskReducer.editLoading.status;

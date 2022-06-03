@@ -3,10 +3,10 @@ import {
   deleteTagAction,
 } from 'store/editTask/additionalFunctions/tag/thunk';
 import { AxiosError } from 'axios';
+import { IResponseTask } from 'store/common/task/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ITag } from 'store/common/tags/types';
 import { fetchTaskAction } from 'store/common/task/thunk';
-import { IResponseTask } from 'store/common/task/types';
 import { TAG_SLICE_ALIAS, ITagReducer } from './types';
 
 const initialState: ITagReducer = {
@@ -35,7 +35,6 @@ export const tagSlice = createSlice({
       state,
       { payload }: PayloadAction<AxiosError>,
     ) => {
-      state.sentTag = null;
       state.loading = false;
       state.error = payload;
     },
@@ -46,9 +45,7 @@ export const tagSlice = createSlice({
       state,
       { payload }: PayloadAction<IResponseTask>,
     ) => {
-      state.sentTag = state.sentTag?.concat(
-        payload.tags.map(({ task_tag }) => task_tag),
-      );
+      state.sentTag = payload.tags.map(({ task_tag }) => task_tag);
       state.loading = false;
     },
 

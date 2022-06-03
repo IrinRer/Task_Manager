@@ -1,63 +1,78 @@
 import React from 'react';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import {
-  getEditMembersLoading,
-  getTaskAuthor,
-  getTaskImplementer,
-  getTaskResponsible,
-} from 'store/editTask/selectors';
-import {
-  getImplementerRoleID,
-  getResponsibleRoleID,
-} from 'store/common/roles/selectors';
+import { getEditMembersLoading } from 'store/editTask/selectors';
 import uniqueId from 'lodash/uniqueId';
 import Spinner from 'components/Common/Spinner';
-import MembersWrapper from './MembersWrapper';
+import { ROLES } from 'constants/types/common';
+import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
+import { getRights } from 'helpers/rights';
+import { RIGHTS_NAMES } from 'constants/rights';
+import { EditableContext, RoleContext } from 'constants/common';
 import OneMember from './OneMember';
-import Watchers from './Watchers';
+import MembersWrapperMulti from './MembersWrapperMulti';
+import MembersByOne from './MembersByOne';
 
 const Info: React.FC = () => {
-  const author = useAppSelector(getTaskAuthor);
-  const responsible = useAppSelector(getTaskResponsible);
-  const implementer = useAppSelector(getTaskImplementer);
-
-  const responsibleRoleID = useAppSelector(getResponsibleRoleID);
-  const implementerRoleID = useAppSelector(getImplementerRoleID);
-
   const editLoading = useAppSelector(getEditMembersLoading);
+  const myMaxRole = useAppSelector(getMyMaxRoleForTask);
+  const isRightsEditWatchers = getRights(myMaxRole, RIGHTS_NAMES.editWatcher);
+  const isRightsEditImplementer = getRights(
+    myMaxRole,
+    RIGHTS_NAMES.editImplementer,
+  );
+  const isRightsEditResponsible = getRights(
+    myMaxRole,
+    RIGHTS_NAMES.editResponsible,
+  );
 
   const elements = [
     {
       id: uniqueId(),
-      title: 'Автор',
-      block: <OneMember user={author || null} roleId="" />,
-    },
-    {
-      id: uniqueId(),
-      title: 'Ответственный',
+      title: ROLES.author_short,
+      editable: false,
       block: (
-        <OneMember
-          editable
-          user={responsible || null}
-          roleId={responsibleRoleID || ''}
-        />
+        <RoleContext.Provider value={ROLES.author}>
+          <EditableContext.Provider value={false}>
+            <OneMember />
+          </EditableContext.Provider>
+        </RoleContext.Provider>
       ),
     },
     {
       id: uniqueId(),
-      title: 'Исполнитель',
+      title: ROLES.responsible,
+      editable: isRightsEditResponsible,
       block: (
-        <OneMember
-          editable
-          user={implementer || null}
-          roleId={implementerRoleID || ''}
-        />
+        <RoleContext.Provider value={ROLES.responsible}>
+          <EditableContext.Provider value={isRightsEditResponsible}>
+            <OneMember />
+          </EditableContext.Provider>
+        </RoleContext.Provider>
       ),
     },
     {
       id: uniqueId(),
-      title: 'Наблюдатель',
-      block: <Watchers />,
+      title: ROLES.implementer,
+      editable: isRightsEditImplementer,
+      block: (
+        <RoleContext.Provider value={ROLES.implementer}>
+          <EditableContext.Provider value={isRightsEditImplementer}>
+            <MembersByOne multiAdd usersMaxCount={3} />
+          </EditableContext.Provider>
+        </RoleContext.Provider>
+      ),
+    },
+    {
+      id: uniqueId(),
+      title: ROLES.watcher,
+      editable: isRightsEditWatchers,
+      block: (
+        <RoleContext.Provider value={ROLES.watcher}>
+          <EditableContext.Provider value={isRightsEditWatchers}>
+            <MembersByOne multiAdd usersMaxCount={50} />
+          </EditableContext.Provider>
+        </RoleContext.Provider>
+      ),
     },
   ];
 
@@ -69,9 +84,13 @@ const Info: React.FC = () => {
     <>
       {elements.map((el) => {
         return (
-          <MembersWrapper key={el.id} roleName={el.title}>
-            {el.block}
-          </MembersWrapper>
+          <RoleContext.Provider
+            value={el.title === ROLES.author_short ? ROLES.author : el.title}
+          >
+            <EditableContext.Provider value={el.editable}>
+              <MembersWrapperMulti key={el.id}>{el.block}</MembersWrapperMulti>
+            </EditableContext.Provider>
+          </RoleContext.Provider>
         );
       })}
     </>

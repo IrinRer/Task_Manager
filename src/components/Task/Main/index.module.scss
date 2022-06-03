@@ -3,7 +3,7 @@
 
 .taskMain {
   width: 60%;
-  padding: 24px;
+  padding: 32px;
   display: inline-block;
 
   :global(.ant-input).comm {
@@ -22,6 +22,19 @@
   :global(.ant-input).comm:focus-visible {
     box-shadow: none;
     color: $text-color;
+  }
+  .titleWrapper {
+    display: flex;
+    gap: 20px;
+    .title {
+      flex-grow: 1;
+    }
+    .options {
+      display: flex;
+      justify-content: center;
+      padding-top: 20px;
+      width: 40px;
+    }
   }
 }
 

@@ -1,10 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { notification } from 'antd';
 import { AxiosResponse } from 'axios';
+import { IStatusChangeArg } from 'constants/types/common';
 
 import { api } from 'network';
 
-import { ITaskAssignUser, EDIT_TASK_SLICE_ALIAS } from 'store/editTask/types';
+import {
+  ITaskAssignUser,
+  EDIT_TASK_SLICE_ALIAS,
+  ITaskAssignGroupUser,
+} from 'store/editTask/types';
 
 export const setTaskDescription = createAsyncThunk(
   `${EDIT_TASK_SLICE_ALIAS}/setDescription`,
@@ -20,7 +25,7 @@ export const setTaskDescription = createAsyncThunk(
       return response.data.data;
     } catch (error) {
       notification.error({ message: 'Ошибка смены описания' });
-      return rejectWithValue(error);
+      return rejectWithValue(error.message);
     }
   },
 );
@@ -36,7 +41,7 @@ export const setTaskTitle = createAsyncThunk(
       return response.data.data;
     } catch (error) {
       notification.error({ message: 'Ошибка смены названия' });
-      return rejectWithValue(error);
+      return rejectWithValue(error.message);
     }
   },
 );
@@ -55,7 +60,7 @@ export const setTaskMemberAction = createAsyncThunk(
       return response.data.data;
     } catch (error) {
       notification.error({ message: 'Ошибка назначения участника' });
-      return rejectWithValue(error);
+      return rejectWithValue(error.message);
     }
   },
 );
@@ -74,7 +79,88 @@ export const deleteTaskMemberAction = createAsyncThunk(
       return response.data.data;
     } catch (error) {
       notification.error({ message: 'Ошибка удаления участника' });
-      return rejectWithValue(error);
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
+export const setTaskMemberGroupAction = createAsyncThunk(
+  `${EDIT_TASK_SLICE_ALIAS}/setMemberGroup`,
+  async (data: ITaskAssignGroupUser, { rejectWithValue, dispatch }) => {
+    try {
+      data.assign_users_ids?.forEach((element) => {
+        dispatch(
+          setTaskMemberAction({
+            task_id: data.task_id,
+            assign_user_id: element,
+            task_role_id: data.task_role_id,
+          }),
+        );
+
+        if (data.task_role_id !== data.watcher_role_id) {
+          dispatch(
+            setTaskMemberAction({
+              task_id: data.task_id,
+              assign_user_id: element,
+              task_role_id: data.watcher_role_id,
+            }),
+          );
+        }
+      });
+
+      return 1;
+    } catch (error) {
+      notification.error({ message: 'Ошибка назначения участников' });
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
+export const deleteTaskMemberGroupAction = createAsyncThunk(
+  `${EDIT_TASK_SLICE_ALIAS}/deleteMemberGroup`,
+  async (data: ITaskAssignGroupUser, { rejectWithValue, dispatch }) => {
+    try {
+      data.assign_users_ids?.forEach((element) => {
+        dispatch(
+          deleteTaskMemberAction({
+            task_id: data.task_id,
+            assign_user_id: element,
+            task_role_id: data.task_role_id,
+          }),
+        );
+
+        if (data.task_role_id !== data.watcher_role_id) {
+          dispatch(
+            deleteTaskMemberAction({
+              task_id: data.task_id,
+              assign_user_id: element,
+              task_role_id: data.watcher_role_id,
+            }),
+          );
+        }
+      });
+      return 1;
+    } catch (error) {
+      notification.error({ message: 'Ошибка удаления участников' });
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
+export const changeEditTaskStatusAction = createAsyncThunk(
+  `${EDIT_TASK_SLICE_ALIAS}/changeEditTaskStatus`,
+  async (arg: IStatusChangeArg, { rejectWithValue }) => {
+    try {
+      const response = await api().post(
+        `/api/v1.0/task/tasks/${arg.task_id}/status-change`,
+        {
+          task_status_id: arg.task_status_id,
+        },
+      );
+      return response.data.data;
+    } catch (error) {
+      notification.error({ message: 'Ошибка изменения статуса' });
+      return rejectWithValue(error.message);
     }
   },
 );

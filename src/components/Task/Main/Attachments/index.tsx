@@ -23,7 +23,7 @@ import {
   getfileName,
   getStorageFile,
 } from 'store/editTask/attachments/selectors';
-import ModalDelete from '../../../../constants/ModalDelete';
+import ModalDelete from 'components/Common/ModalDelete';
 import styles from './index.module.scss';
 
 const Attachments = () => {
@@ -155,7 +155,7 @@ const Attachments = () => {
         textMain={`${fileForDelete?.name} будет безвозвратно удален`}
         textButton="Удалить файл"
         setVisibleModalDelete={setVisibleModalDelete}
-        file={fileForDelete}
+        file={fileForDelete || ''}
         action={onDeleteFile}
       />
     </Col>

@@ -19,6 +19,7 @@ export const authSlice = createSlice({
     ) => {
       state.token = payload;
     },
+    resetAuth: () => initialState,
   },
   extraReducers: {
     [fetchAuthAction.pending.type]: (state: IAuthReducer) => {
@@ -42,5 +43,5 @@ export const authSlice = createSlice({
   },
 });
 
-export const { addVerifyToken } = authSlice.actions;
+export const { addVerifyToken, resetAuth } = authSlice.actions;
 export default authSlice.reducer;

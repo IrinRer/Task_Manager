@@ -1,0 +1,22 @@
+@import 'src/styles/font-variables';
+@import 'src/styles/color-variables';
+
+.listMemberWrapper {
+  width: 56%;
+}
+.dropdownList {
+  border-bottom-left-radius: 16px !important;
+  border-bottom-right-radius: 16px !important;
+
+  :global(.ant-select-item) {
+    font-size: $font-size-m !important;
+    padding: 9px 12px 9px 26px !important;
+  }
+
+  :global(.ant-select-item-option-selected:not(.ant-select-item-option-disabled)),
+  :global(.ant-select-item-option-active:not(.ant-select-item-option-disabled)) {
+    background: $bg-secondary !important;
+    font-weight: normal;
+    cursor: default;
+  }
+}

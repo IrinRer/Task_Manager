@@ -1,25 +1,32 @@
 import AddMemberButton from 'components/Task/Info/AddMemberButton';
-import React, { FC } from 'react';
+import useMembersProps from 'components/Task/Info/MembersHook/useMembersProps';
+import { EditableContext, RoleContext } from 'constants/common';
+import React, { FC, useContext } from 'react';
 import { IUser } from 'store/users/types';
 import EditableMember from '../EditableMember';
 import styles from './index.module.scss';
 
 type TProps = {
-  user: IUser | null;
-  roleId: string;
-  editable?: true;
+  user?: IUser;
 };
 
-const OneMember: FC<TProps> = ({ user, roleId, editable }) => {
+const OneMember: FC<TProps> = ({ user }) => {
+  const roleName = useContext(RoleContext);
+  const editable = useContext(EditableContext);
+  const usersData = useMembersProps(roleName);
+  const userFromTaskRole = usersData?.users ? usersData?.users[0] : undefined;
+
+  const member = user || userFromTaskRole;
+
   return (
     <div className={styles.members}>
-      {editable && user ? <EditableMember user={user} roleId={roleId} /> : null}
+      {editable && member ? <EditableMember user={member} /> : null}
 
-      {!editable && user ? (
-        <span className={styles.noeditMembers}>{user.name}</span>
+      {!editable && member ? (
+        <span className={styles.noeditMembers}>{member.name}</span>
       ) : null}
 
-      {!user ? <AddMemberButton roleId={roleId} /> : null}
+      {!member && editable ? <AddMemberButton /> : null}
     </div>
   );
 };

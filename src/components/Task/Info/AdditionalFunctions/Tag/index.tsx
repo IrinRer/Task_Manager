@@ -7,13 +7,22 @@ import { allColorTag } from 'constants/additionalFunctions/color';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { uniqueTagNameSelector } from 'store/editTask/additionalFunctions/tag/selectors';
 import { getTaskId } from 'store/editTask/selectors';
+import { MAX_NUMBER_TAGS } from 'constants/additionalFunctions/tag';
+import { ITag } from 'store/common/tags/types';
+import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
+import { getRights } from 'helpers/rights';
+import { RIGHTS_NAMES } from 'constants/rights';
 import TagItem from './TagItem';
 
 import styles from './index.module.scss';
 
 const { Text } = Typography;
 
-const SelectTag = () => {
+interface IProps {
+  tagSelect: ITag[] | undefined
+}
+
+const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [colorTag, setColor] = useState('');
   const [inputValue, setInputValue] = useState('');
@@ -22,8 +31,11 @@ const SelectTag = () => {
   const dispatch = useAppDispatch();
   const taskId = useAppSelector(getTaskId);
 
+  const myMaxRole = useAppSelector(getMyMaxRoleForTask);
+  const isRights = getRights(myMaxRole, RIGHTS_NAMES.editTag);
+
   const uniqueTagName = useAppSelector(uniqueTagNameSelector);
-  const isUniqueTag = uniqueTagName?.indexOf(inputValue) === -1;
+  const isUniqueTag = uniqueTagName?.indexOf(inputValue) === -1 && inputValue;
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -32,9 +44,10 @@ const SelectTag = () => {
   const handleOk = () => {
     setIsModalVisible(false);
     setColor('');
+    setInputValue('');
     form.resetFields();
 
-    if (inputValue && isUniqueTag && uniqueTagName.length < 50) {
+    if (inputValue && isUniqueTag && uniqueTagName.length < MAX_NUMBER_TAGS) {
       dispatch(
         createTagAction({ name: inputValue, color: colorTag, task_id: taskId }),
       );
@@ -61,16 +74,15 @@ const SelectTag = () => {
 
   return (
     <div className={className}>
-      <TagItem />
-      <Button
-        type="primary"
-        onClick={showModal}
+      <TagItem editable={isRights} tagSelect={tagSelect}/>
+      {isRights ? (
+        <Button
         className={styles.btnTag}
-        shape="round"
-      >
-        + Добавить метку
-      </Button>
-
+          onClick={showModal}
+        >
+          + Добавить метку
+        </Button>
+      ) : null}
       <Modal
         title="Новая метка"
         visible={isModalVisible}
@@ -78,7 +90,7 @@ const SelectTag = () => {
         className={styles.modalTag}
         footer={
           <Button
-            className={styles.btnTag}
+            className={styles.btn}
             onClick={handleOk}
             htmlType="submit"
             disabled={!isUniqueTag}

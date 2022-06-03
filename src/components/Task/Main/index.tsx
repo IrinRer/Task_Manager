@@ -9,12 +9,16 @@ import {
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { isClickedAttachments } from 'store/editTask/attachments/selectors';
 import uniqueId from 'lodash/uniqueId';
+import descriptionIcon from 'assets/icons/description.svg';
+import commentsIcon from 'assets/icons/comments.svg';
+import historyIcon from 'assets/icons/history.svg';
 import styles from './index.module.scss';
-import History from '../History';
+import History from './History';
 import InputWrapper from './InputWrapper';
-import Description from '../Description';
-import Title from '../Title';
 import Attachments from './Attachments';
+import Options from '../Options';
+import Description from './Description';
+import Title from './Title';
 
 const Main: React.FC = () => {
   const clickedAttachments = useAppSelector(isClickedAttachments);
@@ -23,14 +27,14 @@ const Main: React.FC = () => {
     {
       id: uniqueId(),
       title: 'Описание',
-      icon: <AlignLeftOutlined />,
+      icon: <img src={descriptionIcon} alt="description" />,
       block: <Description />,
     },
 
     {
       id: uniqueId(),
       title: 'Комментарии',
-      icon: <CommentOutlined />,
+      icon: <img src={commentsIcon} alt="comments" />,
       block: (
         <TextArea
           autoSize
@@ -43,14 +47,22 @@ const Main: React.FC = () => {
     {
       id: uniqueId(),
       title: 'Действия',
-      icon: <ContainerOutlined />,
+      icon: <img src={historyIcon} alt="history" />,
       block: <History />,
     },
   ];
 
   return (
     <div className={styles.taskMain}>
-      <Title />
+      <div className={styles.titleWrapper}>
+        <div className={styles.title}>
+          <Title />
+        </div>
+        <div className={styles.options}>
+          <Options />
+        </div>
+      </div>
+
       {elements.map((el) => {
         if (el.title === 'Описание' && clickedAttachments) {
           return (

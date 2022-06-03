@@ -1,4 +1,5 @@
 import { AxiosError } from 'axios';
+import { TagColor } from 'constants/types/common';
 
 export const COMMON_TAGS_SLICE_ALIAS = 'common/tags';
 
@@ -11,7 +12,7 @@ export interface ICommonTagsReducer {
 export interface ITag {
   task_tag_id?: string;
   name: string;
-  color: string;
+  color: TagColor;
   created?: Date;
   updated?: Date;
 }
