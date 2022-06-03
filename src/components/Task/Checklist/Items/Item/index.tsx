@@ -8,11 +8,13 @@ import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { ICheckListChangeCompleteStatus } from 'store/editTask/types';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { getIsTaskEditable } from 'store/editTask/selectors';
 import { isDeleteCheckListItemLoading } from 'store/editTask/checkLists/deleteCheckListItem/selectors';
 import { setCompleteCheckListItem } from 'store/editTask/checkLists/setCompleteCheckListItem/thunk';
 import Spinner from 'components/Common/Spinner';
 import { deleteCheckListItem } from 'store/editTask/checkLists/deleteCheckListItem/thunk';
+import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
+import { getRights } from 'helpers/rights';
+import { RIGHTS_NAMES } from 'constants/rights';
 import styles from './index.module.scss';
 
 interface IProps {
@@ -24,8 +26,9 @@ const CheckListItem: React.FC<IProps> = ({ checkListItem }) => {
 
   const { check_list_item_id, message, complete } = checkListItem;
 
-  const isTaskEditable = useAppSelector(getIsTaskEditable);
   const isCheckListItemLoading = useAppSelector(isDeleteCheckListItemLoading);
+  const myMaxRole = useAppSelector(getMyMaxRoleForTask);
+  const isRights = getRights(myMaxRole, RIGHTS_NAMES.editChecklistItem);
 
   const checkBoxClassName = classnames(
     filterStyles.checkboxGroup,
@@ -54,7 +57,7 @@ const CheckListItem: React.FC<IProps> = ({ checkListItem }) => {
         checked={complete}
         className={checkBoxClassName}
         onChange={toggleCheckListItemComplete}
-        disabled={!isTaskEditable}
+        disabled={!isRights}
       />
       <p className={checkBoxTextClassName}>{message}</p>
       <Popover
@@ -75,7 +78,7 @@ const CheckListItem: React.FC<IProps> = ({ checkListItem }) => {
         overlayClassName={styles.popoverMenu}
         placement="bottomRight"
       >
-        {isTaskEditable && <MoreIcon className={styles.moreButton} />}
+        {isRights && <MoreIcon className={styles.moreButton} />}
       </Popover>
     </div>
   );

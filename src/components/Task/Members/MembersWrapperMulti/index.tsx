@@ -2,6 +2,8 @@ import { CaretRightOutlined } from '@ant-design/icons';
 import ListMember from 'components/Task/Info/ListMember';
 import useMembersProps from 'components/Task/Info/MembersHook/useMembersProps';
 import { RoleContext, USERS_BY_ONE_MAX_COUNT } from 'constants/common';
+import { TRights } from 'constants/rights';
+import { ROLES } from 'constants/types/common';
 import React, { FC, useContext, useState } from 'react';
 import styles from './index.module.scss';
 
@@ -11,6 +13,8 @@ type TProps = {
 
 const MembersWrapperMulti: FC<TProps> = ({ children }) => {
   const roleName = useContext(RoleContext);
+  const roleShowName =
+    roleName === ROLES.author ? ROLES.author_short : roleName;
 
   const [isActive, setIsActive] = useState<boolean>(false);
 
@@ -26,7 +30,7 @@ const MembersWrapperMulti: FC<TProps> = ({ children }) => {
   return isManyUsers ? (
     <div className={styles.infoLine}>
       <span onMouseDownCapture={expandChange} className={styles.expand}>
-        {`${roleName} ${users?.length}`}
+        {`${roleShowName} ${users?.length}`}
         <CaretRightOutlined rotate={isActive ? 90 : 0} />
       </span>
       {isActive ? (
@@ -37,7 +41,7 @@ const MembersWrapperMulti: FC<TProps> = ({ children }) => {
     </div>
   ) : (
     <div className={styles.infoLine}>
-      <span>{roleName}</span>
+      <span>{roleShowName}</span>
       {children}
     </div>
   );

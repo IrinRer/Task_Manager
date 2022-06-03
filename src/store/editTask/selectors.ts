@@ -131,17 +131,5 @@ export const getIsCheckListItemLoading = (state: RootState): boolean =>
 export const getIsCheckListTitleLoading = (state: RootState): boolean =>
   state.editTask.editTaskReducer.editLoading.checkListTitle;
 
-export const getIsTaskEditable = createSelector(
-  getTaskAuthor,
-  getTaskImplementers,
-  getTaskResponsible,
-  getVerifyIdUser,
-  (author, implementers, responsible, authUserId): boolean => {
-    return !![author, ...implementers, responsible].find(
-      (user) => user?.user_id === authUserId,
-    );
-  },
-);
-
 export const getCheckListTitle = (state: RootState): string =>
   state.editTask.editTaskReducer.data!.check_lists[0].title;

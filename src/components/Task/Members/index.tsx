@@ -6,7 +6,7 @@ import Spinner from 'components/Common/Spinner';
 import { ROLES } from 'constants/types/common';
 import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
 import { getRights } from 'helpers/rights';
-import { RIGHTS_NAMES } from 'constants/rights';
+import { RIGHTS_NAMES, TRights } from 'constants/rights';
 import { EditableContext, RoleContext } from 'constants/common';
 import OneMember from './OneMember';
 import MembersWrapperMulti from './MembersWrapperMulti';
@@ -25,10 +25,17 @@ const Info: React.FC = () => {
     RIGHTS_NAMES.editResponsible,
   );
 
-  const elements = [
+  type TElementsMembers = {
+    id: string;
+    title: TRights;
+    editable: boolean;
+    block: JSX.Element;
+  };
+
+  const elements: TElementsMembers[] = [
     {
       id: uniqueId(),
-      title: ROLES.author_short,
+      title: ROLES.author,
       editable: false,
       block: (
         <RoleContext.Provider value={ROLES.author}>
@@ -84,9 +91,7 @@ const Info: React.FC = () => {
     <>
       {elements.map((el) => {
         return (
-          <RoleContext.Provider
-            value={el.title === ROLES.author_short ? ROLES.author : el.title}
-          >
+          <RoleContext.Provider value={el.title}>
             <EditableContext.Provider value={el.editable}>
               <MembersWrapperMulti key={el.id}>{el.block}</MembersWrapperMulti>
             </EditableContext.Provider>
