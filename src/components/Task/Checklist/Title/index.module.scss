@@ -1,0 +1,41 @@
+@import 'src/styles/_color-variables.scss';
+@import 'src/styles/_colors.scss';
+@import 'src/styles/_font-variables.scss';
+
+.title {
+  font-weight: 500;
+  font-size: $font-size-l;
+  line-height: $line-height-l;
+  color: $text-title;
+  margin: 0;
+}
+
+.button {
+  padding: 0;
+  margin: 0 auto 0 0;
+  border: none;
+  background-color: $bg-secondary;
+  cursor: text;
+}
+
+.input {
+  height: 24px;
+  -webkit-flex: 1;
+  font-weight: 500;
+  font-size: $font-size-l;
+  line-height: $line-height-l;
+  color: $text-title;
+  padding: 0;
+  border-radius: 0;
+  margin: 0 auto 0 0;
+  border-bottom: 1px solid $dark-secondary;
+
+  &:focus {
+    border-bottom: 1px solid $dark-secondary;
+  }
+}
+
+.spinner {
+  width: 20px;
+  margin: 0 auto 0 20px;
+}

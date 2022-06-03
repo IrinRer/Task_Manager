@@ -47,16 +47,20 @@ export const getTaskAuthor = createSelector(
   taskRoles,
   (roles) => roles?.find(isAuthor)?.assign_user,
 );
+
 export const getTaskResponsible = createSelector(
   taskRoles,
   (roles) => roles?.find(isResponsible)?.assign_user,
 );
+
 export const getTaskImplementers = createSelector(taskRoles, (roles) =>
   getUsersFromRoles(roles?.filter(isImplementer)),
 );
+
 export const getTaskWatchers = createSelector(taskRoles, (roles) =>
   getUsersFromRoles(roles?.filter(isWatcher)),
 );
+
 export const getTaskWatchersID = createSelector(taskRoles, (roles) =>
   getUsersIdFromRoles(roles?.filter(isWatcher)),
 );

@@ -4,7 +4,7 @@
 .wrapname {
   display: flex;
   align-items: flex-end;
-  justify-content: flex-start;
+  width: 100%;
 
   span {
     font-size: $font-size-xxl;
@@ -16,7 +16,6 @@
   }
 
   :global(textarea.ant-input).name {
-    max-width: 499px;
     font-size: $font-size-xxl;
     line-height: $line-height-s;
     color: $text-color;
@@ -24,9 +23,9 @@
     border: none;
     overflow: hidden;
     padding: 0;
-    margin-top: 16px;
     margin-bottom: 30px;
   }
+
   :global(.ant-input).name:focus,
   :global(.ant-input).name:active,
   :global(.ant-input).name:focus-visible {
@@ -34,11 +33,13 @@
     box-shadow: none;
     border-bottom: 1px solid $button-main;
   }
+
   :global(textarea.ant-input-status-error).name {
     border: none;
     box-shadow: none;
     border-bottom: 2px solid $alert;
   }
+
   :global(textarea.ant-input-status-error).name:focus,
   :global(textarea.ant-input-status-error).name:active,
   :global(textarea.ant-input-status-error).name:focus-visible {
@@ -46,14 +47,17 @@
     box-shadow: none !important;
     border-bottom: 2px solid $alert;
   }
+
   :global(textarea.ant-input-status-error).name::placeholder {
     color: $alert;
   }
+
   :global(textarea.ant-input).error {
     border: none;
     box-shadow: none;
     border-bottom: 2px solid $alert;
   }
+
   :global(textarea.ant-input).error:focus,
   :global(textarea.ant-input).error:active,
   :global(textarea.ant-input).error:focus-visible {
@@ -61,9 +65,11 @@
     box-shadow: none !important;
     border-bottom: 2px solid $alert;
   }
+
   :global(textarea.ant-input).error::placeholder {
     color: $alert;
   }
+
   :global(.ant-input).readonly:focus,
   :global(.ant-input).readonly:active,
   :global(.ant-input).readonly:focus-visible {
@@ -75,6 +81,28 @@
     height: 28px !important;
   }
 }
+
 .border {
   border-bottom: 1px solid $dark-secondary;
+}
+
+.popoverMenu {
+  min-width: 190px;
+  padding: 0;
+  border: 1px solid $bg-primary;
+  box-shadow: 0 8px 40px rgba(23, 31, 70, 0.08);
+
+  :global {
+    .ant-popover-arrow {
+      display: none;
+    }
+
+    .ant-popover-inner {
+      border-radius: 8px;
+    }
+
+    .ant-popover-inner-content {
+      padding: 20px 27px;
+    }
+  }
 }
