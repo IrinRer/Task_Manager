@@ -19,7 +19,7 @@ import styles from './index.module.scss';
 const { Text } = Typography;
 
 interface IProps {
-  tagSelect: ITag[] | undefined
+  tagSelect: ITag[] | undefined;
 }
 
 const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
@@ -74,8 +74,8 @@ const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
 
   return (
     <div className={className}>
-      <TagItem editable={isRights} tagSelect={tagSelect}/>
-      {isRights ? (
+      <TagItem editable={isRights} tagSelect={tagSelect} />
+      {isRights && (
         <Button
           type="primary"
           onClick={showModal}
@@ -84,7 +84,7 @@ const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
         >
           + Добавить метку
         </Button>
-      ) : null}
+      )}
       <Modal
         title="Новая метка"
         visible={isModalVisible}

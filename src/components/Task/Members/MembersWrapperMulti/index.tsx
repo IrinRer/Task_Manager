@@ -2,7 +2,6 @@ import { CaretRightOutlined } from '@ant-design/icons';
 import ListMember from 'components/Task/Info/ListMember';
 import useMembersProps from 'components/Task/Info/MembersHook/useMembersProps';
 import { RoleContext, USERS_BY_ONE_MAX_COUNT } from 'constants/common';
-import { TRights } from 'constants/rights';
 import { ROLES } from 'constants/types/common';
 import React, { FC, useContext, useState } from 'react';
 import styles from './index.module.scss';

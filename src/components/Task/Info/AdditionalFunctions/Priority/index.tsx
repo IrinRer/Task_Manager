@@ -37,7 +37,7 @@ const SelectPriority: React.FC<IProps> = ({ defaultPriority }) => {
   return (
     <div className={styles.priority}>
       <Text className={styles.text}>Приоритет</Text>
-      {isRights ? (
+      {isRights && (
         <Select
           placeholder="+ Добавить приоритет"
           defaultValue={defaultPriority}
@@ -56,7 +56,8 @@ const SelectPriority: React.FC<IProps> = ({ defaultPriority }) => {
             );
           })}
         </Select>
-      ) : (
+      )}
+      {!isRights && defaultPriorityName && (
         <div className={styles.noedit}>
           <div
             className={styles[STYLES[PriorityName[defaultPriorityName || '']]]}

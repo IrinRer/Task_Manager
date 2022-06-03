@@ -44,7 +44,7 @@ const SelectDate: React.FC<IProps> = ({ dateStop }) => {
         disabled={!isRights}
         format={DATE_FORMAT_UI}
         bordered={false}
-        placeholder="+ Добавить срок"
+        placeholder={isRights ? '+ Добавить срок' : ''}
         className={styles.piker}
         showToday={false}
         onChange={onChange}
