@@ -64,6 +64,12 @@ const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
     } else setColor('');
   };
 
+  const onEnter = (e) => {
+    if(e.code === 'Enter') {
+      handleOk()
+    }
+  }
+
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
@@ -77,7 +83,7 @@ const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
       <TagItem editable={isRights} tagSelect={tagSelect}/>
       {isRights ? (
         <Button
-        className={styles.btnTag}
+          className={styles.btnTag}
           onClick={showModal}
         >
           + Добавить метку
@@ -91,7 +97,8 @@ const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
         footer={
           <Button
             className={styles.btn}
-            onClick={handleOk}
+            onSubmit={handleOk}
+            tabIndex={0}
             htmlType="submit"
             disabled={!isUniqueTag}
           >
@@ -102,7 +109,7 @@ const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
         onCancel={handleCancel}
       >
         <Text type="secondary">Название метки</Text>
-        <Form form={form}>
+        <Form form={form} onKeyPress={onEnter}>
           <Form.Item name="input" key="input">
             <Input
               className={styles.input}
