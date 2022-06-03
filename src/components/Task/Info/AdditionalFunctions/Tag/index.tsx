@@ -74,16 +74,20 @@ const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
 
   return (
     <div className={className}>
-      <TagItem editable={isRights} tagSelect={tagSelect} />
+      <div className={styles.tagItem}>
+        <TagItem editable={isRights} tagSelect={tagSelect} />
+      </div>
       {isRights && (
-        <Button
-          type="primary"
-          onClick={showModal}
-          className={styles.btn}
-          shape="round"
-        >
-          + Добавить метку
-        </Button>
+        <div className={styles.btnAdd}>
+          <Button
+            type="primary"
+            onClick={showModal}
+            className={styles.btn}
+            shape="round"
+          >
+            + Добавить метку
+          </Button>
+        </div>
       )}
       <Modal
         title="Новая метка"

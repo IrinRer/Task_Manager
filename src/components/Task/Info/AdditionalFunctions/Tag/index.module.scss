@@ -3,23 +3,35 @@
 @import 'src/styles/font-variables';
 
 .wrapper_flex {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
   :global(.ant-btn-primary).btn {
-    margin-right: 14%;
+    width: 56%;
+    padding: 0;
+    margin: 0;
   }
 }
 
 .wrapper_grid {
-  display: grid;
-  grid-template-columns: 47% 50%;
-  align-items: center;
-
   :global(.ant-btn-primary).btn {
-    margin-left: 96%;
+    width: 56%;
+    padding: 0;
+    margin: 0;
   }
+}
+
+.tagItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tag {
+  width: 56%;
+}
+
+.btnAdd {
+  display: flex;
+  justify-content: end;
+  align-items: center;
 }
 
 :global(.ant-btn-primary).btn,
@@ -37,6 +49,8 @@
     font-size: $font-size-m;
     font-weight: 500;
     color: $blue;
+    text-align: left;
+    width: 100%;
   }
 }
 
