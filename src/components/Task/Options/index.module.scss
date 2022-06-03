@@ -1,42 +1,16 @@
 @import 'src/styles/color-variables.scss';
-@import 'src/styles/font-variables.scss';
-@import 'src/styles/colors';
 
-.wrapper {
-  //   :global(.ant-popover.popover.ant-popover-placement-bottom) {
-  //     :global(.ant-popover-inner) {
-  //       border-radius: 8px;
-  //       padding: 16px 0px 16px 0px;
-  //       padding-bottom: 16px;
-
-  //       .options {
-  //         width: 500px;
-  //       }
-  //       :global(.ant-popover-inner-content) {
-  //         padding: 0px;
-  //         :global(.ant-btn.ant-btn-text) {
-  //           height: 32px;
-  //           color: $text-dark;
-  //           font-weight: 700;
-  //           font-size: $font-size-s;
-  //           padding-left: 20px;
-  //           padding-right: 20px;
-  //           &:hover {
-  //             background-color: rgba($blue, 0.05);
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-
-  span {
-    cursor: pointer;
-  }
-}
 // Не вносить в wrapper потому что в коде они вынесены отдельно
 :global(.ant-popover.popover.options.ant-popover-placement-top),
 :global(.ant-popover.popover.options.ant-popover-placement-bottom) {
   :global(.ant-popover-inner) {
     width: 200px;
   }
+}
+
+.optionIcon {
+  width: 24px;
+  height: 24px;
+  color: $dark-primary;
+  cursor: pointer;
 }

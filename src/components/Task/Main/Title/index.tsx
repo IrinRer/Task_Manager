@@ -5,8 +5,8 @@ import {
   getTaskId,
   getTitle,
 } from 'store/editTask/selectors';
-import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { setTaskTitle } from 'store/editTask/thunk';
+import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { ReactComponent as EditIcon } from 'assets/icons/edit.svg';
 
@@ -54,44 +54,38 @@ const Title: React.FC = () => {
 
   if (editLoading) {
     return (
-      <>
-        <div className={styles.wrapname}>
-          <Spinner margin="0 auto" size="default" />
-        </div>
-        <div className={styles.border} />
-      </>
+      <div className={styles.wrapname}>
+        <Spinner margin="0 auto" size="default" />
+      </div>
     );
   }
 
   return (
-    <>
-      <div className={styles.wrapname}>
-        <TextArea
-          ref={inputRef}
-          autoSize
-          maxLength={TITLE_TASK_MAX_LENGTH}
-          placeholder="Введите название"
-          className={classnames(styles.name, {
-            [styles.readonly]: isReadonly,
-            [styles.error]: !newTitle,
-          })}
-          onChange={changeTitle}
-          onPressEnter={onBlur}
-          onBlur={onBlur}
-          value={newTitle || ''}
-          readOnly={isReadonly}
+    <div className={styles.wrapname}>
+      <TextArea
+        ref={inputRef}
+        autoSize
+        maxLength={TITLE_TASK_MAX_LENGTH}
+        placeholder="Введите название"
+        className={classnames(styles.name, {
+          [styles.readonly]: isReadonly,
+          [styles.error]: !newTitle,
+        })}
+        onChange={changeTitle}
+        onPressEnter={onBlur}
+        onBlur={onBlur}
+        value={newTitle || ''}
+        readOnly={isReadonly}
+      />
+      {isReadonly && isRights && (
+        <Button
+          ghost
+          icon={<EditIcon />}
+          size="small"
+          onClick={changeReadonly}
         />
-        {isReadonly && isRights ? (
-          <Button
-            ghost
-            icon={<EditIcon />}
-            size="small"
-            onClick={changeReadonly}
-          />
-        ) : null}
-      </div>
-      <div className={styles.border} />
-    </>
+      )}
+    </div>
   );
 };
 
