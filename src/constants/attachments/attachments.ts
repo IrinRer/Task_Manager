@@ -38,10 +38,11 @@ export interface IItemFile {
 
 export const colorProgress = '#0062ff';
 
-export const acceptFormat = ".doc,.png,.jpg,.jpeg,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"; 
+export const acceptFormat = ".doc,.png,.jpg,.jpeg,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf"; 
 
 export const progress = {
   strokeWidth: 5,
+  showInfo: false,
   strokeColor: {
     '0%': colorProgress,
     '100%': colorProgress,

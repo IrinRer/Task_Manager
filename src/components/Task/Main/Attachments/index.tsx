@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Upload, Col, notification } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, PaperClipOutlined } from '@ant-design/icons';
 import type { RcFile, UploadFile } from 'antd/es/upload/interface';
 // import type {UploadRequestOption} from 'rc-upload/lib/interface';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
@@ -14,7 +14,7 @@ import {
   IOptions,
   acceptFormat,
   progress,
-} from 'constants/types/attachments/attachments';
+} from 'constants/attachments/attachments';
 import { IPayloadFile } from 'store/editTask/attachments/types';
 import { uniqueId } from 'lodash';
 import { getTaskId } from 'store/editTask/selectors';
@@ -33,25 +33,27 @@ const Attachments = () => {
   const fileName = useAppSelector(getfileName);
   const taskFile = useAppSelector(getTaskFile);
 
-  const taskFileAll = taskFile.map((item: IPayloadFile) => {
-    // формат в котором вложения поступают с бэка и формат вложений
-    // при загрузки разный, поэтому приходится приводить к одному виду
-    return {
-      uid: uniqueId(),
-      name: item.name_original,
-      originFileObj: {
-        name: item.name_original,
-      },
-      size: item.size,
-      type: item.content_type,
-      thumbUrl: item.image_thumbnail,
-      storageId: item.storage_file_id,
-      response: 'Ok',
-      status: 'done',
-    };
-  });
+  const taskFileAll = taskFile?.length
+    ? taskFile?.map((item: IPayloadFile) => {
+        // формат в котором вложения поступают с бэка и формат вложений
+        // при загрузки разный, поэтому приходится приводить к одному виду
+        const id = uniqueId();
+        return {
+          uid: id,
+          name: item.name_original,
+          originFileObj: {
+            uid: id,
+            name: item.name_original,
+          },
+          size: item.size,
+          type: item.content_type,
+          storageId: item.storage_file_id,
+          response: 'Ok',
+        };
+      })
+    : [];
 
-  const [fileList, setFile] = useState<Array<UploadFile>>(taskFileAll);
+  const [fileList, setFile] = useState<Array<any>>(taskFileAll);
   const [, setProgress] = useState(0);
   const [visibleModalDelete, setVisibleModalDelete] = useState(false);
   const [fileForDelete, setfileForDelete] = useState<UploadFile>();
@@ -131,7 +133,10 @@ const Attachments = () => {
 
   return (
     <Col className={styles.col}>
-      <p className={styles.text}>Вложения</p>
+      <div className={styles.wrapperFlex}>
+        <PaperClipOutlined className={styles.PaperClipOutlined} />
+        <p className={styles.text}>Вложения</p>
+      </div>
       <Upload.Dragger
         className={styles.upload}
         fileList={fileList}

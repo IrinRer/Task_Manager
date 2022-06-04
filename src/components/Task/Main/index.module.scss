@@ -4,7 +4,11 @@
 .taskMain {
   width: 60%;
   padding: 32px;
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  row-gap: 40px;
+  background-color: $bg-secondary;
+  border-top-left-radius: 16px;
 
   :global(.ant-input).comm {
     font-size: $font-size-m;
@@ -23,23 +27,29 @@
     box-shadow: none;
     color: $text-color;
   }
+
   .titleWrapper {
     display: flex;
-    gap: 20px;
-    .title {
-      flex-grow: 1;
-    }
-    .options {
-      display: flex;
-      justify-content: center;
-      padding-top: 20px;
-      width: 40px;
-    }
+    justify-content: space-between;
+    column-gap: 30px;
   }
 }
 
-.wrapperAttachments {
+.taskHeader {
   display: flex;
-  align-items: baseline;
-  gap: 10px;
+  flex-direction: column;
+}
+
+.titleRow {
+  display: flex;
+  column-gap: 30px;
+}
+
+.options {
+  display: flex;
+  column-gap: 22px;
+}
+
+.border {
+  border-bottom: 1px solid $dark-secondary;
 }

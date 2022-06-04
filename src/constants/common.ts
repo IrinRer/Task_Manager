@@ -66,6 +66,8 @@ export enum BlockTitle {
 }
 export const USERS_BY_ONE_MAX_COUNT = 3;
 
+export const DEFAULT_CHECK_LIST_TITLE = 'Чек-лист';
+
 export const DESCRIPTION_LENGTH_EXPAND = 300;
 
 export const DESCRIPTION_MAX_LENGTH = 500;

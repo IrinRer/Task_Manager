@@ -1,5 +1,5 @@
 import { AxiosRequestConfig, AxiosError } from 'axios';
-import { IFileList } from 'constants/types/attachments/attachments';
+import { IFileList } from 'constants/attachments/attachments';
 
 export const ATTACHMENTS_SLICE_ALIAS = 'attachments';
 
@@ -25,7 +25,6 @@ export interface IFileThunk {
 export interface IPayloadFile {
   content_type: string;
   image_height: string;
-  image_thumbnail: string | null;
   image_width: string;
   name_original: string;
   size: number;

@@ -33,8 +33,8 @@ export interface IResponseTask {
   roles: Array<ITaskRoles> | null;
   tags: IResponseTags[];
   progress: IProgress;
-  check_lists: []; 
-  storage_files: any;
+  check_lists: Array<ICheckList>;
+  storage_files: [];
   storage_files_meta: {
     total: number;
   };
@@ -52,4 +52,20 @@ export interface ITaskRoles {
   };
   task_role: IRoles;
   assign_user: IUser;
+}
+
+export interface ICheckList {
+  check_list_id: string;
+  title: string;
+  created: string;
+  updated: string;
+  items: Array<ICheckListItem>;
+}
+
+export interface ICheckListItem {
+  check_list_item_id: string;
+  message: string;
+  complete: boolean;
+  created: string;
+  updated: string;
 }
