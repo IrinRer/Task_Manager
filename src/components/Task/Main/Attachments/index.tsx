@@ -49,10 +49,15 @@ const Attachments = () => {
           type: item.content_type,
           storageId: item.storage_file_id,
           response: 'Ok',
+          status: 'done',
         };
       })
     : [];
 
+  // any потому что UploadFile нельзя назначить для taskFileAll, так как
+  // taskFileAll я делаю сама. taskFileAll нужен для того, чтобы отображать уже
+  // назначенные файлы. Заменить UploadFile на другое тоже не получается, так как
+  // это стандартный тип для файлов и есть несовпадение в originFileObj
   const [fileList, setFile] = useState<Array<any>>(taskFileAll);
   const [, setProgress] = useState(0);
   const [visibleModalDelete, setVisibleModalDelete] = useState(false);

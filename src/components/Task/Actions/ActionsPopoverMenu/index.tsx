@@ -7,7 +7,10 @@ import Spinner from 'components/Common/Spinner';
 import { addCheckList } from 'store/editTask/checkLists/addCheckList/thunk';
 import { isAddCheckListLoading } from 'store/editTask/checkLists/addCheckList/selectors';
 import { setClickedAttachments } from 'store/editTask/attachments/slice';
-import { isClickedAttachments } from 'store/editTask/attachments/selectors';
+import {
+  getfileName,
+  isClickedAttachments,
+} from 'store/editTask/attachments/selectors';
 import styles from './index.module.scss';
 
 const ActionsPopoverMenu = () => {
@@ -16,7 +19,10 @@ const ActionsPopoverMenu = () => {
   const isCheckListLoading = useAppSelector(isAddCheckListLoading);
   const addCheckListButtonIsActive = !!checkList;
 
-  const addAttachmentsButtonIsActive = useAppSelector(isClickedAttachments);
+  const isClickedAttachmentsBtn = useAppSelector(isClickedAttachments);
+  const attachments = useAppSelector(getfileName);
+  const addAttachmentsButtonIsActive =
+    isClickedAttachmentsBtn || !!attachments.length;
 
   const addCheckListButtonClassName = classnames(styles.menuOption, {
     [styles.menuOptionDisabled]: addCheckListButtonIsActive,
