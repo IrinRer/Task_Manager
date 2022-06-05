@@ -5,23 +5,23 @@ import { TOption } from '../../Task/Info/TaskHook/useSelectOptions';
 
 const { Option } = Select;
 
-interface ISimpleSelect<T> {
+interface ISimpleSelect<T, U> {
   list: T[] | null;
   itemKey: string;
-  itemLabel: string;
+  itemLabel: U;
   itemValue: string;
 }
 
-const SimpleSelect = <T,>(
+const SimpleSelect = <T, U>(
   props: React.PropsWithChildren<
-    ISimpleSelect<T> & SelectProps<SelectValue, TOption>
+    ISimpleSelect<T, U> & SelectProps<SelectValue, TOption>
   >,
 ): React.ReactElement => {
   const { list, itemKey, itemLabel, itemValue, ...rest } = props;
   const children = list?.map((el) => {
     return (
       <Option key={el[itemKey]} value={el[itemValue]}>
-        {el[itemLabel]}
+        {/* itemLabel */}
       </Option>
     );
   });

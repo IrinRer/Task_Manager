@@ -5,6 +5,7 @@ import { EditableContext, RoleContext } from 'constants/common';
 import React, { FC, useContext } from 'react';
 import { IUser } from 'store/users/types';
 import EditableMember from '../EditableMember';
+import MemberItem from '../MemberItem';
 import styles from './index.module.scss';
 
 type TProps = {
@@ -23,14 +24,7 @@ const OneMember: FC<TProps> = ({ user }) => {
     <div className={styles.members}>
       {editable && member ? <EditableMember user={member} /> : null}
 
-      {!editable && member ? (
-        <div className={styles.wrapper}>
-          <div className={styles.avatarWrapper}>
-            <UserAvatar user={member} />
-          </div>
-          <span className={styles.noeditMembers}>{member.name}</span>
-        </div>
-      ) : null}
+      {!editable && member ? <MemberItem user={member} /> : null}
 
       {!member && editable ? <AddMemberButton /> : null}
     </div>

@@ -12,6 +12,7 @@ import { IPopulatedUser } from 'store/users/types';
 import { ROLES } from 'constants/types/common';
 import SimpleSelect from 'components/Common/SimpleSelect';
 import { RoleContext } from 'constants/common';
+import MemberItem from 'components/Task/Members/MemberItem';
 import styles from './index.module.scss';
 import useSelectOptions from '../TaskHook/useSelectOptions';
 import useMembersProps from '../MembersHook/useMembersProps';
@@ -69,7 +70,7 @@ const AddMemberButton: FC = () => {
           {...options.common}
           list={allUsers}
           itemKey="key"
-          itemLabel="name"
+          itemLabel={<MemberItem />}
           itemValue="user_id"
           defaultValue={roleAssign}
           dropdownClassName={styles.dropdown}
