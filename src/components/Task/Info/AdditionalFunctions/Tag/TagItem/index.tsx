@@ -1,11 +1,10 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { Menu } from 'antd';
 import { CaretRightOutlined } from '@ant-design/icons';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { uniqueId } from 'lodash';
 import { MIN_NUMBER_TAGS_ON_PAGE } from 'constants/additionalFunctions/tag';
-import ModalDelete from 'components/Common/ModalDelete';
-import { deleteTagAction } from 'store/common/tags/thunk';
+import { unassignTagAction } from 'store/editTask/additionalFunctions/tag/thunk';
 import { ITag } from 'store/common/tags/types';
 import CustomTag from 'components/Common/CustomTag';
 import styles from '../index.module.scss';
@@ -13,22 +12,14 @@ import styles from '../index.module.scss';
 type TProps = {
   editable: boolean;
   tagSelect?: ITag[];
+  taskId: string | undefined;
 };
 
-const TagItem: FC<TProps> = ({ editable, tagSelect }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [name, setName] = useState('');
-  const [id, setId] = useState<string | undefined>('');
-
+const TagItem: FC<TProps> = ({ editable, tagSelect, taskId }) => {
   const dispatch = useAppDispatch();
 
-  const handleClose = (
-    id: string | undefined,
-    name: string,
-  ) => {
-    setIsVisible(true);
-    setId(id);
-    setName(name);
+  const handleClose = (id: string | undefined, name: string) => {
+    dispatch(unassignTagAction({ tagId: id, taskId, name }));
   };
 
   const tag = tagSelect?.map(({ name, color, task_tag_id: id }) => {
@@ -39,15 +30,10 @@ const TagItem: FC<TProps> = ({ editable, tagSelect }) => {
         closable={editable}
         key={name}
         id={id}
-        onClose={(e) => handleClose(id, name)}
+        onClose={() => handleClose(id, name)}
       />
     );
   });
-
-  const handleOk = () => {
-    dispatch(deleteTagAction(id));
-    setIsVisible(false);
-  };
 
   return (
     <>
@@ -63,14 +49,6 @@ const TagItem: FC<TProps> = ({ editable, tagSelect }) => {
         </Menu.SubMenu>
       </Menu>
       <div className={styles.tag}>{tag?.slice(0, MIN_NUMBER_TAGS_ON_PAGE)}</div>
-      <ModalDelete
-        visible={isVisible}
-        textMain={`Метка ${name} будет удалена из списка меток и из всех задач проекта`}
-        textButton="Удалить метку"
-        setVisibleModalDelete={setIsVisible}
-        file={id || ''}
-        action={handleOk}
-      />
     </>
   );
 };

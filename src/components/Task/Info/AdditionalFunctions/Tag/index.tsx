@@ -50,6 +50,8 @@ const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
 
   const handleOk = () => {
     setIsModalVisibleMain(false);
+    setIsModalVisibleCreate(false);
+
     setColor('');
     setInputValue('');
     form.resetFields();
@@ -81,7 +83,7 @@ const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
 
   return (
     <div className={className}>
-      <TagItem editable={isRights} tagSelect={tagSelect} />
+      <TagItem editable={isRights} tagSelect={tagSelect} taskId={taskId}/>
       {isRights ? (
         <Button
           type="primary"
@@ -92,6 +94,11 @@ const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
           + Добавить метку
         </Button>
       ) : null}
+      <ModalNewTag
+        isVisible={isModalVisibleMain}
+        setVisible={setIsModalVisibleMain}
+        openWindowCreate={openWindowCreate}
+      />
       <Modal
         title="Новая метка"
         visible={isModalVisibleCreate}
@@ -137,11 +144,6 @@ const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
           </Form.Item>
         </Form>
       </Modal>
-      <ModalNewTag
-        isVisible={isModalVisibleMain}
-        setVisible={setIsModalVisibleMain}
-        openWindowCreate={openWindowCreate}
-      />
     </div>
   );
 };

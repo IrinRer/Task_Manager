@@ -24,16 +24,17 @@ export const createTagAction = createAsyncThunk(
   },
 );
 
-// export const deleteTagAction = createAsyncThunk(
-//   `${TAG_SLICE_ALIAS}/delete`,
-//   async (tagId: string | undefined, { rejectWithValue }) => {
-//     try {
-//       const response = await api().delete(`/api/v1.0/task/tags/${tagId}`);
-//       notification.success({ message: 'Метка успешно удалена' });
-//       return response.data.data;
-//     } catch (error) {
-//       notification.error({ message: 'Произошла ошибка удаления!' });
-//       return rejectWithValue(error);
-//     }
-//   },
-// );
+export const unassignTagAction = createAsyncThunk(
+  `${TAG_SLICE_ALIAS}/unassign`,
+  async (tag: any, { rejectWithValue }) => {
+    try {
+      await api().post(`/api/v1.0/task/tasks/${tag.taskId}/tag-unassign`, {
+        task_tag_id: tag.tagId,
+      });
+      return tag.name;
+    } catch (error) {
+      notification.error({ message: 'Произошла ошибка открепления метки!' });
+      return rejectWithValue(error);
+    }
+  },
+);
