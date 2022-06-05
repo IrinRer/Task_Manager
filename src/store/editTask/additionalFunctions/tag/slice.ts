@@ -1,6 +1,6 @@
 import {
   createTagAction,
-  deleteTagAction,
+
 } from 'store/editTask/additionalFunctions/tag/thunk';
 import { AxiosError } from 'axios';
 import { IResponseTask } from 'store/common/task/types';
@@ -49,27 +49,27 @@ export const tagSlice = createSlice({
       state.loading = false;
     },
 
-    [deleteTagAction.pending.type]: (state) => {
-      state.loading = true;
-      state.error = null;
-    },
-    [deleteTagAction.fulfilled.type]: (
-      state,
-      { payload }: PayloadAction<ITag>,
-    ) => {
-      state.sentTag = state.sentTag?.filter(
-        (item) => item.name !== payload.name,
-      );
-      state.loading = false;
-    },
-    [deleteTagAction.rejected.type]: (
-      state,
-      { payload }: PayloadAction<AxiosError>,
-    ) => {
-      state.sentTag = initialState.sentTag;
-      state.loading = false;
-      state.error = payload;
-    },
+    // [deleteTagAction.pending.type]: (state) => {
+    //   state.loading = true;
+    //   state.error = null;
+    // },
+    // [deleteTagAction.fulfilled.type]: (
+    //   state,
+    //   { payload }: PayloadAction<ITag>,
+    // ) => {
+    //   state.sentTag = state.sentTag?.filter(
+    //     (item) => item.name !== payload.name,
+    //   );
+    //   state.loading = false;
+    // },
+    // [deleteTagAction.rejected.type]: (
+    //   state,
+    //   { payload }: PayloadAction<AxiosError>,
+    // ) => {
+    //   state.sentTag = initialState.sentTag;
+    //   state.loading = false;
+    //   state.error = payload;
+    // },
   },
 });
 

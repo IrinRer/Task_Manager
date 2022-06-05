@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, Button } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
+import { UploadFile } from 'antd/lib/upload/interface';
 import styles from './index.module.scss';
 
 interface IProps {
@@ -8,8 +9,8 @@ interface IProps {
   textButton: string;
   visible: boolean;
   setVisibleModalDelete: React.Dispatch<React.SetStateAction<boolean>>;
-  action: (arg: string | undefined) => void;
-  file: string | undefined;
+  action: (arg: string | UploadFile) => void;
+  file: string | UploadFile;
 }
 
 const ModalDelete: React.FC<IProps> = ({
@@ -23,10 +24,12 @@ const ModalDelete: React.FC<IProps> = ({
   const handleOk = () => {
     action(file);
     setVisibleModalDelete(false);
+    console.log('onOk ModalDelete');
   };
 
   const handleCancel = () => {
     setVisibleModalDelete(false);
+    console.log('handleCancel ModalDelete');
   };
 
   return (
@@ -40,6 +43,7 @@ const ModalDelete: React.FC<IProps> = ({
           className={styles.btn_modal}
           key="submit"
           danger
+          htmlType='submit'
           type="primary"
           icon={<DeleteOutlined />}
           onClick={handleOk}

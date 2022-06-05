@@ -18,6 +18,5 @@ export interface ITag {
 }
 
 export interface IPopulatedTag extends ITag {
-  value: string;
   key: string | undefined;
 }

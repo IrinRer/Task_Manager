@@ -2,13 +2,14 @@ import React, { FC, useState } from 'react';
 import { Menu } from 'antd';
 import { CaretRightOutlined } from '@ant-design/icons';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import { deleteTagAction } from 'store/editTask/additionalFunctions/tag/thunk';
 import { uniqueId } from 'lodash';
 import { MIN_NUMBER_TAGS_ON_PAGE } from 'constants/additionalFunctions/tag';
 import ModalDelete from 'components/Common/ModalDelete';
+import { deleteTagAction } from 'store/common/tags/thunk';
 import { ITag } from 'store/common/tags/types';
 import CustomTag from 'components/Common/CustomTag';
 import styles from '../index.module.scss';
+
 
 type TProps = {
   editable: boolean,
@@ -70,7 +71,7 @@ const TagItem: FC<TProps> = ({ editable, tagSelect }) => {
         textMain={`Метка ${name} будет удалена из списка меток и из всех задач проекта`}
         textButton="Удалить метку"
         setVisibleModalDelete={setIsVisible}
-        file={id}
+        file={id || ''}
         action={handleOk}
       />
     </>

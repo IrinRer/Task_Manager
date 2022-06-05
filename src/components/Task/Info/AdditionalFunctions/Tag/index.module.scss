@@ -39,8 +39,18 @@
     color: $blue;
   }
 }
-
 .modalTag {
+  :global(.ant-modal-header) {
+    border-bottom: none !important;
+  }
+
+  :global(.ant-modal-footer) {
+    border-top: none !important;
+  }
+}
+
+.modalTag,
+.modalTagMain {
   :global(.ant-modal-content),
   :global(.ant-modal),
   :global(.ant-modal-body) {
@@ -53,18 +63,18 @@
 
   :global(.ant-modal-header) {
     border-radius: 16px !important;
-    border-bottom: none !important;
   }
 
   :global(.ant-modal-footer) {
     text-align: left !important;
     display: flex;
-    padding: 24px;
-    padding-top: 0;
+    padding: 10px 24px;
   }
 
   :global(.ant-modal-body) {
     padding-bottom: 10px !important;
+    overflow: auto;
+    max-height: 230px;
   }
 
   :global(.ant-modal-footer) > .btn {
@@ -77,10 +87,6 @@
     &:disabled {
       background: $gray-500;
     }
-  }
-
-  :global(.ant-modal-footer) {
-    border-top: none !important;
   }
 
   :global(.ant-input).input {
@@ -292,4 +298,92 @@
 :global(.ant-menu) {
   background: none;
   padding-left: 0;
+}
+
+.wrapperMenuItem {
+  :global(.ant-menu-title-content) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .colorItem {
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+    margin-right: 8px;
+
+    &[color='orange'] {
+      background-color: $orange;
+    }
+
+    &[color='red'] {
+      background-color: $red;
+    }
+
+    &[color='green'] {
+      background-color: $salad;
+    }
+
+    &[color='yellow'] {
+      background-color: $yellow;
+    }
+
+    &[color='blue'] {
+      background-color: $blue;
+    }
+
+    &[color='pink'] {
+      background-color: $pink;
+    }
+
+    &[color='purple'] {
+      background-color: $purple;
+    }
+  }
+
+  p {
+    font-size: $font-size-m;
+    line-height: 20px;
+    margin-bottom: 0px;
+  }
+}
+
+.menuItem,
+.wrapperIcon {
+  display: flex;
+  align-items: center;
+
+  :global(.ant-btn).btnIcon {
+    border: none;
+    background: none;
+    box-shadow: none;
+  }
+
+  :global(.anticon).iconEdit,
+  :global(.anticon).iconDelete {
+    background-color: $gray-100;
+    padding: 5px;
+    border-radius: 4px;
+    margin-left: 3px;
+
+    svg {
+      color: $gray-500;
+    }
+  }
+
+  :global(.anticon).iconEdit {
+    svg {
+      &:hover {
+        color: $blue;
+      }
+    }
+  }
+
+  :global(.anticon).iconDelete {
+    svg {
+      &:hover {
+        color: $red;
+      }
+    }
+  }
 }

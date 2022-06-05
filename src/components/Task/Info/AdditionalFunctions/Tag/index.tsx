@@ -13,17 +13,19 @@ import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
 import { getRights } from 'helpers/rights';
 import { RIGHTS_NAMES } from 'constants/rights';
 import TagItem from './TagItem';
+import ModalNewTag from './ModalNewTag';
 
 import styles from './index.module.scss';
 
 const { Text } = Typography;
 
 interface IProps {
-  tagSelect: ITag[] | undefined
+  tagSelect: ITag[] | undefined;
 }
 
 const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalVisibleMain, setIsModalVisibleMain] = useState(false);
+  const [isModalVisibleCreate, setIsModalVisibleCreate] = useState(false);
   const [colorTag, setColor] = useState('');
   const [inputValue, setInputValue] = useState('');
   const [form] = Form.useForm();
@@ -37,12 +39,20 @@ const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
   const uniqueTagName = useAppSelector(uniqueTagNameSelector);
   const isUniqueTag = uniqueTagName?.indexOf(inputValue) === -1 && inputValue;
 
+  const openWindowCreate = () => {
+    setIsModalVisibleCreate(true);
+    setIsModalVisibleMain(false)
+    console.log('openWindowCreate')
+  };
+
   const showModal = () => {
-    setIsModalVisible(true);
+    setIsModalVisibleMain(true);
+    console.log('showModal')
   };
 
   const handleOk = () => {
-    setIsModalVisible(false);
+    setIsModalVisibleMain(false);
+    console.log('handleOk')
     setColor('');
     setInputValue('');
     form.resetFields();
@@ -55,7 +65,8 @@ const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
   };
 
   const handleCancel = () => {
-    setIsModalVisible(false);
+    setIsModalVisibleCreate(false);
+    console.log('handleCancel')
   };
 
   const onChecked = (e) => {
@@ -74,7 +85,7 @@ const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
 
   return (
     <div className={className}>
-      <TagItem editable={isRights} tagSelect={tagSelect}/>
+      <TagItem editable={isRights} tagSelect={tagSelect} />
       {isRights ? (
         <Button
           type="primary"
@@ -87,7 +98,7 @@ const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
       ) : null}
       <Modal
         title="Новая метка"
-        visible={isModalVisible}
+        visible={isModalVisibleCreate}
         width={310}
         className={styles.modalTag}
         footer={
@@ -130,6 +141,11 @@ const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
           </Form.Item>
         </Form>
       </Modal>
+      <ModalNewTag
+        isVisible={isModalVisibleMain}
+        setVisible={setIsModalVisibleMain}
+        openWindowCreate={openWindowCreate}
+      />
     </div>
   );
 };
