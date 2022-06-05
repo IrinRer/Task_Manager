@@ -48,6 +48,8 @@ const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
     form.resetFields();
 
     if (inputValue && isUniqueTag && uniqueTagName.length < MAX_NUMBER_TAGS) {
+      // eslint-disable-next-line
+      debugger
       dispatch(
         createTagAction({ name: inputValue, color: colorTag, task_id: taskId }),
       );
@@ -97,8 +99,7 @@ const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
         footer={
           <Button
             className={styles.btn}
-            onSubmit={handleOk}
-            tabIndex={0}
+            onClick={handleOk}
             htmlType="submit"
             disabled={!isUniqueTag}
           >
