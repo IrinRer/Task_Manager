@@ -24,12 +24,10 @@ const ModalDelete: React.FC<IProps> = ({
   const handleOk = () => {
     action(file);
     setVisibleModalDelete(false);
-    console.log('onOk ModalDelete');
   };
 
   const handleCancel = () => {
     setVisibleModalDelete(false);
-    console.log('handleCancel ModalDelete');
   };
 
   return (

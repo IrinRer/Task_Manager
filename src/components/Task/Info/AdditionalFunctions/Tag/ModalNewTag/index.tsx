@@ -16,21 +16,17 @@ const ModalNewTag = ({ isVisible, setVisible, openWindowCreate }) => {
   const [name, setName] = useState('');
   const [isVisibleModalDelete, setIsVisibleModalDelete] = useState(false);
   const [id, setId] = useState<string | undefined>('');
-
   const onOk = (id: string | undefined, name: string) => {
     setIsVisibleModalDelete(true);
-    console.log('onOk ModalNewTag')
     setName(name);
     setId(id);
   };
 
   const onDelete = () => {
-    console.log('onDelete ModalNewTag')
     dispatch(deleteTagAction(id));
   };
 
   const handleCancel = () => {
-    console.log('handleCancel ModalNewTag')
     setVisible(false)
   };
 

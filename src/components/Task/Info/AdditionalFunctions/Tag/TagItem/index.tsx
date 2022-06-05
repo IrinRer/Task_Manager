@@ -10,10 +10,9 @@ import { ITag } from 'store/common/tags/types';
 import CustomTag from 'components/Common/CustomTag';
 import styles from '../index.module.scss';
 
-
 type TProps = {
-  editable: boolean,
-  tagSelect?: ITag[]
+  editable: boolean;
+  tagSelect?: ITag[];
 };
 
 const TagItem: FC<TProps> = ({ editable, tagSelect }) => {
@@ -24,11 +23,9 @@ const TagItem: FC<TProps> = ({ editable, tagSelect }) => {
   const dispatch = useAppDispatch();
 
   const handleClose = (
-    e: React.MouseEvent<HTMLElement>,
     id: string | undefined,
     name: string,
   ) => {
-    e.preventDefault();
     setIsVisible(true);
     setId(id);
     setName(name);
@@ -42,7 +39,7 @@ const TagItem: FC<TProps> = ({ editable, tagSelect }) => {
         closable={editable}
         key={name}
         id={id}
-        onClose={(e) => handleClose(e, id, name)}
+        onClose={(e) => handleClose(id, name)}
       />
     );
   });

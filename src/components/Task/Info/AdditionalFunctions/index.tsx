@@ -49,6 +49,8 @@ const AdditionalFunctions = () => {
     tagSelect,
   );
 
+  console.log(tagSelect)
+
   return (
     <>
       <DateTasks dateStop={dateStop} />

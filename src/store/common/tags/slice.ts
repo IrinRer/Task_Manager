@@ -6,7 +6,9 @@ import {
   ITag,
 } from 'store/common/tags/types';
 import { AxiosError } from 'axios';
+import { createTagAction } from 'store/editTask/additionalFunctions/tag/thunk';
 import { deleteTagAction, fetchTagsAction } from './thunk';
+
 
 const initialState: ICommonTagsReducer = {
   tags: [],
@@ -37,6 +39,15 @@ export const commonTagsSlice = createSlice({
       state.tags = [];
       state.loading = false;
       state.error = payload;
+    },
+    
+    // нужен, чтобы при добавлении нового тега
+    [createTagAction.fulfilled.type]: (
+      state,
+      { payload }: PayloadAction<ITag>,
+    ) => {
+      state.tags = state.tags?.concat(payload);
+      state.loading = false;
     },
 
     [deleteTagAction.pending.type]: (state) => {

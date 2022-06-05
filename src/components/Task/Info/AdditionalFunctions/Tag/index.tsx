@@ -41,18 +41,15 @@ const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
 
   const openWindowCreate = () => {
     setIsModalVisibleCreate(true);
-    setIsModalVisibleMain(false)
-    console.log('openWindowCreate')
+    setIsModalVisibleMain(false);
   };
 
   const showModal = () => {
     setIsModalVisibleMain(true);
-    console.log('showModal')
   };
 
   const handleOk = () => {
     setIsModalVisibleMain(false);
-    console.log('handleOk')
     setColor('');
     setInputValue('');
     form.resetFields();
@@ -66,7 +63,6 @@ const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
 
   const handleCancel = () => {
     setIsModalVisibleCreate(false);
-    console.log('handleCancel')
   };
 
   const onChecked = (e) => {

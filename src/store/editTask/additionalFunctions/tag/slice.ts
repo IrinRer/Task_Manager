@@ -1,16 +1,16 @@
-import {
-  createTagAction,
-
-} from 'store/editTask/additionalFunctions/tag/thunk';
 import { AxiosError } from 'axios';
-import { IResponseTask } from 'store/common/task/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ITag } from '../../../common/tags/types';
+import { createTagAction } from 'store/editTask/additionalFunctions/tag/thunk';
+import { deleteTagAction, fetchTagsAction } from 'store/common/tags/thunk';
+import { IResponseTask } from 'store/common/task/types';
+import { fetchTaskAction } from 'store/common/task/thunk';
+import { ITag } from 'store/common/tags/types';
 import { TAG_SLICE_ALIAS, ITagReducer } from './types';
-import { fetchTaskAction } from '../../../common/task/thunk';
 
-const initialState: ITagReducer = {
+// ITagReducer
+const initialState: any = {
   sentTag: [],
+  tags: [],
   loading: false,
   error: null,
 };
@@ -49,27 +49,18 @@ export const tagSlice = createSlice({
       state.loading = false;
     },
 
-    // [deleteTagAction.pending.type]: (state) => {
-    //   state.loading = true;
-    //   state.error = null;
-    // },
-    // [deleteTagAction.fulfilled.type]: (
-    //   state,
-    //   { payload }: PayloadAction<ITag>,
-    // ) => {
-    //   state.sentTag = state.sentTag?.filter(
-    //     (item) => item.name !== payload.name,
-    //   );
-    //   state.loading = false;
-    // },
-    // [deleteTagAction.rejected.type]: (
-    //   state,
-    //   { payload }: PayloadAction<AxiosError>,
-    // ) => {
-    //   state.sentTag = initialState.sentTag;
-    //   state.loading = false;
-    //   state.error = payload;
-    // },
+    [deleteTagAction.fulfilled.type]: (
+      state,
+      { payload }: PayloadAction<ITag>,
+    ) => {
+      // state.sentTag = state.sentTag?.filter(
+      //   (item) => item.name !== payload.name,
+      // );
+      state.sentTag = state.sentTag?.filter(
+        (item) => item.name !== payload.name,
+      );
+      state.loading = false;
+    },
   },
 });
 
