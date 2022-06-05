@@ -12,8 +12,8 @@ import {
 } from 'store/editTask/attachments/thunk';
 import {
   IOptions,
-  acceptFormat,
-  progress,
+  ACCEPT_FORMAT,
+  PROGRESS,
 } from 'constants/attachments/attachments';
 import { IPayloadFile } from 'store/editTask/attachments/types';
 import { uniqueId } from 'lodash';
@@ -64,8 +64,6 @@ const Attachments = () => {
   const [fileForDelete, setfileForDelete] = useState<UploadFile>();
 
   const determineIndex = (file: UploadFile) => {
-    // определяется индекс вложения, потом по этому индексу будет удаляться
-    // или скачиваться
     return fileName.indexOf(file?.originFileObj?.name || '');
   };
 
@@ -145,9 +143,9 @@ const Attachments = () => {
       <Upload.Dragger
         className={styles.upload}
         fileList={fileList}
-        accept={acceptFormat}
+        accept={ACCEPT_FORMAT}
         listType="picture"
-        progress={progress}
+        progress={PROGRESS}
         showUploadList={{ showRemoveIcon: true, showDownloadIcon: true }}
         beforeUpload={beforeUpload}
         customRequest={handleSubmit}
