@@ -15,10 +15,10 @@
     margin-left: 10px;
     margin-top: 5px;
     border: none;
-    background-color: #f1f1f5;
+    background-color: $gray-200;
 
     &:hover {
-      background-color: #f1f1f5;
+      background-color: $gray-200;
       border: none;
     }
 
@@ -37,7 +37,7 @@
   background: none;
   height: auto;
   border-radius: 8px;
-  border: 1px dashed #b5b5be;
+  border: 1px dashed $gray-500;
 
   :global(.ant-upload-drag-container) {
     display: flex;
@@ -46,8 +46,8 @@
   }
 
   &:hover {
-    background-color: #f1f1f5;
-    border: 1px dashed #b5b5be;
+    background-color: $gray-200;
+    border: 1px dashed $gray-500;
 
     .btnAttachment {
       background-color: white;
@@ -56,8 +56,8 @@
 }
 
 :global(.ant-upload.ant-upload-drag.ant-upload-drag-hover).upload {
-  background-color: #f1f1f5;
-  border: 1px dashed #b5b5be;
+  background-color: $gray-200;
+  border: 1px dashed $gray-500;
 
   .btnAttachment {
     background-color: white;

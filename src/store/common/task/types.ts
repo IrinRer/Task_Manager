@@ -1,6 +1,7 @@
 import { ITag } from 'store/common/tags/types';
 import { AxiosError } from 'axios';
 import { IUser } from 'store/users/types';
+import { IPayloadFile } from 'store/editTask/attachments/types';
 import { IPriority } from '../priorities/types';
 import { IProgress } from '../progresses/types';
 import { IRoles } from '../roles/types';
@@ -34,7 +35,7 @@ export interface IResponseTask {
   tags: IResponseTags[];
   progress: IProgress;
   check_lists: Array<ICheckList>;
-  storage_files: [];
+  storage_files: Array<IPayloadFile>;
   storage_files_meta: {
     total: number;
   };

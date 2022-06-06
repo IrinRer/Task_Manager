@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Button, Upload, Col, notification } from 'antd';
 import { PlusOutlined, PaperClipOutlined } from '@ant-design/icons';
 import type { RcFile, UploadFile } from 'antd/es/upload/interface';
-// import type {UploadRequestOption} from 'rc-upload/lib/interface';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import {
