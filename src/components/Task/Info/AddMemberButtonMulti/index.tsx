@@ -24,6 +24,7 @@ import { IPopulatedUser } from 'store/users/types';
 import SimpleSelect from 'components/Common/SimpleSelect';
 import { ROLES } from 'constants/types/common';
 import { RoleContext } from 'constants/common';
+import MemberItem from 'components/Task/Members/MemberItem';
 import styles from '../AddMemberButton/index.module.scss';
 import useSelectOptions from '../TaskHook/useSelectOptions';
 import useMembersProps from '../MembersHook/useMembersProps';
@@ -154,7 +155,7 @@ const AddMemberButtonMulti: FC<TProps> = ({ usersMaxCount }) => {
           {...options.common}
           list={isDisabled ? getOnlySelectedUsers : allUsers}
           itemKey="key"
-          itemLabel="name"
+          OptionItem={MemberItem}
           itemValue="user_id"
           mode="multiple"
           dropdownClassName={styles.dropdown}

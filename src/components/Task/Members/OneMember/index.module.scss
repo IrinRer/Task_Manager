@@ -1,20 +1,6 @@
 .members {
+  width: 100%;
+}
+.nolist {
   width: 56%;
-  .wrapper {
-    padding-bottom: 16px;
-  }
-  .noeditMembers {
-    display: inline-block;
-    width: 80%;
-  }
-  .avatarWrapper {
-    display: inline-block;
-  }
-  :global(.ant-avatar) {
-    width: 18px;
-    height: 18px;
-    line-height: 18px;
-    margin-right: 8px;
-    vertical-align: sub;
-  }
 }

@@ -1,37 +1,34 @@
-import React, { FC, ReactElement } from 'react';
+import React from 'react';
 import { Select } from 'antd';
 import { SelectProps, SelectValue } from 'antd/lib/select';
-import MemberItem from 'components/Task/Members/MemberItem';
 import { TOption } from '../../Task/Info/TaskHook/useSelectOptions';
 
 const { Option } = Select;
 
-interface TProps<T> {
-  user?: T;
-}
-
-interface ISimpleSelect<T, U> {
+interface ISimpleSelect<T> {
   list: T[] | null;
   itemKey: string;
   itemLabel?: string;
   itemValue: string;
-  OptionItem?: FC<TProps<T>>;
+  // optionPropName?: string;
+  // OptionItem?: React.FC<{ optionPropName: T }>;
+  OptionItem?: React.FC<{ user: T; size?: 'L' | 'M' }>;
 }
 
-const withAdd = <R, T>(BaseComponent: React.FC<TProps<T>>) => {
-  return (props: React.PropsWithChildren<TProps<T>>) => {
+const withAdd = <P,>(BaseComponent: React.FC<P>) => {
+  return (props: P) => {
     return <BaseComponent {...props} />;
   };
 };
 
-const SimpleSelect = <T, U>(
+const SimpleSelect = <T,>(
   props: React.PropsWithChildren<
-    ISimpleSelect<T, U> & SelectProps<SelectValue, TOption>
+    ISimpleSelect<T> & SelectProps<SelectValue, TOption>
   >,
 ): React.ReactElement => {
   const { list, itemKey, itemLabel, itemValue, OptionItem, ...rest } = props;
 
-  const OptionElem = withAdd<undefined, T>(
+  const OptionElem = withAdd<{ user: T; size?: 'L' | 'M' }>(
     OptionItem ||
       (() => {
         return null;
@@ -41,7 +38,7 @@ const SimpleSelect = <T, U>(
   const itemList = list?.map((el) => {
     return (
       <Option key={el[itemKey]} value={el[itemValue]}>
-        <OptionElem user={el} />
+        <OptionElem user={el} size="L" />
       </Option>
     );
   });

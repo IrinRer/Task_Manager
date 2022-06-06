@@ -11,6 +11,7 @@ import classnames from 'classnames';
 import { ROLES } from 'constants/types/common';
 import SimpleSelect from 'components/Common/SimpleSelect';
 import { EditableContext, RoleContext } from 'constants/common';
+import MemberItem from 'components/Task/Members/MemberItem';
 import styles from '../AddMemberButton/index.module.scss';
 import stylesList from './index.module.scss';
 import useSelectOptions from '../TaskHook/useSelectOptions';
@@ -106,7 +107,7 @@ const ListMemberMulti: FC<TProps> = ({ isActive, setIsActive }) => {
         {...options.common}
         list={users}
         itemKey="user_id"
-        itemLabel="name"
+        OptionItem={MemberItem}
         itemValue="user_id"
         mode="multiple"
         menuItemSelectedIcon={editable ? <CloseOutlined /> : null}

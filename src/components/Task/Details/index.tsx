@@ -1,9 +1,9 @@
 import React from 'react';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import {
-  getTaskResponsible,
   getTaskId,
   getEditStatusLoading,
+  getTaskAuthor,
 } from 'store/editTask/selectors';
 import Spinner from 'components/Common/Spinner';
 import StatusWithPopover from 'components/Common/StatusWithPopover';
@@ -14,7 +14,7 @@ import styles from './index.module.scss';
 import OneMember from '../Members/OneMember';
 
 const Info: React.FC = () => {
-  const responsible = useAppSelector(getTaskResponsible);
+  const author = useAppSelector(getTaskAuthor);
   const taskId = useAppSelector(getTaskId);
   const editLoading = useAppSelector(getEditStatusLoading);
 
@@ -35,9 +35,9 @@ const Info: React.FC = () => {
         </span>
       </div>
       <div className={styles.infoLine}>
-        <span>{ROLES.responsible}</span>
-        {responsible && (
-          <RoleContext.Provider value={ROLES.responsible}>
+        <span>{ROLES.author_short}</span>
+        {author && (
+          <RoleContext.Provider value={ROLES.author}>
             <EditableContext.Provider value={false}>
               <OneMember />
             </EditableContext.Provider>

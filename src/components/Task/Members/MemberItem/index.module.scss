@@ -1,5 +1,7 @@
 .memberItem {
-  padding-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 
   .noeditMembers {
     display: inline-block;
@@ -14,5 +16,17 @@
     line-height: 18px;
     margin-right: 8px;
     vertical-align: sub;
+  }
+}
+.avatarM {
+  :global(.ant-avatar) {
+    width: 18px;
+    height: 18px;
+  }
+}
+.avatarL {
+  :global(.ant-avatar) {
+    width: 24px;
+    height: 24px;
   }
 }
