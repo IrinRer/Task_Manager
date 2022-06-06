@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 import AddMemberButton from 'components/Task/Info/AddMemberButton';
 import useMembersProps from 'components/Task/Info/MembersHook/useMembersProps';
 import { EditableContext, RoleContext } from 'constants/common';
@@ -21,7 +20,7 @@ const OneMember: FC<TProps> = ({ user }) => {
   const member = user || userFromTaskRole;
 
   return (
-    <div className={classnames(user ? styles.members : styles.nolist)}>
+    <div className={user ? styles.inlist : styles.nolist}>
       {editable && member ? <EditableMember user={member} /> : null}
 
       {!editable && member ? <MemberItem user={member} /> : null}
