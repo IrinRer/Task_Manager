@@ -70,7 +70,7 @@ const AddMemberButton: FC = () => {
           {...options.common}
           list={allUsers}
           itemKey="key"
-          itemLabel={<MemberItem />}
+          OptionItem={MemberItem}
           itemValue="user_id"
           defaultValue={roleAssign}
           dropdownClassName={styles.dropdown}

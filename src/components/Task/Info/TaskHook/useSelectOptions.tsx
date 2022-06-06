@@ -73,8 +73,8 @@ const useSelectOptions = () => {
       placeholder: 'Искать участников',
       optionFilterProp: 'children',
       defaultOpen: true,
-      filterOption,
-      filterSort,
+      // filterOption,
+      // filterSort,
     },
     particular: {
       handleSearch,
