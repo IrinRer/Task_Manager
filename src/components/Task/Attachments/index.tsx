@@ -14,8 +14,6 @@ import {
   ACCEPT_FORMAT,
   PROGRESS,
 } from 'constants/attachments/attachments';
-import { IPayloadFile } from 'store/editTask/attachments/types';
-import { uniqueId } from 'lodash';
 import { getTaskId } from 'store/editTask/selectors';
 import { getTaskFile } from 'store/common/task/selectors';
 import {
@@ -23,6 +21,7 @@ import {
   getStorageFile,
 } from 'store/editTask/attachments/selectors';
 import { config } from 'helpers/progressBar';
+import { fileFormat } from 'helpers/fileFormat';
 import ModalDelete from 'components/Common/ModalDelete';
 import styles from './index.module.scss';
 
@@ -33,26 +32,7 @@ const Attachments = () => {
   const fileName = useAppSelector(getfileName);
   const taskFile = useAppSelector(getTaskFile);
 
-  const taskFileAll = taskFile?.length
-    ? taskFile?.map((item: IPayloadFile) => {
-        // формат в котором вложения поступают с бэка и формат вложений
-        // при загрузки разный, поэтому приходится приводить к одному виду
-        const id = uniqueId();
-        return {
-          uid: id,
-          name: item.name_original,
-          originFileObj: {
-            uid: id,
-            name: item.name_original,
-          },
-          size: item.size,
-          type: item.content_type,
-          storageId: item.storage_file_id,
-          response: 'Ok',
-          status: 'done',
-        };
-      })
-    : [];
+  const taskFileAll = fileFormat(taskFile);
 
   // any потому что UploadFile нельзя назначить для taskFileAll, так как
   // taskFileAll я делаю сама. taskFileAll нужен для того, чтобы отображать уже
