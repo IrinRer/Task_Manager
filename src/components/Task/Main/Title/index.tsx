@@ -11,7 +11,6 @@ import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { ReactComponent as EditIcon } from 'assets/icons/edit.svg';
 import Spinner from 'components/Common/Spinner';
 import classnames from 'classnames';
-// import DropMenu from 'components/Task/Title/AddFunctionality';
 import { Button } from 'antd';
 import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
 import { getRights } from 'helpers/rights';

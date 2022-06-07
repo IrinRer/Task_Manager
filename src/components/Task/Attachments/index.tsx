@@ -22,6 +22,7 @@ import {
   getfileName,
   getStorageFile,
 } from 'store/editTask/attachments/selectors';
+import { config } from 'helpers/progressBar';
 import ModalDelete from 'components/Common/ModalDelete';
 import styles from './index.module.scss';
 
@@ -109,25 +110,14 @@ const Attachments = () => {
   const handleSubmit = (options: IOptions) => {
     const { onSuccess, onError, onProgress } = options;
 
-    // config нужен для того, чтобы отображался progress bar загрузки файла
-    const config = {
-      onUploadProgress: (event: ProgressEvent) => {
-        const definePercent = (event.loaded / event.total) * 100;
-        const percent = Math.floor(definePercent);
-        setProgress(percent);
-        if (percent === 100) {
-          setTimeout(() => setProgress(0), 1000);
-        }
-        onProgress({ percent: definePercent });
-      },
-    };
+    const configProgressBar = config(setProgress, onProgress);
 
     dispatch(
       assignFile({
         fileList: fileList[fileList.length - 1].originFileObj,
         onSuccess,
         onError,
-        config,
+        configProgressBar,
         taskId,
       }),
     );

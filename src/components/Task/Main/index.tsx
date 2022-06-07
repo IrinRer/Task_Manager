@@ -44,7 +44,7 @@ const Main: React.FC = () => {
       </InputWrapper>
 
       {isCheckListLoading ? <Spinner /> : <Checklist />}
-      {isAttachments ? <Attachments /> : null}
+      {isAttachments && <Attachments />}
 
       <InputWrapper
         labelText="Комментарии"

@@ -11,7 +11,7 @@ export interface IAttachmentsReducer {
 }
 
 export interface IFileThunk {
-  config?: AxiosRequestConfig<FormData>;
+  configProgressBar?: AxiosRequestConfig<FormData>;
   fileList?: IFileList | undefined;
   taskId?: string | undefined;
 

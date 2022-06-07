@@ -19,7 +19,7 @@ export const assignFile = createAsyncThunk(
       const responseFile = await api().post(
         `/api/v1.0/storage/files/${responseCreate.data.data.storage_file_id}/upload`,
         formData,
-        file.config,
+        file.configProgressBar,
       );
 
       await api().post(

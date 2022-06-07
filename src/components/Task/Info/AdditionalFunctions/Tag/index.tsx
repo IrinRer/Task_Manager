@@ -48,8 +48,6 @@ const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
     form.resetFields();
 
     if (inputValue && isUniqueTag && uniqueTagName.length < MAX_NUMBER_TAGS) {
-      // eslint-disable-next-line
-      debugger
       dispatch(
         createTagAction({ name: inputValue, color: colorTag, task_id: taskId }),
       );
