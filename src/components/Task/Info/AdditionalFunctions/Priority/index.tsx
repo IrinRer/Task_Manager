@@ -2,15 +2,12 @@ import React from 'react';
 import { Select, Typography } from 'antd';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { changePriorityAction } from 'store/editTask/additionalFunctions/priority/thunk';
-import {
-  getTaskInfoPriority,
-  getTaskInfoPriorityName,
-} from 'store/common/task/selectors';
+import { getTaskInfoPriorityName } from 'store/common/task/selectors';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { selectPopulatedPriorities } from 'store/common/priorities/selectors';
 import { getTaskId } from 'store/editTask/selectors';
 import { PriorityName } from 'constants/types/common';
-
+import { STYLES } from 'constants/common';
 import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
 import { getRights } from 'helpers/rights';
 import { RIGHTS_NAMES } from 'constants/rights';
@@ -19,16 +16,15 @@ import styles from './index.module.scss';
 const { Text } = Typography;
 const { Option } = Select;
 
-const SelectPriority = () => {
+interface IProps {
+  defaultPriority: string | undefined;
+}
+
+const SelectPriority: React.FC<IProps> = ({ defaultPriority }) => {
   const dispatch = useAppDispatch();
   const priorityValue = useAppSelector(selectPopulatedPriorities);
   const taskId = useAppSelector(getTaskId);
-
-  const STYLES: string[] = ['high', 'middle', 'low'];
-
-  const defaultPriority = useAppSelector(getTaskInfoPriority);
   const defaultPriorityName = useAppSelector(getTaskInfoPriorityName);
-
   const myMaxRole = useAppSelector(getMyMaxRoleForTask);
   const isRights = getRights(myMaxRole, RIGHTS_NAMES.editPriority);
 

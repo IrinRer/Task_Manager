@@ -37,7 +37,7 @@ export const fetchTasksAction = createAsyncThunk(
     } catch (error) {
       dispatch(filtersRollBack());
 
-      notification.error({ message: error.message });
+      notification.error({ message: 'Ошибка сети' });
       return rejectWithValue(error.message);
     }
   },
@@ -73,3 +73,4 @@ export const deleteTaskAction = createAsyncThunk(
     }
   },
 );
+

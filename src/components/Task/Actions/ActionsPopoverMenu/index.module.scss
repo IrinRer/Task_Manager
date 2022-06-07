@@ -1,0 +1,28 @@
+@import 'src/styles/colors';
+@import 'src/styles/color-variables';
+@import 'src/styles/font-variables';
+
+.menuOption {
+  margin: 0;
+  padding: 0;
+  font-weight: 400;
+  font-size: $font-size-m;
+  line-height: $line-height-m;
+  color: $gray-800;
+  cursor: pointer;
+  border: none;
+  background-color: $bg-secondary;
+
+  &:hover {
+    color: darken($gray-800, 20%);
+  }
+
+  &:disabled {
+    color: $gray-500;
+    cursor: default;
+
+    &:hover {
+      color: $gray-500;
+    }
+  }
+}

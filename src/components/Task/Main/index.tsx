@@ -1,62 +1,62 @@
 import React from 'react';
 import TextArea from 'antd/lib/input/TextArea';
-import uniqueId from 'lodash/uniqueId';
 import descriptionIcon from 'assets/icons/description.svg';
 import commentsIcon from 'assets/icons/comments.svg';
 import historyIcon from 'assets/icons/history.svg';
+import { useAppSelector } from 'customHooks/redux/useAppSelector';
+import Spinner from 'components/Common/Spinner';
+import { isDeleteCheckListLoading } from 'store/editTask/checkLists/deleteCheckList/selectors';
 import styles from './index.module.scss';
 import History from './History';
 import InputWrapper from './InputWrapper';
 import Options from '../Options';
 import Description from './Description';
 import Title from './Title';
+import Checklist from '../Checklist';
+import Actions from '../Actions';
 
 const Main: React.FC = () => {
-  const elements = [
-    {
-      id: uniqueId(),
-      title: 'Описание',
-      icon: <img src={descriptionIcon} alt="description" />,
-      block: <Description />,
-    },
-    {
-      id: uniqueId(),
-      title: 'Комментарии',
-      icon: <img src={commentsIcon} alt="comments" />,
-      block: (
+  const isCheckListLoading = useAppSelector(isDeleteCheckListLoading);
+
+  return (
+    <div className={styles.taskMain}>
+      <div className={styles.taskHeader}>
+        <div className={styles.titleRow}>
+          <Title />
+          <div className={styles.options}>
+            <Actions />
+            <Options />
+          </div>
+        </div>
+        <div className={styles.border} />
+      </div>
+
+      <InputWrapper
+        labelText="Описание"
+        icon={<img src={descriptionIcon} alt="description" />}
+      >
+        <Description />
+      </InputWrapper>
+
+      {isCheckListLoading ? <Spinner /> : <Checklist />}
+
+      <InputWrapper
+        labelText="Комментарии"
+        icon={<img src={commentsIcon} alt="comments" />}
+      >
         <TextArea
           autoSize
           placeholder="Оставьте комментарий"
           className={styles.comm}
         />
-      ),
-    },
-    {
-      id: uniqueId(),
-      title: 'Действия',
-      icon: <img src={historyIcon} alt="history" />,
-      block: <History />,
-    },
-  ];
+      </InputWrapper>
 
-  return (
-    <div className={styles.taskMain}>
-      <div className={styles.titleWrapper}>
-        <div className={styles.title}>
-          <Title />
-        </div>
-        <div className={styles.options}>
-          <Options />
-        </div>
-      </div>
-
-      {elements.map((el) => {
-        return (
-          <InputWrapper key={el.id} labelText={el.title} icon={el.icon}>
-            {el.block}
-          </InputWrapper>
-        );
-      })}
+      <InputWrapper
+        labelText="Действия"
+        icon={<img src={historyIcon} alt="history" />}
+      >
+        <History />
+      </InputWrapper>
     </div>
   );
 };
