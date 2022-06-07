@@ -4,13 +4,13 @@ import { BlockType } from 'constants/types/common';
 
 import StatusWithPopover from 'components/Common/StatusWithPopover';
 import { TaskContext } from 'constants/taskContext';
-import Attached from '../Attached';
-import Progress from '../Progress';
-import DateString from '../Date';
-import Tags from '../Tags';
-import Roles from '../Roles';
-import Priority from '../Priority';
-import Title from '../Title';
+import Attached from './Attached';
+import Progress from './Progress';
+import DateString from './Date';
+import Tags from './Tags';
+import Roles from './Roles';
+import Priority from './Priority';
+import Title from './Title';
 import Options from '../Options';
 import styles from './index.module.scss';
 
