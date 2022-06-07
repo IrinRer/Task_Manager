@@ -15,7 +15,7 @@ export interface ITagPayload {
 
 export interface ITagThunk {
   task_tag_id?: string;
-  name: string;
-  color: string;
+  name?: string;
+  color?: string;
   task_id: string | undefined;
 }

@@ -1,0 +1,19 @@
+:global(.ant-collapse-content-box) {
+    position: relative;
+    min-height: 100px;
+    max-height: 320px;
+}
+
+.wrapper > button {
+    position: absolute;
+    bottom: -5px;
+    margin-top: 10px;
+
+    &:last-child {
+        right: 70%;
+    }
+
+    &:nth-child(2) {
+        right: 77%;
+    }
+}

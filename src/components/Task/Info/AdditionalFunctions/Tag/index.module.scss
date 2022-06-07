@@ -2,6 +2,7 @@
 @import 'src/styles/colors';
 @import 'src/styles/font-variables';
 
+
 .wrapper_flex {
   display: flex;
   justify-content: space-between;
@@ -27,7 +28,7 @@
 :global(.ant-btn-primary).btn:active,
 :global(.ant-btn-primary).btn:focus {
   background: none;
-  font-weight: 600;
+  font-weight: 600; 
   text-shadow: none;
   box-shadow: none;
   border: none;

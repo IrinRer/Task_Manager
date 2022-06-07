@@ -15,6 +15,7 @@ import { ITag } from 'store/common/tags/types';
 import SelectPriority from './Priority';
 import SelectDate from './Date';
 import SelectTag from './Tag';
+import styles from './index.module.scss';
 
 const AdditionalFunctions = () => {
   const dateStop = useAppSelector(getTaskInfoDateStop);
@@ -49,12 +50,16 @@ const AdditionalFunctions = () => {
     tagSelect,
   );
 
+  // const className = classnames(styles.wrapper_row, {
+  //   [styles.wrapper_column]: !!dateStop,
+  // });
+
   return (
-    <>
+    <div className={styles.wrapper}>
       <DateTasks dateStop={dateStop} />
       <PriorityTasks defaultPriority={defaultPriority} />
       <TagTasks tagSelect={tagSelect} />
-    </>
+    </div>
   );
 };
 

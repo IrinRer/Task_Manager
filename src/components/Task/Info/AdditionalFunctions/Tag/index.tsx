@@ -83,7 +83,7 @@ const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
 
   return (
     <div className={className}>
-      <TagItem editable={isRights} tagSelect={tagSelect} taskId={taskId}/>
+      <TagItem editable={isRights} tagSelect={tagSelect} taskId={taskId} />
       {isRights ? (
         <Button
           type="primary"

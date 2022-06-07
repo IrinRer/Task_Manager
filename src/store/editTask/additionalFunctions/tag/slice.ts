@@ -1,6 +1,7 @@
 import { AxiosError } from 'axios';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
+  assignTagAction,
   createTagAction,
   unassignTagAction,
 } from 'store/editTask/additionalFunctions/tag/thunk';
@@ -33,6 +34,24 @@ export const tagSlice = createSlice({
       state.loading = false;
     },
     [createTagAction.rejected.type]: (
+      state,
+      { payload }: PayloadAction<AxiosError>,
+    ) => {
+      state.loading = false;
+      state.error = payload;
+    },
+    [assignTagAction.pending.type]: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [assignTagAction.fulfilled.type]: (
+      state,
+      { payload }: PayloadAction<ITag>,
+    ) => {
+      state.sentTag = state.sentTag?.concat(payload);
+      state.loading = false;
+    },
+    [assignTagAction.rejected.type]: (
       state,
       { payload }: PayloadAction<AxiosError>,
     ) => {
