@@ -31,7 +31,6 @@ export const assignTagAction = createAsyncThunk(
       await api().post(`/api/v1.0/task/tasks/${tag.task_id}/tag-assign`, {
         task_tag_id: tag.task_tag_id,
       });
-
       return tag;
     } catch (error) {
       notification.error({ message: 'Произошла ошибка добавления тега!' });

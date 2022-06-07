@@ -9,9 +9,11 @@ import { getTaskId } from 'store/editTask/selectors';
 import { PriorityName } from 'constants/types/common';
 import { STYLES } from 'constants/common';
 import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
+import { getPriorityName } from 'store/editTask/additionalFunctions/priority/selectors';
 import { getRights } from 'helpers/rights';
 import { RIGHTS_NAMES } from 'constants/rights';
 import styles from './index.module.scss';
+
 
 const { Text } = Typography;
 const { Option } = Select;
@@ -28,19 +30,24 @@ const SelectPriority: React.FC<IProps> = ({ defaultPriority }) => {
   const myMaxRole = useAppSelector(getMyMaxRoleForTask);
   const isRights = getRights(myMaxRole, RIGHTS_NAMES.editPriority);
 
+  const priorityAccept = useAppSelector(getPriorityName);
+
   const onChange = (checkedValues: string) => {
     dispatch(
       changePriorityAction({ priority: checkedValues, task_id: taskId }),
     );
   };
-
+  
+  console.log(priorityAccept);
+  console.log(defaultPriority);
+  
   return (
     <div className={styles.priority}>
       <Text className={styles.text}>Приоритет</Text>
       {isRights ? (
         <Select
           placeholder="+ Добавить приоритет"
-          defaultValue={defaultPriority}
+          defaultValue={priorityAccept || defaultPriority || undefined}
           showArrow={false}
           bordered={false}
           allowClear
