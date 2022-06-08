@@ -73,4 +73,3 @@ export const deleteTaskAction = createAsyncThunk(
     }
   },
 );
-

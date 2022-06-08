@@ -10,6 +10,7 @@ import priorityReducer from 'store/editTask/additionalFunctions/priority/slice';
 import dateReducer from 'store/editTask/additionalFunctions/date/slice';
 import tagReducer from 'store/editTask/additionalFunctions/tag/slice';
 import filtersReducer from 'store/filters/slice';
+import notificationsReducer from 'store/notifications/slice';
 import tokenReducer from 'store/auth/token/slice';
 import verifyReducer from 'store/auth/verify/slice';
 import commonRolesReducer from './common/roles/slice';
@@ -50,6 +51,7 @@ import { IAddCheckListItemReducer } from './editTask/checkLists/addCheckListItem
 import { IDeleteCheckListItemReducer } from './editTask/checkLists/deleteCheckListItem/types';
 import { ISetCheckListTitleReducer } from './editTask/checkLists/setCheckListTitle/types';
 import { ISetCompleteCheckListItemReducer } from './editTask/checkLists/setCompleteCheckListItem/types';
+import { INotificationsReducer } from './notifications/types';
 
 export const store = configureStore({
   reducer: {
@@ -72,6 +74,7 @@ export const store = configureStore({
     }),
     users: usersReducer,
     filters: filtersReducer,
+    notifications: notificationsReducer,
     auth: combineReducers({
       token: tokenReducer,
       verify: verifyReducer,
@@ -111,6 +114,7 @@ export type RootState = {
   }>;
   users: IUsersReducer;
   filters: IFiltersReducer;
+  notifications: INotificationsReducer;
   auth: CombinedState<{
     token: IAuthReducer;
     verify: IVerifyReducer;
