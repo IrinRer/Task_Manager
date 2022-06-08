@@ -1,5 +1,15 @@
+import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from 'store';
 
-export const getNewTaskSuccess = (state: RootState) => state.createTask.success;
-export const getNewTaskId = (state: RootState) =>
-  state.createTask.task?.task_id;
+export const getNotifications = (state: RootState) =>
+  state.notifications.notifications;
+
+export const getIsNewNotifications = createSelector(
+  getNotifications,
+  (notifications) => {
+    return (
+      notifications.filter((notification) => notification.viewed === false)
+        .length > 0
+    );
+  },
+);

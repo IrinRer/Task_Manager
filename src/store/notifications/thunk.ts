@@ -14,7 +14,7 @@ export const loadNotificationsAction = createAsyncThunk(
       const response: IGetNotificationsResponse = await api().get(
         `/api/v1.0/subscribe/notifies?viewed=${args.viewed}&page=${args.page}&per_page=${args.per_page}`,
       );
-      return response.data;
+      return response.data.data;
     } catch (error) {
       return rejectWithValue(error.message);
     }
