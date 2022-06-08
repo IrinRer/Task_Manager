@@ -1,0 +1,16 @@
+.notification {
+  margin-right: 10px;
+  position: relative;
+  &.new:after {
+    position: absolute;
+    top: 1px;
+    right: 2px;
+    content: ' ';
+    display: inline-block;
+    // color: red;
+    width: 8px;
+    height: 8px;
+    background-color: red;
+    border-radius: 50%;
+  }
+}
