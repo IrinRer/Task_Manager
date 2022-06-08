@@ -7,10 +7,20 @@ import { ROLES } from 'constants/types/common';
 import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
 import { getRights } from 'helpers/rights';
 import { RIGHTS_NAMES, TRights } from 'constants/rights';
-import { EditableContext, RoleContext } from 'constants/common';
+import {
+  RightsRoleContext,
+  useRightsRoleContextValue,
+} from 'constants/taskContext';
 import OneMember from './OneMember';
 import MembersWrapperMulti from './MembersWrapperMulti';
 import MembersByOne from './MembersByOne';
+
+type TElementsMembers = {
+  id: string;
+  title: TRights;
+  editable: boolean;
+  block: JSX.Element;
+};
 
 const Info: React.FC = () => {
   const editLoading = useAppSelector(getEditMembersLoading);
@@ -25,24 +35,17 @@ const Info: React.FC = () => {
     RIGHTS_NAMES.editResponsible,
   );
 
-  type TElementsMembers = {
-    id: string;
-    title: TRights;
-    editable: boolean;
-    block: JSX.Element;
-  };
-
   const elements: TElementsMembers[] = [
     {
       id: uniqueId(),
       title: ROLES.author,
       editable: false,
       block: (
-        <RoleContext.Provider value={ROLES.author}>
-          <EditableContext.Provider value={false}>
-            <OneMember />
-          </EditableContext.Provider>
-        </RoleContext.Provider>
+        <RightsRoleContext.Provider
+          value={useRightsRoleContextValue(ROLES.author, false)}
+        >
+          <OneMember />
+        </RightsRoleContext.Provider>
       ),
     },
     {
@@ -50,11 +53,14 @@ const Info: React.FC = () => {
       title: ROLES.responsible,
       editable: isRightsEditResponsible,
       block: (
-        <RoleContext.Provider value={ROLES.responsible}>
-          <EditableContext.Provider value={isRightsEditResponsible}>
-            <OneMember />
-          </EditableContext.Provider>
-        </RoleContext.Provider>
+        <RightsRoleContext.Provider
+          value={useRightsRoleContextValue(
+            ROLES.responsible,
+            isRightsEditResponsible,
+          )}
+        >
+          <OneMember />
+        </RightsRoleContext.Provider>
       ),
     },
     {
@@ -62,11 +68,14 @@ const Info: React.FC = () => {
       title: ROLES.implementer,
       editable: isRightsEditImplementer,
       block: (
-        <RoleContext.Provider value={ROLES.implementer}>
-          <EditableContext.Provider value={isRightsEditImplementer}>
-            <MembersByOne multiAdd usersMaxCount={3} />
-          </EditableContext.Provider>
-        </RoleContext.Provider>
+        <RightsRoleContext.Provider
+          value={useRightsRoleContextValue(
+            ROLES.implementer,
+            isRightsEditImplementer,
+          )}
+        >
+          <MembersByOne multiAdd usersMaxCount={3} />
+        </RightsRoleContext.Provider>
       ),
     },
     {
@@ -74,11 +83,11 @@ const Info: React.FC = () => {
       title: ROLES.watcher,
       editable: isRightsEditWatchers,
       block: (
-        <RoleContext.Provider value={ROLES.watcher}>
-          <EditableContext.Provider value={isRightsEditWatchers}>
-            <MembersByOne multiAdd usersMaxCount={50} />
-          </EditableContext.Provider>
-        </RoleContext.Provider>
+        <RightsRoleContext.Provider
+          value={useRightsRoleContextValue(ROLES.watcher, isRightsEditWatchers)}
+        >
+          <MembersByOne multiAdd usersMaxCount={50} />
+        </RightsRoleContext.Provider>
       ),
     },
   ];
@@ -91,11 +100,12 @@ const Info: React.FC = () => {
     <>
       {elements.map((el) => {
         return (
-          <RoleContext.Provider value={el.title}>
-            <EditableContext.Provider value={el.editable}>
-              <MembersWrapperMulti key={el.id}>{el.block}</MembersWrapperMulti>
-            </EditableContext.Provider>
-          </RoleContext.Provider>
+          <RightsRoleContext.Provider
+            // eslint-disable-next-line react-hooks/rules-of-hooks
+            value={useRightsRoleContextValue(el.title, el.editable)}
+          >
+            <MembersWrapperMulti key={el.id}>{el.block}</MembersWrapperMulti>
+          </RightsRoleContext.Provider>
         );
       })}
     </>

@@ -1,13 +1,13 @@
 import { CloseOutlined } from '@ant-design/icons';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import { deleteTaskMemberAction } from 'store/editTask/thunk';
 import { getTaskId } from 'store/editTask/selectors';
 import useMembersProps from 'components/Task/Info/MembersHook/useMembersProps';
 import { IUser } from 'store/users/types';
 import { ROLES } from 'constants/types/common';
-import { RoleContext } from 'constants/common';
+import { RoleContext } from 'constants/taskContext';
 import styles from './index.module.scss';
 import MemberItem from '../MemberItem';
 
@@ -16,7 +16,7 @@ type TProps = {
 };
 
 const EditableMember: FC<TProps> = ({ user }) => {
-  const roleName = useContext(RoleContext);
+  const roleName = RoleContext();
   const dispatch = useAppDispatch();
   const taskId = useAppSelector(getTaskId);
 

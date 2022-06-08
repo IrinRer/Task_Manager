@@ -1,7 +1,7 @@
 import { SearchOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import React, { FC, useContext, useState } from 'react';
+import React, { FC, useState } from 'react';
 
 import { getNewSelectedMembers, getTaskId } from 'store/editTask/selectors';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
@@ -11,14 +11,14 @@ import { selectPopulatedUsers } from 'store/users/selectors';
 import { IPopulatedUser } from 'store/users/types';
 import { ROLES } from 'constants/types/common';
 import SimpleSelect from 'components/Common/SimpleSelect';
-import { RoleContext } from 'constants/common';
 import MemberItem from 'components/Task/Members/MemberItem';
+import { RoleContext } from 'constants/taskContext';
 import styles from './index.module.scss';
 import useSelectOptions from '../TaskHook/useSelectOptions';
 import useMembersProps from '../MembersHook/useMembersProps';
 
 const AddMemberButton: FC = () => {
-  const roleName = useContext(RoleContext);
+  const roleName = RoleContext();
   const dispatch = useAppDispatch();
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const options = useSelectOptions();

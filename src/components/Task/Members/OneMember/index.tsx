@@ -1,7 +1,7 @@
 import AddMemberButton from 'components/Task/Info/AddMemberButton';
 import useMembersProps from 'components/Task/Info/MembersHook/useMembersProps';
-import { EditableContext, RoleContext } from 'constants/common';
-import React, { FC, useContext } from 'react';
+import { EditableContext, RoleContext } from 'constants/taskContext';
+import React, { FC } from 'react';
 import { IUser } from 'store/users/types';
 import EditableMember from '../EditableMember';
 import MemberItem from '../MemberItem';
@@ -12,8 +12,8 @@ type TProps = {
 };
 
 const OneMember: FC<TProps> = ({ user }) => {
-  const roleName = useContext(RoleContext);
-  const editable = useContext(EditableContext);
+  const roleName = RoleContext();
+  const editable = EditableContext();
   const usersData = useMembersProps(roleName);
   const userFromTaskRole = usersData?.users ? usersData?.users[0] : undefined;
 

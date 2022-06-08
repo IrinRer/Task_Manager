@@ -1,8 +1,8 @@
 import classnames from 'classnames';
 import UserAvatar from 'components/Common/UserAvatar';
 import useMembersProps from 'components/Task/Info/MembersHook/useMembersProps';
-import { RoleContext } from 'constants/common';
-import React, { FC, useContext } from 'react';
+import { RoleContext } from 'constants/taskContext';
+import React, { FC } from 'react';
 import { IUser } from 'store/users/types';
 import styles from './index.module.scss';
 
@@ -12,7 +12,7 @@ type TProps = {
 };
 
 const MemberItem: FC<TProps> = ({ user, size = 'M' }) => {
-  const roleName = useContext(RoleContext);
+  const roleName = RoleContext();
   const usersData = useMembersProps(roleName);
   const userFromTaskRole = usersData?.users ? usersData?.users[0] : undefined;
 

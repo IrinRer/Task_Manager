@@ -9,7 +9,10 @@ import Spinner from 'components/Common/Spinner';
 import StatusWithPopover from 'components/Common/StatusWithPopover';
 
 import { ROLES } from 'constants/types/common';
-import { EditableContext, RoleContext } from 'constants/common';
+import {
+  RightsRoleContext,
+  useRightsRoleContextValue,
+} from 'constants/taskContext';
 import styles from './index.module.scss';
 import OneMember from '../Members/OneMember';
 
@@ -36,13 +39,11 @@ const Info: React.FC = () => {
       </div>
       <div className={styles.infoLine}>
         <span>{ROLES.author_short}</span>
-        {author && (
-          <RoleContext.Provider value={ROLES.author}>
-            <EditableContext.Provider value={false}>
-              <OneMember />
-            </EditableContext.Provider>
-          </RoleContext.Provider>
-        )}
+        <RightsRoleContext.Provider
+          value={useRightsRoleContextValue(ROLES.author, false)}
+        >
+          {author ? <OneMember /> : null}
+        </RightsRoleContext.Provider>
       </div>
     </>
   );

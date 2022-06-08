@@ -1,6 +1,6 @@
 import { CloseOutlined, SearchOutlined } from '@ant-design/icons';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import React, { FC, useContext, useMemo } from 'react';
+import React, { FC, useMemo } from 'react';
 
 import { getUnselectedMembers, getTaskId } from 'store/editTask/selectors';
 
@@ -10,8 +10,8 @@ import { deleteTaskMemberAction } from 'store/editTask/thunk';
 import classnames from 'classnames';
 import { ROLES } from 'constants/types/common';
 import SimpleSelect from 'components/Common/SimpleSelect';
-import { EditableContext, RoleContext } from 'constants/common';
 import MemberItem from 'components/Task/Members/MemberItem';
+import { EditableContext, RoleContext } from 'constants/taskContext';
 import styles from '../AddMemberButton/index.module.scss';
 import stylesList from './index.module.scss';
 import useSelectOptions from '../TaskHook/useSelectOptions';
@@ -23,8 +23,8 @@ type TProps = {
 };
 
 const ListMemberMulti: FC<TProps> = ({ isActive, setIsActive }) => {
-  const roleName = useContext(RoleContext);
-  const editable = useContext(EditableContext);
+  const roleName = RoleContext();
+  const editable = EditableContext();
   const options = useSelectOptions();
 
   const roleUnassign = useAppSelector(getUnselectedMembers);
