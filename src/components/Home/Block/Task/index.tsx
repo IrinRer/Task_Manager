@@ -11,7 +11,7 @@ import Tags from './Tags';
 import Roles from './Roles';
 import Priority from './Priority';
 import Title from './Title';
-import Options from '../Options';
+import Options from './Options';
 import styles from './index.module.scss';
 
 interface IProps {
