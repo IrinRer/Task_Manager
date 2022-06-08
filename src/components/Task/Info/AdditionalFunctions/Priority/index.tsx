@@ -14,7 +14,6 @@ import { getRights } from 'helpers/rights';
 import { RIGHTS_NAMES } from 'constants/rights';
 import styles from './index.module.scss';
 
-
 const { Text } = Typography;
 const { Option } = Select;
 
@@ -37,10 +36,7 @@ const SelectPriority: React.FC<IProps> = ({ defaultPriority }) => {
       changePriorityAction({ priority: checkedValues, task_id: taskId }),
     );
   };
-  
-  console.log(priorityAccept);
-  console.log(defaultPriority);
-  
+
   return (
     <div className={styles.priority}>
       <Text className={styles.text}>Приоритет</Text>

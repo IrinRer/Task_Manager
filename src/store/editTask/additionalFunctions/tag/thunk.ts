@@ -12,13 +12,13 @@ export const createTagAction = createAsyncThunk(
         color: tag.color,
       });
 
-      await api().post(`/api/v1.0/task/tasks/${tag.task_id}/tag-assign`, {
+      await api().post(`/api/v1.0/task/tasks/${tag.arg}/tag-assign`, {
         task_tag_id: responseCreate.data.data.task_tag_id,
       });
 
       return responseCreate.data.data;
     } catch (error) {
-      notification.error({ message: 'Произошла ошибка добавления тега!' });
+      notification.error({ message: 'Произошла ошибка создания тега!' });
       return rejectWithValue(error);
     }
   },
@@ -41,14 +41,32 @@ export const assignTagAction = createAsyncThunk(
 
 export const unassignTagAction = createAsyncThunk(
   `${TAG_SLICE_ALIAS}/unassign`,
-  async (tag: any, { rejectWithValue }) => {
+  async (tag: ITagThunk, { rejectWithValue }) => {
     try {
-      await api().post(`/api/v1.0/task/tasks/${tag.taskId}/tag-unassign`, {
-        task_tag_id: tag.tagId,
+      await api().post(`/api/v1.0/task/tasks/${tag.task_id}/tag-unassign`, {
+        task_tag_id: tag.task_tag_id,
       });
       return tag.name;
     } catch (error) {
       notification.error({ message: 'Произошла ошибка открепления метки!' });
+      return rejectWithValue(error);
+    }
+  },
+);
+
+export const editTagAction = createAsyncThunk(
+  `${TAG_SLICE_ALIAS}/edit`,
+  async (tag: ITagThunk, { rejectWithValue }) => {
+    try {
+      const response = await api().post(`/api/v1.0/task/tags/${tag.arg}`, {
+        name: tag.name,
+        color: tag.color,
+      });
+
+      console.log(response.data);
+      return response.data.data;
+    } catch (error) {
+      notification.error({ message: 'Произошла ошибка редактирования метки!' });
       return rejectWithValue(error);
     }
   },

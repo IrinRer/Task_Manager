@@ -1,28 +1,37 @@
 import React, { useState } from 'react';
-import { Menu, Modal, Button } from 'antd';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { useAppSelector } from 'customHooks/redux/useAppSelector';
+import { Modal, Button } from 'antd';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import { selectPopulatedTags } from 'store/common/tags/selectors';
-import { assignTagAction } from 'store/editTask/additionalFunctions/tag/thunk';
-import { getTaskId } from 'store/editTask/selectors';
+import { editTagAction } from 'store/editTask/additionalFunctions/tag/thunk';
 import { deleteTagAction } from 'store/common/tags/thunk';
 import ModalDelete from 'components/Common/ModalDelete';
+import ModalTag from '../ModalTag';
+import MenuTag from './Menu';
+
 import styles from '../index.module.scss';
 
-const ModalNewTag = ({ isVisible, setVisible, openWindowCreate }) => {
-  const populatedTag = useAppSelector(selectPopulatedTags);
-  const taskId = useAppSelector(getTaskId);
+const ModalNewTag = ({
+  isVisible,
+  setVisible,
+  openWindowCreate
+}) => {
   const dispatch = useAppDispatch();
 
   const [name, setName] = useState('');
   const [isVisibleModalDelete, setIsVisibleModalDelete] = useState(false);
+  const [isModalVisibleEdit, setIsModalVisibleEdit] = useState(false);
+  const [tagId, setTagId] = useState<string | undefined>('');
   const [id, setId] = useState<string | undefined>('');
 
-  const onOk = (id: string | undefined, name: string) => {
+  const onClickDelete = (id: string | undefined, name: string) => {
     setIsVisibleModalDelete(true);
     setName(name);
     setId(id);
+  };
+
+  const onClickEdit = (tagId: string | undefined) => {
+    setTagId(tagId);
+    setVisible(true);
+    setIsModalVisibleEdit(true);
   };
 
   const onDelete = () => {
@@ -32,18 +41,6 @@ const ModalNewTag = ({ isVisible, setVisible, openWindowCreate }) => {
 
   const handleCancel = () => {
     setVisible(false);
-  };
-
-  const onSelect = ({ key }) => {
-    const tag = key.split(',');
-    dispatch(
-      assignTagAction({
-        name: tag[0],
-        color: tag[1],
-        task_tag_id: tag[2],
-        task_id: taskId,
-      }),
-    );
   };
 
   return (
@@ -64,32 +61,10 @@ const ModalNewTag = ({ isVisible, setVisible, openWindowCreate }) => {
         }
         onCancel={handleCancel}
       >
-        <Menu mode="vertical" className={styles.menu} onSelect={onSelect}>
-          {populatedTag?.map((item) => {
-            return (
-              <Menu.Item
-                key={`${item.name},${item.color},${item.key}`}
-                className={styles.wrapperMenuItem}
-              >
-                <div className={styles.menuItem}>
-                  <div color={item.color} className={styles.colorItem} />
-                  <p>{item.name}</p>
-                </div>
-                <div className={styles.wrapperIcon}>
-                  <Button
-                    icon={<EditOutlined className={styles.iconEdit} />}
-                    className={styles.btnIcon}
-                  />
-                  <Button
-                    icon={<DeleteOutlined className={styles.iconDelete} />}
-                    className={styles.btnIcon}
-                    onClick={() => onOk(item.key, item.name)}
-                  />
-                </div>
-              </Menu.Item>
-            );
-          })}
-        </Menu>
+        <MenuTag
+          onClickDelete={onClickDelete}
+          onClickEdit={onClickEdit}
+        />
       </Modal>
       <ModalDelete
         visible={isVisibleModalDelete}
@@ -98,6 +73,14 @@ const ModalNewTag = ({ isVisible, setVisible, openWindowCreate }) => {
         setVisibleModalDelete={setIsVisibleModalDelete}
         file={id || ''}
         action={onDelete}
+      />
+      <ModalTag
+        text="Изменить метку"
+        action={editTagAction}
+        arg={tagId}
+        isVisible={isModalVisibleEdit}
+        setIsModalVisibleMain={setVisible}
+        setIsModalVisibleCreate={setIsModalVisibleEdit}
       />
     </>
   );

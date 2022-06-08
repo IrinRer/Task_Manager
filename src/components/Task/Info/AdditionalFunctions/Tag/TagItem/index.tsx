@@ -19,7 +19,7 @@ const TagItem: FC<TProps> = ({ editable, tagSelect, taskId }) => {
   const dispatch = useAppDispatch();
 
   const handleClose = (id: string | undefined, name: string) => {
-    dispatch(unassignTagAction({ tagId: id, taskId, name }));
+    dispatch(unassignTagAction({ task_tag_id: id, task_id: taskId, name }));
   };
 
   const tag = tagSelect?.map(({ name, color, task_tag_id: id }) => {

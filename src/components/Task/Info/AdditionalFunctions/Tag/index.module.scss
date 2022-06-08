@@ -291,6 +291,7 @@
 
 :global(.ant-menu-vertical) {
   border-right: none;
+
   :global(.ant-menu-sub:not([class*='-active'])) {
     max-height: 300px;
   }
@@ -301,90 +302,97 @@
   padding-left: 0;
 }
 
-.wrapperMenuItem {
-  :global(.ant-menu-title-content) {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .colorItem {
-    width: 24px;
-    height: 24px;
-    border-radius: 8px;
-    margin-right: 8px;
+// .wrapperMenuItem {
+//   display: flex;
 
-    &[color='orange'] {
-      background-color: $orange;
-    }
+//   :global(.ant-menu-title-content) {
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+//   }
+//   .colorItem {
+//     width: 24px;
+//     height: 24px;
+//     border-radius: 8px;
+//     margin-right: 8px;
 
-    &[color='red'] {
-      background-color: $red;
-    }
+//     &[color='orange'] {
+//       background-color: $orange;
+//     }
 
-    &[color='green'] {
-      background-color: $salad;
-    }
+//     &[color='red'] {
+//       background-color: $red;
+//     }
 
-    &[color='yellow'] {
-      background-color: $yellow;
-    }
+//     &[color='green'] {
+//       background-color: $salad;
+//     }
 
-    &[color='blue'] {
-      background-color: $blue;
-    }
+//     &[color='yellow'] {
+//       background-color: $yellow;
+//     }
 
-    &[color='pink'] {
-      background-color: $pink;
-    }
+//     &[color='blue'] {
+//       background-color: $blue;
+//     }
 
-    &[color='purple'] {
-      background-color: $purple;
-    }
-  }
+//     &[color='pink'] {
+//       background-color: $pink;
+//     }
 
-  p {
-    font-size: $font-size-m;
-    line-height: 20px;
-    margin-bottom: 0px;
-  }
-}
+//     &[color='purple'] {
+//       background-color: $purple;
+//     }
+//   }
 
-.menuItem,
-.wrapperIcon {
-  display: flex;
-  align-items: center;
+//   p {
+//     font-size: $font-size-m;
+//     line-height: 20px;
+//     margin-bottom: 0px;
+//   }
+// }
 
-  :global(.ant-btn).btnIcon {
-    border: none;
-    background: none;
-    box-shadow: none;
-  }
+// .menuItem,
+// .wrapperIcon {
+//   display: flex;
+//   align-items: center;
 
-  :global(.anticon).iconEdit,
-  :global(.anticon).iconDelete {
-    background-color: $gray-100;
-    padding: 5px;
-    border-radius: 4px;
-    margin-left: 3px;
+//   :global(.ant-btn).btnIcon {
+//     border: none;
+//     background: none;
+//     box-shadow: none;
+//   }
 
-    svg {
-      color: $gray-500;
-    }
-  }
+//   :global(.anticon).iconEdit,
+//   :global(.anticon).iconDelete {
+//     background-color: $gray-100;
+//     padding: 5px;
+//     border-radius: 4px;
+//     margin-left: 3px;
 
-  :global(.anticon).iconEdit {
-    svg {
-      &:hover {
-        color: $blue;
-      }
-    }
-  }
+//     svg {
+//       color: $gray-500;
+//     }
+//   }
 
-  :global(.anticon).iconDelete {
-    svg {
-      &:hover {
-        color: $red;
-      }
-    }
-  }
-}
+//   :global(.anticon).iconEdit {
+//     svg {
+//       &:hover {
+//         color: $blue;
+//       }
+//     }
+//   }
+
+//   :global(.anticon).iconDelete {
+//     svg {
+//       &:hover {
+//         color: $red;
+//       }
+//     }
+//   }
+// }
+
+// .wrapperSelect {
+//   display: flex;
+//   justify-content: space-between;
+// }
