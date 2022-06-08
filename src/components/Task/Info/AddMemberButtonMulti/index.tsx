@@ -28,6 +28,7 @@ import { RoleContext } from 'constants/taskContext';
 import styles from '../AddMemberButton/index.module.scss';
 import useSelectOptions from '../TaskHook/useSelectOptions';
 import useMembersProps from '../MembersHook/useMembersProps';
+import CustomSelect from '../CustomSelect';
 
 type TProps = {
   usersMaxCount: number;
@@ -151,7 +152,7 @@ const AddMemberButtonMulti: FC<TProps> = ({ usersMaxCount }) => {
   return (
     <div className={styles.addmemberWrapper}>
       {isVisible ? (
-        <SimpleSelect
+        <CustomSelect
           {...options.common}
           list={isDisabled ? getOnlySelectedUsers : allUsers}
           itemKey="key"

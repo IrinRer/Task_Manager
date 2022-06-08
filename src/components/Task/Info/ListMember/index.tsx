@@ -16,6 +16,7 @@ import styles from '../AddMemberButton/index.module.scss';
 import stylesList from './index.module.scss';
 import useSelectOptions from '../TaskHook/useSelectOptions';
 import useMembersProps from '../MembersHook/useMembersProps';
+import CustomSelect from '../CustomSelect';
 
 type TProps = {
   isActive: boolean;
@@ -103,7 +104,7 @@ const ListMemberMulti: FC<TProps> = ({ isActive, setIsActive }) => {
         stylesList.listMemberWrapper,
       )}
     >
-      <SimpleSelect
+      <CustomSelect
         {...options.common}
         list={users}
         itemKey="user_id"

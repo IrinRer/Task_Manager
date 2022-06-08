@@ -16,6 +16,7 @@ import { RoleContext } from 'constants/taskContext';
 import styles from './index.module.scss';
 import useSelectOptions from '../TaskHook/useSelectOptions';
 import useMembersProps from '../MembersHook/useMembersProps';
+import CustomSelect from '../CustomSelect';
 
 const AddMemberButton: FC = () => {
   const roleName = RoleContext();
@@ -66,7 +67,7 @@ const AddMemberButton: FC = () => {
   return (
     <div className={styles.addmemberWrapper}>
       {isVisible ? (
-        <SimpleSelect
+        <CustomSelect
           {...options.common}
           list={allUsers}
           itemKey="key"
