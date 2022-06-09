@@ -5,6 +5,8 @@ export const NOTIFICATIONS_SLICE_ALIAS = 'notifications';
 
 export interface INotificationsReducer {
   notifications: INotification[];
+  veiewedTotal: number;
+  newTotal: number;
   loading: boolean;
   error: AxiosError | null;
 }
@@ -60,14 +62,16 @@ export interface INotification {
 }
 
 export interface IGetNotificationsResponse {
-  pagination: {
-    items_count: number;
-    items_total: number;
-    per_page: number;
-    page_current: number;
-    page_total: number;
+  data: {
+    pagination: {
+      items_count: number;
+      items_total: number;
+      per_page: number;
+      page_current: number;
+      page_total: number;
+    };
+    data: INotification[];
   };
-  data: INotification[];
 }
 
 export interface IgetNotificationsArgs {
