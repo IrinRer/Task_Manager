@@ -15,11 +15,7 @@ import styles from './index.module.scss';
 
 const { Text } = Typography;
 
-interface IProps {
-  dateStop: string | undefined;
-}
-
-const SelectDate: React.FC<IProps> = ({ dateStop }) => {
+const SelectDate: React.FC = () => {
   const dispatch = useAppDispatch();
   const taskId = useAppSelector(getTaskId);
   const myMaxRole = useAppSelector(getMyMaxRoleForTask);
@@ -36,9 +32,6 @@ const SelectDate: React.FC<IProps> = ({ dateStop }) => {
     );
   };
 
-  const isDateStop = dateStop
-    ? parse(dateStop, DATE_FORMAT_UI, new Date())
-    : undefined;
   const isAcceptDateStop = acceptDateStop
     ? parse(acceptDateStop, DATE_FORMAT_UI, new Date())
     : undefined;
@@ -47,7 +40,7 @@ const SelectDate: React.FC<IProps> = ({ dateStop }) => {
     <div className={styles.date}>
       <Text className={styles.text}>Срок</Text>
       <DatePicker
-        defaultValue={isAcceptDateStop || isDateStop}
+        defaultValue={isAcceptDateStop}
         disabled={!isRights}
         format={DATE_FORMAT_UI}
         bordered={false}

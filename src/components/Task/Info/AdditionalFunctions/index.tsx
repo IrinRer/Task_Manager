@@ -19,7 +19,6 @@ import SelectDate from './Date';
 import SelectTag from './Tag';
 import styles from './index.module.scss';
 
-
 const AdditionalFunctions = () => {
   const dateStop = useAppSelector(getTaskInfoDateStop);
   const defaultPriority = useAppSelector(getTaskInfoPriority);
@@ -28,46 +27,45 @@ const AdditionalFunctions = () => {
   const accepDate = useAppSelector(getDateStop);
 
   type TPriorityTasks = {
-    defaultPriority: string | undefined;
+    defaultPriority?: string | undefined;
     accepPriority?: string | undefined;
   };
 
   type TDateTasks = {
-    dateStop: string | undefined;
+    dateStop?: string | undefined;
     accepDate?: string | undefined;
   };
 
   type TTagTasks = {
-    tagSelect: ITag[] | undefined;
+    tagSelect?: ITag[] | undefined;
   };
 
   const PriorityTasks = withAdditionalFunctions<string, TPriorityTasks>(
     SelectPriority,
     ExclamationCircleOutlined,
     defaultPriority || '',
-    accepPriority || ''
+    accepPriority || '',
   );
   const DateTasks = withAdditionalFunctions<string, TDateTasks>(
     SelectDate,
     ClockCircleOutlined,
     dateStop || '',
-    accepDate || ''
+    accepDate || '',
   );
   const TagTasks = withAdditionalFunctions<ITag[] | undefined, TTagTasks>(
     SelectTag,
     TagOutlined,
     tagSelect,
-    tagSelect
+    tagSelect,
   );
 
   return (
     <div className={styles.wrapper}>
-      <DateTasks dateStop={dateStop} />
-      <PriorityTasks defaultPriority={defaultPriority} />
-      <TagTasks tagSelect={tagSelect} />
+      <DateTasks />
+      <PriorityTasks />
+      <TagTasks />
     </div>
   );
 };
 
 export default AdditionalFunctions;
-

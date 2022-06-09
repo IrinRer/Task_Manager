@@ -15,15 +15,11 @@ import ModalTag from './ModalTag';
 
 import styles from './index.module.scss';
 
-interface IProps {
-  tagSelect: ITag[] | undefined;
-}
-
-const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
+const SelectTag: React.FC = () => {
   const [isModalVisibleMain, setIsModalVisibleMain] = useState(false);
   const [isModalVisibleCreate, setIsModalVisibleCreate] = useState(false);
 
-  const taskId = useAppSelector(getTaskId);
+  const taskId = useAppSelector(getTaskId); 
 
   const myMaxRole = useAppSelector(getMyMaxRoleForTask);
   const isRights = getRights(myMaxRole, RIGHTS_NAMES.editTag);
@@ -45,7 +41,7 @@ const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
 
   return (
     <div className={className}>
-      <TagItem editable={isRights} tagSelect={tagSelect} taskId={taskId} />
+      <TagItem editable={isRights} taskId={taskId} />
       {isRights ? (
         <Button
           type="primary"

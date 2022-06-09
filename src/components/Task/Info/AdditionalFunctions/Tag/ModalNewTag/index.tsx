@@ -46,9 +46,9 @@ const ModalNewTag = ({
   return (
     <>
       <Modal
-        title="Создать новую метку"
         visible={isVisible}
         width={310}
+        closable={false}
         className={styles.modalTagMain}
         footer={
           <Button

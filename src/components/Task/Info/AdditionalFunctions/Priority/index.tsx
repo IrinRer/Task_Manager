@@ -17,11 +17,7 @@ import styles from './index.module.scss';
 const { Text } = Typography;
 const { Option } = Select;
 
-interface IProps {
-  defaultPriority: string | undefined;
-}
-
-const SelectPriority: React.FC<IProps> = ({ defaultPriority }) => {
+const SelectPriority: React.FC = () => {
   const dispatch = useAppDispatch();
   const priorityValue = useAppSelector(selectPopulatedPriorities);
   const taskId = useAppSelector(getTaskId);
@@ -43,7 +39,7 @@ const SelectPriority: React.FC<IProps> = ({ defaultPriority }) => {
       {isRights ? (
         <Select
           placeholder="+ Добавить приоритет"
-          defaultValue={priorityAccept || defaultPriority || undefined}
+          defaultValue={priorityAccept}
           showArrow={false}
           bordered={false}
           allowClear

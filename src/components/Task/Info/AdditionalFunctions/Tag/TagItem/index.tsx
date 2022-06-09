@@ -5,18 +5,20 @@ import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { uniqueId } from 'lodash';
 import { MIN_NUMBER_TAGS_ON_PAGE } from 'constants/additionalFunctions/tag';
 import { unassignTagAction } from 'store/editTask/additionalFunctions/tag/thunk';
+import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { ITag } from 'store/common/tags/types';
+import { getTag } from 'store/editTask/additionalFunctions/tag/selectors';
 import CustomTag from 'components/Common/CustomTag';
 import styles from '../index.module.scss';
 
 type TProps = {
   editable: boolean;
-  tagSelect?: ITag[];
   taskId: string | undefined;
 };
 
-const TagItem: FC<TProps> = ({ editable, tagSelect, taskId }) => {
+const TagItem: FC<TProps> = ({ editable, taskId }) => {
   const dispatch = useAppDispatch();
+  const tagSelect = useAppSelector(getTag);
 
   const handleClose = (id: string | undefined, name: string) => {
     dispatch(unassignTagAction({ task_tag_id: id, task_id: taskId, name }));
