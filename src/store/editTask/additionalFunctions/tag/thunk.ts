@@ -33,7 +33,7 @@ export const assignTagAction = createAsyncThunk(
       });
       return tag;
     } catch (error) {
-      notification.error({ message: 'Произошла ошибка добавления тега!' });
+      notification.error({ message: 'Произошла ошибка прикрепления тега!' });
       return rejectWithValue(error);
     }
   },
@@ -62,8 +62,6 @@ export const editTagAction = createAsyncThunk(
         name: tag.name,
         color: tag.color,
       });
-
-      console.log(response.data);
       return response.data.data;
     } catch (error) {
       notification.error({ message: 'Произошла ошибка редактирования метки!' });

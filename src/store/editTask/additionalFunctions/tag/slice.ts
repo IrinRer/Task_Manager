@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   assignTagAction,
   createTagAction,
+  editTagAction,
   unassignTagAction,
 } from 'store/editTask/additionalFunctions/tag/thunk';
 import { deleteTagAction } from 'store/common/tags/thunk';
@@ -95,6 +96,19 @@ export const tagSlice = createSlice({
       state.sentTag = state.sentTag?.filter(
         (item) => item.name !== payload.name,
       );
+      state.loading = false;
+    },
+
+    [editTagAction.fulfilled.type]: (
+      state,
+      { payload }: PayloadAction<ITag>,
+    ) => {
+      state.sentTag = state.sentTag?.map((item) => {
+        if (item.task_tag_id === payload.task_tag_id) {
+          return payload;
+        }
+        return item;
+      });
       state.loading = false;
     },
   },

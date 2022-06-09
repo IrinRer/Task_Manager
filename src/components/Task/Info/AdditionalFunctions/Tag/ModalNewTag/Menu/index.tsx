@@ -9,10 +9,7 @@ import { getTaskId } from 'store/editTask/selectors';
 import { ITag } from 'store/common/tags/types';
 import styles from './index.module.scss';
 
-const MenuTag = ({
-  onClickDelete,
-  onClickEdit,
-}) => {
+const MenuTag = ({ onClickDelete, onClickEdit }) => {
   const dispatch = useAppDispatch();
 
   const populatedTag = useAppSelector(selectPopulatedTags);
