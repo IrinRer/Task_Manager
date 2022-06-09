@@ -96,9 +96,8 @@ export const editTaskSlice = createSlice({
         );
     },
 
-    updateCheckListTitle: (state, { payload }: PayloadAction<ICheckList>) => {
-      state.data!.check_lists[0].title = payload.title;
-      state.data!.check_lists[0].updated = payload.updated;
+    updateCheckList: (state, { payload }: PayloadAction<ICheckList>) => {
+      state.data!.check_lists[0] = payload;
     },
 
     updateCheckListItem: (
@@ -272,7 +271,7 @@ export const {
   setEditTask,
   addCheckListItemToTask,
   removeCheckListItemFromTask,
-  updateCheckListTitle,
+  updateCheckList,
   updateCheckListItem,
 } = editTaskSlice.actions;
 
