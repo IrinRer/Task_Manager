@@ -131,7 +131,7 @@ export enum TagColor {
   pink = 'pink',
   purple = 'purple',
   red = 'red',
-  salad = 'salad',
+  salad = 'green',
   yellow = 'yellow',
 }
 

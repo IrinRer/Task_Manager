@@ -11,6 +11,7 @@
 
 .priority {
   display: grid;
+  align-items: center;
   grid-template-columns: 47% 50%;
   //justify-content: space-between;
 
@@ -35,6 +36,10 @@
     font-size: $font-size-m;
     width: 56%;
     text-transform: none;
+  }
+
+  :global(.ant-select-clear) {
+    background: none;
   }
 }
 

@@ -11,7 +11,11 @@ import {
   setTaskTitle,
 } from 'store/editTask/thunk';
 import { AxiosError } from 'axios';
-import { IResponseTask } from 'store/common/task/types';
+import {
+  ICheckList,
+  ICheckListItem,
+  IResponseTask,
+} from 'store/common/task/types';
 import { fetchTaskAction } from 'store/common/task/thunk';
 
 const initialState: IEditTaskReducer = {
@@ -24,6 +28,9 @@ const initialState: IEditTaskReducer = {
     members: false,
     status: false,
     membersGroup: false,
+    checkList: false,
+    checkListTitle: false,
+    checkListItem: false,
   },
   selectedMembers: null,
   unselectedMembers: null,
@@ -36,6 +43,9 @@ const initialState: IEditTaskReducer = {
     status: null,
     setMembersGroup: null,
     delMembersGroup: null,
+    checkList: null,
+    checkListTitle: null,
+    checkListItem: null,
   },
 };
 
@@ -63,6 +73,44 @@ export const editTaskSlice = createSlice({
       action: PayloadAction<Array<string>>,
     ) => {
       state.unselectedMembers = action.payload;
+    },
+
+    setEditTask: (state, { payload }: PayloadAction<IResponseTask>) => {
+      state.data = payload;
+    },
+
+    addCheckListItemToTask: (
+      state,
+      { payload }: PayloadAction<ICheckListItem>,
+    ) => {
+      state.data?.check_lists[0].items.push(payload);
+    },
+
+    removeCheckListItemFromTask: (
+      state,
+      { payload }: PayloadAction<ICheckListItem>,
+    ) => {
+      state.data!.check_lists[0].items =
+        state.data!.check_lists[0].items.filter(
+          (item) => item.check_list_item_id !== payload.check_list_item_id,
+        );
+    },
+
+    updateCheckListTitle: (state, { payload }: PayloadAction<ICheckList>) => {
+      state.data!.check_lists[0].title = payload.title;
+      state.data!.check_lists[0].updated = payload.updated;
+    },
+
+    updateCheckListItem: (
+      state,
+      { payload }: PayloadAction<ICheckListItem>,
+    ) => {
+      const checkListItemIndex: number =
+        state.data!.check_lists[0].items.findIndex(
+          (item) => item.check_list_item_id === payload.check_list_item_id,
+        );
+
+      state.data!.check_lists[0].items[checkListItemIndex] = payload;
     },
   },
   extraReducers: {
@@ -221,5 +269,11 @@ export const {
   setNewSelectedMembers,
   setUnselectedMembers,
   setModalVisible,
+  setEditTask,
+  addCheckListItemToTask,
+  removeCheckListItemFromTask,
+  updateCheckListTitle,
+  updateCheckListItem,
 } = editTaskSlice.actions;
+
 export default editTaskSlice.reducer;

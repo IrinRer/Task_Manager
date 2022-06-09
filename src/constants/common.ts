@@ -48,6 +48,8 @@ export const PRIORITY_COLORS = {
   Низкий: 'Green',
 };
 
+export const STYLES = ['high', 'middle', 'low'];
+
 export enum StatusClass {
   'Создана' = 'created',
   'В работе' = 'work',
@@ -64,6 +66,8 @@ export enum BlockTitle {
 }
 export const USERS_BY_ONE_MAX_COUNT = 3;
 
+export const DEFAULT_CHECK_LIST_TITLE = 'Чек-лист';
+
 export const DESCRIPTION_LENGTH_EXPAND = 300;
 
 export const DESCRIPTION_MAX_LENGTH = 500;
@@ -72,3 +76,4 @@ export const TITLE_TASK_MAX_LENGTH = 150;
 
 export const RoleContext = createContext<TRights | ''>('');
 export const EditableContext = createContext<boolean>(false);
+

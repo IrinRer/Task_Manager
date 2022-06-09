@@ -21,6 +21,12 @@ import commonStatusesReducer from './common/statuses/slice';
 import onetaskReducer from './common/task/slice';
 import editTaskReducer from './editTask/slice';
 import createTaskReducer from './createTask/slice';
+import addCheckListReducer from './editTask/checkLists/addCheckList/slice';
+import deleteCheckListReducer from './editTask/checkLists/deleteCheckList/slice';
+import addCheckListItemReducer from './editTask/checkLists/addCheckListItem/slice';
+import deleteCheckListItemReducer from './editTask/checkLists/deleteCheckListItem/slice';
+import setCheckListTitleReducer from './editTask/checkLists/setCheckListTitle/slice';
+import setCompleteCheckListItemReducer from './editTask/checkLists/setCompleteCheckListItem/slice';
 
 import { ICommonTagsReducer } from './common/tags/types';
 import { ICommonProgressesReducer } from './common/progresses/types';
@@ -38,6 +44,12 @@ import { ICreateTaskReducer } from './createTask/types';
 import { ITagReducer } from './editTask/additionalFunctions/tag/types';
 import { IDateReducer } from './editTask/additionalFunctions/date/types';
 import { IPriorityReducer } from './editTask/additionalFunctions/priority/types';
+import { IAddCheckListReducer } from './editTask/checkLists/addCheckList/types';
+import { IDeleteCheckListReducer } from './editTask/checkLists/deleteCheckList/types';
+import { IAddCheckListItemReducer } from './editTask/checkLists/addCheckListItem/types';
+import { IDeleteCheckListItemReducer } from './editTask/checkLists/deleteCheckListItem/types';
+import { ISetCheckListTitleReducer } from './editTask/checkLists/setCheckListTitle/types';
+import { ISetCompleteCheckListItemReducer } from './editTask/checkLists/setCompleteCheckListItem/types';
 
 export const store = configureStore({
   reducer: {
@@ -48,6 +60,14 @@ export const store = configureStore({
         priority: priorityReducer,
         date: dateReducer,
         tags: tagReducer,
+      }),
+      checkLists: combineReducers({
+        addCheckList: addCheckListReducer,
+        deleteCheckList: deleteCheckListReducer,
+        addCheckListItem: addCheckListItemReducer,
+        deleteCheckListItem: deleteCheckListItemReducer,
+        setCheckListTitle: setCheckListTitleReducer,
+        setCompleteCheckListItem: setCompleteCheckListItemReducer,
       }),
     }),
     users: usersReducer,
@@ -79,6 +99,14 @@ export type RootState = {
       priority: IPriorityReducer;
       date: IDateReducer;
       tags: ITagReducer;
+    }>;
+    checkLists: CombinedState<{
+      addCheckList: IAddCheckListReducer;
+      deleteCheckList: IDeleteCheckListReducer;
+      addCheckListItem: IAddCheckListItemReducer;
+      deleteCheckListItem: IDeleteCheckListItemReducer;
+      setCheckListTitle: ISetCheckListTitleReducer;
+      setCompleteCheckListItem: ISetCompleteCheckListItemReducer;
     }>;
   }>;
   users: IUsersReducer;
