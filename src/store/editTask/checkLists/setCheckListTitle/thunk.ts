@@ -4,7 +4,7 @@ import { RootState } from 'store';
 import { AxiosResponse } from 'axios';
 import { api } from 'network';
 import { notification } from 'antd';
-import { updateCheckList } from 'store/editTask/slice';
+import { updateCheckListTitle } from 'store/editTask/slice';
 import { SET_CHECKLIST_TITLE_SLICE_ALIAS } from './types';
 
 export const setCheckListTitle = createAsyncThunk(
@@ -23,7 +23,7 @@ export const setCheckListTitle = createAsyncThunk(
         },
       );
 
-      dispatch(updateCheckList(response.data.data));
+      dispatch(updateCheckListTitle(response.data.data));
       return response.data.data;
     } catch (error) {
       notification.error({

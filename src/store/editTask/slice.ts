@@ -96,6 +96,11 @@ export const editTaskSlice = createSlice({
         );
     },
 
+    updateCheckListTitle: (state, { payload }: PayloadAction<ICheckList>) => {
+      state.data!.check_lists[0].title = payload.title;
+      state.data!.check_lists[0].updated = payload.updated;
+    },
+
     updateCheckList: (state, { payload }: PayloadAction<ICheckList>) => {
       state.data!.check_lists[0] = payload;
     },
@@ -225,7 +230,6 @@ export const editTaskSlice = createSlice({
       state: IEditTaskReducer,
       { payload }: PayloadAction<AxiosError>,
     ) => {
-      // state.response = null;
       state.editLoading.status = false;
       state.editError.status = payload;
     },
@@ -272,6 +276,7 @@ export const {
   addCheckListItemToTask,
   removeCheckListItemFromTask,
   updateCheckList,
+  updateCheckListTitle,
   updateCheckListItem,
 } = editTaskSlice.actions;
 
