@@ -10,10 +10,10 @@ const Roles: React.FC = () => {
 
   const roles = task?.roles;
 
-  if (!roles || roles.length === 0) return null;
+  if (!roles?.length) return null;
 
-  // рендерим только первые три роли по ТЗ
-  const renderedRoles = roles.length > 2 ? roles.slice(0, 2) : [...roles];
+  // рендерим только первые две роли по ТЗ
+  const renderedRoles = roles.slice(0, 2);
 
   return (
     <div className={styles.wrapper}>
