@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import { Modal, Button, Typography, Input, Form, Radio } from 'antd';
+import { AsyncThunk } from '@reduxjs/toolkit';
+import { ITagThunk } from 'store/editTask/additionalFunctions/tag/types';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
+import { setIsModalVisibleMain } from 'store/editTask/additionalFunctions/tag/modalVisible/slice';
 import { uniqueTagNameSelector } from 'store/editTask/additionalFunctions/tag/selectors';
 import { allColorTag } from 'constants/additionalFunctions/color';
 import { MAX_NUMBER_TAGS } from 'constants/additionalFunctions/tag';
@@ -10,17 +13,29 @@ import styles from '../index.module.scss';
 
 const { Text } = Typography;
 
-const ModalTag = ({
-  isVisible,
-  setIsModalVisibleCreate,
-  setIsModalVisibleMain,
+interface IArg {
+  name: string;
+  color: string;
+  arg: any;
+}
+
+interface IProps {
+  text: string;
+  action: AsyncThunk<IArg, ITagThunk, {}>;
+  arg: { tagId?: string; name?: string; color?: string; taskId?: string };
+  isVisible: boolean;
+  setIsModalVisible: any;
+}
+
+const ModalTag: FC<IProps> = ({
   text,
   action,
   arg,
+  isVisible,
+  setIsModalVisible,
 }) => {
   const [colorTag, setColor] = useState('');
   const [inputValue, setInputValue] = useState('');
-
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -36,8 +51,8 @@ const ModalTag = ({
   const isUniqueTag = uniqueTagName?.indexOf(inputValue) === -1 && inputValue;
 
   const handleOk = () => {
-    setIsModalVisibleMain(false);
-    setIsModalVisibleCreate(false);
+    dispatch(setIsModalVisibleMain(false));
+    dispatch(setIsModalVisible(false));
 
     setColor('');
     setInputValue('');
@@ -49,13 +64,19 @@ const ModalTag = ({
   };
 
   const handleCancel = () => {
-    setIsModalVisibleCreate(false);
+    dispatch(setIsModalVisible(false));
   };
 
   const onChecked = (e) => {
     if (e.target.checked) {
       setColor(e.target.value);
     } else setColor('');
+  };
+
+  const onEnter = (e: React.KeyboardEvent<HTMLFormElement>) => {
+    if (e.code === 'Enter') {
+      handleOk();
+    }
   };
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,7 +103,7 @@ const ModalTag = ({
       onCancel={handleCancel}
     >
       <Text type="secondary">Название метки</Text>
-      <Form form={form}>
+      <Form form={form} onKeyPress={onEnter}>
         <Form.Item name="input" key="input">
           <Input
             className={styles.input}

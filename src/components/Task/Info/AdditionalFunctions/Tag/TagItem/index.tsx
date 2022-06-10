@@ -2,7 +2,6 @@ import React, { FC } from 'react';
 import { Menu } from 'antd';
 import { CaretRightOutlined } from '@ant-design/icons';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import { uniqueId } from 'lodash';
 import { MIN_NUMBER_TAGS_ON_PAGE } from 'constants/additionalFunctions/tag';
 import { unassignTagAction } from 'store/editTask/additionalFunctions/tag/thunk';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
@@ -45,7 +44,7 @@ const TagItem: FC<TProps> = ({ editable, taskId }) => {
           icon={<CaretRightOutlined className={styles.iconColor} />}
         >
           {tag?.map((item: React.ReactElement) => {
-            return <Menu.Item key={uniqueId()}>{item}</Menu.Item>;
+            return <Menu.Item key={item.key}>{item}</Menu.Item>;
           })}
         </Menu.SubMenu>
       </Menu>

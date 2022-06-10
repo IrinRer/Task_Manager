@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Menu, Button } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
@@ -9,7 +9,16 @@ import { getTaskId } from 'store/editTask/selectors';
 import { ITag } from 'store/common/tags/types';
 import styles from './index.module.scss';
 
-const MenuTag = ({ onClickDelete, onClickEdit }) => {
+interface IProps {
+  onClickDelete: (key: string | undefined, name: string) => void;
+  onClickEdit: (
+    task_tag_id: string | undefined,
+    name: string,
+    color: string,
+  ) => void;
+}
+
+const MenuTag: FC<IProps> = ({ onClickDelete, onClickEdit }) => {
   const dispatch = useAppDispatch();
 
   const populatedTag = useAppSelector(selectPopulatedTags);
