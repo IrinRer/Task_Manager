@@ -5,7 +5,7 @@ export const initials = (name: string): string => {
   const names = name.split(' ');
 
   // Берём первую букву первого слова и если есть второе, то первую букву его.
-  return `${names[0][0].toUpperCase()}${
+  return `${names[0] ? names[0][0].toUpperCase() : ''}${
     names[1] ? names[1][0].toUpperCase() : ''
   }`;
 };

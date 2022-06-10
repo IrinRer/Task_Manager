@@ -1,22 +1,22 @@
 import classnames from 'classnames';
 import UserAvatar from 'components/Common/UserAvatar';
+import { RightsRoleContext } from 'components/Task/context';
 import useMembersProps from 'components/Task/Info/MembersHook/useMembersProps';
-import { RoleContext } from 'constants/taskContext';
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import { IUser } from 'store/users/types';
 import styles from './index.module.scss';
 
 type TProps = {
-  user?: IUser;
+  obj?: IUser;
   size?: 'L' | 'M';
 };
 
-const MemberItem: FC<TProps> = ({ user, size = 'M' }) => {
-  const roleName = RoleContext();
+const MemberItem: FC<TProps> = ({ obj, size = 'M' }) => {
+  const roleName = useContext(RightsRoleContext)?.role || '';
   const usersData = useMembersProps(roleName);
   const userFromTaskRole = usersData?.users ? usersData?.users[0] : undefined;
 
-  const member = user || userFromTaskRole;
+  const member = obj || userFromTaskRole;
 
   return (
     <div className={classnames(styles[`avatar${size}`], styles.memberItem)}>

@@ -1,7 +1,7 @@
+import { RightsRoleContext } from 'components/Task/context';
 import AddMemberButton from 'components/Task/Info/AddMemberButton';
 import useMembersProps from 'components/Task/Info/MembersHook/useMembersProps';
-import { EditableContext, RoleContext } from 'constants/taskContext';
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import { IUser } from 'store/users/types';
 import EditableMember from '../EditableMember';
 import MemberItem from '../MemberItem';
@@ -12,8 +12,8 @@ type TProps = {
 };
 
 const OneMember: FC<TProps> = ({ user }) => {
-  const roleName = RoleContext();
-  const editable = EditableContext();
+  const roleName = useContext(RightsRoleContext)?.role || '';
+  const editable = useContext(RightsRoleContext)?.isRights || false;
   const usersData = useMembersProps(roleName);
   const userFromTaskRole = usersData?.users ? usersData?.users[0] : undefined;
 
@@ -23,7 +23,7 @@ const OneMember: FC<TProps> = ({ user }) => {
     <div className={user ? styles.inlist : styles.nolist}>
       {editable && member ? <EditableMember user={member} /> : null}
 
-      {!editable && member ? <MemberItem user={member} /> : null}
+      {!editable && member ? <MemberItem obj={member} /> : null}
 
       {!member && editable ? <AddMemberButton /> : null}
     </div>

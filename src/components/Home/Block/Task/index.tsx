@@ -1,12 +1,8 @@
 import React, { useContext } from 'react';
 import { Col, Row } from 'antd';
-import { BlockType, ROLES } from 'constants/types/common';
+import { BlockType } from 'constants/types/common';
 import StatusWithPopover from 'components/Common/StatusWithPopover';
 import { TaskContext } from 'constants/taskContext';
-import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { getRights } from 'helpers/rights';
-import { RIGHTS_NAMES } from 'constants/rights';
-import { getMyMaxRoleForAllTasks } from 'store/common/roles/selectors';
 import Attached from '../Attached';
 import Progress from '../Progress';
 import DateString from '../Date';
@@ -24,15 +20,6 @@ interface IProps {
 const Task: React.FC<IProps> = ({ type }) => {
   const task = useContext(TaskContext);
 
-  const myMaxRoleAllTasks = useAppSelector(getMyMaxRoleForAllTasks);
-
-  const myMaxRole =
-    myMaxRoleAllTasks.find((el) => {
-      return el.task_id === task?.task_id;
-    })?.maxrole || ROLES.any;
-
-  const isRights = getRights(myMaxRole, RIGHTS_NAMES.editStatus);
-
   if (!task) return null;
 
   return (
@@ -48,19 +35,6 @@ const Task: React.FC<IProps> = ({ type }) => {
       {/* Статус со всплывающим селектором смены статуса */}
       <Col span={3} className={styles.status}>
         <StatusWithPopover taskId={task.task_id} />
-        {/* isRights ? (
-          <Popover
-            overlayClassName="popover"
-            content={<StatusChange task_id={task.task_id} />}
-            trigger="click"
-          >
-            <div>
-              <Status statusName={task.status.name} />
-            </div>
-          </Popover>
-        ) : (
-          <Status statusName={task.status.name} />
-        ) */}
       </Col>
       {/* Дата */}
       {type !== BlockType.done && (

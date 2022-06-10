@@ -1,10 +1,10 @@
 import { CaretRightOutlined } from '@ant-design/icons';
+import { RightsRoleContext } from 'components/Task/context';
 import ListMember from 'components/Task/Info/ListMember';
 import useMembersProps from 'components/Task/Info/MembersHook/useMembersProps';
 import { USERS_BY_ONE_MAX_COUNT } from 'constants/common';
-import { RoleContext } from 'constants/taskContext';
 import { ROLES } from 'constants/types/common';
-import React, { FC, useState } from 'react';
+import React, { FC, useContext, useState } from 'react';
 import styles from './index.module.scss';
 
 type TProps = {
@@ -12,7 +12,7 @@ type TProps = {
 };
 
 const MembersWrapperMulti: FC<TProps> = ({ children }) => {
-  const roleName = RoleContext();
+  const roleName = useContext(RightsRoleContext)?.role || '';
   const roleShowName =
     roleName === ROLES.author ? ROLES.author_short : roleName;
 

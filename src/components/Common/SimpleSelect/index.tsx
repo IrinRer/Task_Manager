@@ -1,7 +1,9 @@
 import React from 'react';
 import { Select } from 'antd';
 import { SelectProps, SelectValue } from 'antd/lib/select';
-import { TOption } from '../../Task/Info/TaskHook/useSelectOptions';
+import useSelectOptions, {
+  TOption,
+} from '../../Task/Info/TaskHook/useSelectOptions';
 
 const { Option } = Select;
 
@@ -18,14 +20,23 @@ const SimpleSelect = <T,>(
   >,
 ): React.ReactElement => {
   const { list, itemKey, itemLabel, itemValue, ...rest } = props;
-  const children = list?.map((el) => {
-    return (
-      <Option key={el[itemKey]} value={el[itemValue]}>
-        {el[itemLabel]}
-      </Option>
-    );
-  });
-  return <Select {...rest}>{children}</Select>;
+  const options = useSelectOptions();
+
+  return (
+    <Select
+      filterOption={options.particular.filterOption}
+      filterSort={options.particular.filterSort}
+      {...rest}
+    >
+      {list?.map((el) => {
+        return (
+          <Option key={el[itemKey]} value={el[itemValue]}>
+            {el[itemLabel]}
+          </Option>
+        );
+      })}
+    </Select>
+  );
 };
 
 export default SimpleSelect;

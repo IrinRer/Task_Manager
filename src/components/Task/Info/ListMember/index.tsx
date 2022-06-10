@@ -1,6 +1,6 @@
 import { CloseOutlined, SearchOutlined } from '@ant-design/icons';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import React, { FC, useMemo } from 'react';
+import React, { FC, useContext, useMemo } from 'react';
 
 import { getUnselectedMembers, getTaskId } from 'store/editTask/selectors';
 
@@ -9,9 +9,8 @@ import { setUnselectedMembers } from 'store/editTask/slice';
 import { deleteTaskMemberAction } from 'store/editTask/thunk';
 import classnames from 'classnames';
 import { ROLES } from 'constants/types/common';
-import SimpleSelect from 'components/Common/SimpleSelect';
 import MemberItem from 'components/Task/Members/MemberItem';
-import { EditableContext, RoleContext } from 'constants/taskContext';
+import { RightsRoleContext } from 'components/Task/context';
 import styles from '../AddMemberButton/index.module.scss';
 import stylesList from './index.module.scss';
 import useSelectOptions from '../TaskHook/useSelectOptions';
@@ -24,8 +23,8 @@ type TProps = {
 };
 
 const ListMemberMulti: FC<TProps> = ({ isActive, setIsActive }) => {
-  const roleName = RoleContext();
-  const editable = EditableContext();
+  const roleName = useContext(RightsRoleContext)?.role || '';
+  const editable = useContext(RightsRoleContext)?.isRights || false;
   const options = useSelectOptions();
 
   const roleUnassign = useAppSelector(getUnselectedMembers);
@@ -109,6 +108,7 @@ const ListMemberMulti: FC<TProps> = ({ isActive, setIsActive }) => {
         list={users}
         itemKey="user_id"
         OptionItem={MemberItem}
+        itemLabel="name"
         itemValue="user_id"
         mode="multiple"
         menuItemSelectedIcon={editable ? <CloseOutlined /> : null}
@@ -127,6 +127,7 @@ const ListMemberMulti: FC<TProps> = ({ isActive, setIsActive }) => {
         }
         onChange={editable ? onChange : () => {}}
         onBlur={editable ? onBlur : closeList}
+        onSearch={options.particular.handleSearch}
       />
     </div>
   );

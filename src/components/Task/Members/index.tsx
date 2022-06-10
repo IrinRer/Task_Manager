@@ -1,19 +1,15 @@
 import React from 'react';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { getEditMembersLoading } from 'store/editTask/selectors';
-import uniqueId from 'lodash/uniqueId';
 import Spinner from 'components/Common/Spinner';
 import { ROLES } from 'constants/types/common';
 import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
 import { getRights } from 'helpers/rights';
 import { RIGHTS_NAMES, TRights } from 'constants/rights';
-import {
-  RightsRoleContext,
-  useRightsRoleContextValue,
-} from 'constants/taskContext';
 import OneMember from './OneMember';
 import MembersWrapperMulti from './MembersWrapperMulti';
 import MembersByOne from './MembersByOne';
+import ContextWrapper from '../ContextWrapper';
 
 type TElementsMembers = {
   id: string;
@@ -37,58 +33,28 @@ const Info: React.FC = () => {
 
   const elements: TElementsMembers[] = [
     {
-      id: uniqueId(),
+      id: '1',
       title: ROLES.author,
       editable: false,
-      block: (
-        <RightsRoleContext.Provider
-          value={useRightsRoleContextValue(ROLES.author, false)}
-        >
-          <OneMember />
-        </RightsRoleContext.Provider>
-      ),
+      block: <OneMember />,
     },
     {
-      id: uniqueId(),
+      id: '2',
       title: ROLES.responsible,
       editable: isRightsEditResponsible,
-      block: (
-        <RightsRoleContext.Provider
-          value={useRightsRoleContextValue(
-            ROLES.responsible,
-            isRightsEditResponsible,
-          )}
-        >
-          <OneMember />
-        </RightsRoleContext.Provider>
-      ),
+      block: <OneMember />,
     },
     {
-      id: uniqueId(),
+      id: '3',
       title: ROLES.implementer,
       editable: isRightsEditImplementer,
-      block: (
-        <RightsRoleContext.Provider
-          value={useRightsRoleContextValue(
-            ROLES.implementer,
-            isRightsEditImplementer,
-          )}
-        >
-          <MembersByOne multiAdd usersMaxCount={3} />
-        </RightsRoleContext.Provider>
-      ),
+      block: <MembersByOne multiAdd usersMaxCount={3} />,
     },
     {
-      id: uniqueId(),
+      id: '4',
       title: ROLES.watcher,
       editable: isRightsEditWatchers,
-      block: (
-        <RightsRoleContext.Provider
-          value={useRightsRoleContextValue(ROLES.watcher, isRightsEditWatchers)}
-        >
-          <MembersByOne multiAdd usersMaxCount={50} />
-        </RightsRoleContext.Provider>
-      ),
+      block: <MembersByOne multiAdd usersMaxCount={50} />,
     },
   ];
 
@@ -100,12 +66,9 @@ const Info: React.FC = () => {
     <>
       {elements.map((el) => {
         return (
-          <RightsRoleContext.Provider
-            // eslint-disable-next-line react-hooks/rules-of-hooks
-            value={useRightsRoleContextValue(el.title, el.editable)}
-          >
-            <MembersWrapperMulti key={el.id}>{el.block}</MembersWrapperMulti>
-          </RightsRoleContext.Provider>
+          <ContextWrapper key={el.id} role={el.title} isRights={el.editable}>
+            <MembersWrapperMulti>{el.block}</MembersWrapperMulti>
+          </ContextWrapper>
         );
       })}
     </>

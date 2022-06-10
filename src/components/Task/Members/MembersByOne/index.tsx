@@ -1,9 +1,9 @@
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import AddMemberButton from 'components/Task/Info/AddMemberButton';
 import AddMemberButtonMulti from 'components/Task/Info/AddMemberButtonMulti';
 import useMembersProps from 'components/Task/Info/MembersHook/useMembersProps';
 import { USERS_BY_ONE_MAX_COUNT } from 'constants/common';
-import { EditableContext, RoleContext } from 'constants/taskContext';
+import { RightsRoleContext } from 'components/Task/context';
 import styles from './index.module.scss';
 import OneMember from '../OneMember';
 
@@ -13,8 +13,8 @@ type TProps = {
 };
 
 const MembersByOne: FC<TProps> = ({ multiAdd, usersMaxCount }) => {
-  const roleName = RoleContext();
-  const editable = EditableContext();
+  const roleName = useContext(RightsRoleContext)?.role || '';
+  const editable = useContext(RightsRoleContext)?.isRights || false;
   const usersData = useMembersProps(roleName);
   const users = usersData?.users ? usersData?.users : [];
 

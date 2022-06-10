@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { TRights } from 'constants/rights';
-import { ROLES } from 'constants/types/common';
+import { ROLES, TTask } from 'constants/types/common';
 import { RootState } from 'store';
 import { getVerifyIdUser } from 'store/auth/verify/selectors';
 import {
@@ -10,12 +10,12 @@ import {
   getTaskWatchersID,
 } from 'store/editTask/selectors';
 import {
-  getTasksAuthorsIDS,
-  getTasksImplementersIDS,
-  getTasksResponsiblesIDS,
-  getTasksWatchersIDS,
+  getTaskAuthorIDParams,
+  getTaskImplementersIDParams,
+  getTaskResponsibleIDParams,
+  getTaskWatchersIDParams,
 } from 'store/tasks/selectors';
-import { IRoles, TasksMaxRole, TasksRoles } from './types';
+import { IRoles } from './types';
 
 function isAuthorFromRoles(element: IRoles): boolean {
   return element.name === ROLES.author;
@@ -56,11 +56,22 @@ export const getRolesLoading = (state: RootState) => state.common.roles.loading;
 export const getRolesError = (state: RootState) => state.common.roles.error;
 
 export const getMyRolesForTask = createSelector(
-  getTaskAuthorID,
-  getTaskImplementersID,
-  getTaskResponsibleID,
-  getTaskWatchersID,
-  getVerifyIdUser,
+  [
+    (state: RootState, task?: TTask | undefined) =>
+      task ? getTaskAuthorIDParams(state, task) : getTaskAuthorID(state),
+    (state: RootState, task?: TTask | undefined) =>
+      task
+        ? getTaskImplementersIDParams(state, task)
+        : getTaskImplementersID(state),
+    (state: RootState, task?: TTask | undefined) =>
+      task
+        ? getTaskResponsibleIDParams(state, task)
+        : getTaskResponsibleID(state),
+    (state: RootState, task?: TTask | undefined) =>
+      task ? getTaskWatchersIDParams(state, task) : getTaskWatchersID(state),
+    getVerifyIdUser,
+  ],
+
   (author, implementers, responsible, watchers, authUserId): string[] => {
     const resultRoles: string[] = [];
     const usersIDwithRolesForTask = [
@@ -80,7 +91,8 @@ export const getMyRolesForTask = createSelector(
 );
 
 export const getMyMaxRoleForTask = createSelector(
-  getMyRolesForTask,
+  (state: RootState, task?: TTask | undefined) =>
+    getMyRolesForTask(state, task),
   (roles): TRights => {
     if (roles.includes(ROLES.author)) return ROLES.author;
     if (roles.includes(ROLES.responsible)) return ROLES.responsible;
@@ -90,80 +102,45 @@ export const getMyMaxRoleForTask = createSelector(
   },
 );
 
-export const findTaskRoleELem = (rolesArr: TasksRoles[], task_id: string) => {
-  return rolesArr.find((role_el) => {
-    return role_el.task_id === task_id;
-  });
-};
+/* export const getMyRolesForAllTasks = createSelector(
+  [
+    (state: RootState, task: TTask | undefined) =>
+      getTaskAuthorIDParams(state, task),
+    (state, task) => getTaskImplementersIDParams(state, task),
+    (state, task) => getTaskResponsibleIDParams(state, task),
+    (state, task) => getTaskWatchersIDParams(state, task),
+    getVerifyIdUser,
+  ],
 
-export const getMyRolesForAllTasks = createSelector(
-  getTasksAuthorsIDS,
-  getTasksImplementersIDS,
-  getTasksResponsiblesIDS,
-  getTasksWatchersIDS,
-  getVerifyIdUser,
-  (authors, implementers, responsibles, watchers, authUserId): TasksRoles[] => {
-    const resultRoles: TasksRoles[] = [];
-
-    [
-      { name: ROLES.author, data: authors },
+  // eslint-disable-next-line sonarjs/no-identical-functions
+  (author, implementers, responsible, watchers, authUserId): string[] => {
+    const resultRoles: string[] = [];
+    const usersIDwithRolesForTask = [
+      { name: ROLES.author, data: [author] },
       { name: ROLES.implementer, data: implementers },
-      { name: ROLES.responsible, data: responsibles },
+      { name: ROLES.responsible, data: [responsible] },
       { name: ROLES.watcher, data: watchers },
-    ].forEach((el) => {
-      el.data.forEach((task_el) => {
-        if (task_el.users.includes(authUserId || '')) {
-          const taskRoleELem = findTaskRoleELem(resultRoles, task_el.task_id);
-          if (taskRoleELem) {
-            taskRoleELem.roles.push(el.name);
-          } else {
-            resultRoles.push({ task_id: task_el.task_id, roles: [el.name] });
-          }
-        }
-      });
+    ];
+
+    // eslint-disable-next-line sonarjs/no-identical-functions
+    usersIDwithRolesForTask.forEach((el) => {
+      if (el.data.includes(authUserId || undefined)) {
+        resultRoles.push(el.name);
+      }
     });
     return resultRoles;
   },
-);
+); */
 
-export const getMyMaxRoleForAllTasks = createSelector(
-  getMyRolesForAllTasks,
-  (resultRoles): TasksMaxRole[] => {
-    const resultMaxRoles: TasksMaxRole[] = [];
-
-    resultRoles.forEach((task_el) => {
-      switch (true) {
-        case task_el.roles.includes(ROLES.author):
-          resultMaxRoles.push({
-            task_id: task_el.task_id,
-            maxrole: ROLES.author,
-          });
-          break;
-        case task_el.roles.includes(ROLES.responsible):
-          resultMaxRoles.push({
-            task_id: task_el.task_id,
-            maxrole: ROLES.responsible,
-          });
-          break;
-        case task_el.roles.includes(ROLES.implementer):
-          resultMaxRoles.push({
-            task_id: task_el.task_id,
-            maxrole: ROLES.implementer,
-          });
-          break;
-        case task_el.roles.includes(ROLES.watcher):
-          resultMaxRoles.push({
-            task_id: task_el.task_id,
-            maxrole: ROLES.watcher,
-          });
-          break;
-        default:
-          resultMaxRoles.push({
-            task_id: task_el.task_id,
-            maxrole: ROLES.any,
-          });
-      }
-    });
-    return resultMaxRoles;
+/* export const getMyMaxRoleForAllTasks1 = createSelector(
+  (state: RootState, task: TTask | undefined) =>
+    getMyRolesForAllTasks(state, task),
+  // eslint-disable-next-line sonarjs/no-identical-functions
+  (roles): TRights => {
+    if (roles.includes(ROLES.author)) return ROLES.author;
+    if (roles.includes(ROLES.responsible)) return ROLES.responsible;
+    if (roles.includes(ROLES.implementer)) return ROLES.implementer;
+    if (roles.includes(ROLES.watcher)) return ROLES.watcher;
+    return ROLES.any;
   },
-);
+); */

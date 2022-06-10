@@ -10,7 +10,6 @@ import {
 } from 'store/common/task/selectors';
 import { ICheckList } from '../common/task/types';
 import { TProgress } from '../../constants/types/common';
-import { getVerifyIdUser } from '../auth/verify/selectors';
 
 export const getModalVisible = (state: RootState) =>
   state.editTask.editTaskReducer.modalVisible;

@@ -9,12 +9,9 @@ import Spinner from 'components/Common/Spinner';
 import StatusWithPopover from 'components/Common/StatusWithPopover';
 
 import { ROLES } from 'constants/types/common';
-import {
-  RightsRoleContext,
-  useRightsRoleContextValue,
-} from 'constants/taskContext';
 import styles from './index.module.scss';
 import OneMember from '../Members/OneMember';
+import { RightsRoleContext, useRightsRoleContextValue } from '../context';
 
 const Info: React.FC = () => {
   const author = useAppSelector(getTaskAuthor);
