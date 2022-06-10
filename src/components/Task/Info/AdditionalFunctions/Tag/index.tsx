@@ -5,7 +5,6 @@ import { createTagAction } from 'store/editTask/additionalFunctions/tag/thunk';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { uniqueTagNameSelector } from 'store/editTask/additionalFunctions/tag/selectors';
 import { getTaskId } from 'store/editTask/selectors';
-import { ITag } from 'store/common/tags/types';
 import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
 import { getRights } from 'helpers/rights';
 import { RIGHTS_NAMES } from 'constants/rights';
@@ -19,7 +18,7 @@ const SelectTag: React.FC = () => {
   const [isModalVisibleMain, setIsModalVisibleMain] = useState(false);
   const [isModalVisibleCreate, setIsModalVisibleCreate] = useState(false);
 
-  const taskId = useAppSelector(getTaskId); 
+  const taskId = useAppSelector(getTaskId);
 
   const myMaxRole = useAppSelector(getMyMaxRoleForTask);
   const isRights = getRights(myMaxRole, RIGHTS_NAMES.editTag);
@@ -62,7 +61,7 @@ const SelectTag: React.FC = () => {
         setIsModalVisibleCreate={setIsModalVisibleCreate}
         setIsModalVisibleMain={setIsModalVisibleMain}
         text="Новая метка"
-        arg={taskId}
+        arg={{ taskId }}
         action={createTagAction}
       />
     </div>

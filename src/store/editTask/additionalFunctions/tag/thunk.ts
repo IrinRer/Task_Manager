@@ -12,7 +12,7 @@ export const createTagAction = createAsyncThunk(
         color: tag.color,
       });
 
-      await api().post(`/api/v1.0/task/tasks/${tag.arg}/tag-assign`, {
+      await api().post(`/api/v1.0/task/tasks/${tag.arg?.taskId}/tag-assign`, {
         task_tag_id: responseCreate.data.data.task_tag_id,
       });
 
@@ -58,10 +58,13 @@ export const editTagAction = createAsyncThunk(
   `${TAG_SLICE_ALIAS}/edit`,
   async (tag: ITagThunk, { rejectWithValue }) => {
     try {
-      const response = await api().post(`/api/v1.0/task/tags/${tag.arg}`, {
-        name: tag.name,
-        color: tag.color,
-      });
+      const response = await api().post(
+        `/api/v1.0/task/tags/${tag.arg?.tagId}`,
+        {
+          name: tag.name,
+          color: tag.color,
+        },
+      );
       return response.data.data;
     } catch (error) {
       notification.error({ message: 'Произошла ошибка редактирования метки!' });

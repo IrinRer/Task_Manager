@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Button, Typography, Input, Form, Radio } from 'antd';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
@@ -22,6 +22,13 @@ const ModalTag = ({
   const [inputValue, setInputValue] = useState('');
 
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    form.setFieldsValue({
+      input: arg.name,
+      checkbox: arg.color,
+    });
+  }, [form, arg.color, arg.name]);
 
   const dispatch = useAppDispatch();
 

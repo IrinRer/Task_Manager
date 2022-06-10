@@ -40,7 +40,7 @@ const SelectDate: React.FC = () => {
     <div className={styles.date}>
       <Text className={styles.text}>Срок</Text>
       <DatePicker
-        defaultValue={isAcceptDateStop}
+        defaultValue={isAcceptDateStop || undefined}
         disabled={!isRights}
         format={DATE_FORMAT_UI}
         bordered={false}

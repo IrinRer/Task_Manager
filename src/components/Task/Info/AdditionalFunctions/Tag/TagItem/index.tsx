@@ -6,7 +6,6 @@ import { uniqueId } from 'lodash';
 import { MIN_NUMBER_TAGS_ON_PAGE } from 'constants/additionalFunctions/tag';
 import { unassignTagAction } from 'store/editTask/additionalFunctions/tag/thunk';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { ITag } from 'store/common/tags/types';
 import { getTag } from 'store/editTask/additionalFunctions/tag/selectors';
 import CustomTag from 'components/Common/CustomTag';
 import styles from '../index.module.scss';

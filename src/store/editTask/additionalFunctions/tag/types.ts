@@ -14,7 +14,10 @@ export interface ITagPayload {
 }
 
 export interface ITagThunk {
-  arg?: string;
+  arg?: {
+    taskId?: string;
+    tagId?: string;
+  };
   name?: string;
   color?: string;
   task_tag_id?: string;

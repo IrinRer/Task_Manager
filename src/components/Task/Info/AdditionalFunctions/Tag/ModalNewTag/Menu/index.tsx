@@ -44,7 +44,9 @@ const MenuTag = ({ onClickDelete, onClickEdit }) => {
               <Button
                 icon={<EditOutlined className={styles.iconEdit} />}
                 className={styles.btnIcon}
-                onClick={() => onClickEdit(item.task_tag_id)}
+                onClick={() =>
+                  onClickEdit(item.task_tag_id, item.name, item.color)
+                }
               />
               <Button
                 icon={<DeleteOutlined className={styles.iconDelete} />}
