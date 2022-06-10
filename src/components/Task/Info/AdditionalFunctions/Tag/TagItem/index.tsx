@@ -44,7 +44,7 @@ const TagItem: FC<TProps> = ({ editable, taskId }) => {
           icon={<CaretRightOutlined className={styles.iconColor} />}
         >
           {tag?.map((item: React.ReactElement) => {
-            return <Menu.Item key={item.key}>{item}</Menu.Item>;
+            return <div key={item.key}>{item}</div>;
           })}
         </Menu.SubMenu>
       </Menu>

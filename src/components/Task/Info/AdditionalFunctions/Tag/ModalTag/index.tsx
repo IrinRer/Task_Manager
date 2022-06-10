@@ -1,6 +1,6 @@
-import React, { useState, useEffect, FC } from 'react';
+import React, { useState, useEffect, FC, useRef } from 'react';
 import { Modal, Button, Typography, Input, Form, Radio } from 'antd';
-import { AsyncThunk } from '@reduxjs/toolkit';
+import { AnyAction, AsyncThunk } from '@reduxjs/toolkit';
 import { ITagThunk } from 'store/editTask/additionalFunctions/tag/types';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
@@ -16,7 +16,7 @@ const { Text } = Typography;
 interface IArg {
   name: string;
   color: string;
-  arg: any;
+  arg: string;
 }
 
 interface IProps {
@@ -24,7 +24,7 @@ interface IProps {
   action: AsyncThunk<IArg, ITagThunk, {}>;
   arg: { tagId?: string; name?: string; color?: string; taskId?: string };
   isVisible: boolean;
-  setIsModalVisible: any;
+  setIsModalVisible: (action: boolean) => AnyAction;
 }
 
 const ModalTag: FC<IProps> = ({
@@ -38,12 +38,16 @@ const ModalTag: FC<IProps> = ({
   const [inputValue, setInputValue] = useState('');
   const [form] = Form.useForm();
 
+  const formRef = useRef(null);
+
   useEffect(() => {
-    form.setFieldsValue({
-      input: arg.name,
-      checkbox: arg.color,
-    });
-  }, [form, arg.color, arg.name]);
+    if (formRef.current) {
+      form.setFieldsValue({
+        input: arg.name,
+        checkbox: arg.color,
+      });
+    }
+  }, [form, arg]);
 
   const dispatch = useAppDispatch();
 
@@ -103,7 +107,7 @@ const ModalTag: FC<IProps> = ({
       onCancel={handleCancel}
     >
       <Text type="secondary">Название метки</Text>
-      <Form form={form} onKeyPress={onEnter}>
+      <Form form={form} onKeyPress={onEnter} ref={formRef}>
         <Form.Item name="input" key="input">
           <Input
             className={styles.input}

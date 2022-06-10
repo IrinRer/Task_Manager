@@ -57,7 +57,7 @@ const ModalNewTag: FC<IProps> = ({ openWindowCreate }) => {
 
   const onDelete = () => {
     dispatch(deleteTagAction(id));
-    dispatch(setIsModalVisibleMain(true));
+    dispatch(setIsModalVisibleMain(false));
   };
 
   const handleCancel = () => {

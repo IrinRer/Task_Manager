@@ -6,7 +6,6 @@ import { IResponseTask } from 'store/common/task/types';
 import { PRIORITY_SLICE_ALIAS, IPriorityReducer } from './types';
 import { changePriorityAction } from './thunk';
 
-
 const initialState: IPriorityReducer = {
   priority: null,
   loading: false,
