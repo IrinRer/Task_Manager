@@ -27,17 +27,17 @@ const AdditionalFunctions = () => {
   const accepDate = useAppSelector(getDateStop);
 
   type TPriorityTasks = {
-    defaultPriority?: string | undefined;
-    accepPriority?: string | undefined;
+    defaultPriority?: string;
+    accepPriority?: string;
   };
 
   type TDateTasks = {
-    dateStop?: string | undefined;
-    accepDate?: string | undefined;
+    dateStop?: string;
+    accepDate?: string;
   };
 
   type TTagTasks = {
-    tagSelect?: ITag[] | undefined;
+    tagSelect?: ITag[];
   };
 
   const PriorityTasks = withAdditionalFunctions<string, TPriorityTasks>(

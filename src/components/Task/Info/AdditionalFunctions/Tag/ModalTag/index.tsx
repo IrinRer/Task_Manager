@@ -54,13 +54,17 @@ const ModalTag: FC<IProps> = ({
   const uniqueTagName = useAppSelector(uniqueTagNameSelector);
   const isUniqueTag = uniqueTagName?.indexOf(inputValue) === -1 && inputValue;
 
+  const resetForm = () => {
+    setColor('');
+    setInputValue('');
+    form.resetFields();
+  };
+
   const handleOk = () => {
     dispatch(setIsModalVisibleMain(false));
     dispatch(setIsModalVisible(false));
 
-    setColor('');
-    setInputValue('');
-    form.resetFields();
+    resetForm();
 
     if (inputValue && isUniqueTag && uniqueTagName.length < MAX_NUMBER_TAGS) {
       dispatch(action({ name: inputValue, color: colorTag, arg }));
@@ -68,6 +72,7 @@ const ModalTag: FC<IProps> = ({
   };
 
   const handleCancel = () => {
+    resetForm();
     dispatch(setIsModalVisible(false));
   };
 
