@@ -74,8 +74,24 @@ export const downloadFile = createAsyncThunk(
       link.click();
       URL.revokeObjectURL(link.href);
 
-      // в store не сохраняю информацию о файле, который был скачен
-      return file;
+      return response.data;
+    } catch (error) {
+      notification.error({ message: 'Ошибка скачивания файла' });
+      return rejectWithValue(error);
+    }
+  },
+);
+
+export const viewFile = createAsyncThunk(
+  `${ATTACHMENTS_SLICE_ALIAS}/view`,
+  async (file: IFileThunk, { rejectWithValue }) => {
+    try {
+      const response = await api().get(
+        `/api/v1.0/storage/files/${file.fileId}/download`,
+        { responseType: 'blob' },
+      );
+
+      return { url: URL.createObjectURL(response.data), name: file.name };
     } catch (error) {
       notification.error({ message: 'Ошибка скачивания файла' });
       return rejectWithValue(error);

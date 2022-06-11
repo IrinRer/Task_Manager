@@ -5,6 +5,7 @@ export const ATTACHMENTS_SLICE_ALIAS = 'attachments';
 
 export interface IAttachmentsReducer {
   data: IPayloadFile[];
+  viewFile: any;
   isClicked: boolean;
   loading: boolean;
   error: AxiosError | null;

@@ -1,7 +1,8 @@
 import { fetchTaskAction } from 'store/common/task/thunk';
 import { IResponseTask } from 'store/common/task/types';
-import { deleteFile } from 'store/editTask/attachments/thunk';
+import { deleteFile, viewFile } from 'store/editTask/attachments/thunk';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { union } from 'lodash';
 import {
   ATTACHMENTS_SLICE_ALIAS,
   IAttachmentsReducer,
@@ -10,8 +11,10 @@ import {
 import { AxiosError } from 'axios';
 import { assignFile } from './thunk';
 
-const initialState: IAttachmentsReducer = {
+// IAttachmentsReducer
+const initialState: any = {
   data: [],
+  viewFile: [],
   isClicked: false,
   loading: false,
   error: null,
@@ -71,6 +74,27 @@ export const attachmentsSlice = createSlice({
     },
 
     [deleteFile.rejected.type]: (
+      state,
+      { payload }: PayloadAction<AxiosError>,
+    ) => {
+      state.loading = false;
+      state.error = payload;
+    },
+
+    [viewFile.pending.type]: (state) => {
+      state.loading = false;
+      state.error = null;
+    },
+
+    [viewFile.fulfilled.type]: (state, { payload }: PayloadAction<any>) => {
+      const arr = state.viewFile.concat(payload);
+      state.viewFile = arr.filter(
+        (item, i) => arr.findIndex((a) => a.name === item.name) === i,
+      );
+      state.loading = false;
+    },
+
+    [viewFile.rejected.type]: (
       state,
       { payload }: PayloadAction<AxiosError>,
     ) => {

@@ -16,5 +16,8 @@ export const getStorageFile = createSelector(attachmentsData, (attachments) =>
   }),
 );
 
-export const getfileName = (state: RootState) =>
+export const getFileName = (state: RootState) =>
   state.editTask.attachments.data?.map(({ name_original: name }) => name);
+
+export const getViewFile = (state: RootState) =>
+  state.editTask.attachments.viewFile;

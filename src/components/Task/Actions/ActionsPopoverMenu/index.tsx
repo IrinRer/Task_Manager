@@ -8,7 +8,7 @@ import { addCheckList } from 'store/editTask/checkLists/addCheckList/thunk';
 import { isAddCheckListLoading } from 'store/editTask/checkLists/addCheckList/selectors';
 import { setClickedAttachments } from 'store/editTask/attachments/slice';
 import {
-  getfileName,
+  getFileName,
   isClickedAttachments,
 } from 'store/editTask/attachments/selectors';
 import styles from './index.module.scss';
@@ -20,7 +20,7 @@ const ActionsPopoverMenu = () => {
   const addCheckListButtonIsActive = !!checkList;
 
   const isClickedAttachmentsBtn = useAppSelector(isClickedAttachments);
-  const attachments = useAppSelector(getfileName);
+  const attachments = useAppSelector(getFileName);
   const addAttachmentsButtonIsActive =
     isClickedAttachmentsBtn || !!attachments.length;
 

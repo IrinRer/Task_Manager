@@ -6,7 +6,7 @@ import historyIcon from 'assets/icons/history.svg';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import Spinner from 'components/Common/Spinner';
 import { isDeleteCheckListLoading } from 'store/editTask/checkLists/deleteCheckList/selectors';
-import { getfileName, isClickedAttachments } from 'store/editTask/attachments/selectors';
+import { getFileName, isClickedAttachments } from 'store/editTask/attachments/selectors';
 import Attachments from 'components/Task/Attachments';
 import styles from './index.module.scss';
 import History from './History';
@@ -20,7 +20,7 @@ import Actions from '../Actions';
 const Main: React.FC = () => {
   const isCheckListLoading = useAppSelector(isDeleteCheckListLoading);
   const isClickedAttachmentsBtn = useAppSelector(isClickedAttachments);
-  const attachments = useAppSelector(getfileName);
+  const attachments = useAppSelector(getFileName);
   const isAttachments = isClickedAttachmentsBtn || attachments.length;
 
   return (
