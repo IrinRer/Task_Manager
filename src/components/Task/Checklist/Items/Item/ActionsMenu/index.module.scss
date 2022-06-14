@@ -1,0 +1,55 @@
+@import 'src/styles/color-variables.scss';
+@import 'src/styles/font-variables.scss';
+@import 'src/styles/colors.scss';
+
+.popoverMenu {
+  padding: 0;
+  border: 1px solid $bg-primary;
+  box-shadow: 0 8px 40px rgba(23, 31, 70, 0.08);
+  min-width: 160px;
+
+  :global {
+    .ant-popover-arrow {
+      display: none;
+    }
+
+    .ant-popover-inner {
+      border-radius: 8px;
+    }
+
+    .ant-popover-inner-content {
+      padding: 20px 27px;
+    }
+  }
+}
+
+.menuOption {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: $bg-secondary;
+  font-weight: 600;
+  font-size: $font-size-m;
+  line-height: $line-height-xs;
+  color: $red;
+  cursor: pointer;
+
+  &:hover {
+    color: darken($red, 10%);
+  }
+}
+
+.moreButton {
+  cursor: pointer;
+  color: $text-light;
+  flex-shrink: 0;
+  display: none;
+
+  &:hover {
+    color: darken($text-light, 10%);
+  }
+}
+
+.visible {
+  display: block;
+}

@@ -24,7 +24,7 @@ const Checklist: React.FC = () => {
     <div className={styles.checklist}>
       <CheckListHeader />
       <CheckListProgress />
-      {checkList.items.length > 0 && <CheckListItems items={checkList.items} />}
+      {checkList.items?.length && <CheckListItems items={checkList.items} />}
       {isRights && <CheckListAddNewItem />}
     </div>
   );

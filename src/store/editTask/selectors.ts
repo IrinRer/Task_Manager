@@ -104,7 +104,7 @@ export const getCheckListId = (state: RootState): string | undefined =>
 export const getCheckListProgress = createSelector(
   getCheckList,
   (checkList): TProgress => {
-    const total = checkList?.items.length;
+    const total = checkList?.items?.length;
 
     if (total) {
       const completed = checkList.items.filter((item) => item.complete).length;

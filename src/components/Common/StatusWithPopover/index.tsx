@@ -1,9 +1,9 @@
+import React from 'react';
 import { Popover } from 'antd';
 import StatusChange from 'components/Common/StatusWithPopover/StatusChange';
 import { RIGHTS_NAMES } from 'constants/rights';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { getRights } from 'helpers/rights';
-import React from 'react';
 import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
 import { getTaskById } from 'store/tasks/selectors';
 import Status from './Status';
