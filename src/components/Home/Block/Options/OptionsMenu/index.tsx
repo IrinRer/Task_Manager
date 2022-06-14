@@ -9,9 +9,20 @@ import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
 import { getRights } from 'helpers/rights';
 import { RIGHTS_NAMES } from 'constants/rights';
 import { ROLES } from 'constants/types/common';
+import ModalDeleteDelay from 'components/Common/ModalDeleteDelay';
 import styles from './index.module.scss';
 
-const OptionsMenu: React.FC = () => {
+interface IProps {
+  isVisibleDelete: boolean;
+  setIsVisibleDelete: React.Dispatch<React.SetStateAction<boolean>>;
+  setVisibleOptions: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const OptionsMenu: React.FC<IProps> = ({
+  isVisibleDelete,
+  setIsVisibleDelete,
+  setVisibleOptions,
+}) => {
   const dispatch = useAppDispatch();
   const task = useContext(TaskContext);
 
@@ -35,12 +46,20 @@ const OptionsMenu: React.FC = () => {
     if (task) {
       dispatch(cloneTaskAction({ id: task.task_id, edit: false }));
     } else notification.warn({ message: 'Нет прав на дублирование задачи' });
+    setVisibleOptions(false);
   };
 
-  const handleDeleteTask = (): void => {
+  const handleOk = () => {
     if (task) {
       dispatch(deleteTaskAction(task.task_id));
     } else notification.warn({ message: 'Удалить задачу может только автор' });
+    setIsVisibleDelete(false);
+    setVisibleOptions(false);
+  };
+
+  const handleCancel = () => {
+    setIsVisibleDelete(false);
+    setVisibleOptions(false);
   };
 
   return (
@@ -64,10 +83,19 @@ const OptionsMenu: React.FC = () => {
         disabled={!isRightsDelTask}
         className={styles.button}
         type="text"
-        onClick={handleDeleteTask}
+        onClick={() => {
+          setIsVisibleDelete(true);
+        }}
       >
         Удалить задачу
       </Button>
+      <ModalDeleteDelay
+        visible={isVisibleDelete}
+        textMain={`Задача будет удалена через N сек... Для отмены нажмите "Отмена"`}
+        textButton="Удалить"
+        handleOk={handleOk}
+        handleCancel={handleCancel}
+      />
     </div>
   );
 };
