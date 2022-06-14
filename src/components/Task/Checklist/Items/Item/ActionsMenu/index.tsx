@@ -7,7 +7,9 @@ import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { isDeleteCheckListItemLoading } from 'store/editTask/checkLists/deleteCheckListItem/selectors';
 import { deleteCheckListItem } from 'store/editTask/checkLists/deleteCheckListItem/thunk';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import { getIsTaskEditable } from 'store/editTask/selectors';
+import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
+import { RIGHTS_NAMES } from 'constants/rights';
+import { getRights } from 'helpers/rights';
 import styles from './index.module.scss';
 
 interface IProps {
@@ -19,7 +21,8 @@ const ActionsMenu: React.FC<IProps> = ({ check_list_item_id, isHover }) => {
   const dispatch = useAppDispatch();
 
   const isCheckListItemLoading = useAppSelector(isDeleteCheckListItemLoading);
-  const isTaskEditable = useAppSelector(getIsTaskEditable);
+  const myMaxRole = useAppSelector(getMyMaxRoleForTask);
+  const isRights = getRights(myMaxRole, RIGHTS_NAMES.editChecklistItem);
 
   const [popupMenuVisible, setPopupMenuVisible] = useState<boolean>(false);
 
@@ -55,7 +58,7 @@ const ActionsMenu: React.FC<IProps> = ({ check_list_item_id, isHover }) => {
       overlayClassName={styles.popoverMenu}
       placement="bottomRight"
     >
-      {isTaskEditable && <MoreIcon className={menuButtonClassName} />}
+      {isRights && <MoreIcon className={menuButtonClassName} />}
     </Popover>
   );
 };
