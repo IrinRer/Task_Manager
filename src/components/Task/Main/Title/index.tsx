@@ -44,8 +44,6 @@ const Title: React.FC = () => {
   };
 
   const onBlur = (e) => {
-    // console.log(e.relatedTarget);
-    // console.log(e.relatedTarget.querySelector('.ant-modal').focus);
     if (
       e.relatedTarget &&
       e.relatedTarget.getAttribute('aria-label') !== 'Close'
