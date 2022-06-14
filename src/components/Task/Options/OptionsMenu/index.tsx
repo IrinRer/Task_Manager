@@ -8,14 +8,28 @@ import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { getRights } from 'helpers/rights';
 import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
 import { RIGHTS_NAMES } from 'constants/rights';
+import ModalDeleteDelay from 'components/Common/ModalDeleteDelay';
+import { useNavigate } from 'react-router-dom';
+import { clearEditDataTask, setModalVisible } from 'store/editTask/slice';
+import { clearDataTask } from 'store/common/task/slice';
+import { ROUTES } from 'constants/routes';
 import styles from './index.module.scss';
 
 interface IProps {
   task: IResponseTask | null;
+  isVisibleDelete: boolean;
+  setIsVisibleDelete: React.Dispatch<React.SetStateAction<boolean>>;
+  setVisibleOptions: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const OptionsMenu: React.FC<IProps> = ({ task }) => {
+const OptionsMenu: React.FC<IProps> = ({
+  task,
+  isVisibleDelete,
+  setIsVisibleDelete,
+  setVisibleOptions,
+}) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const myMaxRole = useAppSelector(getMyMaxRoleForTask);
   const isRightsCopyTask = getRights(myMaxRole, RIGHTS_NAMES.copyTask);
   const isRightsArchiveTask = getRights(myMaxRole, RIGHTS_NAMES.moveToArchive);
@@ -27,10 +41,21 @@ const OptionsMenu: React.FC<IProps> = ({ task }) => {
     }
   };
 
-  const handleDeleteTask = (): void => {
+  const handleOk = () => {
     if (task) {
       dispatch(deleteTaskAction(task.task_id));
     }
+    setIsVisibleDelete(false);
+    setVisibleOptions(false);
+    dispatch(setModalVisible(false));
+    dispatch(clearDataTask());
+    dispatch(clearEditDataTask());
+    navigate(ROUTES.tasks.path);
+  };
+
+  const handleCancel = () => {
+    setIsVisibleDelete(false);
+    setVisibleOptions(false);
   };
 
   return (
@@ -54,10 +79,19 @@ const OptionsMenu: React.FC<IProps> = ({ task }) => {
         disabled={!isRightsDelTask}
         className={styles.button}
         type="text"
-        onClick={handleDeleteTask}
+        onClick={() => {
+          setIsVisibleDelete(true);
+        }}
       >
         Удалить задачу
       </Button>
+      <ModalDeleteDelay
+        visible={isVisibleDelete}
+        textMain={`Задача будет удалена через N сек... Для отмены нажмите "Отмена"`}
+        textButton="Удалить"
+        handleOk={handleOk}
+        handleCancel={handleCancel}
+      />
     </div>
   );
 };
