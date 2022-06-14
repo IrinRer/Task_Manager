@@ -27,6 +27,7 @@ import addCheckListItemReducer from './editTask/checkLists/addCheckListItem/slic
 import deleteCheckListItemReducer from './editTask/checkLists/deleteCheckListItem/slice';
 import setCheckListTitleReducer from './editTask/checkLists/setCheckListTitle/slice';
 import setCompleteCheckListItemReducer from './editTask/checkLists/setCompleteCheckListItem/slice';
+import setCheckListItemPositionReducer from './editTask/checkLists/setCheckListItemPosition/slice';
 
 import { ICommonTagsReducer } from './common/tags/types';
 import { ICommonProgressesReducer } from './common/progresses/types';
@@ -50,6 +51,7 @@ import { IAddCheckListItemReducer } from './editTask/checkLists/addCheckListItem
 import { IDeleteCheckListItemReducer } from './editTask/checkLists/deleteCheckListItem/types';
 import { ISetCheckListTitleReducer } from './editTask/checkLists/setCheckListTitle/types';
 import { ISetCompleteCheckListItemReducer } from './editTask/checkLists/setCompleteCheckListItem/types';
+import { ISetCheckListItemPositionReducer } from './editTask/checkLists/setCheckListItemPosition/types';
 
 export const store = configureStore({
   reducer: {
@@ -68,6 +70,7 @@ export const store = configureStore({
         deleteCheckListItem: deleteCheckListItemReducer,
         setCheckListTitle: setCheckListTitleReducer,
         setCompleteCheckListItem: setCompleteCheckListItemReducer,
+        setCheckListItemPosition: setCheckListItemPositionReducer,
       }),
     }),
     users: usersReducer,
@@ -107,6 +110,7 @@ export type RootState = {
       deleteCheckListItem: IDeleteCheckListItemReducer;
       setCheckListTitle: ISetCheckListTitleReducer;
       setCompleteCheckListItem: ISetCompleteCheckListItemReducer;
+      setCheckListItemPosition: ISetCheckListItemPositionReducer;
     }>;
   }>;
   users: IUsersReducer;
