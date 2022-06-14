@@ -22,6 +22,7 @@ import commonStatusesReducer from './common/statuses/slice';
 import onetaskReducer from './common/task/slice';
 import editTaskReducer from './editTask/slice';
 import attachmentsReducer from './editTask/attachments/slice';
+import previewReducer from './editTask/attachments/preview/slice';
 import createTaskReducer from './createTask/slice';
 import addCheckListReducer from './editTask/checkLists/addCheckList/slice';
 import deleteCheckListReducer from './editTask/checkLists/deleteCheckList/slice';
@@ -51,6 +52,7 @@ import { IAddCheckListItemReducer } from './editTask/checkLists/addCheckListItem
 import { IDeleteCheckListItemReducer } from './editTask/checkLists/deleteCheckListItem/types';
 import { ISetCheckListTitleReducer } from './editTask/checkLists/setCheckListTitle/types';
 import { ISetCompleteCheckListItemReducer } from './editTask/checkLists/setCompleteCheckListItem/types';
+import { IPreviewReducer } from './editTask/attachments/preview/types';
 
 export const store = configureStore({
   reducer: {
@@ -62,7 +64,10 @@ export const store = configureStore({
         date: dateReducer,
         tags: tagReducer,
       }),
-      attachments: attachmentsReducer,
+      attachments: combineReducers({
+        attachmentsReducer,
+        preview: previewReducer,
+      }),
       checkLists: combineReducers({
         addCheckList: addCheckListReducer,
         deleteCheckList: deleteCheckListReducer,
@@ -102,7 +107,10 @@ export type RootState = {
       date: IDateReducer;
       tags: ITagReducer;
     }>;
-    attachments: IAttachmentsReducer;
+    attachments: CombinedState<{
+      attachmentsReducer: IAttachmentsReducer;
+      preview: IPreviewReducer;
+    }>;
     checkLists: CombinedState<{
       addCheckList: IAddCheckListReducer;
       deleteCheckList: IDeleteCheckListReducer;

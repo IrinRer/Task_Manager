@@ -1,15 +1,14 @@
 import { fetchTaskAction } from 'store/common/task/thunk';
 import { IResponseTask } from 'store/common/task/types';
-import { deleteFile, viewFile } from 'store/editTask/attachments/thunk';
+import { deleteFile} from 'store/editTask/attachments/thunk';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { union } from 'lodash';
 import {
   ATTACHMENTS_SLICE_ALIAS,
   IAttachmentsReducer,
   IPayloadFile,
 } from 'store/editTask/attachments/types';
 import { AxiosError } from 'axios';
-import { assignFile } from './thunk';
+import { assignFile, viewFile } from './thunk';
 
 // IAttachmentsReducer
 const initialState: any = {
@@ -70,6 +69,9 @@ export const attachmentsSlice = createSlice({
       { payload }: PayloadAction<string>,
     ) => {
       state.data = state.data?.filter((item) => item.name_original !== payload);
+      // eslint-disable-next-line
+      debugger
+      state.viewFile = state.viewFile?.filter((item) => item.name !== payload);
       state.loading = false;
     },
 

@@ -1,8 +1,12 @@
-import React from 'react';
+import React, {FC} from 'react';
 import { Progress } from 'antd';
-import { COLOR_PROGRESS, PROGRESS } from 'constants/attachments/attachments';
+import { COLOR_PROGRESS } from 'constants/attachments/attachments';
 
-const ProgressBar = ({ progress }) => {
+interface IProps {
+  progress: number
+}
+
+const ProgressBar: FC<IProps> = ({ progress }) => {
   return (
     <Progress
       showInfo={false}

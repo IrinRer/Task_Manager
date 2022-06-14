@@ -90,3 +90,10 @@
     display: flex;
   }
 }
+
+.wrapper_all_file {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+}

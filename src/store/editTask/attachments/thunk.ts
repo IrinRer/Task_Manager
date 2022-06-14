@@ -51,6 +51,7 @@ export const deleteFile = createAsyncThunk(
 
       // нужно, чтобы удалить из store те вложения, которые удалились
       // response.data возвращает целую задачу
+      console.log(file)
       return file.name;
     } catch (error) {
       notification.error({ message: 'Ошибка удаления файла' });
@@ -91,7 +92,7 @@ export const viewFile = createAsyncThunk(
         { responseType: 'blob' },
       );
 
-      return { url: URL.createObjectURL(response.data), name: file.name };
+      return { url: URL.createObjectURL(response.data), name: file.name, storageId: file.fileId };
     } catch (error) {
       notification.error({ message: 'Ошибка скачивания файла' });
       return rejectWithValue(error);

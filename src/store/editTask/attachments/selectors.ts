@@ -2,10 +2,10 @@ import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from 'store/index';
 
 export const isClickedAttachments = (state: RootState) =>
-  state.editTask.attachments.isClicked;
+  state.editTask.attachments.attachmentsReducer.isClicked;
 
 export const attachmentsData = (state: RootState) =>
-  state.editTask.attachments.data;
+  state.editTask.attachments.attachmentsReducer.data;
 
 export const getStorageFile = createSelector(attachmentsData, (attachments) =>
   attachments.map(({ name_original, storage_file_id }) => {
@@ -17,7 +17,7 @@ export const getStorageFile = createSelector(attachmentsData, (attachments) =>
 );
 
 export const getFileName = (state: RootState) =>
-  state.editTask.attachments.data?.map(({ name_original: name }) => name);
+  state.editTask.attachments.attachmentsReducer.data?.map(({ name_original: name }) => name);
 
 export const getViewFile = (state: RootState) =>
-  state.editTask.attachments.viewFile;
+  state.editTask.attachments.attachmentsReducer.viewFile;
