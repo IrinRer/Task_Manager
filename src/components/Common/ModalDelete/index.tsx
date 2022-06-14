@@ -36,7 +36,6 @@ const ModalDelete: React.FC<IProps> = ({
       title="Вы уверены?"
       visible={visible}
       width={310}
-      zIndex={2000}
       className={styles.modalTag}
       footer={[
         <Button

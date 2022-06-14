@@ -4,10 +4,7 @@ import { PlusOutlined, PaperClipOutlined } from '@ant-design/icons';
 import type { RcFile, UploadFile } from 'antd/es/upload/interface';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import {
-  assignFile,
-  viewFile,
-} from 'store/editTask/attachments/thunk';
+import { assignFile, viewFile } from 'store/editTask/attachments/thunk';
 import { IOptions, ACCEPT_FORMAT } from 'constants/attachments/attachments';
 import { getBase64 } from 'helpers/getBase64';
 import {
@@ -49,8 +46,8 @@ const Attachments = () => {
     );
   }, [dispatch]);
 
-  const [fileList, setFile] = useState<Array<UploadFile>>([]); // точно тут
-  const [progress, setProgress] = useState(0); // точно тут
+  const [fileList, setFile] = useState<Array<UploadFile>>([]);
+  const [progress, setProgress] = useState(0);
   const [fileForDelete, setFileForDelete] = useState<UploadFile>();
 
   const [previewVisible, setPreviewVisible] = useState(false);
@@ -71,6 +68,7 @@ const Attachments = () => {
     return img?.map((item: RcFile) => {
       return (
         <FileImg
+          key={item.name}
           file={item}
           preview=""
           setFile={setFile}

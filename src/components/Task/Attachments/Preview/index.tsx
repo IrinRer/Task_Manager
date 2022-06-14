@@ -1,5 +1,5 @@
 import { Modal } from 'antd';
-import React, {useState } from 'react';
+import React, {useCallback, useState } from 'react';
 import { CloseCircleOutlined } from '@ant-design/icons';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
@@ -33,6 +33,12 @@ const Preview = ({
   const allFileId = useAppSelector(getStorageFile);
   const taskId = useAppSelector(getTaskId);
 
+  const previewTitleRender = useAppSelector(getPreviewTitleRender);
+  const previewImageRender = useAppSelector(getPreviewImageRender);
+
+  const previewTitleReceived = useAppSelector(getPreviewTitleReceived);
+  const previewImageReceived = useAppSelector(getPreviewImageReceived);
+
   const [visibleModalDelete, setVisibleModalDelete] = useState(false);
 
   const determineIndex = (file: UploadFile) => {
@@ -44,7 +50,7 @@ const Preview = ({
     return false;
   };
 
-  const onDeleteFile = (file: UploadFile) => {
+  const onDeleteFile = useCallback((file: UploadFile) => {
     const index = determineIndex(file);
     setFile(fileList?.filter((item) => item.name !== file.name));
     dispatch(
@@ -55,9 +61,9 @@ const Preview = ({
       }),
     );
     setPreviewVisible(false);
-  };
+  }, [previewTitleRender, previewTitleReceived]);
 
-  const onDownload = (file: UploadFile) => {
+  const onDownload = useCallback((file: UploadFile) => {
     const index = determineIndex(file);
     dispatch(
       downloadFile({
@@ -65,17 +71,11 @@ const Preview = ({
         name: file?.originFileObj?.name,
       }),
     );
-  };
+  }, [previewTitleRender, previewTitleReceived]);
 
   const handleCancel = () => {
     setPreviewVisible(false);
   };
-
-  const previewTitleRender = useAppSelector(getPreviewTitleRender);
-  const previewImageRender = useAppSelector(getPreviewImageRender);
-
-  const previewTitleReceived = useAppSelector(getPreviewTitleReceived);
-  const previewImageReceived = useAppSelector(getPreviewImageReceived);
 
   return (
     <>
