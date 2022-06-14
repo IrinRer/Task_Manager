@@ -3,7 +3,7 @@ import ProgressBar from 'components/Common/Progress';
 import FileText from '../FileText';
 import FileImg from '../FileImg';
 
-const ItemRender = ({ file, preview, onRemove, onDownload, progress }) => {
+const ItemRender = ({ file, preview,setFile, fileList, progress }) => {
   const isProgress =
     progress > 0 && file.percent !== 100 ? (
       <ProgressBar progress={progress} />
@@ -15,8 +15,8 @@ const ItemRender = ({ file, preview, onRemove, onDownload, progress }) => {
         <FileImg
           file={file}
           preview={preview}
-          onRemove={onRemove}
-          onDownload={onDownload}
+          setFile={setFile}
+         fileList={fileList}
         />
         {isProgress}
       </>

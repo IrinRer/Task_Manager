@@ -1,29 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-// import {
-//   setPreviewImage,
-//   setPreviewTitle,
-//   setPreviewVisible,
-// } from 'store/editTask/attachments/preview/slice';
-import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { getPreviewVisibleReceived } from 'store/editTask/attachments/preview/selectors';
 import {
   cleanRender,
   setPreviewImageReceived,
-  setPreviewImageRender,
   setPreviewTitleReceived,
-  setPreviewTitleRender,
-  setPreviewVisibleReceived,
 } from 'store/editTask/attachments/preview/slice';
 import styles from './index.module.scss';
 import Preview from '../Preview';
 
-
-const FileImg = ({ file, preview, onRemove, onDownload }) => {
+const FileImg = ({ file, preview, setFile, fileList }) => {
   const dispatch = useAppDispatch();
-  const previewVisibleReceived = useAppSelector(getPreviewVisibleReceived)
 
-  const [previewVisible, setPreviewVisible] = useState(previewVisibleReceived);
+  const [previewVisible, setPreviewVisible] = useState(false);
 
   const url = !file.url ? URL.createObjectURL(file.originFileObj) : undefined;
 
@@ -31,8 +19,7 @@ const FileImg = ({ file, preview, onRemove, onDownload }) => {
     file.name.length > 20 ? `${file.name.slice(0, 20)}...` : file.name;
 
   const customPreview = () => {
-    dispatch(setPreviewVisibleReceived(true));
-    setPreviewVisible(!previewVisibleReceived);
+    setPreviewVisible(true);
     dispatch(setPreviewImageReceived(file.url));
     dispatch(setPreviewTitleReceived(file.name));
 
@@ -46,12 +33,10 @@ const FileImg = ({ file, preview, onRemove, onDownload }) => {
         <p>{`${isLongText}`} </p>
       </div>
       <Preview
-        // previewTitle={file.name}
         previewVisible={previewVisible}
-        // previewImage={file.url}
         setPreviewVisible={setPreviewVisible}
-        onRemove={onRemove}
-        onDownload={onDownload}
+        setFile={setFile}
+        fileList={fileList}
         file={file}
       />
     </>

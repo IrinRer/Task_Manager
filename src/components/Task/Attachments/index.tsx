@@ -6,8 +6,6 @@ import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import {
   assignFile,
-  deleteFile,
-  downloadFile,
   viewFile,
 } from 'store/editTask/attachments/thunk';
 import { IOptions, ACCEPT_FORMAT } from 'constants/attachments/attachments';
@@ -15,18 +13,15 @@ import { getBase64 } from 'helpers/getBase64';
 import {
   setPreviewImageRender,
   setPreviewTitleRender,
-  setPreviewVisibleReceived,
 } from 'store/editTask/attachments/preview/slice';
 import { getTaskId } from 'store/editTask/selectors';
 import {
   getFileName,
-  getStorageFile,
   getTaskFileAllType,
   getTaskFileImg,
   getViewFile,
 } from 'store/editTask/attachments/selectors';
 import { config } from 'helpers/progressBar';
-import ModalDelete from 'components/Common/ModalDelete';
 import ItemRender from './ItemRender';
 import styles from './index.module.scss';
 import FileText from './FileText';
@@ -36,7 +31,6 @@ import Preview from './Preview';
 const Attachments = () => {
   const dispatch = useAppDispatch();
   const taskId = useAppSelector(getTaskId);
-  const allFileId = useAppSelector(getStorageFile);
   const fileName = useAppSelector(getFileName);
   const taskFileImg = useAppSelector(getTaskFileImg);
 
@@ -57,15 +51,9 @@ const Attachments = () => {
 
   const [fileList, setFile] = useState<Array<UploadFile>>([]); // точно тут
   const [progress, setProgress] = useState(0); // точно тут
-  const [visibleModalDelete, setVisibleModalDelete] = useState(false); // это в другой ветке
   const [fileForDelete, setFileForDelete] = useState<UploadFile>();
 
   const [previewVisible, setPreviewVisible] = useState(false);
-  // const [previewVisibleReceived, setPreviewVisibleReceived] = useState();
-
-  const determineIndex = (file: UploadFile) => {
-    return fileName.indexOf(file?.originFileObj?.name || file.name);
-  };
 
   const beforeUpload = (file: RcFile) => {
     if (fileName.indexOf(file.name) !== -1) {
@@ -79,45 +67,14 @@ const Attachments = () => {
     setFile(fileList);
   };
 
-  const onRemove = (file: UploadFile) => {
-    setVisibleModalDelete(true);
-    setFileForDelete(file);
-    return false;
-  };
-
-  const onDeleteFile = (file: UploadFile) => {
-    const index = determineIndex(file);
-    setFile(fileList?.filter((item) => item.name !== file.name));
-    dispatch(
-      deleteFile({
-        fileId: allFileId[index].storageId,
-        taskId,
-        name: file?.originFileObj?.name || file.name,
-      }),
-    );
-    setPreviewVisible(false);
-    dispatch(setPreviewVisibleReceived(false));
-  };
-
-
-  const onDownload = (file: UploadFile) => {
-    const index = determineIndex(file);
-    dispatch(
-      downloadFile({
-        fileId: allFileId[index].storageId,
-        name: file?.originFileObj?.name,
-      }),
-    );
-  };
-
   const onViewFileImg = () => {
     return img?.map((item: RcFile) => {
       return (
         <FileImg
           file={item}
           preview=""
-          onDownload={onDownload}
-          onRemove={onRemove}
+          setFile={setFile}
+          fileList={fileList}
         />
       );
     });
@@ -156,8 +113,8 @@ const Attachments = () => {
         file={file}
         progress={progress}
         preview={actions.preview}
-        onDownload={onDownload}
-        onRemove={onRemove}
+        setFile={setFile}
+        fileList={fileList}
       />
     );
   };
@@ -199,18 +156,10 @@ const Attachments = () => {
         {onViewFileImg()}
         {onViewFileAllType()}
       </div>
-      <ModalDelete
-        visible={visibleModalDelete}
-        textMain={`${fileForDelete?.name} будет безвозвратно удален`}
-        textButton="Удалить файл"
-        setVisibleModalDelete={setVisibleModalDelete}
-        file={fileForDelete || ''}
-        action={onDeleteFile}
-      />
       <Preview
         file={fileForDelete}
-        onDownload={onDownload}
-        onRemove={onRemove}
+        setFile={setFile}
+        fileList={fileList}
         previewVisible={previewVisible}
         setPreviewVisible={setPreviewVisible}
       />

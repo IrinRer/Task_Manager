@@ -51,7 +51,7 @@ export const deleteFile = createAsyncThunk(
 
       // нужно, чтобы удалить из store те вложения, которые удалились
       // response.data возвращает целую задачу
-      console.log(file)
+
       return file.name;
     } catch (error) {
       notification.error({ message: 'Ошибка удаления файла' });
