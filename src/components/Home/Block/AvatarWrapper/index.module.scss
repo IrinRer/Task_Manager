@@ -6,5 +6,8 @@
   :global(.ant-avatar) {
     margin-right: 10px;
     color: $white;
+    &:hover {
+      cursor: pointer;
+    }
   }
 }

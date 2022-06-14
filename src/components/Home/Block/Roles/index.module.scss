@@ -4,6 +4,11 @@
 
 .wrapper {
   display: flex;
+  button {
+    padding: 0;
+    border: 0;
+    background-color: $bg-secondary;
+  }
   :global(.ant-avatar).plus {
     display: flex;
     align-items: center;
@@ -14,5 +19,8 @@
     font-size: $font-size-s;
     line-height: $line-height-s;
     font-weight: 400;
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
