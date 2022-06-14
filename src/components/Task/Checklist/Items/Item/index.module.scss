@@ -1,15 +1,25 @@
 @import 'src/styles/color-variables.scss';
-@import 'src/styles/colors.scss';
 @import 'src/styles/font-variables.scss';
 
 .checkListItem {
   display: flex;
-  column-gap: 18px;
+  padding-bottom: 16px;
+  align-items: center;
+  transition: padding-bottom 0.2s ease-out;
+
+  &DraggedOver {
+    padding-bottom: 70px;
+  }
 }
 
 .checkbox {
   :global {
-    max-height: 20px;
+    height: 20px;
+    margin-right: 18px;
+
+    .ant-checkbox {
+      top: 0;
+    }
 
     .ant-checkbox-inner {
       width: 20px;
@@ -27,52 +37,5 @@
 
   &Completed {
     text-decoration: line-through;
-  }
-}
-
-.popoverMenu {
-  padding: 0;
-  border: 1px solid $bg-primary;
-  box-shadow: 0 8px 40px rgba(23, 31, 70, 0.08);
-  min-width: 160px;
-
-  :global {
-    .ant-popover-arrow {
-      display: none;
-    }
-
-    .ant-popover-inner {
-      border-radius: 8px;
-    }
-
-    .ant-popover-inner-content {
-      padding: 20px 27px;
-    }
-  }
-}
-
-.moreButton {
-  cursor: pointer;
-  color: $text-light;
-  flex-shrink: 0;
-
-  &:hover {
-    color: darken($text-light, 10%);
-  }
-}
-
-.menuOption {
-  margin: 0;
-  padding: 0;
-  border: none;
-  background-color: $bg-secondary;
-  font-weight: 600;
-  font-size: $font-size-m;
-  line-height: $line-height-xs;
-  color: $red;
-  cursor: pointer;
-
-  &:hover {
-    color: darken($red, 10%);
   }
 }
