@@ -34,12 +34,17 @@
   padding: 0;
   margin: 0;
 }
+:global(.ant-modal-wrap) {
+  //width: 1167px !important;
+  //margin: 0 auto;
+}
 
 .task {
   top: 0 !important;
   height: 100%;
   padding-bottom: 0 !important;
   width: 1167px !important;
+
   .taskContainer {
     display: flex;
     justify-content: space-between;

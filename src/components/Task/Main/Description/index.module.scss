@@ -7,10 +7,10 @@
   :global(.ant-input).desc {
     font-size: $font-size-m;
     line-height: $line-height-m;
+    min-height: min-content;
     box-shadow: none;
     overflow: hidden;
     margin-top: 16px;
-    margin-bottom: 14px;
     border: none;
     padding: 0;
   }
@@ -33,6 +33,7 @@
     color: $bg-secondary;
     font-size: $font-size-m;
     border: none;
+    margin-top: 16px;
   }
 
   :global(.ant-btn).save span {
@@ -52,6 +53,7 @@
     color: $heading;
     border: 1px solid $border-primary;
     margin-left: 8px;
+    margin-top: 16px;
   }
 
   :global(.ant-btn).cancel span {

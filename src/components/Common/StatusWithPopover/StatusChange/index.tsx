@@ -6,11 +6,12 @@ import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { selectStatuses } from 'store/common/statuses/selectors';
 import { changeTaskStatusAction } from 'store/tasks/thunk';
 import { changeEditTaskStatusAction } from 'store/editTask/thunk';
-import { getVerifyIdUser } from 'store/auth/verify/selectors';
 import { getTaskById } from 'store/tasks/selectors';
-import { canUserChangeTaskStatus } from 'helpers/userRoles';
 import classnames from 'classnames';
 import { StatusClass } from 'constants/common';
+import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
+import { getRights } from 'helpers/rights';
+import { RIGHTS_NAMES } from 'constants/rights';
 import styles from './index.module.scss';
 
 interface IProps {
@@ -23,11 +24,14 @@ interface IProps {
 const StatusChange: React.FC<IProps> = ({ taskId, edit = false }) => {
   const dispatch = useAppDispatch();
   const statuses = useAppSelector(selectStatuses);
-  const userId = useAppSelector(getVerifyIdUser);
   const task = useAppSelector((state) => getTaskById(state, taskId));
+  const myMaxRoleFromAllTask = useAppSelector((state) =>
+    getMyMaxRoleForTask(state, task),
+  );
+  const isRights = getRights(myMaxRoleFromAllTask, RIGHTS_NAMES.editStatus);
 
   const handleClick = (task_status_id: string) => {
-    if (!(task && canUserChangeTaskStatus(userId, task))) {
+    if (!(task && isRights)) {
       notification.warn({ message: 'У Вас нет прав на изменение статуса' });
       return;
     }

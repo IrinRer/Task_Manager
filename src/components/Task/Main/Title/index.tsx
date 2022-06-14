@@ -43,11 +43,18 @@ const Title: React.FC = () => {
     setNewTitle(e.target.value);
   };
 
-  const onBlur = () => {
-    setNewTitle(newTitle?.trim());
+  const onBlur = (e) => {
+    // console.log(e.relatedTarget);
+    // console.log(e.relatedTarget.querySelector('.ant-modal').focus);
+    if (
+      e.relatedTarget &&
+      e.relatedTarget.getAttribute('aria-label') !== 'Close'
+    ) {
+      setNewTitle(newTitle?.trim());
 
-    if (taskId && newTitle && !isReadonly && newTitle.trim() !== '') {
-      dispatch(setTaskTitle({ task_id: taskId, title: newTitle.trim() }));
+      if (taskId && newTitle && !isReadonly && newTitle.trim() !== '') {
+        dispatch(setTaskTitle({ task_id: taskId, title: newTitle.trim() }));
+      }
     }
     setIsReadonly(true);
   };

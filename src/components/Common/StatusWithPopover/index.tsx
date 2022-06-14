@@ -14,10 +14,6 @@ interface IProps {
 }
 
 const StatusWithPopover: React.FC<IProps> = ({ taskId, edit = false }) => {
-  // const userId = useAppSelector(getVerifyIdUser);
-  // const task = useAppSelector((state) => getTaskById(state, taskId));
-  // const trigger = task && canUserChangeTaskStatus(userId, task) ? 'click' : '';
-
   const task = useAppSelector((state) => getTaskById(state, taskId));
   const myMaxRoleFromAllTask = useAppSelector((state) =>
     getMyMaxRoleForTask(state, task),
