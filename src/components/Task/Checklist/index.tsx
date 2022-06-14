@@ -20,7 +20,7 @@ const Checklist: React.FC = () => {
     <div className={styles.checklist}>
       <CheckListHeader />
       <CheckListProgress />
-      {checkList.items?.length && <CheckListItems items={checkList.items} />}
+      {checkList.items && <CheckListItems items={checkList.items} />}
       {isTaskEditable && <CheckListAddNewItem />}
     </div>
   );
