@@ -1,0 +1,9 @@
+.dragIcon {
+  cursor: grab;
+  display: none;
+  margin-left: -24px;
+
+  &Hover {
+    display: block;
+  }
+}
