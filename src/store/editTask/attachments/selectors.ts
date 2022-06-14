@@ -21,3 +21,15 @@ export const getFileName = (state: RootState) =>
 
 export const getViewFile = (state: RootState) =>
   state.editTask.attachments.attachmentsReducer.viewFile;
+
+
+  export const taskFile = (state: RootState) =>
+  state.editTask.attachments.attachmentsReducer.data;
+
+export const getTaskFileImg = createSelector(taskFile, (file) =>
+  file?.filter(({ type }) => type === 'image'),
+);
+
+export const getTaskFileAllType = createSelector(taskFile, (file) =>
+  file?.filter(({ type }) => type !== 'image'),
+);

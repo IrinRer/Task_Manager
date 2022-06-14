@@ -8,13 +8,12 @@ import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { getPreviewVisibleReceived } from 'store/editTask/attachments/preview/selectors';
 import {
-  setPreviewFileReceived,
+  cleanRender,
   setPreviewImageReceived,
   setPreviewImageRender,
   setPreviewTitleReceived,
   setPreviewTitleRender,
   setPreviewVisibleReceived,
-  setPreviewVisibleRender,
 } from 'store/editTask/attachments/preview/slice';
 import styles from './index.module.scss';
 import Preview from '../Preview';
@@ -32,14 +31,12 @@ const FileImg = ({ file, preview, onRemove, onDownload }) => {
     file.name.length > 20 ? `${file.name.slice(0, 20)}...` : file.name;
 
   const customPreview = () => {
-    // dispatch(setPreviewVisibleReceived(true));
-    setPreviewVisible(true);
+    dispatch(setPreviewVisibleReceived(true));
+    setPreviewVisible(!previewVisibleReceived);
     dispatch(setPreviewImageReceived(file.url));
     dispatch(setPreviewTitleReceived(file.name));
-    dispatch(setPreviewFileReceived(file));
 
-    dispatch(setPreviewImageRender(''));
-    dispatch(setPreviewTitleRender(''));
+    dispatch(cleanRender());
   };
 
   return (

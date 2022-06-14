@@ -1,8 +1,5 @@
 import { RootState } from 'store/';
 
-export const getPreviewVisibleRender = (state: RootState) =>
-  state.editTask.attachments.preview.previewVisibleRender;
-
 export const getPreviewImageRender = (state: RootState) =>
   state.editTask.attachments.preview.previewImageRender;
 
@@ -18,8 +15,3 @@ export const getPreviewImageReceived = (state: RootState) =>
 export const getPreviewTitleReceived = (state: RootState) =>
   state.editTask.attachments.preview.previewTitleReceived;
 
-export const getPreviewFileRender = (state: RootState) =>
-  state.editTask.attachments.preview.previewFileRender;
-
-export const getPreviewFileReceived = (state: RootState) =>
-  state.editTask.attachments.preview.previewFileReceived;

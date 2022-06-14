@@ -13,20 +13,16 @@ import {
 import { IOptions, ACCEPT_FORMAT } from 'constants/attachments/attachments';
 import { getBase64 } from 'helpers/getBase64';
 import {
-  setPreviewFileReceived,
   setPreviewImageRender,
   setPreviewTitleRender,
   setPreviewVisibleReceived,
-  setPreviewVisibleRender,
 } from 'store/editTask/attachments/preview/slice';
 import { getTaskId } from 'store/editTask/selectors';
 import {
-  getTaskFileAllType,
-  getTaskFileImg,
-} from 'store/common/task/selectors';
-import {
   getFileName,
   getStorageFile,
+  getTaskFileAllType,
+  getTaskFileImg,
   getViewFile,
 } from 'store/editTask/attachments/selectors';
 import { config } from 'helpers/progressBar';
@@ -57,16 +53,15 @@ const Attachments = () => {
         }),
       ),
     );
-  }, [dispatch, taskFileImg]);
+  }, [dispatch]);
 
   const [fileList, setFile] = useState<Array<UploadFile>>([]); // точно тут
   const [progress, setProgress] = useState(0); // точно тут
   const [visibleModalDelete, setVisibleModalDelete] = useState(false); // это в другой ветке
-  const [fileForDelete, setfileForDelete] = useState<UploadFile>();
+  const [fileForDelete, setFileForDelete] = useState<UploadFile>();
 
   const [previewVisible, setPreviewVisible] = useState(false);
-  // const [previewImage, setPreviewImage] = useState('');
-  // const [previewTitle, setPreviewTitle] = useState('');
+  // const [previewVisibleReceived, setPreviewVisibleReceived] = useState();
 
   const determineIndex = (file: UploadFile) => {
     return fileName.indexOf(file?.originFileObj?.name || file.name);
@@ -86,7 +81,7 @@ const Attachments = () => {
 
   const onRemove = (file: UploadFile) => {
     setVisibleModalDelete(true);
-    setfileForDelete(file);
+    setFileForDelete(file);
     return false;
   };
 
@@ -103,6 +98,7 @@ const Attachments = () => {
     setPreviewVisible(false);
     dispatch(setPreviewVisibleReceived(false));
   };
+
 
   const onDownload = (file: UploadFile) => {
     const index = determineIndex(file);
@@ -150,7 +146,7 @@ const Attachments = () => {
   };
 
   const itemListRender = (
-    originNode,
+    _,
     file: RcFile,
     fileList: UploadFile[],
     actions: { download: () => void; preview: () => void; remove: () => void },
@@ -172,7 +168,7 @@ const Attachments = () => {
       file.preview = await getBase64(file.originFileObj as RcFile);
     }
 
-    setfileForDelete(file);
+    setFileForDelete(file);
     dispatch(setPreviewImageRender(file.url || (file.preview as string)));
     setPreviewVisible(true);
     dispatch(setPreviewTitleRender(file.name));
@@ -189,13 +185,10 @@ const Attachments = () => {
         fileList={fileList}
         accept={ACCEPT_FORMAT}
         itemRender={itemListRender}
-        showUploadList={{ showRemoveIcon: true, showDownloadIcon: true }}
         beforeUpload={beforeUpload}
         customRequest={handleSubmit}
         onChange={handleUpload}
         onPreview={handlePreview}
-        onRemove={onRemove}
-        onDownload={onDownload}
       >
         <Button className={styles.btnAttachment}>
           <PlusOutlined />
@@ -220,8 +213,6 @@ const Attachments = () => {
         onRemove={onRemove}
         previewVisible={previewVisible}
         setPreviewVisible={setPreviewVisible}
-        // previewTitle={previewTitle}
-        // previewImage={previewImage}
       />
     </Col>
   );

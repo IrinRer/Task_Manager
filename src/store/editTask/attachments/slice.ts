@@ -69,8 +69,6 @@ export const attachmentsSlice = createSlice({
       { payload }: PayloadAction<string>,
     ) => {
       state.data = state.data?.filter((item) => item.name_original !== payload);
-      // eslint-disable-next-line
-      debugger
       state.viewFile = state.viewFile?.filter((item) => item.name !== payload);
       state.loading = false;
     },
