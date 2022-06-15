@@ -17,9 +17,6 @@ import {
 
 export const selectTasks = (state: RootState) => state.tasks.tasks;
 
-/* export const getTaskById = (state: RootState, id: string) =>
-  state.tasks.tasks.find((task) => task.task_id === id); */
-
 export const getTaskById = createSelector(
   [(state: RootState) => state.tasks.tasks, (state, taskId: string) => taskId],
   (items, taskId) => items.find((task) => task.task_id === taskId),

@@ -39,7 +39,7 @@ const Info: React.FC = () => {
         <RightsRoleContext.Provider
           value={useRightsRoleContextValue(ROLES.author, false)}
         >
-          {author ? <OneMember /> : null}
+          {author && <OneMember />}
         </RightsRoleContext.Provider>
       </div>
     </>

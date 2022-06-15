@@ -3,7 +3,7 @@ import { Select } from 'antd';
 import { SelectProps, SelectValue } from 'antd/lib/select';
 import useSelectOptions, {
   TOption,
-} from '../../Task/Info/TaskHook/useSelectOptions';
+} from 'components/Task/Info/TaskHook/useSelectOptions';
 
 const { Option } = Select;
 

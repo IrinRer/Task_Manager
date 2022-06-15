@@ -57,17 +57,17 @@ export const getRolesError = (state: RootState) => state.common.roles.error;
 
 export const getMyRolesForTask = createSelector(
   [
-    (state: RootState, task?: TTask | undefined) =>
+    (state: RootState, task?: TTask) =>
       task ? getTaskAuthorIDParams(state, task) : getTaskAuthorID(state),
-    (state: RootState, task?: TTask | undefined) =>
+    (state: RootState, task?: TTask) =>
       task
         ? getTaskImplementersIDParams(state, task)
         : getTaskImplementersID(state),
-    (state: RootState, task?: TTask | undefined) =>
+    (state: RootState, task?: TTask) =>
       task
         ? getTaskResponsibleIDParams(state, task)
         : getTaskResponsibleID(state),
-    (state: RootState, task?: TTask | undefined) =>
+    (state: RootState, task?: TTask) =>
       task ? getTaskWatchersIDParams(state, task) : getTaskWatchersID(state),
     getVerifyIdUser,
   ],
@@ -91,8 +91,7 @@ export const getMyRolesForTask = createSelector(
 );
 
 export const getMyMaxRoleForTask = createSelector(
-  (state: RootState, task?: TTask | undefined) =>
-    getMyRolesForTask(state, task),
+  (state: RootState, task?: TTask) => getMyRolesForTask(state, task),
   (roles): TRights => {
     if (roles.includes(ROLES.author)) return ROLES.author;
     if (roles.includes(ROLES.responsible)) return ROLES.responsible;

@@ -5,15 +5,11 @@ import {
   useRightsRoleContextValue,
 } from '../context';
 
-interface IProps {
+interface IProps extends IRightsRole {
   children: React.ReactNode;
 }
 
-const ContextWrapper: React.FC<IRightsRole & IProps> = ({
-  role,
-  isRights,
-  children,
-}) => {
+const ContextWrapper: React.FC<IProps> = ({ role, isRights, children }) => {
   return (
     <RightsRoleContext.Provider
       value={useRightsRoleContextValue(role, isRights)}

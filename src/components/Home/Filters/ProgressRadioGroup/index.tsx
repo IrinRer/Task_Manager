@@ -8,7 +8,7 @@ import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { selectProgressValue } from 'store/filters/selectors';
 import { fetchTasksAction } from 'store/tasks/thunk';
 import { IProgress, TProgressValue } from 'store/common/progresses/types';
-import FilterWrapper from '../../../Common/FilterWrapper';
+import FilterWrapper from 'components/Common/FilterWrapper';
 import styles from './index.module.scss';
 
 const ProgressRadioGroup: React.FC = () => {

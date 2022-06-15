@@ -1,7 +1,7 @@
 import React from 'react';
 import { Layout } from 'antd';
-import Display from '../../components/Home';
-import Filters from '../../components/Home/Filters';
+import Display from 'components/Home';
+import Filters from 'components/Home/Filters';
 import styles from './index.module.scss';
 
 const { Sider, Content } = Layout;

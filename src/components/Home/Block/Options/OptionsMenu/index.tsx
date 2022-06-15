@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Button, notification } from 'antd';
+import { Button } from 'antd';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { cloneTaskAction } from 'store/createTask/thunk';
@@ -45,14 +45,14 @@ const OptionsMenu: React.FC<IProps> = ({
   const handleCloneTask = (): void => {
     if (task) {
       dispatch(cloneTaskAction({ id: task.task_id, edit: false }));
-    } else notification.warn({ message: 'Нет прав на дублирование задачи' });
+    }
     setVisibleOptions(false);
   };
 
   const handleOk = () => {
     if (task) {
       dispatch(deleteTaskAction(task.task_id));
-    } else notification.warn({ message: 'Удалить задачу может только автор' });
+    }
     setIsVisibleDelete(false);
     setVisibleOptions(false);
   };

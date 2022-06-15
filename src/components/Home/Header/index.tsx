@@ -14,6 +14,9 @@ import { generatePath, useNavigate } from 'react-router-dom';
 import { getNewTaskId, getNewTaskSuccess } from 'store/createTask/selectors';
 import { resetNewTaskSuccess } from 'store/createTask/slice';
 import { CaretDownOutlined } from '@ant-design/icons';
+import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
+import { getRights } from 'helpers/rights';
+import { RIGHTS_NAMES } from 'constants/rights';
 import AddNewTask from './AddNewTask';
 import UserMenu from './UserMenu';
 import styles from './index.module.scss';
@@ -31,6 +34,9 @@ const Header: React.FC = () => {
   const newTaskSuccess = useAppSelector(getNewTaskSuccess);
   const newTaskId = useAppSelector(getNewTaskId);
   const navigate = useNavigate();
+
+  const myMaxRole = useAppSelector(getMyMaxRoleForTask);
+  const isRights = getRights(myMaxRole, RIGHTS_NAMES.createTask);
 
   useEffect(() => {
     if (newTaskSuccess) {
@@ -84,7 +90,7 @@ const Header: React.FC = () => {
 
         {/* Кнопка создания новой задачи */}
         <Col className={styles.newtask} span={4}>
-          <AddNewTask />
+          {isRights && <AddNewTask />}
         </Col>
       </Row>
     </>

@@ -71,3 +71,5 @@ export const DESCRIPTION_LENGTH_EXPAND = 300;
 export const DESCRIPTION_MAX_LENGTH = 500;
 
 export const TITLE_TASK_MAX_LENGTH = 150;
+
+export const MAX_USER_INITIALS = 2;
