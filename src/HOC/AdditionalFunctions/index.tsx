@@ -6,7 +6,7 @@ export const withAdditionalFunctions = <T, P>(
   BaseComponent: React.FC,
   Icon: React.FC,
   value: T,
-  accept: T,
+  accepted: T,
 ) => {
   return (props: P) => {
     const [isClick, setClick] = useState(false);
@@ -17,7 +17,7 @@ export const withAdditionalFunctions = <T, P>(
 
     return (
       <>
-        {isClick || value[0] || accept[0] ? (
+        {isClick || value[0] || accepted[0] ? (
           <BaseComponent  />
         ) : (
           <Button

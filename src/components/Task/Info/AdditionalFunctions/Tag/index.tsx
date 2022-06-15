@@ -44,8 +44,8 @@ const SelectTag: React.FC = () => {
 
   return (
     <div className={className}>
-      <TagItem editable={isRights} taskId={taskId} />
-      {isRights ? (
+      <TagItem editable={isRights} taskId={taskId || ''} />
+      {isRights && (
         <Button
           type="primary"
           onClick={showModal}
@@ -54,7 +54,7 @@ const SelectTag: React.FC = () => {
         >
           + Добавить метку
         </Button>
-      ) : null}
+      ) }
       <ModalNewTag openWindowCreate={openWindowCreate} />
       <ModalTag
         text="Новая метка"

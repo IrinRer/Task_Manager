@@ -31,7 +31,7 @@ export const tagSlice = createSlice({
       state,
       { payload }: PayloadAction<ITag>,
     ) => {
-      state.sentTag = state.sentTag?.concat(payload);
+      state.sentTag?.push(payload);
       state.loading = false;
     },
     [createTagAction.rejected.type]: (
@@ -49,7 +49,7 @@ export const tagSlice = createSlice({
       state,
       { payload }: PayloadAction<ITag>,
     ) => {
-      state.sentTag = state.sentTag?.concat(payload);
+      state.sentTag?.push(payload);
       state.loading = false;
     },
     [assignTagAction.rejected.type]: (

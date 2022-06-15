@@ -11,7 +11,7 @@ export interface ICommonTagsReducer {
 }
 
 export interface ITag {
-  task_tag_id?: string;
+  task_tag_id: string;
   name: string;
   color: TagColor;
   created?: Date;

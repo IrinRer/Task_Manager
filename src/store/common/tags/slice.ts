@@ -43,12 +43,11 @@ export const commonTagsSlice = createSlice({
       state.error = payload;
     },
 
-    // нужен, чтобы при добавлении нового тега
     [createTagAction.fulfilled.type]: (
       state,
       { payload }: PayloadAction<ITag>,
     ) => {
-      state.tags = state.tags?.concat(payload);
+      state.tags?.push(payload);
       state.loading = false;
     },
 

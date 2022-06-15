@@ -23,17 +23,17 @@ const AdditionalFunctions = () => {
   const dateStop = useAppSelector(getTaskInfoDateStop);
   const defaultPriority = useAppSelector(getTaskInfoPriority);
   const tagSelect = useAppSelector(getTag);
-  const accepPriority = useAppSelector(getPriorityName);
-  const accepDate = useAppSelector(getDateStop);
+  const acceptedPriority = useAppSelector(getPriorityName);
+  const acceptedDate = useAppSelector(getDateStop);
 
   type TPriorityTasks = {
     defaultPriority?: string;
-    accepPriority?: string;
+    acceptedPriority?: string;
   };
 
   type TDateTasks = {
     dateStop?: string;
-    accepDate?: string;
+    acceptedDate?: string;
   };
 
   type TTagTasks = {
@@ -44,13 +44,13 @@ const AdditionalFunctions = () => {
     SelectPriority,
     ExclamationCircleOutlined,
     defaultPriority || '',
-    accepPriority || '',
+    acceptedPriority || '',
   );
   const DateTasks = withAdditionalFunctions<string, TDateTasks>(
     SelectDate,
     ClockCircleOutlined,
     dateStop || '',
-    accepDate || '',
+    acceptedDate || '',
   );
   const TagTasks = withAdditionalFunctions<ITag[] | undefined, TTagTasks>(
     SelectTag,

@@ -7,39 +7,37 @@ import { selectPopulatedTags } from 'store/common/tags/selectors';
 import { assignTagAction } from 'store/editTask/additionalFunctions/tag/thunk';
 import { setIsModalVisibleMain } from 'store/editTask/additionalFunctions/tag/modalVisible/slice';
 import { getTaskId } from 'store/editTask/selectors';
-import { ITag } from 'store/common/tags/types';
+import { IPopulatedTag } from 'store/common/tags/types';
 import styles from './index.module.scss';
 
 interface IProps {
   onClickDelete: (key: string | undefined, name: string) => void;
-  onClickEdit: (
-    task_tag_id: string | undefined,
-    name: string,
-    color: string,
-  ) => void;
+  onClickEdit: (task_tag_id: string, value: string, color: string) => void;
 }
 
 const MenuTag: FC<IProps> = ({ onClickDelete, onClickEdit }) => {
   const dispatch = useAppDispatch();
 
-  const populatedTag = useAppSelector(selectPopulatedTags);
+  const populatedTags = useAppSelector(selectPopulatedTags);
   const taskId = useAppSelector(getTaskId);
 
-  const onSelect = (item: ITag) => {
+  const onSelect = (item: IPopulatedTag) => {
     setIsModalVisibleMain(true);
-    dispatch(
-      assignTagAction({
-        name: item.name,
-        color: item.color,
-        task_tag_id: item.task_tag_id,
-        task_id: taskId,
-      }),
-    );
+    if (item.task_tag_id && taskId) {
+      dispatch(
+        assignTagAction({
+          name: item.name,
+          color: item.color,
+          task_tag_id: item.task_tag_id,
+          task_id: taskId,
+        }),
+      );
+    }
   };
 
   return (
     <Menu mode="vertical" className={styles.menu}>
-      {populatedTag?.map((item) => {
+      {populatedTags?.map((item) => {
         return (
           <div className={styles.wrapperSelect} key={item.name}>
             <Button

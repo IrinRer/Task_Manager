@@ -11,7 +11,7 @@ import styles from '../index.module.scss';
 
 type TProps = {
   editable: boolean;
-  taskId: string | undefined;
+  taskId: string;
 };
 
 const TagItem: FC<TProps> = ({ editable, taskId }) => {
@@ -19,7 +19,9 @@ const TagItem: FC<TProps> = ({ editable, taskId }) => {
   const tagSelect = useAppSelector(getTag);
 
   const handleClose = (id: string | undefined, name: string) => {
-    dispatch(unassignTagAction({ task_tag_id: id, task_id: taskId, name }));
+    if (id && taskId) {
+      dispatch(unassignTagAction({ task_tag_id: id, task_id: taskId, name }));
+    }
   };
 
   const tag = tagSelect?.map(({ name, color, task_tag_id: id }) => {

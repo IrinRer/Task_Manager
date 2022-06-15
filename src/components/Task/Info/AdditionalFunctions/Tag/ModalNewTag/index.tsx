@@ -27,26 +27,22 @@ interface IProps {
 
 const ModalNewTag: FC<IProps> = ({ openWindowCreate }) => {
   const dispatch = useAppDispatch();
-  const tag = useAppSelector(getTag) || '';
+  const tags = useAppSelector(getTag);
   const isVisible = useAppSelector(isModalVisibleMain);
   const isVisibleEdit = useAppSelector(isModalVisibleEdit);
 
   const [name, setName] = useState('');
-  const [tagId, setTagId] = useState<string | undefined>('');
+  const [tagId, setTagId] = useState<string>('');
   const [color, setColor] = useState('');
-  const [id, setId] = useState<string | undefined>('');
+  const [id, setId] = useState<string>('');
 
-  const onClickDelete = (id: string | undefined, name: string) => {
+  const onClickDelete = (id: string, name: string) => {
     dispatch(setIsVisibleModalDelete(true));
     setName(name);
     setId(id);
   };
 
-  const onClickEdit = (
-    tagId: string | undefined,
-    name: string,
-    color: string,
-  ) => {
+  const onClickEdit = (tagId: string, name: string, color: string) => {
     setTagId(tagId);
     setName(name);
     setColor(color);
@@ -76,7 +72,7 @@ const ModalNewTag: FC<IProps> = ({ openWindowCreate }) => {
             className={styles.btn}
             onClick={openWindowCreate}
             htmlType="submit"
-            disabled={tag.length > MAX_NUMBER_TAGS}
+            disabled={tags.length > MAX_NUMBER_TAGS}
           >
             Создать метку
           </Button>

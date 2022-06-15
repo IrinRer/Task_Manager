@@ -1,14 +1,22 @@
 import React, { useState, useEffect, FC, useRef } from 'react';
-import { Modal, Button, Typography, Input, Form, Radio } from 'antd';
+import {
+  Modal,
+  Button,
+  Typography,
+  Input,
+  Form,
+  Radio,
+  RadioChangeEvent,
+} from 'antd';
 import { AnyAction, AsyncThunk } from '@reduxjs/toolkit';
-import { ITagThunk } from 'store/editTask/additionalFunctions/tag/types';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { setIsModalVisibleMain } from 'store/editTask/additionalFunctions/tag/modalVisible/slice';
 import { uniqueTagNameSelector } from 'store/editTask/additionalFunctions/tag/selectors';
 import { allColorTag } from 'constants/additionalFunctions/color';
+import { ITagThunkEditCreat } from 'store/editTask/additionalFunctions/tag/types';
 import { MAX_NUMBER_TAGS } from 'constants/additionalFunctions/tag';
-
+import { TAGS_INPUT_MAX_LENGTH } from 'constants/common';
 import styles from '../index.module.scss';
 
 const { Text } = Typography;
@@ -21,7 +29,7 @@ interface IArg {
 
 interface IProps {
   text: string;
-  action: AsyncThunk<IArg, ITagThunk, {}>;
+  action: AsyncThunk<IArg, ITagThunkEditCreat, {}>;
   arg: { tagId?: string; name?: string; color?: string; taskId?: string };
   isVisible: boolean;
   setIsModalVisible: (action: boolean) => AnyAction;
@@ -76,7 +84,7 @@ const ModalTag: FC<IProps> = ({
     dispatch(setIsModalVisible(false));
   };
 
-  const onChecked = (e) => {
+  const onChecked = (e: RadioChangeEvent) => {
     if (e.target.checked) {
       setColor(e.target.value);
     } else setColor('');
@@ -116,7 +124,7 @@ const ModalTag: FC<IProps> = ({
         <Form.Item name="input" key="input">
           <Input
             className={styles.input}
-            maxLength={15}
+            maxLength={TAGS_INPUT_MAX_LENGTH}
             autoFocus
             onChange={onChangeInput}
           />

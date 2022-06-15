@@ -13,6 +13,6 @@ export const selectPopulatedTags = createSelector(
   selectUniqueTags,
   (tags): Array<IPopulatedTag> =>
     tags.map((tag) => {
-      return { ...tag, key: tag.task_tag_id };
+      return { ...tag, value: tag.name, key: tag.task_tag_id };
     }),
 );
