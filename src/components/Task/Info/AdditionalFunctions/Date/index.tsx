@@ -7,9 +7,8 @@ import { format, parse } from 'date-fns';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import DatePicker from 'constants/additionalFunctions/DatePicker';
 import { getTaskId } from 'store/editTask/selectors';
-import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
-import { getRights } from 'helpers/rights';
 import { RIGHTS_NAMES } from 'constants/rights';
+import { useGetRights } from 'customHooks/useGetRights';
 import styles from './index.module.scss';
 
 const { Text } = Typography;
@@ -21,8 +20,7 @@ interface IProps {
 const SelectDate: React.FC<IProps> = ({ dateStop }) => {
   const dispatch = useAppDispatch();
   const taskId = useAppSelector(getTaskId);
-  const myMaxRole = useAppSelector(getMyMaxRoleForTask);
-  const isRights = getRights(myMaxRole, RIGHTS_NAMES.editTaskDate);
+  const isRights = useGetRights(RIGHTS_NAMES.editTaskDate);
 
   const onChange = (date: Date | null) => {
     dispatch(

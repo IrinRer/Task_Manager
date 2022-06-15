@@ -9,9 +9,8 @@ import { uniqueTagNameSelector } from 'store/editTask/additionalFunctions/tag/se
 import { getTaskId } from 'store/editTask/selectors';
 import { MAX_NUMBER_TAGS } from 'constants/additionalFunctions/tag';
 import { ITag } from 'store/common/tags/types';
-import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
-import { getRights } from 'helpers/rights';
 import { RIGHTS_NAMES } from 'constants/rights';
+import { useGetRights } from 'customHooks/useGetRights';
 import TagItem from './TagItem';
 
 import styles from './index.module.scss';
@@ -31,8 +30,7 @@ const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
   const dispatch = useAppDispatch();
   const taskId = useAppSelector(getTaskId);
 
-  const myMaxRole = useAppSelector(getMyMaxRoleForTask);
-  const isRights = getRights(myMaxRole, RIGHTS_NAMES.editTag);
+  const isRights = useGetRights(RIGHTS_NAMES.editTag);
 
   const uniqueTagName = useAppSelector(uniqueTagNameSelector);
   const isUniqueTag = uniqueTagName?.indexOf(inputValue) === -1 && inputValue;

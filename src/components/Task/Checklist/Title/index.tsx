@@ -6,9 +6,8 @@ import { setCheckListTitle } from 'store/editTask/checkLists/setCheckListTitle/t
 import Spinner from 'components/Common/Spinner';
 import { Input } from 'antd';
 import { isSetCheckListTitleLoading } from 'store/editTask/checkLists/setCheckListTitle/selectors';
-import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
-import { getRights } from 'helpers/rights';
 import { RIGHTS_NAMES } from 'constants/rights';
+import { useGetRights } from 'customHooks/useGetRights';
 import styles from './index.module.scss';
 
 const CheckListTitle = () => {
@@ -16,8 +15,7 @@ const CheckListTitle = () => {
 
   const title: string = useAppSelector(getCheckListTitle);
   const isTitleLoading: boolean = useAppSelector(isSetCheckListTitleLoading);
-  const myMaxRole = useAppSelector(getMyMaxRoleForTask);
-  const isRights = getRights(myMaxRole, RIGHTS_NAMES.addChecklist);
+  const isRights = useGetRights(RIGHTS_NAMES.addChecklist);
 
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [newTitle, setNewTitle] = useState<string>(title || '');

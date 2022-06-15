@@ -3,9 +3,8 @@ import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { getEditMembersLoading } from 'store/editTask/selectors';
 import Spinner from 'components/Common/Spinner';
 import { ROLES } from 'constants/types/common';
-import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
-import { getRights } from 'helpers/rights';
 import { RIGHTS_NAMES, TRights } from 'constants/rights';
+import { useGetRights } from 'customHooks/useGetRights';
 import OneMember from './OneMember';
 import MembersWrapperMulti from './MembersWrapperMulti';
 import MembersByOne from './MembersByOne';
@@ -20,16 +19,9 @@ type TElementsMembers = {
 
 const Info: React.FC = () => {
   const editLoading = useAppSelector(getEditMembersLoading);
-  const myMaxRole = useAppSelector(getMyMaxRoleForTask);
-  const isRightsEditWatchers = getRights(myMaxRole, RIGHTS_NAMES.editWatcher);
-  const isRightsEditImplementer = getRights(
-    myMaxRole,
-    RIGHTS_NAMES.editImplementer,
-  );
-  const isRightsEditResponsible = getRights(
-    myMaxRole,
-    RIGHTS_NAMES.editResponsible,
-  );
+  const isRightsEditWatchers = useGetRights(RIGHTS_NAMES.editWatcher);
+  const isRightsEditImplementer = useGetRights(RIGHTS_NAMES.editImplementer);
+  const isRightsEditResponsible = useGetRights(RIGHTS_NAMES.editResponsible);
 
   const elements: TElementsMembers[] = [
     {

@@ -6,10 +6,8 @@ import { ICheckListItem } from 'store/common/task/types';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { ICheckListChangeCompleteStatus } from 'store/editTask/types';
-import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { setCompleteCheckListItem } from 'store/editTask/checkLists/setCompleteCheckListItem/thunk';
-import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
-import { getRights } from 'helpers/rights';
+import { useGetRights } from 'customHooks/useGetRights';
 import { RIGHTS_NAMES } from 'constants/rights';
 import { setDraggedItemId } from 'store/editTask/checkLists/setCheckListItemPosition/slice';
 import { setCheckListItemPosition } from 'store/editTask/checkLists/setCheckListItemPosition/thunk';
@@ -26,8 +24,7 @@ const CheckListItem: React.FC<IProps> = ({ checkListItem }) => {
 
   const { check_list_item_id, message, complete } = checkListItem;
 
-  const myMaxRole = useAppSelector(getMyMaxRoleForTask);
-  const isRights = getRights(myMaxRole, RIGHTS_NAMES.editChecklistItem);
+  const isRights = useGetRights(RIGHTS_NAMES.editChecklistItem);
 
   const [isHover, setIsHover] = useState<boolean>(false);
   const [isDraggedOver, setIsDraggedOver] = useState<boolean>(false);

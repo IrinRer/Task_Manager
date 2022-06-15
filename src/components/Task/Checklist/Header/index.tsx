@@ -6,8 +6,7 @@ import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { getCheckList } from 'store/editTask/selectors';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { deleteCheckList } from 'store/editTask/checkLists/deleteCheckList/thunk';
-import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
-import { getRights } from 'helpers/rights';
+import { useGetRights } from 'customHooks/useGetRights';
 import { RIGHTS_NAMES } from 'constants/rights';
 import CheckListTitle from '../Title';
 import styles from './index.module.scss';
@@ -15,8 +14,7 @@ import styles from './index.module.scss';
 const CheckListHeader: React.FC = () => {
   const checkList = useAppSelector(getCheckList);
   const dispatch = useAppDispatch();
-  const myMaxRole = useAppSelector(getMyMaxRoleForTask);
-  const isRights = getRights(myMaxRole, RIGHTS_NAMES.addChecklist);
+  const isRights = useGetRights(RIGHTS_NAMES.addChecklist);
 
   const handleDeleteCheckListClick = () => {
     dispatch(deleteCheckList(checkList!.check_list_id));

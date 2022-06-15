@@ -8,9 +8,8 @@ import { selectPopulatedPriorities } from 'store/common/priorities/selectors';
 import { getTaskId } from 'store/editTask/selectors';
 import { PriorityName } from 'constants/types/common';
 import { STYLES } from 'constants/common';
-import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
-import { getRights } from 'helpers/rights';
 import { RIGHTS_NAMES } from 'constants/rights';
+import { useGetRights } from 'customHooks/useGetRights';
 import styles from './index.module.scss';
 
 const { Text } = Typography;
@@ -25,8 +24,7 @@ const SelectPriority: React.FC<IProps> = ({ defaultPriority }) => {
   const priorityValue = useAppSelector(selectPopulatedPriorities);
   const taskId = useAppSelector(getTaskId);
   const defaultPriorityName = useAppSelector(getTaskInfoPriorityName);
-  const myMaxRole = useAppSelector(getMyMaxRoleForTask);
-  const isRights = getRights(myMaxRole, RIGHTS_NAMES.editPriority);
+  const isRights = useGetRights(RIGHTS_NAMES.editPriority);
 
   const onChange = (checkedValues: string) => {
     dispatch(

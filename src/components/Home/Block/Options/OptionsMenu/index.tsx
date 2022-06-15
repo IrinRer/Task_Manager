@@ -1,14 +1,11 @@
 import React, { useContext } from 'react';
 import { Button } from 'antd';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { cloneTaskAction } from 'store/createTask/thunk';
 import { deleteTaskAction } from 'store/tasks/thunk';
 import { TaskContext } from 'constants/taskContext';
-import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
-import { getRights } from 'helpers/rights';
+import { useGetRights } from 'customHooks/useGetRights';
 import { RIGHTS_NAMES } from 'constants/rights';
-import { ROLES } from 'constants/types/common';
 import ModalDeleteDelay from 'components/Common/ModalDeleteDelay';
 import styles from './index.module.scss';
 
@@ -26,21 +23,9 @@ const OptionsMenu: React.FC<IProps> = ({
   const dispatch = useAppDispatch();
   const task = useContext(TaskContext);
 
-  const myMaxRoleFromAllTask = useAppSelector((state) =>
-    task ? getMyMaxRoleForTask(state, task) : ROLES.any,
-  );
-  const isRightsCopyTask = getRights(
-    myMaxRoleFromAllTask,
-    RIGHTS_NAMES.copyTask,
-  );
-  const isRightsArchiveTask = getRights(
-    myMaxRoleFromAllTask,
-    RIGHTS_NAMES.moveToArchive,
-  );
-  const isRightsDelTask = getRights(
-    myMaxRoleFromAllTask,
-    RIGHTS_NAMES.deleteTask,
-  );
+  const isRightsCopyTask = useGetRights(RIGHTS_NAMES.copyTask, task);
+  const isRightsArchiveTask = useGetRights(RIGHTS_NAMES.moveToArchive, task);
+  const isRightsDelTask = useGetRights(RIGHTS_NAMES.deleteTask, task);
 
   const handleCloneTask = (): void => {
     if (task) {

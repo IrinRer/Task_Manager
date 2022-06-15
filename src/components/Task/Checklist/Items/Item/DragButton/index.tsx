@@ -1,10 +1,8 @@
 import React from 'react';
 import classnames from 'classnames';
 import { ReactComponent as DragIcon } from 'assets/icons/drag.svg';
-import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
-import { getRights } from 'helpers/rights';
 import { RIGHTS_NAMES } from 'constants/rights';
+import { useGetRights } from 'customHooks/useGetRights';
 import styles from './index.module.scss';
 
 interface IProps {
@@ -13,8 +11,7 @@ interface IProps {
 }
 
 const DragButton: React.FC<IProps> = ({ isHover, onMouseDown }) => {
-  const myMaxRole = useAppSelector(getMyMaxRoleForTask);
-  const isRights = getRights(myMaxRole, RIGHTS_NAMES.editChecklistItem);
+  const isRights = useGetRights(RIGHTS_NAMES.editChecklistItem);
 
   const className = classnames(styles.dragIcon, {
     [styles.dragIconHover]: isHover,

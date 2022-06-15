@@ -4,15 +4,13 @@ import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { cloneTaskAction } from 'store/createTask/thunk';
 import { deleteTaskAction } from 'store/tasks/thunk';
 import { IResponseTask } from 'store/common/task/types';
-import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { getRights } from 'helpers/rights';
-import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
 import { RIGHTS_NAMES } from 'constants/rights';
 import ModalDeleteDelay from 'components/Common/ModalDeleteDelay';
 import { useNavigate } from 'react-router-dom';
 import { clearEditDataTask, setModalVisible } from 'store/editTask/slice';
 import { clearDataTask } from 'store/common/task/slice';
 import { ROUTES } from 'constants/routes';
+import { useGetRights } from 'customHooks/useGetRights';
 import styles from './index.module.scss';
 
 interface IProps {
@@ -30,10 +28,9 @@ const OptionsMenu: React.FC<IProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const myMaxRole = useAppSelector(getMyMaxRoleForTask);
-  const isRightsCopyTask = getRights(myMaxRole, RIGHTS_NAMES.copyTask);
-  const isRightsArchiveTask = getRights(myMaxRole, RIGHTS_NAMES.moveToArchive);
-  const isRightsDelTask = getRights(myMaxRole, RIGHTS_NAMES.deleteTask);
+  const isRightsCopyTask = useGetRights(RIGHTS_NAMES.copyTask);
+  const isRightsArchiveTask = useGetRights(RIGHTS_NAMES.moveToArchive);
+  const isRightsDelTask = useGetRights(RIGHTS_NAMES.deleteTask);
 
   const handleCloneTask = (): void => {
     if (task) {

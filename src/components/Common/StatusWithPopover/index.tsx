@@ -3,8 +3,7 @@ import { Popover } from 'antd';
 import StatusChange from 'components/Common/StatusWithPopover/StatusChange';
 import { RIGHTS_NAMES } from 'constants/rights';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { getRights } from 'helpers/rights';
-import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
+import { useGetRights } from 'customHooks/useGetRights';
 import { getTaskById } from 'store/tasks/selectors';
 import Status from './Status';
 
@@ -15,10 +14,7 @@ interface IProps {
 
 const StatusWithPopover: React.FC<IProps> = ({ taskId, edit = false }) => {
   const task = useAppSelector((state) => getTaskById(state, taskId));
-  const myMaxRoleFromAllTask = useAppSelector((state) =>
-    getMyMaxRoleForTask(state, task),
-  );
-  const isRights = getRights(myMaxRoleFromAllTask, RIGHTS_NAMES.editStatus);
+  const isRights = useGetRights(RIGHTS_NAMES.editStatus, task);
   const trigger = task && isRights ? 'click' : '';
 
   return (
