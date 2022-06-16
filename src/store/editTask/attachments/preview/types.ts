@@ -9,5 +9,6 @@ export interface IPreviewReducer {
   previewImageReceived: string | undefined;
   previewTitleReceived: string;
 
-  fileList: Array<UploadFile>;
+  fileRender: Array<UploadFile>;
+  imgRecieved: any;
 }

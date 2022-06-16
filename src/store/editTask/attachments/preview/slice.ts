@@ -10,7 +10,8 @@ const initialState: IPreviewReducer = {
   previewImageReceived: '',
   previewTitleReceived: '',
 
-  fileList: [],
+  fileRender: [],
+  imgRecieved: []
 };
 
 export const previewSlice = createSlice({
@@ -42,8 +43,12 @@ export const previewSlice = createSlice({
       state.previewTitleReceived = payload;
     },
 
-    setFileList: (state, { payload }: PayloadAction<Array<UploadFile>>) => {
-      state.fileList = payload;
+    setFileRender: (state, { payload }: PayloadAction<any>) => {
+      state.fileRender.push(payload);
+    },
+
+    setImgRecieved: (state, { payload }: PayloadAction<any>) => {
+      state.imgRecieved.push(payload);
     },
   },
 
@@ -52,7 +57,8 @@ export const previewSlice = createSlice({
       state,
       { payload }: PayloadAction<string>,
     ) => {
-      state.fileList = state.fileList?.filter((item) => item.name !== payload);
+      state.fileRender= state.fileRender?.filter((item) => item.name !== payload);
+      state.imgRecieved = state.imgRecieved?.filter((item) => item.name !== payload);
     },
   },
 });
@@ -64,6 +70,7 @@ export const {
 
   setPreviewImageReceived,
   setPreviewTitleReceived,
-  setFileList,
+  setImgRecieved,
+  setFileRender
 } = previewSlice.actions;
 export default previewSlice.reducer;

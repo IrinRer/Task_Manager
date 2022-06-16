@@ -8,9 +8,11 @@ import { assignFile, viewFile } from 'store/editTask/attachments/thunk';
 import { IOptions, ACCEPT_FORMAT } from 'constants/attachments/attachments';
 import { getBase64 } from 'helpers/getBase64';
 import {
+  setImgRecieved,
   setPreviewImageRender,
   setPreviewTitleRender,
 } from 'store/editTask/attachments/preview/slice';
+import { getImgReceived } from 'store/editTask/attachments/preview/selectors';
 import { getTaskId } from 'store/editTask/selectors';
 import {
   getFileName,
@@ -30,6 +32,7 @@ const Attachments = () => {
   const taskId = useAppSelector(getTaskId);
   const fileName = useAppSelector(getFileName);
   const taskFileImg = useAppSelector(getTaskFileImg);
+  const imgRecieved = useAppSelector(getImgReceived);
 
   const taskFile = useAppSelector(getTaskFileAllType);
 
@@ -126,6 +129,7 @@ const Attachments = () => {
     setFileForDelete(file);
     dispatch(setPreviewImageRender(file.url || (file.preview as string)));
     setPreviewVisible(true);
+    dispatch(setImgRecieved({url: file.url, name: file.name}));
     dispatch(setPreviewTitleRender(file.name));
   };
 
@@ -160,6 +164,7 @@ const Attachments = () => {
         fileList={fileList}
         previewVisible={previewVisible}
         setPreviewVisible={setPreviewVisible}
+        img={imgRecieved}
       />
     </Col>
   );

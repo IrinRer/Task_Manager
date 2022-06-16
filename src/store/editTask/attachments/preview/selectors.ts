@@ -12,5 +12,8 @@ export const getPreviewImageReceived = (state: RootState) =>
 export const getPreviewTitleReceived = (state: RootState) =>
   state.editTask.attachments.preview.previewTitleReceived;
 
-export const getFileList = (state: RootState) =>
-  state.editTask.attachments.preview.fileList;
+export const getFileRender = (state: RootState) =>
+  state.editTask.attachments.preview.fileRender;
+
+export const getImgReceived = (state: RootState) =>
+  state.editTask.attachments.preview.imgRecieved;
