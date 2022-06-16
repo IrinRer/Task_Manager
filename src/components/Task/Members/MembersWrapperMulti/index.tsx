@@ -12,7 +12,7 @@ type TProps = {
 };
 
 const MembersWrapperMulti: FC<TProps> = ({ children }) => {
-  const roleName = useContext(RightsRoleContext)?.role || '';
+  const roleName = useContext(RightsRoleContext).role;
   const roleShowName =
     roleName === ROLES.author ? ROLES.author_short : roleName;
 

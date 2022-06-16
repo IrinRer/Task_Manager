@@ -18,7 +18,7 @@ import useMembersProps from '../MembersHook/useMembersProps';
 import CustomSelect from '../CustomSelect';
 
 const AddMemberButton: FC = () => {
-  const roleName = useContext(RightsRoleContext)?.role || '';
+  const roleName = useContext(RightsRoleContext).role;
   const dispatch = useAppDispatch();
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const options = useSelectOptions();
@@ -70,7 +70,6 @@ const AddMemberButton: FC = () => {
           {...options.common}
           list={allUsers}
           itemKey="key"
-          OptionItem={MemberItem}
           itemLabel="name"
           itemValue="user_id"
           defaultValue={roleAssign}
@@ -87,7 +86,9 @@ const AddMemberButton: FC = () => {
           onChange={onChange}
           onBlur={onBlur}
           onSearch={options.particular.handleSearch}
-        />
+        >
+          {MemberItem}
+        </CustomSelect>
       ) : (
         <Button className={styles.addmember} onClick={showMemberModal}>
           + добавить участника

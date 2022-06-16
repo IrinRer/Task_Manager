@@ -43,7 +43,6 @@ const ModalDeleteDelay: React.FC<IProps> = (props: IProps) => {
     if (visible && secondsToGo <= 0) {
       handleOk();
     }
-    return undefined;
   }, [handleOk, secondsToGo, visible]);
 
   return (

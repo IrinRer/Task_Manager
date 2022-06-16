@@ -1,6 +1,7 @@
 import React from 'react';
 import { Select } from 'antd';
 import { SelectProps, SelectValue } from 'antd/lib/select';
+import { AVATAR_SIZE, IUserAvatar } from 'constants/types/common';
 
 const { Option } = Select;
 
@@ -9,12 +10,12 @@ interface ICustomSelect<T> {
   itemKey: string;
   itemLabel: string;
   itemValue: string;
-  OptionItem: React.FC<{ obj: T; size?: 'L' | 'M' }>;
+  children: React.FC<IUserAvatar<T>>;
 }
 
 type TCustomOption<T> = {
   value: string;
-  children: React.FC<{ obj: T; size?: 'L' | 'M' }>;
+  children: React.FC<IUserAvatar<T>>;
   label: string;
 };
 
@@ -29,7 +30,7 @@ const CustomSelect = <T,>(
     ICustomSelect<T> & SelectProps<SelectValue, TCustomOption<T>>
   >,
 ): React.ReactElement => {
-  const { list, itemKey, itemValue, itemLabel, OptionItem, ...rest } = props;
+  const { list, itemKey, itemValue, itemLabel, children, ...rest } = props;
 
   const filterOption = (input: string, option: TCustomOption<T>): boolean => {
     return option!.label.toLowerCase().indexOf(input.toLowerCase()) >= 0;
@@ -44,7 +45,7 @@ const CustomSelect = <T,>(
       .localeCompare(optionB!.label.toLowerCase());
   };
 
-  const OptionElem = withAddOption<{ obj: T; size?: 'L' | 'M' }>(OptionItem);
+  const OptionElem = withAddOption<IUserAvatar<T>>(children);
 
   return (
     <Select
@@ -56,7 +57,7 @@ const CustomSelect = <T,>(
       {list?.map((el) => {
         return (
           <Option key={el[itemKey]} value={el[itemValue]} label={el[itemLabel]}>
-            <OptionElem obj={el} size="L" />
+            <OptionElem obj={el} size={AVATAR_SIZE.large} />
           </Option>
         );
       })}

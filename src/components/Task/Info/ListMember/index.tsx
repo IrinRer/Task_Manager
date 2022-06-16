@@ -23,8 +23,8 @@ type TProps = {
 };
 
 const ListMemberMulti: FC<TProps> = ({ isActive, setIsActive }) => {
-  const roleName = useContext(RightsRoleContext)?.role || '';
-  const editable = useContext(RightsRoleContext)?.isRights || false;
+  const roleName = useContext(RightsRoleContext).role;
+  const editable = useContext(RightsRoleContext).isRights;
   const options = useSelectOptions();
 
   const roleUnassign = useAppSelector(getUnselectedMembers);
@@ -107,7 +107,6 @@ const ListMemberMulti: FC<TProps> = ({ isActive, setIsActive }) => {
         {...options.common}
         list={users}
         itemKey="user_id"
-        OptionItem={MemberItem}
         itemLabel="name"
         itemValue="user_id"
         mode="multiple"
@@ -128,7 +127,9 @@ const ListMemberMulti: FC<TProps> = ({ isActive, setIsActive }) => {
         onChange={editable ? onChange : () => {}}
         onBlur={editable ? onBlur : closeList}
         onSearch={options.particular.handleSearch}
-      />
+      >
+        {MemberItem}
+      </CustomSelect>
     </div>
   );
 };

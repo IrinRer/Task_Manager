@@ -16,7 +16,7 @@ type TProps = {
 };
 
 const EditableMember: FC<TProps> = ({ user }) => {
-  const roleName = useContext(RightsRoleContext)?.role || '';
+  const roleName = useContext(RightsRoleContext).role;
   const dispatch = useAppDispatch();
   const taskId = useAppSelector(getTaskId);
 

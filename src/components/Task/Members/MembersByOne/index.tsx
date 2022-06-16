@@ -13,8 +13,8 @@ type TProps = {
 };
 
 const MembersByOne: FC<TProps> = ({ multiAdd, usersMaxCount }) => {
-  const roleName = useContext(RightsRoleContext)?.role || '';
-  const editable = useContext(RightsRoleContext)?.isRights || false;
+  const roleName = useContext(RightsRoleContext).role;
+  const editable = useContext(RightsRoleContext).isRights;
   const usersData = useMembersProps(roleName);
   const users = usersData?.users ? usersData?.users : [];
 

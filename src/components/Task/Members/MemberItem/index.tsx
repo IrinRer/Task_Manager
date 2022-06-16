@@ -2,17 +2,16 @@ import classnames from 'classnames';
 import UserAvatar from 'components/Common/UserAvatar';
 import { RightsRoleContext } from 'components/Task/context';
 import useMembersProps from 'components/Task/Info/MembersHook/useMembersProps';
+import { AVATAR_SIZE, IUserAvatar } from 'constants/types/common';
 import React, { FC, useContext } from 'react';
 import { IUser } from 'store/users/types';
 import styles from './index.module.scss';
 
-type TProps = {
-  obj?: IUser;
-  size?: 'L' | 'M';
-};
-
-const MemberItem: FC<TProps> = ({ obj, size = 'M' }) => {
-  const roleName = useContext(RightsRoleContext)?.role || '';
+const MemberItem: FC<IUserAvatar<IUser>> = ({
+  obj = null,
+  size = AVATAR_SIZE.medium,
+}) => {
+  const roleName = useContext(RightsRoleContext).role;
   const usersData = useMembersProps(roleName);
   const userFromTaskRole = usersData?.users ? usersData?.users[0] : undefined;
 

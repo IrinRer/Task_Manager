@@ -34,7 +34,7 @@ type TProps = {
 };
 
 const AddMemberButtonMulti: FC<TProps> = ({ usersMaxCount }) => {
-  const roleName = useContext(RightsRoleContext)?.role || '';
+  const roleName = useContext(RightsRoleContext).role;
   const dispatch = useAppDispatch();
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
@@ -155,7 +155,6 @@ const AddMemberButtonMulti: FC<TProps> = ({ usersMaxCount }) => {
           {...options.common}
           list={isDisabled ? getOnlySelectedUsers : allUsers}
           itemKey="key"
-          OptionItem={MemberItem}
           itemLabel="name"
           itemValue="user_id"
           mode="multiple"
@@ -173,7 +172,9 @@ const AddMemberButtonMulti: FC<TProps> = ({ usersMaxCount }) => {
           onChange={onChange}
           onBlur={onBlur}
           onSearch={options.particular.handleSearch}
-        />
+        >
+          {MemberItem}
+        </CustomSelect>
       ) : (
         <Button className={styles.addmember} onClick={showMemberModal}>
           + добавить участника

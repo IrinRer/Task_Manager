@@ -12,8 +12,8 @@ type TProps = {
 };
 
 const OneMember: FC<TProps> = ({ user }) => {
-  const roleName = useContext(RightsRoleContext)?.role || '';
-  const editable = useContext(RightsRoleContext)?.isRights || false;
+  const roleName = useContext(RightsRoleContext).role;
+  const editable = useContext(RightsRoleContext).isRights;
   const usersData = useMembersProps(roleName);
   const userFromTaskRole = usersData?.users ? usersData?.users[0] : undefined;
 
