@@ -1,38 +1,41 @@
 import React from 'react';
 import { Modal, Button } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
+import { UploadFile } from 'antd/lib/upload/interface';
+import { setIsVisibleModalDelete } from 'store/editTask/additionalFunctions/tag/modalVisible/slice';
+import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
+import { isModalVisibleDelete } from 'store/editTask/additionalFunctions/tag/modalVisible/selectors';
+import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import styles from './index.module.scss';
 
 interface IProps {
   textMain: string;
   textButton: string;
-  visible: boolean;
-  setVisibleModalDelete: React.Dispatch<React.SetStateAction<boolean>>;
-  action: (arg: string | undefined) => void;
-  file: string | undefined;
+  action: (arg: string | UploadFile) => void;
+  file: string | UploadFile;
 }
 
 const ModalDelete: React.FC<IProps> = ({
   textMain,
   textButton,
-  visible,
-  setVisibleModalDelete,
   action,
   file,
 }) => {
+  const isVisible = useAppSelector(isModalVisibleDelete);
+  const dispatch = useAppDispatch();
   const handleOk = () => {
     action(file);
-    setVisibleModalDelete(false);
+    dispatch(setIsVisibleModalDelete(false));
   };
 
   const handleCancel = () => {
-    setVisibleModalDelete(false);
+    dispatch(setIsVisibleModalDelete(false));
   };
 
   return (
     <Modal
       title="Вы уверены?"
-      visible={visible}
+      visible={isVisible}
       width={310}
       className={styles.modalTag}
       footer={[
@@ -40,6 +43,7 @@ const ModalDelete: React.FC<IProps> = ({
           className={styles.btn_modal}
           key="submit"
           danger
+          htmlType="submit"
           type="primary"
           icon={<DeleteOutlined />}
           onClick={handleOk}

@@ -6,7 +6,11 @@ import {
   ITag,
 } from 'store/common/tags/types';
 import { AxiosError } from 'axios';
-import { fetchTagsAction } from './thunk';
+import {
+  createTagAction,
+  editTagAction,
+} from 'store/editTask/additionalFunctions/tag/thunk';
+import { deleteTagAction, fetchTagsAction } from './thunk';
 
 const initialState: ICommonTagsReducer = {
   tags: [],
@@ -35,6 +39,58 @@ export const commonTagsSlice = createSlice({
       { payload }: PayloadAction<AxiosError>,
     ) => {
       state.tags = [];
+      state.loading = false;
+      state.error = payload;
+    },
+
+    [createTagAction.fulfilled.type]: (
+      state,
+      { payload }: PayloadAction<ITag>,
+    ) => {
+      state.tags?.push(payload);
+      state.loading = false;
+    },
+
+    [deleteTagAction.pending.type]: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [deleteTagAction.fulfilled.type]: (
+      state,
+      { payload }: PayloadAction<ITag>,
+    ) => {
+      state.tags = state.tags?.filter((item) => item.name !== payload.name);
+      state.loading = false;
+    },
+    [deleteTagAction.rejected.type]: (
+      state,
+      { payload }: PayloadAction<AxiosError>,
+    ) => {
+      state.tags = initialState.tags;
+      state.loading = false;
+      state.error = payload;
+    },
+
+    [editTagAction.pending.type]: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [editTagAction.fulfilled.type]: (
+      state,
+      { payload }: PayloadAction<ITag>,
+    ) => {
+      state.tags = state.tags.map((item) => {
+        if (item.task_tag_id === payload.task_tag_id) {
+          return payload;
+        }
+        return item;
+      });
+      state.loading = false;
+    },
+    [editTagAction.rejected.type]: (
+      state,
+      { payload }: PayloadAction<AxiosError>,
+    ) => {
       state.loading = false;
       state.error = payload;
     },

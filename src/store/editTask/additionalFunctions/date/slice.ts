@@ -1,7 +1,10 @@
 import { AxiosError } from 'axios';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { fetchTaskAction } from 'store/common/task/thunk';
+import { IResponseTask } from 'store/common/task/types';
 import { DATE_SLICE_ALIAS, IDateReducer } from './types';
 import { createDateAction } from './thunk';
+
 
 const initialState: IDateReducer = {
   dateStart: null,
@@ -34,6 +37,14 @@ export const prioritySlice = createSlice({
       state.dateStop = null;
       state.loading = false;
       state.error = payload;
+    },
+
+    [fetchTaskAction.fulfilled.type]: (
+      state,
+      { payload }: PayloadAction<IResponseTask>,
+    ) => {
+      state.dateStop = payload.exec_stop;
+      state.loading = false;
     },
   },
 });

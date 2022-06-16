@@ -7,6 +7,7 @@ import { format, parse } from 'date-fns';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import DatePicker from 'constants/additionalFunctions/DatePicker';
 import { getTaskId } from 'store/editTask/selectors';
+import { getDateStop } from 'store/editTask/additionalFunctions/date/selectors';
 import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
 import { getRights } from 'helpers/rights';
 import { RIGHTS_NAMES } from 'constants/rights';
@@ -14,15 +15,12 @@ import styles from './index.module.scss';
 
 const { Text } = Typography;
 
-interface IProps {
-  dateStop: string | undefined;
-}
-
-const SelectDate: React.FC<IProps> = ({ dateStop }) => {
+const SelectDate: React.FC = () => {
   const dispatch = useAppDispatch();
   const taskId = useAppSelector(getTaskId);
   const myMaxRole = useAppSelector(getMyMaxRoleForTask);
   const isRights = getRights(myMaxRole, RIGHTS_NAMES.editTaskDate);
+  const acceptDateStop = useAppSelector(getDateStop);
 
   const onChange = (date: Date | null) => {
     dispatch(
@@ -34,13 +32,15 @@ const SelectDate: React.FC<IProps> = ({ dateStop }) => {
     );
   };
 
+  const isAcceptDateStop = acceptDateStop
+    ? parse(acceptDateStop, DATE_FORMAT_UI, new Date())
+    : undefined;
+
   return (
     <div className={styles.date}>
       <Text className={styles.text}>Срок</Text>
       <DatePicker
-        defaultValue={
-          dateStop ? parse(dateStop, DATE_FORMAT_UI, new Date()) : undefined
-        }
+        defaultValue={isAcceptDateStop || undefined}
         disabled={!isRights}
         format={DATE_FORMAT_UI}
         bordered={false}
