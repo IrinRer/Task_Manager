@@ -1,4 +1,4 @@
-import { Modal, Carousel } from 'antd';
+import { Modal, Carousel, Button } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   CloseCircleOutlined,
@@ -51,14 +51,23 @@ const Preview = ({
   // const [fileRender, setFileRender] = useState<any>([]);
   const [title, setTitle] = useState<any>(isTitle);
   // const [smth, setSmth] = useState<any>();
+  const [index, setIndex] = useState(0);
 
   const determineIndex = (file: UploadFile) => {
     return fileName.indexOf(file?.originFileObj?.name || file.name);
   };
 
-//   useEffect(() => {
-//     dispatch(setFileRender(smth));
-//  }, [smth]);
+  const isImg = previewImageRender || previewImageReceived;
+
+  useEffect(() => {
+    img.forEach((item, index) => {
+      if (item.url === isImg) {
+        setIndex(+index);
+      }
+    });
+  }, [img, isImg]);
+
+  console.log(index);
 
   const onRemove = () => {
     setVisibleModalDelete(true);
@@ -91,54 +100,88 @@ const Preview = ({
   const onChange = (current: number) => {
     console.log(current);
     return img.map((item, index) => {
-       if(current === index) {
-        return item.name 
-       }    
-       return title; 
-     })
-   };
+      if (current === index) {
+        return item.name;
+      }
+      return title;
+    });
+  };
 
   const handleCancel = () => {
     setPreviewVisible(false);
   };
 
-  const isImg = previewImageRender || previewImageReceived;
-
   // сделать красиво как нибудь
+  // const imgAll = () => {
+  //   if (img) {
+  //     return img.map(({ url, name }) => {
+  //       if (url !== isImg) {
+  //         // dispatch(setFileRender({ url, name }));
+  //         return (
+  //           <div>
+  //             <img src={url} alt="img" className={styles.img} />
+  //           </div>
+  //         );
+  //       }
+  //       return null;
+  //     });
+  //   }
+  //   return null;
+  // };
+
   const imgAll = () => {
     if (img) {
       return img.map(({ url, name }) => {
-        if (url !== isImg) {
-          // dispatch(setFileRender({ url, name }));
-          return (
-            <div>
-              <img src={url} alt="img" className={styles.img} />
-            </div>
-          );
-        }
-        return null;
+        // dispatch(setFileRender({ url, name }));
+        return (
+          <div>
+            <img src={url} alt="img" className={styles.img} />
+          </div>
+        );
       });
     }
     return null;
   };
 
+  // const index = img.map((item, index) => item.url === isImg ? index : null);
+  // в итоге вернется индекс того изображения которое есть сейчас
+
+  const prevClick = () => {
+    return index !== 0 ? setIndex(index - 1) : setIndex(img.length - 1);
+  };
+
+  const nextClick = () => {
+    return index !== img.length - 1 ? setIndex(index + 1) : setIndex(0);
+  };
+
+  // const ff = img ? img[0].url : null;
+
   return (
     <>
-      <Modal
-        visible={previewVisible}
-        closeIcon={<CloseCircleOutlined />}
-        title={
-          <Header
-            previewTitle={isTitle}
-            onRemove={() => onRemove()}
-            onDownload={() => onDownload(file)}
-          />
-        }
-        footer={null}
-        onCancel={handleCancel}
-        className={styles.modal}
-      >
-        <Carousel
+      {img.length ? (
+        <Modal
+          visible={previewVisible}
+          closeIcon={<CloseCircleOutlined />}
+          title={
+            <Header
+              previewTitle={img[index].name}
+              onRemove={() => onRemove()}
+              onDownload={() => onDownload(file)}
+            />
+          }
+          footer={null}
+          onCancel={handleCancel}
+          className={styles.modal}
+        >
+          {/* <div >
+            <img alt="img" className={styles.img} src={isImg}/>
+        </div> */}
+
+          <img alt="img" className={styles.img} src={img[index].url} />
+
+          <Button icon={<LeftOutlined />} onClick={prevClick} />
+          <Button icon={<RightOutlined />} onClick={nextClick} />
+          {/* <Carousel
           afterChange={onChange}
           arrows
           prevArrow={<LeftOutlined />}
@@ -148,8 +191,9 @@ const Preview = ({
             <img alt="img" className={styles.img} src={isImg}/>
           </div>
           {imgAll()}
-        </Carousel>
-      </Modal>
+        </Carousel> */}
+        </Modal>
+      ) : null}
       <ModalDelete
         visible={visibleModalDelete}
         textMain={`${file?.name} будет безвозвратно удален`}
