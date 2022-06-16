@@ -22,25 +22,6 @@ export interface ITagThunkEditCreat {
   color: string;
 }
 
-// export interface ITagThunkCreat {
-//   arg: {
-//     taskId: string;
-//   };
-//   name: string;
-//   color: string;
-// }
-
-// export interface ITagThunkEdit {
-//   arg: {
-//     tagId: string;
-//   };
-//   name: string;
-//   color: string;
-// }
-
-
-
-
 export interface ITagThunkAssignTag {
   task_tag_id: string;
   task_id: string;
