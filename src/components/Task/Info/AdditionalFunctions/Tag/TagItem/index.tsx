@@ -18,7 +18,7 @@ const TagItem: FC<TProps> = ({ editable, taskId }) => {
   const dispatch = useAppDispatch();
   const tagSelect = useAppSelector(getTag);
 
-  const handleClose = (id: string | undefined, name: string) => {
+  const handleClose = ( id: string, name: string) => {
     if (id && taskId) {
       dispatch(unassignTagAction({ task_tag_id: id, task_id: taskId, name }));
     }
