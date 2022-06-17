@@ -1,13 +1,16 @@
-import {
-  createTagAction,
-  deleteTagAction,
-} from 'store/editTask/additionalFunctions/tag/thunk';
 import { AxiosError } from 'axios';
-import { IResponseTask } from 'store/common/task/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ITag } from '../../../common/tags/types';
+import {
+  assignTagAction,
+  createTagAction,
+  editTagAction,
+  unassignTagAction,
+} from 'store/editTask/additionalFunctions/tag/thunk';
+import { deleteTagAction } from 'store/common/tags/thunk';
+import { IResponseTask } from 'store/common/task/types';
+import { fetchTaskAction } from 'store/common/task/thunk';
+import { ITag } from 'store/common/tags/types';
 import { TAG_SLICE_ALIAS, ITagReducer } from './types';
-import { fetchTaskAction } from '../../../common/task/thunk';
 
 const initialState: ITagReducer = {
   sentTag: [],
@@ -28,10 +31,28 @@ export const tagSlice = createSlice({
       state,
       { payload }: PayloadAction<ITag>,
     ) => {
-      state.sentTag = state.sentTag?.concat(payload);
+      state.sentTag?.push(payload);
       state.loading = false;
     },
     [createTagAction.rejected.type]: (
+      state,
+      { payload }: PayloadAction<AxiosError>,
+    ) => {
+      state.loading = false;
+      state.error = payload;
+    },
+    [assignTagAction.pending.type]: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [assignTagAction.fulfilled.type]: (
+      state,
+      { payload }: PayloadAction<ITag>,
+    ) => {
+      state.sentTag?.push(payload);
+      state.loading = false;
+    },
+    [assignTagAction.rejected.type]: (
       state,
       { payload }: PayloadAction<AxiosError>,
     ) => {
@@ -49,10 +70,25 @@ export const tagSlice = createSlice({
       state.loading = false;
     },
 
-    [deleteTagAction.pending.type]: (state) => {
+    [unassignTagAction.pending.type]: (state) => {
       state.loading = true;
       state.error = null;
     },
+    [unassignTagAction.fulfilled.type]: (
+      state,
+      { payload }: PayloadAction<string>,
+    ) => {
+      state.sentTag = state.sentTag?.filter((item) => item.name !== payload);
+      state.loading = false;
+    },
+    [unassignTagAction.rejected.type]: (
+      state,
+      { payload }: PayloadAction<AxiosError>,
+    ) => {
+      state.loading = false;
+      state.error = payload;
+    },
+
     [deleteTagAction.fulfilled.type]: (
       state,
       { payload }: PayloadAction<ITag>,
@@ -62,13 +98,18 @@ export const tagSlice = createSlice({
       );
       state.loading = false;
     },
-    [deleteTagAction.rejected.type]: (
+
+    [editTagAction.fulfilled.type]: (
       state,
-      { payload }: PayloadAction<AxiosError>,
+      { payload }: PayloadAction<ITag>,
     ) => {
-      state.sentTag = initialState.sentTag;
+      state.sentTag = state.sentTag?.map((item) => {
+        if (item.task_tag_id === payload.task_tag_id) {
+          return payload;
+        }
+        return item;
+      });
       state.loading = false;
-      state.error = payload;
     },
   },
 });

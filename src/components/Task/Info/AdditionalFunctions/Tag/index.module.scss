@@ -53,12 +53,37 @@
     width: 100%;
   }
 }
-
 .modalTag {
+  :global(.ant-modal-header) {
+    border-bottom: none !important;
+  }
+
+  :global(.ant-modal-footer) {
+    border-top: none !important;
+  }
+}
+
+.modalTag,
+.modalTagMain {
   :global(.ant-modal-content),
   :global(.ant-modal),
   :global(.ant-modal-body) {
     border-radius: 16px !important;
+  }
+
+  ::-webkit-scrollbar {
+    width: 18px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: $gray-200;
+    border-radius: 10px 16px 0px 0px;
+    width: 14px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px 10px 0px 0px;
+    background-color: $gray-300;
   }
 
   :global(.ant-modal-body) {
@@ -67,18 +92,18 @@
 
   :global(.ant-modal-header) {
     border-radius: 16px !important;
-    border-bottom: none !important;
   }
 
   :global(.ant-modal-footer) {
     text-align: left !important;
     display: flex;
-    padding: 24px;
-    padding-top: 0;
+    padding: 10px 24px;
   }
 
   :global(.ant-modal-body) {
     padding-bottom: 10px !important;
+    overflow: auto;
+    max-height: 230px;
   }
 
   :global(.ant-modal-footer) > .btn {
@@ -91,10 +116,6 @@
     &:disabled {
       background: $gray-500;
     }
-  }
-
-  :global(.ant-modal-footer) {
-    border-top: none !important;
   }
 
   :global(.ant-input).input {
@@ -298,6 +319,7 @@
 
 :global(.ant-menu-vertical) {
   border-right: none;
+
   :global(.ant-menu-sub:not([class*='-active'])) {
     max-height: 300px;
   }

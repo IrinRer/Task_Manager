@@ -1,36 +1,27 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { Menu } from 'antd';
 import { CaretRightOutlined } from '@ant-design/icons';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import { deleteTagAction } from 'store/editTask/additionalFunctions/tag/thunk';
-import { uniqueId } from 'lodash';
 import { MIN_NUMBER_TAGS_ON_PAGE } from 'constants/additionalFunctions/tag';
-import ModalDelete from 'components/Common/ModalDelete';
-import { ITag } from 'store/common/tags/types';
+import { unassignTagAction } from 'store/editTask/additionalFunctions/tag/thunk';
+import { useAppSelector } from 'customHooks/redux/useAppSelector';
+import { getTag } from 'store/editTask/additionalFunctions/tag/selectors';
 import CustomTag from 'components/Common/CustomTag';
 import styles from '../index.module.scss';
 
 type TProps = {
-  editable: boolean,
-  tagSelect?: ITag[]
+  editable: boolean;
+  taskId: string;
 };
 
-const TagItem: FC<TProps> = ({ editable, tagSelect }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [name, setName] = useState('');
-  const [id, setId] = useState<string | undefined>('');
-
+const TagItem: FC<TProps> = ({ editable, taskId }) => {
   const dispatch = useAppDispatch();
+  const tagSelect = useAppSelector(getTag);
 
-  const handleClose = (
-    e: React.MouseEvent<HTMLElement>,
-    id: string | undefined,
-    name: string,
-  ) => {
-    e.preventDefault();
-    setIsVisible(true);
-    setId(id);
-    setName(name);
+  const handleClose = ( id: string, name: string) => {
+    if (id && taskId) {
+      dispatch(unassignTagAction({ task_tag_id: id, task_id: taskId, name }));
+    }
   };
 
   const tag = tagSelect?.map(({ name, color, task_tag_id: id }) => {
@@ -41,15 +32,10 @@ const TagItem: FC<TProps> = ({ editable, tagSelect }) => {
         closable={editable}
         key={name}
         id={id}
-        onClose={(e) => handleClose(e, id, name)}
+        onClose={() => handleClose(id, name)}
       />
     );
   });
-
-  const handleOk = () => {
-    dispatch(deleteTagAction(id));
-    setIsVisible(false);
-  };
 
   return (
     <>
@@ -60,19 +46,11 @@ const TagItem: FC<TProps> = ({ editable, tagSelect }) => {
           icon={<CaretRightOutlined className={styles.iconColor} />}
         >
           {tag?.map((item: React.ReactElement) => {
-            return <Menu.Item key={uniqueId()}>{item}</Menu.Item>;
+            return <div key={item.key}>{item}</div>;
           })}
         </Menu.SubMenu>
       </Menu>
       <div className={styles.tag}>{tag?.slice(0, MIN_NUMBER_TAGS_ON_PAGE)}</div>
-      <ModalDelete
-        visible={isVisible}
-        textMain={`Метка ${name} будет удалена из списка меток и из всех задач проекта`}
-        textButton="Удалить метку"
-        setVisibleModalDelete={setIsVisible}
-        file={id}
-        action={handleOk}
-      />
     </>
   );
 };
