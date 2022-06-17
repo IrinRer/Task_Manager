@@ -6,11 +6,8 @@ import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { selectStatuses } from 'store/common/statuses/selectors';
 import { changeTaskStatusAction } from 'store/tasks/thunk';
 import { changeEditTaskStatusAction } from 'store/editTask/thunk';
-import { getVerifyIdUser } from 'store/auth/verify/selectors';
 import { getTaskById } from 'store/tasks/selectors';
-import { canUserChangeTaskStatus } from 'helpers/userRoles';
 import classnames from 'classnames';
-import { StatusClass } from 'constants/common';
 import styles from './index.module.scss';
 
 interface IProps {
@@ -23,11 +20,10 @@ interface IProps {
 const StatusChange: React.FC<IProps> = ({ taskId, edit = false }) => {
   const dispatch = useAppDispatch();
   const statuses = useAppSelector(selectStatuses);
-  const userId = useAppSelector(getVerifyIdUser);
   const task = useAppSelector((state) => getTaskById(state, taskId));
 
   const handleClick = (task_status_id: string) => {
-    if (!(task && canUserChangeTaskStatus(userId, task))) {
+    if (!(task /* && canUserChangeTaskStatus(userId, task) */)) {
       notification.warn({ message: 'У Вас нет прав на изменение статуса' });
       return;
     }
@@ -44,7 +40,7 @@ const StatusChange: React.FC<IProps> = ({ taskId, edit = false }) => {
         const current = status.task_status_id === task?.status.task_status_id;
         const classNames = classnames(
           styles.button,
-          current ? styles[StatusClass[status.name]] : '',
+          current ? styles.current : '',
         );
         return (
           <Button
@@ -61,5 +57,4 @@ const StatusChange: React.FC<IProps> = ({ taskId, edit = false }) => {
     </div>
   );
 };
-
 export default StatusChange;

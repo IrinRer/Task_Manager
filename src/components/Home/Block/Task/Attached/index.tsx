@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import FlexWrapper from 'components/Common/FlexWrapper';
 import attachmentIcon from 'assets/icons/attachment.svg';
-import { TaskContext } from 'constants/taskContext';
+import { TaskContext } from 'components/Home/taskContext';
 import styles from './index.module.scss';
 
 const Attached: React.FC = () => {

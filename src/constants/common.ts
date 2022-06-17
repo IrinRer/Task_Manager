@@ -77,3 +77,17 @@ export const TITLE_TASK_MAX_LENGTH = 150;
 export const RoleContext = createContext<TRights | ''>('');
 export const EditableContext = createContext<boolean>(false);
 
+export enum NOTIFIER_COMMANDS {
+  statusChange = 'Смена статуса',
+  priorityChange = 'Смена приоритета',
+  priorityCancel = 'Отмена приоритета',
+  descriptionEdit = 'Редактирование описания',
+  tagCancel = 'Отмена тега у сущности',
+  tagAdd = 'Добавление тега к сущности',
+  timeEndChange = 'Изменение времени окончания',
+  timeStartChange = 'Изменение времени начала',
+  titleEdit = 'Редактирование заголовка',
+  roleAdd = 'Назначение роли',
+}
+
+export const NOTIFICATION_COUNT_INCREMENT = 20;

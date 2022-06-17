@@ -1,6 +1,7 @@
 .notification {
   margin-right: 10px;
   position: relative;
+  cursor: pointer;
   &.new:after {
     position: absolute;
     top: 1px;

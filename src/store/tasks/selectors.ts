@@ -9,8 +9,7 @@ import {
 } from './service';
 
 export const selectTasks = (state: RootState) => state.tasks.tasks;
-export const getTaskById = (state: RootState, id: string) =>
-  state.tasks.tasks.find((task) => task.task_id === id);
+
 export const selectTasksLoading = (state: RootState) => state.tasks.loading;
 export const selectTasksError = (state: RootState) => state.tasks.error;
 export const selectTasksTotalCount = (state: RootState) =>
@@ -59,4 +58,9 @@ export const getDoneTasksSortedPaginated = createSelector(
   getViewParameters,
   (tasks, viewParameters) =>
     getTasksSortedPaginated(tasks, viewParameters, BlockType.done),
+);
+
+export const getTaskById = createSelector(
+  [selectTasks, (_, taskId: string) => taskId],
+  (tasks, taskId: string) => tasks.find((task) => task.task_id === taskId),
 );

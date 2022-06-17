@@ -1,6 +1,6 @@
 import { Avatar } from 'antd';
 import React, { useContext } from 'react';
-import { TaskContext } from 'constants/taskContext';
+import { TaskContext } from 'components/Home/taskContext';
 import AvatarWrapper from '../AvatarWrapper';
 import styles from './index.module.scss';
 

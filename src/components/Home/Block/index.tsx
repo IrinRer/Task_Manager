@@ -6,7 +6,7 @@ import { getViewParameters } from 'store/tasks/selectors';
 import { Col, Pagination, Row } from 'antd';
 import { BlockType, SortField, TTask } from 'constants/types/common';
 import { BlockTitle } from 'constants/common';
-import { TaskContext } from 'constants/taskContext';
+import { TaskContext } from 'components/Home/taskContext';
 import Sorter from './Sorter';
 import Task from './Task';
 import PaginationLabel from './PaginationLabel';
@@ -87,7 +87,7 @@ const Block: React.FC<IProps> = ({ blockType }) => {
             );
           })
         ) : (
-          <p>Нет задач для отображения</p>
+          <p className={styles.emptyTask}>Нет задач для отображения</p>
         )}
       </Col>
 

@@ -4,9 +4,12 @@ import { ROLES } from 'constants/types/common';
 export const NOTIFICATIONS_SLICE_ALIAS = 'notifications';
 
 export interface INotificationsReducer {
-  notifications: INotification[];
-  veiewedTotal: number;
-  newTotal: number;
+  viewed: IGetNotificationsResponseData;
+  new: IGetNotificationsResponseData;
+  showCount: number;
+  allNotifications: INotification[];
+  notificationsToShow: INotification[];
+  showNotificationModal: boolean;
   loading: boolean;
   error: AxiosError | null;
 }
@@ -35,15 +38,21 @@ export interface INotification {
       logo: string;
     };
     params: {
-      assign_user: {
+      message?: string;
+      complete?: boolean;
+      assign_user?: {
         user_id: string;
         name: string;
       };
-      task_role: {
+      check_list?: {
+        check_list_id: string;
+        title: string;
+      };
+      task_role?: {
         task_role_id: string;
         name: ROLES;
       };
-      task: {
+      task?: {
         task_id: string;
         title: string;
       };
@@ -61,26 +70,21 @@ export interface INotification {
   };
 }
 
-export interface IGetNotificationsResponse {
-  data: {
-    pagination: {
-      items_count: number;
-      items_total: number;
-      per_page: number;
-      page_current: number;
-      page_total: number;
-    };
-    data: INotification[];
+export interface IGetNotificationsResponseData {
+  pagination: {
+    items_count: number;
+    items_total: number;
+    per_page: number;
+    page_current: number;
+    page_total: number;
   };
+  data: INotification[];
 }
-
-export interface IgetNotificationsArgs {
-  viewed: boolean;
-  page: number;
-  per_page: number;
+export interface IGetNotificationsResponse {
+  data: IGetNotificationsResponseData;
 }
 
 export interface IChangeNotificationViewedArgs {
   viewed: boolean;
-  subscribe_notify_id: [string];
+  subscribe_notify_id: string[];
 }

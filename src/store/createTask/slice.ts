@@ -10,6 +10,7 @@ import {
 
 const initialState: ICreateTaskReducer = {
   task: null,
+  showTaskCreatedMessage: false,
   loading: false,
   error: null,
   success: false,
@@ -23,6 +24,12 @@ export const createTaskSlice = createSlice({
       state.success = false;
       state.task = null;
     },
+    setShowTaskCreatedMessage: (
+      state: ICreateTaskReducer,
+      { payload }: PayloadAction<boolean>,
+    ) => {
+      state.showTaskCreatedMessage = payload;
+    },
   },
   extraReducers: {
     [createTaskAction.pending.type]: (state: ICreateTaskReducer) => {
@@ -35,8 +42,10 @@ export const createTaskSlice = createSlice({
     ) => {
       state.loading = false;
       state.task = payload;
+      state.showTaskCreatedMessage = true;
       state.success = true;
     },
+
     [createTaskAction.rejected.type]: (
       state: ICreateTaskReducer,
       { payload }: PayloadAction<AxiosError>,
@@ -66,5 +75,6 @@ export const createTaskSlice = createSlice({
   },
 });
 
-export const { resetNewTaskSuccess } = createTaskSlice.actions;
+export const { resetNewTaskSuccess, setShowTaskCreatedMessage } =
+  createTaskSlice.actions;
 export default createTaskSlice.reducer;

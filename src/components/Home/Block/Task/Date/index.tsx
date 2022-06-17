@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import scheduleIcon from 'assets/icons/schedule.svg';
 import FlexWrapper from 'components/Common/FlexWrapper';
-import { TaskContext } from 'constants/taskContext';
+import { TaskContext } from 'components/Home/taskContext';
 import styles from './index.module.scss';
 
 const DateString: React.FC = () => {

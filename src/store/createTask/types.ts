@@ -5,6 +5,7 @@ export const CREATE_TASK_SLICE_ALIAS = 'createTask';
 
 export interface ICreateTaskReducer {
   task: TTask | null;
+  showTaskCreatedMessage: boolean;
   loading: boolean;
   error: AxiosError | null;
   success: boolean;

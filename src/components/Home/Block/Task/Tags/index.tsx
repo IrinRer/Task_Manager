@@ -1,7 +1,7 @@
 import CustomTag from 'components/Common/CustomTag';
 import { TTag } from 'constants/types/common';
 import React, { useContext } from 'react';
-import { TaskContext } from 'constants/taskContext';
+import { TaskContext } from 'components/Home/taskContext';
 import styles from './index.module.scss';
 
 const Tags: React.FC = () => {

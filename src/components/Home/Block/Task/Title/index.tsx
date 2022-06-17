@@ -5,7 +5,7 @@ import { generatePath, useNavigate } from 'react-router-dom';
 import { ROUTES } from 'constants/routes';
 import { TITLE_LENGTH } from 'constants/common';
 import { TaskStatuses } from 'constants/types/common';
-import { TaskContext } from 'constants/taskContext';
+import { TaskContext } from 'components/Home/taskContext';
 import styles from './index.module.scss';
 
 // TODO: Длина обрезки заголовка TITLE_LENGTH будет зависеть от разрешения экрана

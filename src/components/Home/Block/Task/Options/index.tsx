@@ -8,7 +8,7 @@ const Options: React.FC = () => {
   return (
     <div className={styles.wrapper}>
       <Popover
-        overlayClassName="popover options"
+        overlayClassName="options"
         content={<OptionsMenu />}
         trigger="click"
       >

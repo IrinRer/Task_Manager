@@ -11,19 +11,19 @@ export const isUserTaskAuthor = (
   );
 };
 
-export const canUserChangeTaskStatus = (
-  userId: string | null,
-  task: TTask,
-): boolean => {
-  const validRoles = [ROLES.author, ROLES.implementer, ROLES.responsible];
-  return (
-    task.roles.find(
-      (role) =>
-        validRoles.includes(role.task_role.name) &&
-        role.assign_user.user_id === userId,
-    ) !== undefined
-  );
-};
+// export const canUserChangeTaskStatus = (
+//   userId: string | null,
+//   task: TTask | IResponseTask,
+// ): boolean => {
+//   const validRoles = [ROLES.author, ROLES.implementer, ROLES.responsible];
+//   return (
+//     (task?.roles) ? task.roles.find(
+//       (role: TRole | ITaskRoles) =>
+//         validRoles.includes(role.task_role.name) &&
+//         role.assign_user.user_id === userId,
+//     ) !== undefined : false;
+//   );
+// };
 
 export const canUserDuplicateTask = (
   userId: string | null,

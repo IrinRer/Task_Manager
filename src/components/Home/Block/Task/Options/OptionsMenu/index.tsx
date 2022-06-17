@@ -6,7 +6,7 @@ import { canUserDuplicateTask, isUserTaskAuthor } from 'helpers/userRoles';
 import { getVerifyIdUser } from 'store/auth/verify/selectors';
 import { cloneTaskAction } from 'store/createTask/thunk';
 import { deleteTaskAction } from 'store/tasks/thunk';
-import { TaskContext } from 'constants/taskContext';
+import { TaskContext } from 'components/Home/taskContext';
 import styles from './index.module.scss';
 
 const OptionsMenu: React.FC = () => {

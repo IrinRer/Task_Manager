@@ -2,7 +2,7 @@ import { PriorityName } from 'constants/types/common';
 import React, { useContext } from 'react';
 import classnames from 'classnames';
 import { PRIORITY_STYLES } from 'constants/common';
-import { TaskContext } from 'constants/taskContext';
+import { TaskContext } from 'components/Home/taskContext';
 import styles from './index.module.scss';
 
 const Priority: React.FC = () => {

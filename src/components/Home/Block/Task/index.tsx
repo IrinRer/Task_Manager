@@ -3,7 +3,7 @@ import { Col, Row } from 'antd';
 import { BlockType } from 'constants/types/common';
 
 import StatusWithPopover from 'components/Common/StatusWithPopover';
-import { TaskContext } from 'constants/taskContext';
+import { TaskContext } from 'components/Home/taskContext';
 import Attached from './Attached';
 import Progress from './Progress';
 import DateString from './Date';
