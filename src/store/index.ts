@@ -11,6 +11,7 @@ import priorityReducer from 'store/editTask/additionalFunctions/priority/slice';
 import dateReducer from 'store/editTask/additionalFunctions/date/slice';
 import tagReducer from 'store/editTask/additionalFunctions/tag/slice';
 import filtersReducer from 'store/filters/slice';
+import modalVisibleReducers from 'store/editTask/additionalFunctions/tag/modalVisible/slice';
 import tokenReducer from 'store/auth/token/slice';
 import verifyReducer from 'store/auth/verify/slice';
 import commonRolesReducer from './common/roles/slice';
@@ -54,6 +55,7 @@ import { IDeleteCheckListItemReducer } from './editTask/checkLists/deleteCheckLi
 import { ISetCheckListTitleReducer } from './editTask/checkLists/setCheckListTitle/types';
 import { ISetCompleteCheckListItemReducer } from './editTask/checkLists/setCompleteCheckListItem/types';
 import { IPreviewReducer } from './editTask/attachments/preview/types';
+import { IModalVisibleReducer } from './editTask/additionalFunctions/tag/modalVisible/types';
 import { ISetCheckListItemPositionReducer } from './editTask/checkLists/setCheckListItemPosition/types';
 
 
@@ -65,7 +67,10 @@ export const store = configureStore({
       additionalFunctions: combineReducers({
         priority: priorityReducer,
         date: dateReducer,
-        tags: tagReducer,
+        tags: combineReducers({
+          tagReducer,
+          modalVisible: modalVisibleReducers,
+        }),
       }),
       attachments: combineReducers({
         attachmentsReducer,
@@ -109,7 +114,10 @@ export type RootState = {
     additionalFunctions: CombinedState<{
       priority: IPriorityReducer;
       date: IDateReducer;
-      tags: ITagReducer;
+      tags: CombinedState<{
+        tagReducer: ITagReducer;
+        modalVisible: IModalVisibleReducer;
+      }>;
     }>;
     attachments: CombinedState<{
       attachmentsReducer: IAttachmentsReducer;

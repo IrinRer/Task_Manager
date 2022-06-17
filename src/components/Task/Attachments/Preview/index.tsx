@@ -15,6 +15,7 @@ import {
   getPreviewTitleRender,
 } from 'store/editTask/attachments/preview/selectors';
 import { setFileRender } from 'store/editTask/attachments/preview/slice';
+import { setIsVisibleModalDelete } from 'store/editTask/additionalFunctions/tag/modalVisible/slice';
 import ModalDelete from 'components/Common/ModalDelete';
 import { UploadFile } from 'antd/lib/upload/interface';
 import {
@@ -67,10 +68,8 @@ const Preview = ({
     });
   }, [img, isImg]);
 
-  console.log(index);
-
   const onRemove = () => {
-    setVisibleModalDelete(true);
+    dispatch(setIsVisibleModalDelete(true));
     return false;
   };
 
@@ -195,10 +194,8 @@ const Preview = ({
         </Modal>
       ) : null}
       <ModalDelete
-        visible={visibleModalDelete}
         textMain={`${file?.name} будет безвозвратно удален`}
         textButton="Удалить файл"
-        setVisibleModalDelete={setVisibleModalDelete}
         file={file || ''}
         action={onDeleteFile}
       />
