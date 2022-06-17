@@ -1,4 +1,4 @@
-import { deleteFile } from 'store/editTask/attachments/thunk';
+import { deleteFile, viewFile } from 'store/editTask/attachments/thunk';
 import { UploadFile } from 'antd/lib/upload/interface';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IPreviewReducer, PREVIEW_SLICE_ALIAS } from './types';
@@ -11,7 +11,7 @@ const initialState: IPreviewReducer = {
   previewTitleReceived: '',
 
   fileRender: [],
-  imgRecieved: []
+  imgRecieved: [],
 };
 
 export const previewSlice = createSlice({
@@ -48,7 +48,18 @@ export const previewSlice = createSlice({
     },
 
     setImgRecieved: (state, { payload }: PayloadAction<any>) => {
-      state.imgRecieved.push(payload);
+      // state.imgRecieved.forEach(({name}) => console.log(name))
+      // console.log(payload.name);
+      // state.imgRecieved.push(payload);
+
+      // eslint-disable-next-line
+      const arr = state.imgRecieved.concat(payload);
+      state.imgRecieved = arr.filter(
+        (item, i) => arr.findIndex((a) => a.name === item.name) === i,
+      );
+
+        // state.imgRecieved.push(payload);
+      
     },
   },
 
@@ -57,8 +68,12 @@ export const previewSlice = createSlice({
       state,
       { payload }: PayloadAction<string>,
     ) => {
-      state.fileRender= state.fileRender?.filter((item) => item.name !== payload);
-      state.imgRecieved = state.imgRecieved?.filter((item) => item.name !== payload);
+      state.fileRender = state.fileRender?.filter(
+        (item) => item.name !== payload,
+      );
+      state.imgRecieved = state.imgRecieved?.filter(
+        (item) => item.name !== payload,
+      );
     },
   },
 });
@@ -71,6 +86,6 @@ export const {
   setPreviewImageReceived,
   setPreviewTitleReceived,
   setImgRecieved,
-  setFileRender
+  setFileRender,
 } = previewSlice.actions;
 export default previewSlice.reducer;

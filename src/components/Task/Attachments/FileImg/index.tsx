@@ -11,7 +11,6 @@ import {
 import styles from './index.module.scss';
 import Preview from '../Preview';
 
-
 const FileImg = ({ file, preview, setFile, fileList }) => {
   const dispatch = useAppDispatch();
   const imgRecieved = useAppSelector(getImgReceived);
@@ -20,8 +19,8 @@ const FileImg = ({ file, preview, setFile, fileList }) => {
   // const [imgRecieved, setImgRecieved] = useState<any>([]);
 
   useEffect(() => {
-    dispatch(setImgRecieved({url: url || file.url, name: file.name}));
-  }, [file.url])
+    dispatch(setImgRecieved({ url: url || file.url, name: file.name, file }));
+  }, [file.url]);
 
   const url = !file.url ? URL.createObjectURL(file.originFileObj) : undefined;
 
@@ -47,8 +46,7 @@ const FileImg = ({ file, preview, setFile, fileList }) => {
         setPreviewVisible={setPreviewVisible}
         setFile={setFile}
         fileList={fileList}
-        file={file}
-        img = {imgRecieved}
+
       />
     </>
   );

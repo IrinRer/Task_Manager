@@ -8,14 +8,10 @@ import {
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import {
-  getFileRender,
-  getPreviewImageReceived,
-  getPreviewImageRender,
+  getImgReceived,
   getPreviewTitleReceived,
   getPreviewTitleRender,
 } from 'store/editTask/attachments/preview/selectors';
-import { setFileRender } from 'store/editTask/attachments/preview/slice';
-import { setIsVisibleModalDelete } from 'store/editTask/additionalFunctions/tag/modalVisible/slice';
 import ModalDelete from 'components/Common/ModalDelete';
 import { UploadFile } from 'antd/lib/upload/interface';
 import {
@@ -27,49 +23,39 @@ import { getTaskId } from 'store/editTask/selectors';
 import Header from './Header';
 import styles from './index.module.scss';
 
-const Preview = ({
-  file,
-  setFile,
-  fileList,
-  previewVisible,
-  setPreviewVisible,
-  img,
-}) => {
+const Preview = ({ setFile, fileList, previewVisible, setPreviewVisible }) => {
   const dispatch = useAppDispatch();
   const fileName = useAppSelector(getFileName);
   const allFileId = useAppSelector(getStorageFile);
   const taskId = useAppSelector(getTaskId);
-  const fileRender = useAppSelector(getFileRender);
+  const imgRecieved = useAppSelector(getImgReceived);
 
   const previewTitleRender = useAppSelector(getPreviewTitleRender);
-  const previewImageRender = useAppSelector(getPreviewImageRender);
+  // const previewImageRender = useAppSelector(getPreviewImageRender);
 
   const previewTitleReceived = useAppSelector(getPreviewTitleReceived);
-  const previewImageReceived = useAppSelector(getPreviewImageReceived);
-  const isTitle = previewTitleRender || previewTitleReceived;
+  // const previewImageReceived = useAppSelector(getPreviewImageReceived);
 
   const [visibleModalDelete, setVisibleModalDelete] = useState(false);
-  // const [fileRender, setFileRender] = useState<any>([]);
-  const [title, setTitle] = useState<any>(isTitle);
-  // const [smth, setSmth] = useState<any>();
   const [index, setIndex] = useState(0);
 
   const determineIndex = (file: UploadFile) => {
     return fileName.indexOf(file?.originFileObj?.name || file.name);
   };
 
-  const isImg = previewImageRender || previewImageReceived;
+  // const isImg = previewImageRender || previewImageReceived;
+  const isTitle = previewTitleRender || previewTitleReceived;
 
   useEffect(() => {
-    img.forEach((item, index) => {
-      if (item.url === isImg) {
+    imgRecieved.forEach((item, index) => {
+      if (item.name === isTitle) {
         setIndex(+index);
       }
     });
-  }, [img, isImg]);
+  }, [imgRecieved, isTitle]);
 
   const onRemove = () => {
-    dispatch(setIsVisibleModalDelete(true));
+    setVisibleModalDelete(true);
     return false;
   };
 
@@ -96,111 +82,61 @@ const Preview = ({
     );
   };
 
-  const onChange = (current: number) => {
-    console.log(current);
-    return img.map((item, index) => {
-      if (current === index) {
-        return item.name;
-      }
-      return title;
-    });
-  };
-
   const handleCancel = () => {
     setPreviewVisible(false);
   };
 
-  // сделать красиво как нибудь
-  // const imgAll = () => {
-  //   if (img) {
-  //     return img.map(({ url, name }) => {
-  //       if (url !== isImg) {
-  //         // dispatch(setFileRender({ url, name }));
-  //         return (
-  //           <div>
-  //             <img src={url} alt="img" className={styles.img} />
-  //           </div>
-  //         );
-  //       }
-  //       return null;
-  //     });
-  //   }
-  //   return null;
-  // };
-
-  const imgAll = () => {
-    if (img) {
-      return img.map(({ url, name }) => {
-        // dispatch(setFileRender({ url, name }));
-        return (
-          <div>
-            <img src={url} alt="img" className={styles.img} />
-          </div>
-        );
-      });
-    }
-    return null;
+  const handleClick = (i: string) => {
+    setIndex(+i);
   };
 
-  // const index = img.map((item, index) => item.url === isImg ? index : null);
-  // в итоге вернется индекс того изображения которое есть сейчас
-
   const prevClick = () => {
-    return index !== 0 ? setIndex(index - 1) : setIndex(img.length - 1);
+    return index !== 0 ? setIndex(index - 1) : setIndex(imgRecieved.length - 1);
   };
 
   const nextClick = () => {
-    return index !== img.length - 1 ? setIndex(index + 1) : setIndex(0);
+    return index !== imgRecieved.length - 1 ? setIndex(index + 1) : setIndex(0);
   };
 
-  // const ff = img ? img[0].url : null;
-
-  return (
+  return imgRecieved.length ? (
     <>
-      {img.length ? (
-        <Modal
-          visible={previewVisible}
-          closeIcon={<CloseCircleOutlined />}
-          title={
-            <Header
-              previewTitle={img[index].name}
-              onRemove={() => onRemove()}
-              onDownload={() => onDownload(file)}
-            />
-          }
-          footer={null}
-          onCancel={handleCancel}
-          className={styles.modal}
-        >
-          {/* <div >
-            <img alt="img" className={styles.img} src={isImg}/>
-        </div> */}
+      <Modal
+        visible={previewVisible}
+        closeIcon={<CloseCircleOutlined />}
+        title={
+          <Header
+            previewTitle={imgRecieved[index].name}
+            onRemove={() => onRemove()}
+            onDownload={() => onDownload(imgRecieved[index].file)}
+          />
+        }
+        footer={null}
+        onCancel={handleCancel}
+        className={styles.modal}
+      >
+        <img alt="img" className={styles.img} src={imgRecieved[index].url} />
 
-          <img alt="img" className={styles.img} src={img[index].url} />
+        <Button icon={<LeftOutlined />} onClick={prevClick} />
+        <Button icon={<RightOutlined />} onClick={nextClick} />
 
-          <Button icon={<LeftOutlined />} onClick={prevClick} />
-          <Button icon={<RightOutlined />} onClick={nextClick} />
-          {/* <Carousel
-          afterChange={onChange}
-          arrows
-          prevArrow={<LeftOutlined />}
-          nextArrow={<RightOutlined />}
-        >
-          <div >
-            <img alt="img" className={styles.img} src={isImg}/>
-          </div>
-          {imgAll()}
-        </Carousel> */}
-        </Modal>
-      ) : null}
+        {imgRecieved.map((item, i) => {
+          return imgRecieved[index].url !== item.url ? (
+            <div style={{ width: '100px' }} onClick={() => handleClick(i)}>
+              <img src={item.url} alt="img" style={{ width: '100px' }} />
+            </div>
+          ) : null;
+        })}
+      </Modal>
       <ModalDelete
-        textMain={`${file?.name} будет безвозвратно удален`}
+        textMain={`${imgRecieved[index]?.name} будет безвозвратно удален`}
         textButton="Удалить файл"
-        file={file || ''}
+        visibleModalDelete={visibleModalDelete}
+        setIsVisibleModalDelete={setVisibleModalDelete}
+        file={imgRecieved[index].file || ''}
         action={onDeleteFile}
       />
     </>
-  );
+  ) : null;
 };
 
 export default Preview;

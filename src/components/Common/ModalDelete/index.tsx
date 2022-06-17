@@ -14,6 +14,8 @@ type IProps = {
   textMain: string;
   textButton: string;
   action: (arg: string | UploadFile) => void;
+  visibleModalDelete: boolean;
+  setIsVisibleModalDelete: (arg: boolean) => void;
   file: string | UploadFile;
 }
 
@@ -21,23 +23,24 @@ const ModalDelete: React.FC<IProps> = ({
   textMain,
   textButton,
   action,
+  visibleModalDelete,
+  setIsVisibleModalDelete,
   file,
 }) => {
-  const isVisible = useAppSelector(isModalVisibleDelete);
-  const dispatch = useAppDispatch();
+
   const handleOk = () => {
     action(file);
-    dispatch(setIsVisibleModalDelete(false));
+    setIsVisibleModalDelete(false);
   };
 
   const handleCancel = () => {
-    dispatch(setIsVisibleModalDelete(false));
+    setIsVisibleModalDelete(false);
   };
 
   return (
     <Modal
       title="Вы уверены?"
-      visible={isVisible}
+      visible={visibleModalDelete}
       width={310}
       className={styles.modalTag}
       footer={[

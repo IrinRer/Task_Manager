@@ -35,9 +35,10 @@ const ModalNewTag: FC<IProps> = ({ openWindowCreate }) => {
   const [tagId, setTagId] = useState<string>('');
   const [color, setColor] = useState('');
   const [id, setId] = useState<string>('');
+  const [visibleModalDelete, setVisibleModalDelete] = useState(false);
 
   const onClickDelete = (id: string, name: string) => {
-    dispatch(setIsVisibleModalDelete(true));
+    setIsVisibleModalDelete(true);
     setName(name);
     setId(id);
   };
@@ -84,6 +85,8 @@ const ModalNewTag: FC<IProps> = ({ openWindowCreate }) => {
       <ModalDelete
         textMain={`Метка ${name} будет удалена из списка меток и из всех задач проекта`}
         textButton="Удалить метку"
+        visibleModalDelete={visibleModalDelete}
+        setIsVisibleModalDelete={setVisibleModalDelete}
         file={id || ''}
         action={onDelete}
       />

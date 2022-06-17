@@ -129,7 +129,7 @@ const Attachments = () => {
     setFileForDelete(file);
     dispatch(setPreviewImageRender(file.url || (file.preview as string)));
     setPreviewVisible(true);
-    dispatch(setImgRecieved({url: file.url, name: file.name}));
+    dispatch(setImgRecieved({url: file.url, name: file.name, file}));
     dispatch(setPreviewTitleRender(file.name));
   };
 
@@ -159,12 +159,10 @@ const Attachments = () => {
         {onViewFileAllType()}
       </div>
       <Preview
-        file={fileForDelete}
         setFile={setFile}
         fileList={fileList}
         previewVisible={previewVisible}
         setPreviewVisible={setPreviewVisible}
-        img={imgRecieved}
       />
     </Col>
   );
