@@ -59,7 +59,7 @@ const Task: React.FC = () => {
       confirmLoading={loadingTask}
       onCancel={handleCancel}
       className={styles.task}
-      closeIcon={<CloseIcon />}
+      closeIcon={<CloseIcon id="close" />}
       footer={[]}
     >
       <div className={styles.taskContainer}>

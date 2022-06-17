@@ -10,16 +10,25 @@
 }
 
 .priority {
-  display: grid;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
+
   grid-template-columns: 47% 50%;
   margin-bottom: 10px;
 
   .text {
     font-weight: normal;
     font-size: $font-size-m;
-    width: 56%;
     text-transform: none;
+  }
+
+  :global(.ant-select) {
+    width: 56% !important;
+  }
+
+  :global(.ant-select-selector) {
+    padding: 0 !important;
   }
 
   :global(.ant-select-selection-placeholder) {
@@ -28,13 +37,12 @@
     text-transform: none;
   }
   .noedit {
-    width: 100%;
-    padding: 0 11px;
+    width: 56%;
+    padding: 0;
   }
   span {
     font-weight: normal;
     font-size: $font-size-m;
-    width: 56%;
     text-transform: none;
   }
 

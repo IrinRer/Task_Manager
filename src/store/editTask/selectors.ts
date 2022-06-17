@@ -10,10 +10,12 @@ import {
 } from 'store/common/task/selectors';
 import { ICheckList } from '../common/task/types';
 import { TProgress } from '../../constants/types/common';
-import { getVerifyIdUser } from '../auth/verify/selectors';
 
 export const getModalVisible = (state: RootState) =>
   state.editTask.editTaskReducer.modalVisible;
+
+export const getModalDeleteTaskVisible = (state: RootState) =>
+  state.editTask.editTaskReducer.modalDeleteTaskVisible;
 
 export const getNewSelectedMembers = (state: RootState) =>
   state.editTask.editTaskReducer.selectedMembers;
@@ -130,18 +132,6 @@ export const getIsCheckListItemLoading = (state: RootState): boolean =>
 
 export const getIsCheckListTitleLoading = (state: RootState): boolean =>
   state.editTask.editTaskReducer.editLoading.checkListTitle;
-
-export const getIsTaskEditable = createSelector(
-  getTaskAuthor,
-  getTaskImplementers,
-  getTaskResponsible,
-  getVerifyIdUser,
-  (author, implementers, responsible, authUserId): boolean => {
-    return !![author, ...implementers, responsible].find(
-      (user) => user?.user_id === authUserId,
-    );
-  },
-);
 
 export const getCheckListTitle = (state: RootState): string =>
   state.editTask.editTaskReducer.data!.check_lists[0].title;

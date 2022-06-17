@@ -1,6 +1,4 @@
-import { createContext } from 'react';
 import { ROLES } from './types/common';
-import { TRights } from './rights';
 
 export const BASE_DATE_FORMAT = 'DD.MM.YYYY' as const;
 
@@ -74,6 +72,4 @@ export const DESCRIPTION_MAX_LENGTH = 500;
 
 export const TITLE_TASK_MAX_LENGTH = 150;
 
-export const RoleContext = createContext<TRights | ''>('');
-export const EditableContext = createContext<boolean>(false);
-
+export const MAX_USER_INITIALS = 2;

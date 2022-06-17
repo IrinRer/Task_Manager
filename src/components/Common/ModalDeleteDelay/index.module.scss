@@ -1,0 +1,40 @@
+@import 'src/styles/color-variables';
+@import 'src/styles/colors';
+@import 'src/styles/font-variables';
+
+.modalTag {
+  :global(.ant-modal-content),
+  :global(.ant-modal),
+  :global(.ant-modal-body) {
+    border-radius: 16px !important;
+  }
+
+  :global(.ant-modal-body) {
+    padding: 24px !important;
+  }
+
+  :global(.ant-modal-header) {
+    border-radius: 16px !important;
+    border-bottom: none !important;
+  }
+
+  :global(.ant-modal-footer) {
+    text-align: left !important;
+    display: flex;
+    padding: 24px;
+    padding-top: 0;
+  }
+
+  :global(.ant-modal-body) {
+    padding-bottom: 10px !important;
+  }
+
+  :global(.ant-modal-footer) {
+    border-top: none !important;
+  }
+
+  :global(.ant-btn).btn_modal {
+    border-radius: 8px;
+    height: 40px;
+  }
+ }

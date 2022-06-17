@@ -11,8 +11,7 @@ import { setTaskDescription } from 'store/editTask/thunk';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import Spinner from 'components/Common/Spinner';
 import classnames from 'classnames';
-import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
-import { getRights } from 'helpers/rights';
+import { useGetRights } from 'customHooks/useGetRights';
 import {
   DESCRIPTION_LENGTH_EXPAND,
   DESCRIPTION_MAX_LENGTH,
@@ -31,8 +30,7 @@ const Description: React.FC = () => {
   const taskId = useAppSelector(getTaskId);
   const editLoading = useAppSelector(getEditDescLoading);
 
-  const myMaxRole = useAppSelector(getMyMaxRoleForTask);
-  const isRights = getRights(myMaxRole, RIGHTS_NAMES.editDescription);
+  const isRights = useGetRights(RIGHTS_NAMES.editDescription);
 
   const [newDesc, setNewDesc] = useState<string | undefined>(description);
   const [isReadonly, setIsReadonly] = useState<boolean>(true);

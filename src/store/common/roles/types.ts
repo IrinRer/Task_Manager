@@ -1,4 +1,5 @@
 import { AxiosError } from 'axios';
+import { TRights } from 'constants/rights';
 
 export const ONETASK_SLICE_ROLES = 'roles';
 
@@ -16,3 +17,13 @@ export interface IRoles {
   created: Date;
   updated: Date;
 }
+
+export type TasksRoles = {
+  task_id: string;
+  roles: Array<string>;
+};
+
+export type TasksMaxRole = {
+  task_id: string;
+  maxrole: TRights;
+};

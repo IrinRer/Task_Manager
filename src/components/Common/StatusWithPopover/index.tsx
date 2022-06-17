@@ -1,9 +1,9 @@
 import React from 'react';
 import { Popover } from 'antd';
 import StatusChange from 'components/Common/StatusWithPopover/StatusChange';
+import { RIGHTS_NAMES } from 'constants/rights';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { canUserChangeTaskStatus } from 'helpers/userRoles';
-import { getVerifyIdUser } from 'store/auth/verify/selectors';
+import { useGetRights } from 'customHooks/useGetRights';
 import { getTaskById } from 'store/tasks/selectors';
 import Status from './Status';
 
@@ -13,10 +13,9 @@ interface IProps {
 }
 
 const StatusWithPopover: React.FC<IProps> = ({ taskId, edit = false }) => {
-  const userId = useAppSelector(getVerifyIdUser);
   const task = useAppSelector((state) => getTaskById(state, taskId));
-
-  const trigger = task && canUserChangeTaskStatus(userId, task) ? 'click' : '';
+  const isRights = useGetRights(RIGHTS_NAMES.editStatus, task);
+  const trigger = task && isRights ? 'click' : '';
 
   return (
     <Popover

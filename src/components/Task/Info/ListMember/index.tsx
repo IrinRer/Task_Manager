@@ -9,12 +9,13 @@ import { setUnselectedMembers } from 'store/editTask/slice';
 import { deleteTaskMemberAction } from 'store/editTask/thunk';
 import classnames from 'classnames';
 import { ROLES } from 'constants/types/common';
-import SimpleSelect from 'components/Common/SimpleSelect';
-import { EditableContext, RoleContext } from 'constants/common';
+import MemberItem from 'components/Task/Members/MemberItem';
+import { RightsRoleContext } from 'components/Task/context';
 import styles from '../AddMemberButton/index.module.scss';
 import stylesList from './index.module.scss';
 import useSelectOptions from '../TaskHook/useSelectOptions';
 import useMembersProps from '../MembersHook/useMembersProps';
+import CustomSelect from '../CustomSelect';
 
 type TProps = {
   isActive: boolean;
@@ -22,8 +23,8 @@ type TProps = {
 };
 
 const ListMemberMulti: FC<TProps> = ({ isActive, setIsActive }) => {
-  const roleName = useContext(RoleContext);
-  const editable = useContext(EditableContext);
+  const roleName = useContext(RightsRoleContext).role;
+  const editable = useContext(RightsRoleContext).isRights;
   const options = useSelectOptions();
 
   const roleUnassign = useAppSelector(getUnselectedMembers);
@@ -102,7 +103,7 @@ const ListMemberMulti: FC<TProps> = ({ isActive, setIsActive }) => {
         stylesList.listMemberWrapper,
       )}
     >
-      <SimpleSelect
+      <CustomSelect
         {...options.common}
         list={users}
         itemKey="user_id"
@@ -125,7 +126,10 @@ const ListMemberMulti: FC<TProps> = ({ isActive, setIsActive }) => {
         }
         onChange={editable ? onChange : () => {}}
         onBlur={editable ? onBlur : closeList}
-      />
+        onSearch={options.particular.handleSearch}
+      >
+        {MemberItem}
+      </CustomSelect>
     </div>
   );
 };

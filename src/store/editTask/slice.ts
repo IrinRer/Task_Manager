@@ -20,6 +20,7 @@ import { fetchTaskAction } from 'store/common/task/thunk';
 
 const initialState: IEditTaskReducer = {
   modalVisible: false,
+  modalDeleteTaskVisible: false,
   data: null,
   editLoading: {
     task: false,
@@ -60,6 +61,13 @@ export const editTaskSlice = createSlice({
       action: PayloadAction<boolean>,
     ) => {
       state.modalVisible = action.payload;
+    },
+
+    setModalDeleteTaskVisible: (
+      state: IEditTaskReducer,
+      action: PayloadAction<boolean>,
+    ) => {
+      state.modalDeleteTaskVisible = action.payload;
     },
 
     setNewSelectedMembers: (
@@ -272,6 +280,7 @@ export const {
   setNewSelectedMembers,
   setUnselectedMembers,
   setModalVisible,
+  setModalDeleteTaskVisible,
   setEditTask,
   addCheckListItemToTask,
   removeCheckListItemFromTask,
