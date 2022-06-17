@@ -15,21 +15,14 @@ const Title: React.FC = () => {
   const task = useContext(TaskContext);
   const navigate = useNavigate();
 
-  const openTask = (): void => {
-    const path = generatePath(ROUTES.editTask.route, { id: task?.task_id });
-    navigate(path);
-  };
+  const path = generatePath(ROUTES.editTask.route, { id: task?.task_id });
 
   const classNames = classnames(
     task?.status.name === TaskStatuses.Completed ? styles.done : undefined,
   );
   return (
-    <div className={styles.wrapper} onClick={openTask}>
-      <Link
-        className={classNames}
-        target="_blank"
-        to={generatePath(ROUTES.editTask.route, { id: task?.task_id })}
-      >
+    <div className={styles.wrapper}>
+      <Link className={classNames} target="_blank" to={path}>
         {task?.title ? shortTitle(task.title, TITLE_LENGTH) : ''}
       </Link>
     </div>
