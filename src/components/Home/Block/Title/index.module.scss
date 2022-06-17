@@ -8,12 +8,14 @@
   font-size: $font-size-m;
   color: $text-dark;
   font-weight: 600;
-  .done {
-    color: $heading;
-  }
-  a {
+  a,
+  a:hover {
     color: $text-dark;
     background: none;
+  }
+  .done,
+  .done:hover {
+    color: $heading;
   }
   cursor: pointer;
 }
