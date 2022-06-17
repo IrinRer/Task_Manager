@@ -14,7 +14,7 @@ const InputWrapper: FC<TProps> = (props: TProps) => {
     <div className={styles.section}>
       {icon}
       <div className={styles.wrapper}>
-        {labelText}
+        <span className={styles.title}>{labelText}</span>
         {children}
       </div>
     </div>

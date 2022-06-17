@@ -3,6 +3,7 @@ import { ROLES } from './types/common';
 export enum RIGHTS_NAMES {
   'subscription' = 'subscription',
   'unsubscribe' = 'unsubscribe',
+  'createTask' = 'createTask',
   'copyTask' = 'copyTask',
   'showAttached' = 'showAttached',
   'editTitle' = 'editTitle',
@@ -39,6 +40,9 @@ export const RIGHTS: Record<RIGHTS_NAMES, Array<TRights>> = {
   /* право на отписку от задачи (через кнопку в виде глаза); */
   unsubscribe: [ROLES.watcher],
 
+  /* создание задачи */
+  createTask: [ROLES.any],
+
   /* дублирование задачи */
   copyTask: [
     ROLES.any,
@@ -47,6 +51,9 @@ export const RIGHTS: Record<RIGHTS_NAMES, Array<TRights>> = {
     ROLES.implementer,
     ROLES.responsible,
   ],
+
+  /* удаление задачи */
+  deleteTask: [ROLES.author],
 
   /* просмотр и скачивание вложений */
   showAttached: [
@@ -106,7 +113,4 @@ export const RIGHTS: Record<RIGHTS_NAMES, Array<TRights>> = {
 
   /* перемещение задачи в архив */
   moveToArchive: [ROLES.author],
-
-  /* удаление задачи */
-  deleteTask: [ROLES.author],
 };

@@ -14,4 +14,11 @@
     font-weight: 700;
     color: $text-dark;
   }
+  :global(.ant-btn).button:disabled {
+    color: $gray-500 !important;
+    cursor: default;
+  }
+  :global(.ant-btn).button:disabled:hover {
+    background: none !important;
+  }
 }

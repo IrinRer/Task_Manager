@@ -1,7 +1,7 @@
 import React from 'react';
 import { Avatar } from 'antd';
 import { AVATAR_TEXT_COLOR } from 'constants/common';
-import { getAvatarColor, initials } from 'helpers/avatarHelper';
+import { getAvatarColor, getInitialsFromName } from 'helpers/avatarHelper';
 import { IUser } from 'store/users/types';
 import styles from './index.module.scss';
 
@@ -23,7 +23,7 @@ const UserAvatar: React.FC<IProps> = ({ user }) => {
           backgroundColor: getAvatarColor(),
         }}
       >
-        {initials(user.name)}
+        {getInitialsFromName(user.name)}
       </Avatar>
     );
   }

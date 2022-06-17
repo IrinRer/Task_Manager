@@ -12,8 +12,7 @@ import { ReactComponent as EditIcon } from 'assets/icons/edit.svg';
 import Spinner from 'components/Common/Spinner';
 import classnames from 'classnames';
 import { Button } from 'antd';
-import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
-import { getRights } from 'helpers/rights';
+import { useGetRights } from 'customHooks/useGetRights';
 import { TITLE_TASK_MAX_LENGTH } from 'constants/common';
 import { RIGHTS_NAMES } from 'constants/rights';
 import styles from './index.module.scss';
@@ -28,8 +27,7 @@ const Title: React.FC = () => {
   const [newTitle, setNewTitle] = useState<string | undefined>(title);
   const [isReadonly, setIsReadonly] = useState<boolean>(true);
 
-  const myMaxRole = useAppSelector(getMyMaxRoleForTask);
-  const isRights = getRights(myMaxRole, RIGHTS_NAMES.editTitle);
+  const isRights = useGetRights(RIGHTS_NAMES.editTitle);
 
   const changeReadonly = () => {
     setIsReadonly(!isReadonly);
@@ -42,11 +40,16 @@ const Title: React.FC = () => {
     setNewTitle(e.target.value);
   };
 
-  const onBlur = () => {
-    setNewTitle(newTitle?.trim());
+  const onBlur = (e) => {
+    if (
+      e.relatedTarget &&
+      e.relatedTarget.getAttribute('aria-label') !== 'Close'
+    ) {
+      setNewTitle(newTitle?.trim());
 
-    if (taskId && newTitle && !isReadonly && newTitle.trim() !== '') {
-      dispatch(setTaskTitle({ task_id: taskId, title: newTitle.trim() }));
+      if (taskId && newTitle && !isReadonly && newTitle.trim() !== '') {
+        dispatch(setTaskTitle({ task_id: taskId, title: newTitle.trim() }));
+      }
     }
     setIsReadonly(true);
   };

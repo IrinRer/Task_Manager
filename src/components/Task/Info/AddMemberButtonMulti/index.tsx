@@ -21,19 +21,20 @@ import {
 } from 'store/editTask/thunk';
 import { selectPopulatedUsers } from 'store/users/selectors';
 import { IPopulatedUser } from 'store/users/types';
-import SimpleSelect from 'components/Common/SimpleSelect';
 import { ROLES } from 'constants/types/common';
-import { RoleContext } from 'constants/common';
+import MemberItem from 'components/Task/Members/MemberItem';
+import { RightsRoleContext } from 'components/Task/context';
 import styles from '../AddMemberButton/index.module.scss';
 import useSelectOptions from '../TaskHook/useSelectOptions';
 import useMembersProps from '../MembersHook/useMembersProps';
+import CustomSelect from '../CustomSelect';
 
 type TProps = {
   usersMaxCount: number;
 };
 
 const AddMemberButtonMulti: FC<TProps> = ({ usersMaxCount }) => {
-  const roleName = useContext(RoleContext);
+  const roleName = useContext(RightsRoleContext).role;
   const dispatch = useAppDispatch();
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
@@ -150,7 +151,7 @@ const AddMemberButtonMulti: FC<TProps> = ({ usersMaxCount }) => {
   return (
     <div className={styles.addmemberWrapper}>
       {isVisible ? (
-        <SimpleSelect
+        <CustomSelect
           {...options.common}
           list={isDisabled ? getOnlySelectedUsers : allUsers}
           itemKey="key"
@@ -171,7 +172,9 @@ const AddMemberButtonMulti: FC<TProps> = ({ usersMaxCount }) => {
           onChange={onChange}
           onBlur={onBlur}
           onSearch={options.particular.handleSearch}
-        />
+        >
+          {MemberItem}
+        </CustomSelect>
       ) : (
         <Button className={styles.addmember} onClick={showMemberModal}>
           + добавить участника

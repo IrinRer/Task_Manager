@@ -20,7 +20,7 @@ import {
 } from 'store/filters/selectors';
 import { usersInputValueUpdated, usersUpdated } from 'store/filters/slice';
 import { debounce } from 'lodash';
-import FilterWrapper from '../../../Common/FilterWrapper';
+import FilterWrapper from 'components/Common/FilterWrapper';
 import ParticipantTag from './ParticipantTag';
 import styles from './index.module.scss';
 

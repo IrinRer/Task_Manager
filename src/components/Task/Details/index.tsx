@@ -1,29 +1,28 @@
 import React from 'react';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import {
-  getTaskResponsible,
   getTaskId,
   getEditStatusLoading,
+  getTaskAuthor,
 } from 'store/editTask/selectors';
 import Spinner from 'components/Common/Spinner';
 import StatusWithPopover from 'components/Common/StatusWithPopover';
 
 import { ROLES } from 'constants/types/common';
 import styles from './index.module.scss';
+import OneMember from '../Members/OneMember';
+import { RightsRoleContext, useRightsRoleContextValue } from '../context';
 
 const Info: React.FC = () => {
-  const responsible = useAppSelector(getTaskResponsible);
+  const author = useAppSelector(getTaskAuthor);
   const taskId = useAppSelector(getTaskId);
   const editLoading = useAppSelector(getEditStatusLoading);
 
   return (
     <>
       <div className={styles.infoLine}>
-        {/* <span>Статус</span> <span>{status}</span> */}
         <span>Статус</span>{' '}
         <span className={styles.second}>
-          {' '}
-          {/* <Preloader size="large" /> */}
           {editLoading ? (
             <div className={styles.spinner}>
               <Spinner size="large" />
@@ -36,8 +35,12 @@ const Info: React.FC = () => {
         </span>
       </div>
       <div className={styles.infoLine}>
-        <span>{ROLES.responsible}</span>
-        {responsible && <span>{responsible.name}</span>}
+        <span>{ROLES.author_short}</span>
+        <RightsRoleContext.Provider
+          value={useRightsRoleContextValue(ROLES.author, false)}
+        >
+          {author && <OneMember />}
+        </RightsRoleContext.Provider>
       </div>
     </>
   );

@@ -4,7 +4,7 @@ import AddTaskForm from '../AddTaskForm';
 import styles from './index.module.scss';
 
 const AddNewTask = () => {
-  const [showForm, setShowForm] = useState(false);
+  const [showForm, setShowForm] = useState<boolean>(false);
 
   const closeForm = (): void => {
     setShowForm(false);

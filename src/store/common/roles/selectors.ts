@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { TRights } from 'constants/rights';
-import { ROLES } from 'constants/types/common';
+import { ROLES, TTask } from 'constants/types/common';
 import { RootState } from 'store';
 import { getVerifyIdUser } from 'store/auth/verify/selectors';
 import {
@@ -9,6 +9,12 @@ import {
   getTaskResponsibleID,
   getTaskWatchersID,
 } from 'store/editTask/selectors';
+import {
+  getTaskAuthorIDParams,
+  getTaskImplementersIDParams,
+  getTaskResponsibleIDParams,
+  getTaskWatchersIDParams,
+} from 'store/tasks/selectors';
 import { IRoles } from './types';
 
 function isAuthorFromRoles(element: IRoles): boolean {
@@ -50,11 +56,22 @@ export const getRolesLoading = (state: RootState) => state.common.roles.loading;
 export const getRolesError = (state: RootState) => state.common.roles.error;
 
 export const getMyRolesForTask = createSelector(
-  getTaskAuthorID,
-  getTaskImplementersID,
-  getTaskResponsibleID,
-  getTaskWatchersID,
-  getVerifyIdUser,
+  [
+    (state: RootState, task?: TTask) =>
+      task ? getTaskAuthorIDParams(state, task) : getTaskAuthorID(state),
+    (state: RootState, task?: TTask) =>
+      task
+        ? getTaskImplementersIDParams(state, task)
+        : getTaskImplementersID(state),
+    (state: RootState, task?: TTask) =>
+      task
+        ? getTaskResponsibleIDParams(state, task)
+        : getTaskResponsibleID(state),
+    (state: RootState, task?: TTask) =>
+      task ? getTaskWatchersIDParams(state, task) : getTaskWatchersID(state),
+    getVerifyIdUser,
+  ],
+
   (author, implementers, responsible, watchers, authUserId): string[] => {
     const resultRoles: string[] = [];
     const usersIDwithRolesForTask = [
@@ -74,7 +91,7 @@ export const getMyRolesForTask = createSelector(
 );
 
 export const getMyMaxRoleForTask = createSelector(
-  getMyRolesForTask,
+  (state: RootState, task?: TTask) => getMyRolesForTask(state, task),
   (roles): TRights => {
     if (roles.includes(ROLES.author)) return ROLES.author;
     if (roles.includes(ROLES.responsible)) return ROLES.responsible;

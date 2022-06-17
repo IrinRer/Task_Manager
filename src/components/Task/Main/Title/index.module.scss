@@ -18,7 +18,8 @@
   :global(textarea.ant-input).name {
     font-size: $font-size-xxl;
     line-height: $line-height-s;
-    color: $text-color;
+    color: $text-title;
+    font-weight: 500;
     box-shadow: none;
     border: none;
     overflow: hidden;

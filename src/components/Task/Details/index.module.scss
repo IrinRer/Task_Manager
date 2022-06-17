@@ -11,15 +11,13 @@
   font-weight: normal;
   text-transform: none;
 
-  span {
-    width: 50%;
-  }
   span:first-of-type {
     text-align: left;
   }
   .second {
     display: flex;
     justify-content: flex-start;
+    width: 56%;
   }
   .spinner {
     display: flex;

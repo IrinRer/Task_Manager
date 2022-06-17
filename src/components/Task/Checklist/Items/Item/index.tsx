@@ -6,9 +6,9 @@ import { ICheckListItem } from 'store/common/task/types';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { ICheckListChangeCompleteStatus } from 'store/editTask/types';
-import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { getIsTaskEditable } from 'store/editTask/selectors';
 import { setCompleteCheckListItem } from 'store/editTask/checkLists/setCompleteCheckListItem/thunk';
+import { useGetRights } from 'customHooks/useGetRights';
+import { RIGHTS_NAMES } from 'constants/rights';
 import { setDraggedItemId } from 'store/editTask/checkLists/setCheckListItemPosition/slice';
 import { setCheckListItemPosition } from 'store/editTask/checkLists/setCheckListItemPosition/thunk';
 import ActionsMenu from './ActionsMenu';
@@ -24,7 +24,7 @@ const CheckListItem: React.FC<IProps> = ({ checkListItem }) => {
 
   const { check_list_item_id, message, complete } = checkListItem;
 
-  const isTaskEditable = useAppSelector(getIsTaskEditable);
+  const isRights = useGetRights(RIGHTS_NAMES.editChecklistItem);
 
   const [isHover, setIsHover] = useState<boolean>(false);
   const [isDraggedOver, setIsDraggedOver] = useState<boolean>(false);
@@ -103,7 +103,7 @@ const CheckListItem: React.FC<IProps> = ({ checkListItem }) => {
         checked={complete}
         className={checkBoxClassName}
         onChange={toggleCheckListItemComplete}
-        disabled={!isTaskEditable}
+        disabled={!isRights}
       />
       <p className={checkBoxTextClassName}>{message}</p>
       <ActionsMenu check_list_item_id={check_list_item_id} isHover={isHover} />

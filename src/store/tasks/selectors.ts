@@ -1,7 +1,14 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from 'store';
-import { BlockType } from 'constants/types/common';
+import { BlockType, TTask } from 'constants/types/common';
 import { getVerifyIdUser } from 'store/auth/verify/selectors';
+import {
+  getUsersIdFromRoles,
+  isAuthor,
+  isImplementer,
+  isResponsible,
+  isWatcher,
+} from 'store/common/task/selectors';
 import {
   blockTasksTotal,
   getMyTasks,
@@ -9,8 +16,12 @@ import {
 } from './service';
 
 export const selectTasks = (state: RootState) => state.tasks.tasks;
-export const getTaskById = (state: RootState, id: string) =>
-  state.tasks.tasks.find((task) => task.task_id === id);
+
+export const getTaskById = createSelector(
+  [(state: RootState) => state.tasks.tasks, (state, taskId: string) => taskId],
+  (items, taskId) => items.find((task) => task.task_id === taskId),
+);
+
 export const selectTasksLoading = (state: RootState) => state.tasks.loading;
 export const selectTasksError = (state: RootState) => state.tasks.error;
 export const selectTasksTotalCount = (state: RootState) =>
@@ -59,4 +70,36 @@ export const getDoneTasksSortedPaginated = createSelector(
   getViewParameters,
   (tasks, viewParameters) =>
     getTasksSortedPaginated(tasks, viewParameters, BlockType.done),
+);
+
+export const getTaskWatchersIDParams = createSelector(
+  [
+    (state: RootState) => state.tasks.tasks,
+    (state, task: TTask | undefined) => task?.roles,
+  ],
+  (items, roles) => getUsersIdFromRoles(roles?.filter(isWatcher)),
+);
+
+export const getTaskImplementersIDParams = createSelector(
+  [
+    (state: RootState) => state.tasks.tasks,
+    (state, task: TTask | undefined) => task?.roles,
+  ],
+  (items, roles) => getUsersIdFromRoles(roles?.filter(isImplementer)),
+);
+
+export const getTaskResponsibleIDParams = createSelector(
+  [
+    (state: RootState) => state.tasks.tasks,
+    (state, task: TTask | undefined) => task?.roles,
+  ],
+  (items, roles) => roles?.find(isResponsible)?.assign_user.user_id,
+);
+
+export const getTaskAuthorIDParams = createSelector(
+  [
+    (state: RootState) => state.tasks.tasks,
+    (state, task: TTask | undefined) => task?.roles,
+  ],
+  (items, roles) => roles?.find(isAuthor)?.assign_user.user_id,
 );

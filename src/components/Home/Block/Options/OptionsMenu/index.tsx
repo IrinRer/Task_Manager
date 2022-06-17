@@ -1,42 +1,84 @@
 import React, { useContext } from 'react';
-import { Button, notification } from 'antd';
+import { Button } from 'antd';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { canUserDuplicateTask, isUserTaskAuthor } from 'helpers/userRoles';
-import { getVerifyIdUser } from 'store/auth/verify/selectors';
 import { cloneTaskAction } from 'store/createTask/thunk';
 import { deleteTaskAction } from 'store/tasks/thunk';
 import { TaskContext } from 'constants/taskContext';
+import { useGetRights } from 'customHooks/useGetRights';
+import { RIGHTS_NAMES } from 'constants/rights';
+import ModalDeleteDelay from 'components/Common/ModalDeleteDelay';
+import { useAppSelector } from 'customHooks/redux/useAppSelector';
+import { getModalDeleteTaskVisible } from 'store/editTask/selectors';
+import { setModalDeleteTaskVisible } from 'store/editTask/slice';
 import styles from './index.module.scss';
 
-const OptionsMenu: React.FC = () => {
+interface IProps {
+  setVisibleOptions: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const OptionsMenu: React.FC<IProps> = ({ setVisibleOptions }) => {
   const dispatch = useAppDispatch();
-  const userId = useAppSelector(getVerifyIdUser);
   const task = useContext(TaskContext);
 
+  const isRightsCopyTask = useGetRights(RIGHTS_NAMES.copyTask, task);
+  const isRightsArchiveTask = useGetRights(RIGHTS_NAMES.moveToArchive, task);
+  const isRightsDelTask = useGetRights(RIGHTS_NAMES.deleteTask, task);
+  const isVisibleTaskDelete = useAppSelector(getModalDeleteTaskVisible);
+
   const handleCloneTask = (): void => {
-    if (task && canUserDuplicateTask(userId, task)) {
+    if (task) {
       dispatch(cloneTaskAction({ id: task.task_id, edit: false }));
-    } else notification.warn({ message: 'Нет прав на дублирование задачи' });
+    }
+    setVisibleOptions(false);
   };
 
-  const handleDeleteTask = (): void => {
-    if (task && isUserTaskAuthor(userId, task)) {
+  const handleOk = () => {
+    if (task) {
       dispatch(deleteTaskAction(task.task_id));
-    } else notification.warn({ message: 'Удалить задачу может только автор' });
+    }
+    dispatch(setModalDeleteTaskVisible(false));
+    setVisibleOptions(false);
+  };
+
+  const handleCancel = () => {
+    dispatch(setModalDeleteTaskVisible(false));
+    setVisibleOptions(false);
   };
 
   return (
     <div className={styles.wrapper}>
-      <Button className={styles.button} type="text" onClick={handleCloneTask}>
+      <Button
+        disabled={!isRightsCopyTask}
+        className={styles.button}
+        type="text"
+        onClick={handleCloneTask}
+      >
         Дублировать задачу
       </Button>
-      <Button className={styles.button} type="text">
+      <Button
+        disabled={!isRightsArchiveTask}
+        className={styles.button}
+        type="text"
+      >
         Отслеживать задачу
       </Button>
-      <Button className={styles.button} type="text" onClick={handleDeleteTask}>
+      <Button
+        disabled={!isRightsDelTask}
+        className={styles.button}
+        type="text"
+        onClick={() => {
+          dispatch(setModalDeleteTaskVisible(true));
+        }}
+      >
         Удалить задачу
       </Button>
+      <ModalDeleteDelay
+        visible={isVisibleTaskDelete}
+        textMain={`Задача будет удалена через N сек... Для отмены нажмите "Отмена"`}
+        textButton="Удалить"
+        handleOk={handleOk}
+        handleCancel={handleCancel}
+      />
     </div>
   );
 };

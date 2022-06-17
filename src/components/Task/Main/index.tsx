@@ -1,7 +1,5 @@
 import React from 'react';
-import TextArea from 'antd/lib/input/TextArea';
 import descriptionIcon from 'assets/icons/description.svg';
-import commentsIcon from 'assets/icons/comments.svg';
 import historyIcon from 'assets/icons/history.svg';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import Spinner from 'components/Common/Spinner';
@@ -45,17 +43,6 @@ const Main: React.FC = () => {
 
       {isCheckListLoading ? <Spinner /> : <Checklist />}
       {isAttachments && <Attachments />}
-
-      <InputWrapper
-        labelText="Комментарии"
-        icon={<img src={commentsIcon} alt="comments" />}
-      >
-        <TextArea
-          autoSize
-          placeholder="Оставьте комментарий"
-          className={styles.comm}
-        />
-      </InputWrapper>
 
       <InputWrapper
         labelText="Действия"
