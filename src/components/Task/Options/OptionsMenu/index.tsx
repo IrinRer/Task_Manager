@@ -7,30 +7,30 @@ import { IResponseTask } from 'store/common/task/types';
 import { RIGHTS_NAMES } from 'constants/rights';
 import ModalDeleteDelay from 'components/Common/ModalDeleteDelay';
 import { useNavigate } from 'react-router-dom';
-import { clearEditDataTask, setModalVisible } from 'store/editTask/slice';
+import {
+  clearEditDataTask,
+  setModalDeleteTaskVisible,
+  setModalVisible,
+} from 'store/editTask/slice';
 import { clearDataTask } from 'store/common/task/slice';
 import { ROUTES } from 'constants/routes';
 import { useGetRights } from 'customHooks/useGetRights';
+import { useAppSelector } from 'customHooks/redux/useAppSelector';
+import { getModalDeleteTaskVisible } from 'store/editTask/selectors';
 import styles from './index.module.scss';
 
 interface IProps {
   task: IResponseTask | null;
-  isVisibleDelete: boolean;
-  setIsVisibleDelete: React.Dispatch<React.SetStateAction<boolean>>;
   setVisibleOptions: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const OptionsMenu: React.FC<IProps> = ({
-  task,
-  isVisibleDelete,
-  setIsVisibleDelete,
-  setVisibleOptions,
-}) => {
+const OptionsMenu: React.FC<IProps> = ({ task, setVisibleOptions }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isRightsCopyTask = useGetRights(RIGHTS_NAMES.copyTask);
   const isRightsArchiveTask = useGetRights(RIGHTS_NAMES.moveToArchive);
   const isRightsDelTask = useGetRights(RIGHTS_NAMES.deleteTask);
+  const isVisibleTaskDelete = useAppSelector(getModalDeleteTaskVisible);
 
   const handleCloneTask = (): void => {
     if (task) {
@@ -42,7 +42,7 @@ const OptionsMenu: React.FC<IProps> = ({
     if (task) {
       dispatch(deleteTaskAction(task.task_id));
     }
-    setIsVisibleDelete(false);
+    dispatch(setModalDeleteTaskVisible(false));
     setVisibleOptions(false);
     dispatch(setModalVisible(false));
     dispatch(clearDataTask());
@@ -51,7 +51,7 @@ const OptionsMenu: React.FC<IProps> = ({
   };
 
   const handleCancel = () => {
-    setIsVisibleDelete(false);
+    dispatch(setModalDeleteTaskVisible(false));
     setVisibleOptions(false);
   };
 
@@ -77,13 +77,13 @@ const OptionsMenu: React.FC<IProps> = ({
         className={styles.button}
         type="text"
         onClick={() => {
-          setIsVisibleDelete(true);
+          dispatch(setModalDeleteTaskVisible(true));
         }}
       >
         Удалить задачу
       </Button>
       <ModalDeleteDelay
-        visible={isVisibleDelete}
+        visible={isVisibleTaskDelete}
         textMain={`Задача будет удалена через N сек... Для отмены нажмите "Отмена"`}
         textButton="Удалить"
         handleOk={handleOk}

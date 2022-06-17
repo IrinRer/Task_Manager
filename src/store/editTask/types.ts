@@ -5,6 +5,7 @@ export const EDIT_TASK_SLICE_ALIAS = 'edittask';
 
 export interface IEditTaskReducer {
   modalVisible: boolean;
+  modalDeleteTaskVisible: boolean;
   data: IResponseTask | null;
   editLoading: {
     task: boolean;

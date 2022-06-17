@@ -14,6 +14,9 @@ import { TProgress } from '../../constants/types/common';
 export const getModalVisible = (state: RootState) =>
   state.editTask.editTaskReducer.modalVisible;
 
+export const getModalDeleteTaskVisible = (state: RootState) =>
+  state.editTask.editTaskReducer.modalDeleteTaskVisible;
+
 export const getNewSelectedMembers = (state: RootState) =>
   state.editTask.editTaskReducer.selectedMembers;
 
