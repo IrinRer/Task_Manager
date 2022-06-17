@@ -11,5 +11,9 @@
   .done {
     color: $heading;
   }
+  a {
+    color: $text-dark;
+    background: none;
+  }
   cursor: pointer;
 }

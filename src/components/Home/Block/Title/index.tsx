@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import classnames from 'classnames';
 import { shortTitle } from 'helpers/titleLength';
-import { generatePath, useNavigate } from 'react-router-dom';
+import { generatePath, Link, useNavigate } from 'react-router-dom';
 import { ROUTES } from 'constants/routes';
 import { TITLE_LENGTH } from 'constants/common';
 import { TaskStatuses } from 'constants/types/common';
@@ -25,9 +25,13 @@ const Title: React.FC = () => {
   );
   return (
     <div className={styles.wrapper} onClick={openTask}>
-      <span className={classNames}>
+      <Link
+        className={classNames}
+        target="_blank"
+        to={generatePath(ROUTES.editTask.route, { id: task?.task_id })}
+      >
         {task?.title ? shortTitle(task.title, TITLE_LENGTH) : ''}
-      </span>
+      </Link>
     </div>
   );
 };
