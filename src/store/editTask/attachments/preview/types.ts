@@ -3,12 +3,19 @@ import { UploadFile } from 'antd/lib/upload/interface';
 export const PREVIEW_SLICE_ALIAS = 'preview';
 
 export interface IPreviewReducer {
-  previewImageRender: string | undefined;
+  // previewImageRender: string | undefined;
   previewTitleRender: string;
 
-  previewImageReceived: string | undefined;
+  // previewImageReceived: string | undefined;
   previewTitleReceived: string;
 
-  fileRender: Array<UploadFile>;
-  imgRecieved: any;
+  // fileRender: Array<UploadFile>;
+  imgRecieved: Array<IPayloadImgReceived>;
+
+  index: number;
+}
+
+export interface IPayloadImgReceived {
+  name: string;
+  url?: string;
 }

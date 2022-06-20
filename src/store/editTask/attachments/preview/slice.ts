@@ -1,76 +1,66 @@
 import { deleteFile, viewFile } from 'store/editTask/attachments/thunk';
 import { UploadFile } from 'antd/lib/upload/interface';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IPreviewReducer, PREVIEW_SLICE_ALIAS } from './types';
+import { IPreviewReducer, PREVIEW_SLICE_ALIAS, IPayloadImgReceived } from './types';
 
 const initialState: IPreviewReducer = {
-  previewImageRender: '',
+  // previewImageRender: '',
   previewTitleRender: '',
 
-  previewImageReceived: '',
+  // previewImageReceived: '',
   previewTitleReceived: '',
 
-  fileRender: [],
+  // fileRender: [],
   imgRecieved: [],
+
+  index: 0
 };
 
 export const previewSlice = createSlice({
   name: PREVIEW_SLICE_ALIAS,
   initialState,
   reducers: {
-    setPreviewImageRender: (
-      state,
-      { payload }: PayloadAction<string | undefined>,
-    ) => {
-      state.previewImageRender = payload;
-    },
     setPreviewTitleRender: (state, { payload }: PayloadAction<string>) => {
       state.previewTitleRender = payload;
     },
 
     cleanRender: (state) => {
-      state.previewImageRender = '';
+      // state.previewImageRender = '';
       state.previewTitleRender = '';
     },
 
-    setPreviewImageReceived: (
-      state,
-      { payload }: PayloadAction<string | undefined>,
-    ) => {
-      state.previewImageReceived = payload;
-    },
     setPreviewTitleReceived: (state, { payload }: PayloadAction<string>) => {
       state.previewTitleReceived = payload;
     },
 
-    setFileRender: (state, { payload }: PayloadAction<any>) => {
-      state.fileRender.push(payload);
-    },
+    // setFileRender: (state, { payload }: PayloadAction<any>) => {
+    //   state.fileRender.push(payload);
+    // },
 
-    setImgRecieved: (state, { payload }: PayloadAction<any>) => {
-      // state.imgRecieved.forEach(({name}) => console.log(name))
-      // console.log(payload.name);
-      // state.imgRecieved.push(payload);
-
-      // eslint-disable-next-line
+    setImgRecieved: (state, { payload }: PayloadAction<IPayloadImgReceived>) => {
       const arr = state.imgRecieved.concat(payload);
       state.imgRecieved = arr.filter(
         (item, i) => arr.findIndex((a) => a.name === item.name) === i,
-      );
+      );      
+    },
 
-        // state.imgRecieved.push(payload);
-      
+    setIndex: (state, { payload }: PayloadAction<number>) => {
+
+      state.index = payload;     
     },
   },
+
 
   extraReducers: {
     [deleteFile.fulfilled.type]: (
       state,
       { payload }: PayloadAction<string>,
     ) => {
-      state.fileRender = state.fileRender?.filter(
-        (item) => item.name !== payload,
-      );
+      // state.fileRender = state.fileRender?.filter(
+      //   (item) => item.name !== payload,
+      // );
+      // eslint-disable-next-line
+      debugger
       state.imgRecieved = state.imgRecieved?.filter(
         (item) => item.name !== payload,
       );
@@ -79,13 +69,15 @@ export const previewSlice = createSlice({
 });
 
 export const {
-  setPreviewImageRender,
+  // setPreviewImageRender,
   setPreviewTitleRender,
   cleanRender,
 
-  setPreviewImageReceived,
+  // setPreviewImageReceived,
   setPreviewTitleReceived,
   setImgRecieved,
-  setFileRender,
+  // setFileRender,
+
+  setIndex
 } = previewSlice.actions;
 export default previewSlice.reducer;

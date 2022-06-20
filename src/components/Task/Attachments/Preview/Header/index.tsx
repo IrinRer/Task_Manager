@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Button } from 'antd';
 import { ReactComponent as RecycleBinIcon } from 'assets/icons/recycleBin.svg';
 import { CloudDownloadOutlined } from '@ant-design/icons';
-
 import styles from './index.module.scss';
 
-const Header = ({ previewTitle, onRemove, onDownload }) => {
+interface IProps {
+  previewTitle: string;
+  onRemove: () => void;
+  onDownload: () => void;
+}
+
+const Header: FC<IProps> = ({ previewTitle, onRemove, onDownload }) => {
   return (
     <div className={styles.wrapper}>
       <p>{previewTitle}</p>

@@ -1,6 +1,6 @@
 import { fetchTaskAction } from 'store/common/task/thunk';
 import { IResponseTask } from 'store/common/task/types';
-import { deleteFile} from 'store/editTask/attachments/thunk';
+import { deleteFile } from 'store/editTask/attachments/thunk';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   ATTACHMENTS_SLICE_ALIAS,
@@ -10,10 +10,10 @@ import {
 import { AxiosError } from 'axios';
 import { assignFile, viewFile } from './thunk';
 
-// IAttachmentsReducer
-const initialState: any = {
+const initialState: IAttachmentsReducer = {
   data: [],
-  viewFile: [],
+  viewFileImg: [],
+  viewFileDoc: [],
   isClicked: false,
   loading: false,
   error: null,
@@ -37,7 +37,10 @@ export const attachmentsSlice = createSlice({
       state,
       { payload }: PayloadAction<IPayloadFile>,
     ) => {
-      state.data = state.data.concat(payload);
+      if(!payload.type.includes('image')) {
+        state.viewFileDoc.push(payload);
+      }
+      state.data.push(payload);
       state.loading = false;
     },
 
@@ -49,8 +52,6 @@ export const attachmentsSlice = createSlice({
       state.error = payload;
     },
 
-    // нужен, чтобы получить вложения для задачи, если они у нее уже есть
-    // и отобразить их
     [fetchTaskAction.fulfilled.type]: (
       state,
       { payload }: PayloadAction<IResponseTask>,
@@ -69,7 +70,7 @@ export const attachmentsSlice = createSlice({
       { payload }: PayloadAction<string>,
     ) => {
       state.data = state.data?.filter((item) => item.name_original !== payload);
-      state.viewFile = state.viewFile?.filter((item) => item.name !== payload);
+      state.viewFileImg = state.viewFileImg?.filter((item) => item.name !== payload);
       state.loading = false;
     },
 
@@ -86,9 +87,12 @@ export const attachmentsSlice = createSlice({
       state.error = null;
     },
 
-    [viewFile.fulfilled.type]: (state, { payload }: PayloadAction<any>) => {
-      const arr = state.viewFile.concat(payload);
-      state.viewFile = arr.filter(
+    [viewFile.fulfilled.type]: (
+      state,
+      { payload }: PayloadAction<{ name: string; url: string }>,
+    ) => {
+      const arr = state.viewFileImg.concat(payload);
+      state.viewFileImg = arr.filter(
         (item, i) => arr.findIndex((a) => a.name === item.name) === i,
       );
       state.loading = false;

@@ -17,13 +17,14 @@ export const getStorageFile = createSelector(attachmentsData, (attachments) =>
 );
 
 export const getFileName = (state: RootState) =>
-  state.editTask.attachments.attachmentsReducer.data?.map(({ name_original: name }) => name);
+  state.editTask.attachments.attachmentsReducer.data?.map(
+    ({ name_original: name }) => name,
+  );
 
-export const getViewFile = (state: RootState) =>
-  state.editTask.attachments.attachmentsReducer.viewFile;
+export const getViewFileImg = (state: RootState) =>
+  state.editTask.attachments.attachmentsReducer.viewFileImg;
 
-
-  export const taskFile = (state: RootState) =>
+export const taskFile = (state: RootState) =>
   state.editTask.attachments.attachmentsReducer.data;
 
 export const getTaskFileImg = createSelector(taskFile, (file) =>
@@ -33,3 +34,6 @@ export const getTaskFileImg = createSelector(taskFile, (file) =>
 export const getTaskFileAllType = createSelector(taskFile, (file) =>
   file?.filter(({ type }) => type !== 'image'),
 );
+
+export const getTaskFileDoc = (state: RootState) =>
+  state.editTask.attachments.attachmentsReducer.viewFileDoc;

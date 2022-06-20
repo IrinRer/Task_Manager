@@ -1,18 +1,10 @@
 @import 'src/styles/color-variables';
 @import 'src/styles/colors';
 
-.img {
-  width: 40%;
-  border-radius: 16px;
-  display: block;
-  margin: auto;
-  position: relative;
-  top: 10%;
-}
-
 :global(.ant-modal).modal {
-  height: 100vh;
-  width: 50vw;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100%;
   margin: 0;
   top: 0;
 
@@ -27,8 +19,6 @@
   }
 
   :global(.ant-modal-content) {
-    height: 100vh;
-    width: 100vw;
     margin: 0;
     top: 0;
     background: none;
@@ -39,42 +29,42 @@
   }
 
   :global(.ant-modal-body) {
-    height: 80%;
+    height: 100%;
   }
 }
 
-:global(.ant-carousel) :global(.slick-prev),
-:global(.ant-carousel) :global(.slick-prev:focus),
-:global(.ant-carousel) :global(.slick-prev:hover) {
-  left: 100px;
-  z-index: 2;
-  width: 40px;
-  height: 40px;
-  font-size: 20px;
-  background-color: $blue;
-  border-radius: 8px;
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-  color: white;
-}
+// :global(.ant-carousel) :global(.slick-prev),
+// :global(.ant-carousel) :global(.slick-prev:focus),
+// :global(.ant-carousel) :global(.slick-prev:hover) {
+//   left: 100px;
+//   z-index: 2;
+//   width: 40px;
+//   height: 40px;
+//   font-size: 20px;
+//   background-color: $blue;
+//   border-radius: 8px;
+//   display: flex !important;
+//   align-items: center;
+//   justify-content: center;
+//   color: white;
+// }
 
-:global(.ant-carousel) :global(.slick-next),
-:global(.ant-carousel) :global(.slick-next:focus),
-:global(.ant-carousel) :global(.slick-next:hover) {
-  right: 100px;
-  z-index: 2;
-  width: 40px;
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-  height: 40px;
-  font-size: 20px;
-  border-radius: 8px;
-  background-color: $blue;
-  color: white;
-}
+// :global(.ant-carousel) :global(.slick-next),
+// :global(.ant-carousel) :global(.slick-next:focus),
+// :global(.ant-carousel) :global(.slick-next:hover) {
+//   right: 100px;
+//   z-index: 2;
+//   width: 40px;
+//   display: flex !important;
+//   align-items: center;
+//   justify-content: center;
+//   height: 40px;
+//   font-size: 20px;
+//   border-radius: 8px;
+//   background-color: $blue;
+//   color: white;
+// }
 
-:global(.ant-carousel) :global(.slick-dots) li {
-  display: none;
-}
+// :global(.ant-carousel) :global(.slick-dots) li {
+//   display: none;
+// }

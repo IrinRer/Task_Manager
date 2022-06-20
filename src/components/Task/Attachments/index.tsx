@@ -9,16 +9,13 @@ import { IOptions, ACCEPT_FORMAT } from 'constants/attachments/attachments';
 import { getBase64 } from 'helpers/getBase64';
 import {
   setImgRecieved,
-  setPreviewImageRender,
   setPreviewTitleRender,
 } from 'store/editTask/attachments/preview/slice';
-import { getImgReceived } from 'store/editTask/attachments/preview/selectors';
-import { getTaskId } from 'store/editTask/selectors';
+import { getTaskFileAllType, getTaskId } from 'store/editTask/selectors';
 import {
   getFileName,
-  getTaskFileAllType,
   getTaskFileImg,
-  getViewFile,
+  getViewFileImg,
 } from 'store/editTask/attachments/selectors';
 import { config } from 'helpers/progressBar';
 import ItemRender from './ItemRender';
@@ -32,11 +29,10 @@ const Attachments = () => {
   const taskId = useAppSelector(getTaskId);
   const fileName = useAppSelector(getFileName);
   const taskFileImg = useAppSelector(getTaskFileImg);
-  const imgRecieved = useAppSelector(getImgReceived);
 
   const taskFile = useAppSelector(getTaskFileAllType);
 
-  const img = useAppSelector(getViewFile);
+  const img = useAppSelector(getViewFileImg);
 
   useEffect(() => {
     taskFileImg?.map(({ storage_file_id, name_original }) =>
@@ -51,7 +47,6 @@ const Attachments = () => {
 
   const [fileList, setFile] = useState<Array<UploadFile>>([]);
   const [progress, setProgress] = useState(0);
-  const [fileForDelete, setFileForDelete] = useState<UploadFile>();
 
   const [previewVisible, setPreviewVisible] = useState(false);
 
@@ -67,25 +62,21 @@ const Attachments = () => {
     setFile(fileList);
   };
 
-  const onViewFileImg = () => {
-    return img?.map((item: RcFile) => {
-      return (
-        <FileImg
-          key={item.name}
-          file={item}
-          preview=""
-          setFile={setFile}
-          fileList={fileList}
-        />
-      );
-    });
-  };
+  const onViewFileImg = img?.map((item: { name: string; url: string }) => {
+    return (
+      <FileImg
+        key={item.name}
+        file={item}
+        preview={undefined}
+        setFile={setFile}
+        fileList={fileList}
+      />
+    );
+  });
 
-  const onViewFileAllType = () => {
-    return taskFile?.map((item) => {
-      return <FileText file={item} />;
-    });
-  };
+  const onViewFileAllType = taskFile?.map((item) => {
+    return <FileText file={item} key={item.name_original}/>;
+  });
 
   const handleSubmit = (options: IOptions) => {
     const { onSuccess, onError, onProgress } = options;
@@ -126,10 +117,8 @@ const Attachments = () => {
       file.preview = await getBase64(file.originFileObj as RcFile);
     }
 
-    setFileForDelete(file);
-    dispatch(setPreviewImageRender(file.url || (file.preview as string)));
     setPreviewVisible(true);
-    dispatch(setImgRecieved({url: file.url, name: file.name, file}));
+    dispatch(setImgRecieved({ url: file.url, name: file.name }));
     dispatch(setPreviewTitleRender(file.name));
   };
 
@@ -155,13 +144,15 @@ const Attachments = () => {
         Перетащите сюда или загрузите файл
       </Upload.Dragger>
       <div className={styles.wrapper_all_file}>
-        {onViewFileImg()}
-        {onViewFileAllType()}
+        {onViewFileImg}
+        {onViewFileAllType}
       </div>
       <Preview
         setFile={setFile}
         fileList={fileList}
         previewVisible={previewVisible}
+        onDeleteFile={undefined}
+        onDownload={undefined}
         setPreviewVisible={setPreviewVisible}
       />
     </Col>
