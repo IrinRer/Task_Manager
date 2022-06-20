@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import classnames from 'classnames';
 import { shortTitle } from 'helpers/titleLength';
-import { generatePath, Link, useNavigate } from 'react-router-dom';
+import { generatePath, Link } from 'react-router-dom';
 import { ROUTES } from 'constants/routes';
 import { TITLE_LENGTH } from 'constants/common';
 import { TaskStatuses } from 'constants/types/common';
@@ -13,8 +13,6 @@ import styles from './index.module.scss';
 
 const Title: React.FC = () => {
   const task = useContext(TaskContext);
-  const navigate = useNavigate();
-
   const path = generatePath(ROUTES.editTask.route, { id: task?.task_id });
 
   const classNames = classnames(
