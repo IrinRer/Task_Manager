@@ -13,7 +13,7 @@ import { assignFile, viewFile } from './thunk';
 // IAttachmentsReducer
 const initialState: any = {
   dataReceived: [],
-  dataRender: [],
+  data: [],
   viewFileImg: [],
   isClicked: false,
   loading: false,
@@ -38,7 +38,7 @@ export const attachmentsSlice = createSlice({
       state,
       { payload }: PayloadAction<IPayloadFile>,
     ) => {
-      state.dataRender.push(payload);
+      state.data.push(payload);
       state.loading = false;
     },
 
@@ -55,6 +55,7 @@ export const attachmentsSlice = createSlice({
       { payload }: PayloadAction<IResponseTask>,
     ) => {
       state.dataReceived = payload?.storage_files;
+      state.data = payload?.storage_files;
       state.loading = false;
     },
 
@@ -67,8 +68,9 @@ export const attachmentsSlice = createSlice({
       state,
       { payload }: PayloadAction<string>,
     ) => {
-      state.dataRender = state.data?.filter((item) => item.name_original !== payload);
-      state.dataReceived = state.data?.filter((item) => item.name_original !== payload);
+      state.data = state.data?.filter((item) => item.name_original !== payload);
+      state.dataReceived = state.dataReceived?.filter((item) => item.name_original !== payload);
+
       state.viewFileImg = state.viewFileImg?.filter((item) => item.name !== payload);
       state.loading = false;
     },

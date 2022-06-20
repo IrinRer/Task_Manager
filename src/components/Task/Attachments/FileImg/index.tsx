@@ -136,23 +136,6 @@ const FileImg: FC<any> = ({
         className={classNameWrapper}
       >
         <img src={file.url || url} alt="img" className={classNameImg} />
-        {/* <div className={classNameBtn}>
-          <Button
-            icon={<RecycleBinIcon />}
-            onClick={onRemove}
-            className={styles.btn_hover_icon}
-          />
-          <Button
-            icon={<CloudDownloadOutlined />}
-            onClick={() => onDownload(file.name)}
-            className={styles.btn_hover_icon}
-          />
-          <Button
-            icon={<EyeOutlined />}
-            onClick={preview || customPreview}
-            className={styles.btn_hover_icon}
-          />
-        </div> */}
         <HoverButton
           customPreview={customPreview}
           onDownload={onDownload}

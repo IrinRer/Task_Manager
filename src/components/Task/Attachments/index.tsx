@@ -16,14 +16,17 @@ import {
   setImgRecieved,
   setPreviewTitleRender,
 } from 'store/editTask/attachments/preview/slice';
-import { getTaskFileAllType, getTaskId } from 'store/editTask/selectors';
+import { getTaskId } from 'store/editTask/selectors';
 import {
   getFileName,
   getStorageFile,
+  getTaskFileAllType,
   getTaskFileImg,
   getViewFileImg,
 } from 'store/editTask/attachments/selectors';
 import { config } from 'helpers/progressBar';
+import { useGetRights } from 'customHooks/useGetRights';
+import { RIGHTS_NAMES } from 'constants/rights';
 import ItemRender from './ItemRender';
 import styles from './index.module.scss';
 import FileText from './FileText';
@@ -36,6 +39,7 @@ const Attachments = () => {
   const fileName = useAppSelector(getFileName);
   const taskFileImg = useAppSelector(getTaskFileImg);
   const allFileId = useAppSelector(getStorageFile);
+  const isRights = useGetRights(RIGHTS_NAMES.editAttached);
 
   const taskFile = useAppSelector(getTaskFileAllType);
 
@@ -173,21 +177,24 @@ const Attachments = () => {
         <PaperClipOutlined className={styles.PaperClipOutlined} />
         <p className={styles.text}>Вложения</p>
       </div>
-      <Upload.Dragger
-        className={styles.upload}
-        fileList={fileList}
-        accept={ACCEPT_FORMAT}
-        itemRender={itemListRender}
-        beforeUpload={beforeUpload}
-        customRequest={handleSubmit}
-        onChange={handleUpload}
-        onPreview={handlePreview}
-      >
-        <Button className={styles.btnAttachment}>
-          <PlusOutlined />
-        </Button>
-        Перетащите сюда или загрузите файл
-      </Upload.Dragger>
+      {isRights && (
+        <Upload.Dragger
+          className={styles.upload}
+          fileList={fileList}
+          accept={ACCEPT_FORMAT}
+          itemRender={itemListRender}
+          beforeUpload={beforeUpload}
+          customRequest={handleSubmit}
+          onChange={handleUpload}
+          onPreview={handlePreview}
+        >
+          <Button className={styles.btnAttachment}>
+            <PlusOutlined />
+          </Button>
+          Перетащите сюда или загрузите файл
+        </Upload.Dragger>
+      )}
+
       <div className={styles.wrapper_all_file}>
         {onViewFileImg}
         {onViewFileAllType}

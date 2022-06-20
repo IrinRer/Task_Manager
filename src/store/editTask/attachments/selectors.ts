@@ -25,7 +25,7 @@ export const getViewFileImg = (state: RootState) =>
   state.editTask.attachments.attachmentsReducer.viewFileImg;
 
 export const taskFile = (state: RootState) =>
-  state.editTask.attachments.attachmentsReducer.data;
+  state.editTask.attachments.attachmentsReducer.dataReceived;
 
 export const getTaskFileImg = createSelector(taskFile, (file) =>
   file?.filter(({ type }) => type === 'image'),
