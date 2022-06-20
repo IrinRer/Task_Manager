@@ -36,3 +36,17 @@
     margin-left: 8px;
   }
 }
+
+.not_hover_icon {
+  display: none;
+}
+
+.wrapper_img_hover {
+  background: rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+.img_hover {
+  filter: brightness(50%);
+  // background: rgba(0,0,0,.5);
+}

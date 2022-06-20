@@ -13,6 +13,7 @@ export interface IPreviewReducer {
   imgRecieved: Array<IPayloadImgReceived>;
 
   index: number;
+  hover: boolean;
 }
 
 export interface IPayloadImgReceived {

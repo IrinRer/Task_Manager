@@ -4,7 +4,12 @@ import { PlusOutlined, PaperClipOutlined } from '@ant-design/icons';
 import type { RcFile, UploadFile } from 'antd/es/upload/interface';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import { assignFile, viewFile } from 'store/editTask/attachments/thunk';
+import {
+  assignFile,
+  deleteFile,
+  downloadFile,
+  viewFile,
+} from 'store/editTask/attachments/thunk';
 import { IOptions, ACCEPT_FORMAT } from 'constants/attachments/attachments';
 import { getBase64 } from 'helpers/getBase64';
 import {
@@ -14,6 +19,7 @@ import {
 import { getTaskFileAllType, getTaskId } from 'store/editTask/selectors';
 import {
   getFileName,
+  getStorageFile,
   getTaskFileImg,
   getViewFileImg,
 } from 'store/editTask/attachments/selectors';
@@ -29,6 +35,7 @@ const Attachments = () => {
   const taskId = useAppSelector(getTaskId);
   const fileName = useAppSelector(getFileName);
   const taskFileImg = useAppSelector(getTaskFileImg);
+  const allFileId = useAppSelector(getStorageFile);
 
   const taskFile = useAppSelector(getTaskFileAllType);
 
@@ -58,6 +65,33 @@ const Attachments = () => {
     return true;
   };
 
+  const determineIndex = (nameFile: string) => {
+    return fileName.indexOf(nameFile);
+  };
+
+  const onDeleteFile = (nameFile: string) => {
+    const index = determineIndex(nameFile);
+    setFile(fileList?.filter((item) => item.name !== nameFile));
+    dispatch(
+      deleteFile({
+        fileId: allFileId[index].storageId,
+        taskId,
+        name: nameFile,
+      }),
+    );
+    setPreviewVisible(false);
+  };
+
+  const onDownload = (nameFile: string) => {
+    const index = determineIndex(nameFile);
+    dispatch(
+      downloadFile({
+        fileId: allFileId[index].storageId,
+        name: nameFile,
+      }),
+    );
+  };
+
   const handleUpload = ({ fileList }) => {
     setFile(fileList);
   };
@@ -69,13 +103,22 @@ const Attachments = () => {
         file={item}
         preview={undefined}
         setFile={setFile}
+        onDeleteFile={onDeleteFile}
+        onDownload={onDownload}
         fileList={fileList}
       />
     );
   });
 
   const onViewFileAllType = taskFile?.map((item) => {
-    return <FileText file={item} key={item.name_original}/>;
+    return (
+      <FileText
+        file={item}
+        key={item.name_original}
+        onDeleteFile={onDeleteFile}
+        onDownload={onDownload}
+      />
+    );
   });
 
   const handleSubmit = (options: IOptions) => {
@@ -107,6 +150,8 @@ const Attachments = () => {
         preview={actions.preview}
         setFile={setFile}
         fileList={fileList}
+        onDeleteFile={onDeleteFile}
+        onDownload={onDownload}
       />
     );
   };
@@ -151,8 +196,8 @@ const Attachments = () => {
         setFile={setFile}
         fileList={fileList}
         previewVisible={previewVisible}
-        onDeleteFile={undefined}
-        onDownload={undefined}
+        onDeleteFile={onDeleteFile}
+        onDownload={onDownload}
         setPreviewVisible={setPreviewVisible}
       />
     </Col>

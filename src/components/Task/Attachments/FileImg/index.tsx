@@ -8,6 +8,7 @@ import React, {
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import {
   cleanRender,
+  setHover,
   setImgRecieved,
   setPreviewTitleReceived,
 } from 'store/editTask/attachments/preview/slice';
@@ -23,9 +24,12 @@ import { CloudDownloadOutlined, EyeOutlined } from '@ant-design/icons';
 import { UploadFile } from 'antd/es/upload/interface';
 import { ReactComponent as RecycleBinIcon } from 'assets/icons/recycleBin.svg';
 import ModalDelete from 'components/Common/ModalDelete';
+import { getHover } from 'store/editTask/attachments/preview/selectors';
 import classNames from 'classnames';
 import styles from './index.module.scss';
 import Preview from '../Preview';
+import HoverButton from '../HoverButton';
+
 
 interface IProps {
   file: any;
@@ -34,15 +38,25 @@ interface IProps {
   fileList: Array<UploadFile>;
 }
 
-const FileImg: FC<IProps> = ({ file, preview, setFile, fileList }) => {
+const FileImg: FC<any> = ({
+  file,
+  preview,
+  setFile,
+  fileList,
+  onDownload,
+  onDeleteFile,
+}) => {
   const dispatch = useAppDispatch();
   const fileName = useAppSelector(getFileName);
   const allFileId = useAppSelector(getStorageFile);
   const taskId = useAppSelector(getTaskId);
+  
+  // const hover = useAppSelector(getHover);
 
   const [previewVisible, setPreviewVisible] = useState(false);
   const [visibleModalDelete, setVisibleModalDelete] = useState(false);
   const [hover, setHover] = useState(false);
+  // const [hover, setHover] = useState(false);
 
   const url =
     !file.url && file.originFileObj
@@ -79,28 +93,28 @@ const FileImg: FC<IProps> = ({ file, preview, setFile, fileList }) => {
     return false;
   };
 
-  const onDeleteFile = (nameFile: string) => {
-    const index = determineIndex(nameFile);
-    setFile(fileList?.filter((item) => item.name !== nameFile));
-    dispatch(
-      deleteFile({
-        fileId: allFileId[index].storageId,
-        taskId,
-        name: nameFile,
-      }),
-    );
-    setPreviewVisible(false);
-  };
+  // const onDeleteFile = (nameFile: string) => {
+  //   const index = determineIndex(nameFile);
+  //   setFile(fileList?.filter((item) => item.name !== nameFile));
+  //   dispatch(
+  //     deleteFile({
+  //       fileId: allFileId[index].storageId,
+  //       taskId,
+  //       name: nameFile,
+  //     }),
+  //   );
+  //   setPreviewVisible(false);
+  // };
 
-  const onDownload = (nameFile: string) => {
-    const index = determineIndex(nameFile);
-    dispatch(
-      downloadFile({
-        fileId: allFileId[index].storageId,
-        name: nameFile,
-      }),
-    );
-  };
+  // const onDownload = (nameFile: string) => {
+  //   const index = determineIndex(nameFile);
+  //   dispatch(
+  //     downloadFile({
+  //       fileId: allFileId[index].storageId,
+  //       name: nameFile,
+  //     }),
+  //   );
+  // };
 
   const classNameBtn = classNames(styles.not_hover_icon, {
     [styles.hover_icon]: hover,
@@ -122,7 +136,7 @@ const FileImg: FC<IProps> = ({ file, preview, setFile, fileList }) => {
         className={classNameWrapper}
       >
         <img src={file.url || url} alt="img" className={classNameImg} />
-        <div className={classNameBtn}>
+        {/* <div className={classNameBtn}>
           <Button
             icon={<RecycleBinIcon />}
             onClick={onRemove}
@@ -138,7 +152,15 @@ const FileImg: FC<IProps> = ({ file, preview, setFile, fileList }) => {
             onClick={preview || customPreview}
             className={styles.btn_hover_icon}
           />
-        </div>
+        </div> */}
+        <HoverButton
+          customPreview={customPreview}
+          onDownload={onDownload}
+          onRemove={onRemove}
+          file={file}
+          hover={hover}
+          preview={preview}
+        />
         <p>{`${isLongText}`} </p>
       </div>
       <ModalDelete

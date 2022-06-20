@@ -12,12 +12,14 @@ interface IProps {
   progress: number;
 }
 
-const ItemRender: FC<IProps> = ({
+const ItemRender: FC<any> = ({
   file,
   preview,
   setFile,
   fileList,
   progress,
+  onDownload,
+  onDeleteFile,
 }) => {
   const isProgress =
     progress > 0 && file.percent !== 100 ? (
@@ -32,6 +34,8 @@ const ItemRender: FC<IProps> = ({
           preview={preview}
           setFile={setFile}
           fileList={fileList}
+          onDownload={onDownload}
+          onDeleteFile={onDeleteFile}
         />
         {isProgress}
       </>
@@ -39,7 +43,11 @@ const ItemRender: FC<IProps> = ({
   }
   return (
     <>
-      <FileText file={file} />
+      <FileText
+        file={file}
+        onDownload={onDownload}
+        onDeleteFile={onDeleteFile}
+      />
       {isProgress}
     </>
   );

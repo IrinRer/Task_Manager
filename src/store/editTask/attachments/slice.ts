@@ -10,10 +10,11 @@ import {
 import { AxiosError } from 'axios';
 import { assignFile, viewFile } from './thunk';
 
-const initialState: IAttachmentsReducer = {
-  data: [],
+// IAttachmentsReducer
+const initialState: any = {
+  dataReceived: [],
+  dataRender: [],
   viewFileImg: [],
-  viewFileDoc: [],
   isClicked: false,
   loading: false,
   error: null,
@@ -37,10 +38,7 @@ export const attachmentsSlice = createSlice({
       state,
       { payload }: PayloadAction<IPayloadFile>,
     ) => {
-      if(!payload.type.includes('image')) {
-        state.viewFileDoc.push(payload);
-      }
-      state.data.push(payload);
+      state.dataRender.push(payload);
       state.loading = false;
     },
 
@@ -56,7 +54,7 @@ export const attachmentsSlice = createSlice({
       state,
       { payload }: PayloadAction<IResponseTask>,
     ) => {
-      state.data = payload?.storage_files;
+      state.dataReceived = payload?.storage_files;
       state.loading = false;
     },
 
@@ -69,7 +67,8 @@ export const attachmentsSlice = createSlice({
       state,
       { payload }: PayloadAction<string>,
     ) => {
-      state.data = state.data?.filter((item) => item.name_original !== payload);
+      state.dataRender = state.data?.filter((item) => item.name_original !== payload);
+      state.dataReceived = state.data?.filter((item) => item.name_original !== payload);
       state.viewFileImg = state.viewFileImg?.filter((item) => item.name !== payload);
       state.loading = false;
     },

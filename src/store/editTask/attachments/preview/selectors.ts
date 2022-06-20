@@ -14,3 +14,6 @@ export const getImgReceived = (state: RootState) =>
 
 export const getIndex = (state: RootState) =>
   state.editTask.attachments.preview.index;
+
+export const getHover = (state: RootState) =>
+  state.editTask.attachments.preview.hover;

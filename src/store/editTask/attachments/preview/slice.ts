@@ -13,7 +13,8 @@ const initialState: IPreviewReducer = {
   // fileRender: [],
   imgRecieved: [],
 
-  index: 0
+  index: 0,
+  hover: false
 };
 
 export const previewSlice = createSlice({
@@ -45,8 +46,10 @@ export const previewSlice = createSlice({
     },
 
     setIndex: (state, { payload }: PayloadAction<number>) => {
-
       state.index = payload;     
+    },
+    setHover: (state, { payload }: PayloadAction<boolean>) => {
+      state.hover = payload;     
     },
   },
 
@@ -78,6 +81,7 @@ export const {
   setImgRecieved,
   // setFileRender,
 
-  setIndex
+  setIndex,
+  setHover
 } = previewSlice.actions;
 export default previewSlice.reducer;

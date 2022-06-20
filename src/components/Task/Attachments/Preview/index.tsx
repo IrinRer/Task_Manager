@@ -1,6 +1,6 @@
 import { Modal } from 'antd';
 import React, { useEffect, useState, FC } from 'react';
-import { CloseCircleOutlined } from '@ant-design/icons';
+import { CloseCircleOutlined, ConsoleSqlOutlined } from '@ant-design/icons';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import {
@@ -98,6 +98,13 @@ const Preview: FC<IProps> = ({
     setPreviewVisible(false);
   };
 
+  const onDeleteFileImg = (nameFile) => {
+    onDeleteFile(nameFile);
+    setPreviewVisible(false);
+  };
+
+  console.log(onDeleteFile);
+
   return imgRecieved[index] ? (
     <>
       <Modal
@@ -122,7 +129,7 @@ const Preview: FC<IProps> = ({
         visibleModalDelete={visibleModalDelete}
         setIsVisibleModalDelete={setVisibleModalDelete}
         file={imgRecieved[index].name || ''}
-        action={onDeleteFile}
+        action={onDeleteFileImg}
       />
     </>
   ) : null;
