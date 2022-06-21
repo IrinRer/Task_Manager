@@ -1,6 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { notification } from 'antd';
 import { ROLES } from 'constants/types/common';
+import { RootState } from 'store';
+import { getResponsibleRoleID } from 'store/common/roles/selectors';
+import { getTaskAuthorIDParams } from 'store/tasks/selectors';
 import { addTask } from 'store/tasks/slice';
 import { api } from '../../network';
 import {
@@ -11,7 +14,7 @@ import {
 
 export const createTaskAction = createAsyncThunk(
   `${CREATE_TASK_SLICE_ALIAS}/createTask`,
-  async (arg: ICreateTaskArg, { rejectWithValue, dispatch }) => {
+  async (arg: ICreateTaskArg, { rejectWithValue, getState, dispatch }) => {
     try {
       const response = await api().post(`/api/v1.0/task/tasks`, {
         title: arg.title,
@@ -19,6 +22,21 @@ export const createTaskAction = createAsyncThunk(
       });
       dispatch(addTask(response.data.data));
       return response.data.data;
+
+      // Назначаем автора ответственным
+      /* const state = getState() as RootState;
+      const responsibleRoleID = getResponsibleRoleID(state);
+      const author_id = getTaskAuthorIDParams(state, response.data.data);
+
+      const responseResponsible = await api().post(
+        `/api/v1.0/task/tasks/${response.data.data.task_id}/role-assign`,
+        {
+          assign_user_id: author_id,
+          task_role_id: responsibleRoleID,
+        },
+      );
+      dispatch(addTask(responseResponsible.data.data));
+      return responseResponsible.data.data; */
     } catch (error) {
       notification.error({ message: 'Ошибка создания задачи' });
       return rejectWithValue(error.message);
@@ -28,7 +46,7 @@ export const createTaskAction = createAsyncThunk(
 
 export const cloneTaskAction = createAsyncThunk(
   `${CREATE_TASK_SLICE_ALIAS}/cloneTask`,
-  async (args: ICloneTaskArg, { rejectWithValue, dispatch }) => {
+  async (args: ICloneTaskArg, { rejectWithValue, getState, dispatch }) => {
     try {
       // Клонируем задачу
       const response = await api().post(
@@ -49,6 +67,19 @@ export const cloneTaskAction = createAsyncThunk(
           task = { ...roleResponse.data.data };
         }
       });
+
+      /* const state = getState() as RootState;
+      const responsibleRoleID = getResponsibleRoleID(state);
+      const author_id = getTaskAuthorIDParams(state, task);
+
+      const responseResponsible = await api().post(
+        `/api/v1.0/task/tasks/${task.task_id}/role-assign`,
+        {
+          task_role_id: responsibleRoleID,
+          assign_user_id: author_id,
+        },
+      ); */
+
       // Назначаем автора ответственным
       const responseResponsible = await api().post(
         `/api/v1.0/task/tasks/${task.task_id}/role-assign`,
@@ -57,6 +88,7 @@ export const cloneTaskAction = createAsyncThunk(
           assign_user_id: task.roles[0].assign_user.user_id,
         },
       );
+
       // Пишем в таски чтоб не обновлять список с бэкэнда
       dispatch(addTask(responseResponsible.data.data));
       notification.success({ message: 'Копия задачи создана' });

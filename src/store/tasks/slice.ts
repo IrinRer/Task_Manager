@@ -19,6 +19,7 @@ const TASKS_ON_PAGE_DEFAULT = 3;
 
 const initialState: ITasksReducer = {
   tasks: [],
+  task_id_todelete: null,
   itemsTotal: 0,
   loading: false,
   error: null,
@@ -78,6 +79,12 @@ export const tasksSlice = createSlice({
     },
     addTask: (state: ITasksReducer, action: PayloadAction<TTask>) => {
       state.tasks?.push(action.payload);
+    },
+    setTaskToDelete: (
+      state: ITasksReducer,
+      action: PayloadAction<string | null>,
+    ) => {
+      state.task_id_todelete = action.payload;
     },
   },
   extraReducers: {
@@ -157,5 +164,6 @@ export const {
   addTask,
   resetPages,
   resetTasks,
+  setTaskToDelete,
 } = tasksSlice.actions;
 export default tasksSlice.reducer;
