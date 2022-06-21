@@ -54,7 +54,7 @@ const Header: React.FC = () => {
   return (
     <>
       <Row className={styles.titleRow}>
-        <h1>Задачи:</h1>
+        <h1>Задачи</h1>
 
         <div className={styles.user}>
           <UserAvatar user={user} />
