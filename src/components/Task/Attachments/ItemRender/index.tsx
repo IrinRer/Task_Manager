@@ -1,22 +1,20 @@
-import React, { Dispatch, FC, SetStateAction } from 'react';
-import ProgressBar from 'components/Common/Progress';
+import React, { FC } from 'react';
 import { UploadFile } from 'antd/lib/upload/interface';
+import ProgressBar from 'components/Common/Progress';
 import FileText from '../FileText';
 import FileImg from '../FileImg';
 
 interface IProps {
   file: UploadFile;
   preview: () => void;
-  setFile: Dispatch<SetStateAction<UploadFile[]>>;
-  fileList: Array<UploadFile>;
   progress: number;
+  onDownload: (arg: string) => void;
+  onDeleteFile: (arg: string) => void;
 }
 
-const ItemRender: FC<any> = ({
+const ItemRender: FC<IProps> = ({
   file,
   preview,
-  setFile,
-  fileList,
   progress,
   onDownload,
   onDeleteFile,
@@ -26,25 +24,24 @@ const ItemRender: FC<any> = ({
       <ProgressBar progress={progress} />
     ) : null;
 
-  if (file?.type?.includes('image')) {
-    return (
-      <>
-        <FileImg
-          file={file}
-          preview={preview}
-          setFile={setFile}
-          fileList={fileList}
-          onDownload={onDownload}
-          onDeleteFile={onDeleteFile}
-        />
-        {isProgress}
-      </>
-    );
-  }
-  return (
+  return file?.type?.includes('image') ? (
+    <>
+      <FileImg
+        file={{
+          url: file.url || '',
+          name: file.name,
+          originFileObj: file.originFileObj,
+        }}
+        preview={preview}
+        onDownload={onDownload}
+        onDeleteFile={onDeleteFile}
+      />
+      {isProgress}
+    </>
+  ) : (
     <>
       <FileText
-        file={file}
+        file={{ size: file.size || 0, name: file.name }}
         onDownload={onDownload}
         onDeleteFile={onDeleteFile}
       />

@@ -6,7 +6,6 @@ export const ATTACHMENTS_SLICE_ALIAS = 'attachments';
 export interface IAttachmentsReducer {
   data: IPayloadFile[];
   viewFileImg: Array<{name: string; url:string}>;
-  viewFileDoc: any,
   isClicked: boolean;
   dataReceived: IPayloadFile[];
   loading: boolean;

@@ -1,20 +1,17 @@
-import { deleteFile, viewFile } from 'store/editTask/attachments/thunk';
-import { UploadFile } from 'antd/lib/upload/interface';
+import { deleteFile } from 'store/editTask/attachments/thunk';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IPreviewReducer, PREVIEW_SLICE_ALIAS, IPayloadImgReceived } from './types';
+import {
+  IPreviewReducer,
+  PREVIEW_SLICE_ALIAS,
+  IPayloadImgReceived,
+} from './types';
 
 const initialState: IPreviewReducer = {
-  // previewImageRender: '',
   previewTitleRender: '',
-
-  // previewImageReceived: '',
   previewTitleReceived: '',
-
-  // fileRender: [],
   imgRecieved: [],
-
+  loading: false,
   index: 0,
-  hover: false
 };
 
 export const previewSlice = createSlice({
@@ -26,7 +23,6 @@ export const previewSlice = createSlice({
     },
 
     cleanRender: (state) => {
-      // state.previewImageRender = '';
       state.previewTitleRender = '';
     },
 
@@ -34,36 +30,27 @@ export const previewSlice = createSlice({
       state.previewTitleReceived = payload;
     },
 
-    // setFileRender: (state, { payload }: PayloadAction<any>) => {
-    //   state.fileRender.push(payload);
-    // },
-
-    setImgRecieved: (state, { payload }: PayloadAction<IPayloadImgReceived>) => {
+    setImgRecieved: (
+      state,
+      { payload }: PayloadAction<IPayloadImgReceived>,
+    ) => {
       const arr = state.imgRecieved.concat(payload);
       state.imgRecieved = arr.filter(
         (item, i) => arr.findIndex((a) => a.name === item.name) === i,
-      );      
+      );
+      state.loading = true;
     },
 
     setIndex: (state, { payload }: PayloadAction<number>) => {
-      state.index = payload;     
-    },
-    setHover: (state, { payload }: PayloadAction<boolean>) => {
-      state.hover = payload;     
+      state.index = payload;
     },
   },
-
 
   extraReducers: {
     [deleteFile.fulfilled.type]: (
       state,
       { payload }: PayloadAction<string>,
     ) => {
-      // state.fileRender = state.fileRender?.filter(
-      //   (item) => item.name !== payload,
-      // );
-      // eslint-disable-next-line
-      debugger
       state.imgRecieved = state.imgRecieved?.filter(
         (item) => item.name !== payload,
       );
@@ -72,16 +59,10 @@ export const previewSlice = createSlice({
 });
 
 export const {
-  // setPreviewImageRender,
   setPreviewTitleRender,
   cleanRender,
-
-  // setPreviewImageReceived,
   setPreviewTitleReceived,
   setImgRecieved,
-  // setFileRender,
-
   setIndex,
-  setHover
 } = previewSlice.actions;
 export default previewSlice.reducer;

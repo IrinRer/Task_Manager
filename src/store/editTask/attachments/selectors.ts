@@ -34,6 +34,3 @@ export const getTaskFileImg = createSelector(taskFile, (file) =>
 export const getTaskFileAllType = createSelector(taskFile, (file) =>
   file?.filter(({ type }) => type !== 'image'),
 );
-
-export const getTaskFileDoc = (state: RootState) =>
-  state.editTask.attachments.attachmentsReducer.viewFileDoc;

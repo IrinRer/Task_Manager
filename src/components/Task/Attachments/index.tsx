@@ -27,11 +27,12 @@ import {
 import { config } from 'helpers/progressBar';
 import { useGetRights } from 'customHooks/useGetRights';
 import { RIGHTS_NAMES } from 'constants/rights';
+import Preview from './Preview';
 import ItemRender from './ItemRender';
-import styles from './index.module.scss';
 import FileText from './FileText';
 import FileImg from './FileImg';
-import Preview from './Preview';
+
+import styles from './index.module.scss';
 
 const Attachments = () => {
   const dispatch = useAppDispatch();
@@ -58,7 +59,6 @@ const Attachments = () => {
 
   const [fileList, setFile] = useState<Array<UploadFile>>([]);
   const [progress, setProgress] = useState(0);
-
   const [previewVisible, setPreviewVisible] = useState(false);
 
   const beforeUpload = (file: RcFile) => {
@@ -104,12 +104,10 @@ const Attachments = () => {
     return (
       <FileImg
         key={item.name}
-        file={item}
+        file={{ url: item.url, name: item.name }}
         preview={undefined}
-        setFile={setFile}
         onDeleteFile={onDeleteFile}
         onDownload={onDownload}
-        fileList={fileList}
       />
     );
   });
@@ -117,7 +115,7 @@ const Attachments = () => {
   const onViewFileAllType = taskFile?.map((item) => {
     return (
       <FileText
-        file={item}
+        file={{ size: item.size, name: item.name_original }}
         key={item.name_original}
         onDeleteFile={onDeleteFile}
         onDownload={onDownload}
@@ -152,8 +150,6 @@ const Attachments = () => {
         file={file}
         progress={progress}
         preview={actions.preview}
-        setFile={setFile}
-        fileList={fileList}
         onDeleteFile={onDeleteFile}
         onDownload={onDownload}
       />
@@ -200,8 +196,6 @@ const Attachments = () => {
         {onViewFileAllType}
       </div>
       <Preview
-        setFile={setFile}
-        fileList={fileList}
         previewVisible={previewVisible}
         onDeleteFile={onDeleteFile}
         onDownload={onDownload}

@@ -1,5 +1,4 @@
 import { RcFile } from 'antd/lib/upload';
-import { UploadFile, UploadFileStatus } from 'antd/lib/upload/interface';
 /* eslint-disable import/no-extraneous-dependencies */
 import {
   UploadProgressEvent,
@@ -28,34 +27,7 @@ export interface IOptions extends UploadRequestOption {
   onSuccess?: ((xhr?: XMLHttpRequest | undefined) => void) | undefined;
 }
 
-export interface IItemFile {
-  uid: string;
-  name: string;
-  originFileObj: { name: string } | RcFile | undefined;
-  size: number;
-  type: string;
-  storageId: string;
-  response: 'Ok' | string;
-  status: 'done' | UploadFileStatus;
-}
-
 export const COLOR_PROGRESS = '#0062ff';
-
-export interface IType {
-  name: string;
-  url?: string;
-  lastModified?: number;
-  lastModifiedDate?: Date;
-  originFileObj?: RcFile;
-  percent?: number;
-  response?: string;
-  size?: number;
-  status?: undefined;
-  thumbUrl?: string;
-  type?: string;
-  uid?: string;
-  xhr?: undefined;
-}
 
 export const ACCEPT_FORMAT =
   '.doc,.png,.jpg,.jpeg,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf';
@@ -77,11 +49,10 @@ export const SETTINGS = {
       },
     },
     {
-      breakpoint: 600,
+      breakpoint: 800,
       settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2,
-        initialSlide: 2,
+        slidesToShow: 1,
+        slidesToScroll: 1,
       },
     },
     {

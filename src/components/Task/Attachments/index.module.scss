@@ -23,7 +23,7 @@
     }
 
     :global(.anticon-plus) {
-      font-size: 16px !important;
+      font-size: $font-size-l !important;
     }
   }
 }
@@ -68,12 +68,20 @@
   :global(.ant-upload-list) {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 10px;
   }
 
   :global(.ant-upload-list-item) {
     border-radius: 8px;
-    max-width: 250px;
-    margin-right: 10px;
+    max-width: 260px;
+    margin-right: 20px;
+  }
+
+  :global(.ant-upload-list-text-container) {
+    max-width: 260px;
+    margin-top: 10px;
+    margin-right: 20px;
   }
 
   :global(.anticon-paper-clip).PaperClipOutlined {

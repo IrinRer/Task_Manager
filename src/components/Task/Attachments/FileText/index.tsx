@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 import shapeAttachment from 'assets/icons/shapeAttachment.svg';
 import ModalDelete from 'components/Common/ModalDelete';
 import classNames from 'classnames';
-import { setHover } from 'store/editTask/attachments/preview/slice';
-import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import { getHover } from 'store/editTask/attachments/preview/selectors';
-import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import styles from './index.module.scss';
 import HoverButton from '../HoverButton';
+import styles from './index.module.scss';
 
-const FileText = ({ file, onDownload, onDeleteFile }) => {
-  const inKB = (+file.size / 1024).toFixed(2);
-  const dispatch = useAppDispatch();
-  // const hover = useAppSelector(getHover);
+interface IProps {
+  file: { size: number; name?: string; name_original?: string };
+  onDownload: (arg: string) => void;
+  onDeleteFile: (arg: string) => void;
+}
+
+const FileText: FC<IProps> = ({ file, onDownload, onDeleteFile }) => {
+  const inKB = (file.size / 1024).toFixed(2);
 
   const [hover, setHover] = useState(false);
 

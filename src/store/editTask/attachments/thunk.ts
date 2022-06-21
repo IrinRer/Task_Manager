@@ -33,7 +33,7 @@ export const assignFile = createAsyncThunk(
     } catch (error) {
       notification.error({ message: 'Ошибка добавления файла' });
       file.onError({ error });
-      return rejectWithValue(error);
+      return rejectWithValue(error.message);
     }
   },
 );
@@ -49,13 +49,10 @@ export const deleteFile = createAsyncThunk(
 
       notification.success({ message: 'Файл успешно удален' });
 
-      // нужно, чтобы удалить из store те вложения, которые удалились
-      // response.data возвращает целую задачу
-
       return file.name;
     } catch (error) {
       notification.error({ message: 'Ошибка удаления файла' });
-      return rejectWithValue(error);
+      return rejectWithValue(error.message);
     }
   },
 );
@@ -78,7 +75,7 @@ export const downloadFile = createAsyncThunk(
       return response.data;
     } catch (error) {
       notification.error({ message: 'Ошибка скачивания файла' });
-      return rejectWithValue(error);
+      return rejectWithValue(error.message);
     }
   },
 );
@@ -92,10 +89,14 @@ export const viewFile = createAsyncThunk(
         { responseType: 'blob' },
       );
 
-      return { url: URL.createObjectURL(response.data), name: file.name, storageId: file.fileId };
+      return {
+        url: URL.createObjectURL(response.data),
+        name: file.name,
+        storageId: file.fileId,
+      };
     } catch (error) {
       notification.error({ message: 'Ошибка скачивания файла' });
-      return rejectWithValue(error);
+      return rejectWithValue(error.message);
     }
   },
 );

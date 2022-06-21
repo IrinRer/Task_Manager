@@ -1,8 +1,7 @@
 import { Modal } from 'antd';
 import React, { useEffect, useState, FC } from 'react';
-import { CloseCircleOutlined, ConsoleSqlOutlined } from '@ant-design/icons';
+import { CloseCircleOutlined } from '@ant-design/icons';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import {
   getImgReceived,
   getIndex,
@@ -10,51 +9,33 @@ import {
   getPreviewTitleRender,
 } from 'store/editTask/attachments/preview/selectors';
 import ModalDelete from 'components/Common/ModalDelete';
-import { UploadFile } from 'antd/lib/upload/interface';
-import {
-  getFileName,
-  getStorageFile,
-} from 'store/editTask/attachments/selectors';
-import { deleteFile, downloadFile } from 'store/editTask/attachments/thunk';
-import { getTaskId } from 'store/editTask/selectors';
+import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { setIndex } from 'store/editTask/attachments/preview/slice';
 import Header from './Header';
 import ImgView from './ImgView/indes';
 import styles from './index.module.scss';
 
 interface IProps {
-  setFile: (arg: Array<UploadFile>) => void;
-  fileList: Array<UploadFile>;
   previewVisible: boolean;
   setPreviewVisible: (arg: boolean) => void;
-  onDownload: any;
-  onDeleteFile: any;
+  onDownload: (arg: string) => void;
+  onDeleteFile: (arg: string) => void;
 }
 
 const Preview: FC<IProps> = ({
-  setFile,
-  fileList,
   previewVisible,
   setPreviewVisible,
   onDeleteFile,
-  onDownload
+  onDownload,
 }) => {
-  const dispatch = useAppDispatch();
-  const fileName = useAppSelector(getFileName);
-  const allFileId = useAppSelector(getStorageFile);
-  const taskId = useAppSelector(getTaskId);
   const imgRecieved = useAppSelector(getImgReceived);
-
+  const dispatch = useAppDispatch();
   const previewTitleRender = useAppSelector(getPreviewTitleRender);
 
   const previewTitleReceived = useAppSelector(getPreviewTitleReceived);
 
   const [visibleModalDelete, setVisibleModalDelete] = useState(false);
   const index = useAppSelector(getIndex);
-
-  // const determineIndex = (nameFile: string) => {
-  //   return fileName.indexOf(nameFile);
-  // };
 
   const isTitle = previewTitleRender || previewTitleReceived;
 
@@ -71,39 +52,14 @@ const Preview: FC<IProps> = ({
     return false;
   };
 
-  // const onDeleteFile = (nameFile: string) => {
-  //   const index = determineIndex(nameFile);
-  //   setFile(fileList?.filter((item) => item.name !== nameFile));
-  //   dispatch(
-  //     deleteFile({
-  //       fileId: allFileId[index].storageId,
-  //       taskId,
-  //       name: nameFile,
-  //     }),
-  //   );
-  //   setPreviewVisible(false);
-  // };
-
-  // const onDownload = (nameFile: string) => {
-  //   const index = determineIndex(nameFile);
-  //   dispatch(
-  //     downloadFile({
-  //       fileId: allFileId[index].storageId,
-  //       name: nameFile,
-  //     }),
-  //   );
-  // };
-
   const handleCancel = () => {
     setPreviewVisible(false);
   };
 
-  const onDeleteFileImg = (nameFile) => {
+  const onDeleteFileImg = (nameFile: string) => {
     onDeleteFile(nameFile);
     setPreviewVisible(false);
   };
-
-  console.log(onDeleteFile);
 
   return imgRecieved[index] ? (
     <>

@@ -16,7 +16,7 @@ type IProps = {
   action: (arg: string | UploadFile) => void;
   visibleModalDelete: boolean;
   setIsVisibleModalDelete: (arg: boolean) => void;
-  file: string | UploadFile;
+  file?: string | UploadFile;
 }
 
 const ModalDelete: React.FC<IProps> = ({
@@ -29,7 +29,9 @@ const ModalDelete: React.FC<IProps> = ({
 }) => {
 
   const handleOk = () => {
-    action(file);
+    if(file) {
+      action(file);
+    }
     setIsVisibleModalDelete(false);
   };
 

@@ -13,7 +13,9 @@ interface IProps {
 }
 
 const Header: FC<IProps> = ({ previewTitle, onRemove, onDownload }) => {
+  
   const isRights = useGetRights(RIGHTS_NAMES.editAttached);
+
   return (
     <div className={styles.wrapper}>
       <p>{previewTitle}</p>

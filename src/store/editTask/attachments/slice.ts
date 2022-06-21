@@ -10,8 +10,7 @@ import {
 import { AxiosError } from 'axios';
 import { assignFile, viewFile } from './thunk';
 
-// IAttachmentsReducer
-const initialState: any = {
+const initialState: IAttachmentsReducer = {
   dataReceived: [],
   data: [],
   viewFileImg: [],
@@ -30,7 +29,6 @@ export const attachmentsSlice = createSlice({
   },
   extraReducers: {
     [assignFile.pending.type]: (state) => {
-      state.loading = false;
       state.error = null;
     },
 
@@ -39,14 +37,12 @@ export const attachmentsSlice = createSlice({
       { payload }: PayloadAction<IPayloadFile>,
     ) => {
       state.data.push(payload);
-      state.loading = false;
     },
 
     [assignFile.rejected.type]: (
       state,
       { payload }: PayloadAction<AxiosError>,
     ) => {
-      state.loading = false;
       state.error = payload;
     },
 
@@ -56,11 +52,9 @@ export const attachmentsSlice = createSlice({
     ) => {
       state.dataReceived = payload?.storage_files;
       state.data = payload?.storage_files;
-      state.loading = false;
     },
 
     [deleteFile.pending.type]: (state) => {
-      state.loading = false;
       state.error = null;
     },
 
@@ -69,22 +63,24 @@ export const attachmentsSlice = createSlice({
       { payload }: PayloadAction<string>,
     ) => {
       state.data = state.data?.filter((item) => item.name_original !== payload);
-      state.dataReceived = state.dataReceived?.filter((item) => item.name_original !== payload);
+      state.dataReceived = state.dataReceived?.filter(
+        (item) => item.name_original !== payload,
+      );
 
-      state.viewFileImg = state.viewFileImg?.filter((item) => item.name !== payload);
-      state.loading = false;
+      state.viewFileImg = state.viewFileImg?.filter(
+        (item) => item.name !== payload,
+      );
     },
 
     [deleteFile.rejected.type]: (
       state,
       { payload }: PayloadAction<AxiosError>,
     ) => {
-      state.loading = false;
       state.error = payload;
     },
 
     [viewFile.pending.type]: (state) => {
-      state.loading = false;
+      state.loading = true;
       state.error = null;
     },
 

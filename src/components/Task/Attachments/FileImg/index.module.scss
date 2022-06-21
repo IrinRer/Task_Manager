@@ -4,6 +4,7 @@
 .wrapper_img {
   margin-top: 20px;
   width: 160px;
+  border-radius: 8px;
   height: 88px;
 
   .img {
@@ -68,5 +69,4 @@
 
 .img_hover {
   filter: brightness(50%);
-  // background: rgba(0,0,0,.5);
 }
