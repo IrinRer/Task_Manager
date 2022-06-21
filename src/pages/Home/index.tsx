@@ -18,8 +18,13 @@ const Home: React.FC = () => {
   const taskIDtoDelete = useAppSelector(getTaskToDelete);
 
   const handleDeleteTask = useCallback(() => {
-    console.log('Elfkztv задачу');
-    // dispatch(deleteTaskAction(taskIDtoDelete));
+    if (taskIDtoDelete) {
+      dispatch(deleteTaskAction(taskIDtoDelete));
+      dispatch(setTaskToDelete(null));
+    }
+  }, [dispatch, taskIDtoDelete]);
+
+  const handleCancelDeleteTask = useCallback(() => {
     dispatch(setTaskToDelete(null));
   }, [dispatch]);
 
@@ -29,12 +34,12 @@ const Home: React.FC = () => {
         text: 'Задача удалена',
         textButton: 'Отмена',
         className: 'iconDeleteNotice',
-        duration: 0,
         icon: <RecycleBinIcon />,
         handleOk: handleDeleteTask,
+        handleCancel: handleCancelDeleteTask,
       });
     }
-  }, [handleDeleteTask, taskIDtoDelete]);
+  }, [handleCancelDeleteTask, handleDeleteTask, taskIDtoDelete]);
 
   return (
     <Layout className={styles.tasks}>

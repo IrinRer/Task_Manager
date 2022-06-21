@@ -11,6 +11,7 @@ interface IProps {
   className?: string;
   icon?: ReactElement;
   handleOk: () => void;
+  handleCancel?: () => void;
 }
 
 const Notice = (settings: IProps): void => {
@@ -21,11 +22,15 @@ const Notice = (settings: IProps): void => {
     className,
     icon = <InfoCircleOutlined />,
     handleOk,
+    handleCancel = () => {},
   } = settings;
 
   const key = `open${Date.now()}`;
 
-  const handleCancel = () => notification.close(key);
+  const cancel = () => {
+    handleCancel();
+    notification.close(key);
+  };
 
   const closeNotice = () => {
     handleOk();
@@ -37,7 +42,7 @@ const Notice = (settings: IProps): void => {
       type="link"
       size="small"
       className={styles.cancelBtn}
-      onClick={handleCancel}
+      onClick={cancel}
     >
       {textButton}
     </Button>
@@ -49,7 +54,7 @@ const Notice = (settings: IProps): void => {
     icon,
     btn,
     key,
-    className,
+    className: `commonNotice ${className}`,
     closeIcon: <CloseIcon id="closeNotify" />,
     onClose: closeNotice,
   };

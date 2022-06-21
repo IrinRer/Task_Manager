@@ -34,6 +34,7 @@ const ModalDeleteDelayWithNotice: React.FC<IProps> = (props: IProps) => {
       Notice({
         text: textNotice || '',
         textButton: 'Отмена',
+        className: 'iconDeleteNotice',
         icon: <RecycleBinIcon />,
         handleOk: handleOkNotice,
       });

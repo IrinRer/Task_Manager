@@ -2,7 +2,7 @@
 @import 'src/styles/colors';
 @import 'src/styles/font-variables';
 
-:global(.ant-btn).cancelBtn {
+:global(.commonNotice .ant-btn).cancelBtn {
   background-color: unset;
   color: $button-main;
   font-size: $font-size-m !important;
@@ -13,56 +13,57 @@
   right: 70px;
 }
 
-:global(.ant-btn).cancelBtn :focus,
-:global(.ant-btn).cancelBtn :hover,
-:global(.ant-btn).cancelBtn :active,
-:global(.ant-btn-link):focus,
-:global(.ant-btn-link):hover,
-:global(.ant-btn-link):active {
+:global(.commonNotice .ant-btn).cancelBtn :focus,
+:global(.commonNotice .ant-btn).cancelBtn :hover,
+:global(.commonNotice .ant-btn).cancelBtn :active,
+:global(.commonNotice .ant-btn-link):focus,
+:global(.commonNotice .ant-btn-link):hover,
+:global(.commonNotice .ant-btn-link):active {
   background-color: unset !important;
   color: $button-main !important;
 }
 
-:global(.ant-btn).cancelBtn span {
+:global(.commonNotice .ant-btn).cancelBtn span {
   padding-top: 0;
 }
 
-:global(.ant-notification-notice) {
+:global(.commonNotice.ant-notification-notice) {
   padding: 28px 24px 24px;
   min-width: 360px;
   width: max-content;
   height: 80px;
 }
-:global(.ant-notification-notice-message) {
+:global(.commonNotice .ant-notification-notice-message) {
   color: $text-title !important;
   margin-left: 38px !important;
   font-size: $font-size-l !important;
   margin-bottom: 0 !important;
 }
 
-:global(.ant-notification-notice-close-x) svg path {
+:global(.commonNotice .ant-notification-notice-close-x) svg path {
   fill: $dark-primary;
 }
-:global(.ant-notification-notice-close-x):hover svg path {
+:global(.commonNotice .ant-notification-notice-close-x):hover svg path {
   fill: $heading;
 }
-:global(.ant-notification-notice-close-x) {
+:global(.commonNotice .ant-notification-notice-close-x) {
   font-size: $font-size-m;
   width: fit-content;
   height: fit-content;
   line-height: 1;
 }
-:global(.ant-notification-notice-close) {
+:global(.commonNotice .ant-notification-notice-close) {
   top: 16px;
   right: 16px;
 }
 
-.iconDeleteNotice .ant-notification-notice-icon svg path {
+:global(.commonNotice .ant-notification-notice-icon) svg path {
+  width: 16px;
+  height: 16px;
+}
+
+:global(.iconDeleteNotice .ant-notification-notice-icon) svg path {
   width: 16px;
   height: 16px;
   fill: $red;
-}
-
-.iconDeleteNotice {
-  color: aqua;
 }
