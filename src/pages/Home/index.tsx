@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { Layout } from 'antd';
+import { Layout, Progress } from 'antd';
 import Display from 'components/Home';
 import Filters from 'components/Home/Filters';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
@@ -19,8 +19,8 @@ const Home: React.FC = () => {
 
   const handleDeleteTask = useCallback(() => {
     if (taskIDtoDelete) {
-      dispatch(deleteTaskAction(taskIDtoDelete));
       dispatch(setTaskToDelete(null));
+      dispatch(deleteTaskAction(taskIDtoDelete));
     }
   }, [dispatch, taskIDtoDelete]);
 
@@ -34,6 +34,7 @@ const Home: React.FC = () => {
         text: 'Задача удалена',
         textButton: 'Отмена',
         className: 'iconDeleteNotice',
+        // duration: 0,
         icon: <RecycleBinIcon />,
         handleOk: handleDeleteTask,
         handleCancel: handleCancelDeleteTask,

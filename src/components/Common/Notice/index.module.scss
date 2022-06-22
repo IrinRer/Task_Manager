@@ -1,6 +1,7 @@
 @import 'src/styles/color-variables';
 @import 'src/styles/colors';
 @import 'src/styles/font-variables';
+@import 'src/styles/global';
 
 :global(.commonNotice .ant-btn).cancelBtn {
   background-color: unset;
@@ -33,6 +34,27 @@
   width: max-content;
   height: 80px;
 }
+
+@keyframes progress {
+  from {
+    transform: translateX(0) scaleX(1);
+  }
+  to {
+    transform: translateX(-100%) scaleX(0);
+  }
+}
+
+:global(.commonNotice.ant-notification-notice):before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-top: 4px solid $button-main;
+  content: '';
+  width: 100%;
+  animation: progress $TIME_SHOW_NOTICE linear;
+  animation-fill-mode: forwards;
+}
+
 :global(.commonNotice .ant-notification-notice-message) {
   color: $text-title !important;
   margin-left: 38px !important;

@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import { Button, notification } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { ReactComponent as CloseIcon } from 'assets/icons/close.svg';
+import { TIME_SHOW_NOTICE } from 'constants/common';
 import styles from './index.module.scss';
 
 interface IProps {
@@ -14,11 +15,11 @@ interface IProps {
   handleCancel?: () => void;
 }
 
-const Notice = (settings: IProps): void => {
+const Notice = (settings: IProps): any => {
   const {
     text,
     textButton,
-    duration = 5,
+    duration = TIME_SHOW_NOTICE,
     className,
     icon = <InfoCircleOutlined />,
     handleOk,
@@ -61,5 +62,4 @@ const Notice = (settings: IProps): void => {
 
   notification.open(config);
 };
-
 export default Notice;

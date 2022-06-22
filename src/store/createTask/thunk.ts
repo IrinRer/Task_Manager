@@ -95,7 +95,7 @@ export const cloneTaskAction = createAsyncThunk(
       const state = getState() as RootState;
       const responsibleRoleID = getResponsibleRoleID(state);
       const author_id = getTaskAuthorIDParams(state, task);
-
+      /// /await dispatch(setTaskMemberAction());
       try {
         const responseResponsible = await api().post(
           `/api/v1.0/task/tasks/${task.task_id}/role-assign`,

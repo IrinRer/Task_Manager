@@ -59,6 +59,7 @@ export const setTaskMemberAction = createAsyncThunk(
       );
       return response.data.data;
     } catch (error) {
+      /// if 500
       notification.error({ message: 'Ошибка назначения участника' });
       return rejectWithValue(error.message);
     }
