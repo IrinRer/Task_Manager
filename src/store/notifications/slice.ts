@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
+import { mergeArrays } from 'helpers/mergeArrays';
 import {
   changeNotificationViewedAction,
   loadNewNotificationsAction,
@@ -7,6 +8,7 @@ import {
   setAllNotificationsViewedAction,
 } from './thunk';
 import {
+  IChangeNotificationViewedArgs,
   IGetNotificationsResponseData,
   INotification,
   INotificationsReducer,
@@ -104,7 +106,11 @@ export const notificationsSlice = createSlice({
     ) => {
       state.loading = false;
       state.new = payload;
-      state.allNotifications = [...state.allNotifications, ...payload.data];
+      // Если уведомление уже есть в списке, обновляем, иначе - добавляем.
+      state.allNotifications = mergeArrays(
+        state.allNotifications,
+        payload.data,
+      );
     },
     [loadNewNotificationsAction.rejected.type]: (
       state: INotificationsReducer,
@@ -125,7 +131,10 @@ export const notificationsSlice = createSlice({
     ) => {
       state.loading = false;
       state.viewed = payload;
-      state.allNotifications = [...state.allNotifications, ...payload.data];
+      state.allNotifications = mergeArrays(
+        state.allNotifications,
+        payload.data,
+      );
     },
     [loadViewedNotificationsAction.rejected.type]: (
       state: INotificationsReducer,
@@ -142,10 +151,16 @@ export const notificationsSlice = createSlice({
     },
     [changeNotificationViewedAction.fulfilled.type]: (
       state: INotificationsReducer,
+      { payload }: PayloadAction<IChangeNotificationViewedArgs>,
     ) => {
       state.loading = false;
+      state.allNotifications.forEach((n) => {
+        if (n.subscribe_notify_id === payload.subscribe_notify_id[0]) {
+          n.viewed = payload.viewed;
+        }
+      });
     },
-    [changeNotificationViewedAction.pending.type]: (
+    [changeNotificationViewedAction.rejected.type]: (
       state: INotificationsReducer,
       { payload }: PayloadAction<AxiosError>,
     ) => {
@@ -168,7 +183,7 @@ export const notificationsSlice = createSlice({
         }
       });
     },
-    [setAllNotificationsViewedAction.pending.type]: (
+    [setAllNotificationsViewedAction.rejected.type]: (
       state: INotificationsReducer,
       { payload }: PayloadAction<AxiosError>,
     ) => {

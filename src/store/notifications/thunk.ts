@@ -53,11 +53,8 @@ export const changeNotificationViewedAction = createAsyncThunk(
   `${NOTIFICATIONS_SLICE_ALIAS}/changeNotificationViewed`,
   async (args: IChangeNotificationViewedArgs, { rejectWithValue }) => {
     try {
-      const response: IGetNotificationsResponse = await api().post(
-        `/api/v1.0/subscribe/notifies/viewed-change`,
-        args,
-      );
-      return response.data;
+      await api().post(`/api/v1.0/subscribe/notifies/viewed-change`, args);
+      return args;
     } catch (error) {
       return rejectWithValue(error.message);
     }
