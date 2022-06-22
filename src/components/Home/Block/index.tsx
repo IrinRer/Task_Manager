@@ -4,9 +4,10 @@ import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { setPage, setSortField, setTasksOnPage } from 'store/tasks/slice';
 import { getViewParameters } from 'store/tasks/selectors';
 import { Col, Pagination, Row } from 'antd';
-import { BlockType, SortField, TTask } from 'constants/types/common';
+import { BlockType, SortField } from 'constants/types/common';
 import { BlockTitle } from 'constants/common';
 import { TaskContext } from 'components/Home/taskContext';
+import { IResponseTask } from 'store/common/task/types';
 import Sorter from './Sorter';
 import Task from './Task';
 import PaginationLabel from './PaginationLabel';
@@ -79,7 +80,7 @@ const Block: React.FC<IProps> = ({ blockType }) => {
       {/* Задачи */}
       <Col span={24}>
         {tasks.length > 0 ? (
-          tasks.map((task: TTask) => {
+          tasks.map((task: IResponseTask) => {
             return (
               <TaskContext.Provider key={task.task_id} value={task}>
                 <Task type={blockType} />

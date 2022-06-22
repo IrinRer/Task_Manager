@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { TRights } from 'constants/rights';
-import { ROLES, TTask } from 'constants/types/common';
+import { ROLES } from 'constants/types/common';
 import { RootState } from 'store';
 import { getVerifyIdUser } from 'store/auth/verify/selectors';
 import {
@@ -15,6 +15,7 @@ import {
   getTaskResponsibleIDParams,
   getTaskWatchersIDParams,
 } from 'store/tasks/selectors';
+import { IResponseTask } from '../task/types';
 import { IRoles } from './types';
 
 function isAuthorFromRoles(element: IRoles): boolean {
@@ -57,17 +58,17 @@ export const getRolesError = (state: RootState) => state.common.roles.error;
 
 export const getMyRolesForTask = createSelector(
   [
-    (state: RootState, task?: TTask) =>
+    (state: RootState, task?: IResponseTask) =>
       task ? getTaskAuthorIDParams(state, task) : getTaskAuthorID(state),
-    (state: RootState, task?: TTask) =>
+    (state: RootState, task?: IResponseTask) =>
       task
         ? getTaskImplementersIDParams(state, task)
         : getTaskImplementersID(state),
-    (state: RootState, task?: TTask) =>
+    (state: RootState, task?: IResponseTask) =>
       task
         ? getTaskResponsibleIDParams(state, task)
         : getTaskResponsibleID(state),
-    (state: RootState, task?: TTask) =>
+    (state: RootState, task?: IResponseTask) =>
       task ? getTaskWatchersIDParams(state, task) : getTaskWatchersID(state),
     getVerifyIdUser,
   ],
@@ -91,7 +92,7 @@ export const getMyRolesForTask = createSelector(
 );
 
 export const getMyMaxRoleForTask = createSelector(
-  (state: RootState, task?: TTask) => getMyRolesForTask(state, task),
+  (state: RootState, task?: IResponseTask) => getMyRolesForTask(state, task),
   (roles): TRights => {
     if (roles.includes(ROLES.author)) return ROLES.author;
     if (roles.includes(ROLES.responsible)) return ROLES.responsible;

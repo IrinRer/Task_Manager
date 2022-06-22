@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { TRole } from 'constants/types/common';
 import { TaskContext } from 'components/Home/taskContext';
+import { ITaskRoles } from 'store/common/task/types';
 import style from './index.module.scss';
 
 const AllUsersInTask: React.FC = () => {
@@ -9,7 +9,7 @@ const AllUsersInTask: React.FC = () => {
 
   return (
     <ul className={style.wrapper}>
-      {roles!.map((role: TRole) => {
+      {roles!.map((role: ITaskRoles) => {
         return <li key={role.task_to_role_id}>{role.assign_user.name}</li>;
       })}
     </ul>

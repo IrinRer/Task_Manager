@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
-import { TTask } from 'constants/types/common';
+import { IResponseTask } from 'store/common/task/types';
 import { cloneTaskAction, createTaskAction } from './thunk';
 import {
   CREATE_TASK_SLICE_ALIAS,
@@ -38,7 +38,7 @@ export const createTaskSlice = createSlice({
     },
     [createTaskAction.fulfilled.type]: (
       state: ICreateTaskReducer,
-      { payload }: PayloadAction<TTask>,
+      { payload }: PayloadAction<IResponseTask>,
     ) => {
       state.loading = false;
       state.task = payload;

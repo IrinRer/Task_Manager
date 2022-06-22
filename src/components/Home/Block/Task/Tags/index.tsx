@@ -1,5 +1,4 @@
 import CustomTag from 'components/Common/CustomTag';
-import { TTag } from 'constants/types/common';
 import React, { useContext } from 'react';
 import { TaskContext } from 'components/Home/taskContext';
 import styles from './index.module.scss';
@@ -8,7 +7,7 @@ const Tags: React.FC = () => {
   const task = useContext(TaskContext);
   const tags = task?.tags;
 
-  const renderTags = (tags: TTag[]): React.ReactElement => {
+  const renderTags = (tags): React.ReactElement => {
     const renderedTags = tags.length > 3 ? tags.slice(0, 3) : [...tags];
     return (
       <>

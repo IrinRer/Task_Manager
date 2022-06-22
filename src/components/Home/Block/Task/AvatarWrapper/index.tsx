@@ -1,16 +1,16 @@
 import React from 'react';
-import { TRole } from 'constants/types/common';
 import { Avatar } from 'antd';
 import { AVATAR_TEXT_COLOR } from 'constants/common';
 import { getAvatarColor, getInitialsFromName } from 'helpers/avatarHelper';
+import { ITaskRoles } from 'store/common/task/types';
 import styles from './index.module.scss';
 
 interface IProps {
-  role: TRole;
+  role: ITaskRoles;
 }
 
 const AvatarWrapper: React.FC<IProps> = ({ role }) => {
-  const renderRole = (role: TRole): React.ReactElement => {
+  const renderRole = (role: ITaskRoles): React.ReactElement => {
     if (role.assign_user.logo) {
       // Если есть ссылка на аватар - рендерим аватар
       return <Avatar src={role.assign_user.logo} />;

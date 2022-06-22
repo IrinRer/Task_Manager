@@ -1,5 +1,6 @@
 import { AxiosError } from 'axios';
-import { BlockType, SortField, TTask } from 'constants/types/common';
+import { BlockType, SortField } from 'constants/types/common';
+import { IResponseTask } from 'store/common/task/types';
 
 export const TASKS_SLICE_ALIAS = 'Thetasks';
 export type TViewParameters = {
@@ -14,7 +15,7 @@ export type TAllViewParameters = {
 };
 
 export interface ITasksReducer {
-  tasks: Array<TTask>;
+  tasks: Array<IResponseTask>;
   itemsTotal: number;
   loading: boolean;
   error: AxiosError | null;
@@ -35,7 +36,7 @@ export type TsetTasksOnPagePayload = {
 };
 
 export interface ITasksResponse {
-  data: Array<TTask>;
+  data: Array<IResponseTask>;
   pagination: IPagination;
 }
 

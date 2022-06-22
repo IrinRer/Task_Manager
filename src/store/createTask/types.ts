@@ -1,10 +1,10 @@
 import { AxiosError } from 'axios';
-import { TTask } from 'constants/types/common';
+import { IResponseTask } from 'store/common/task/types';
 
 export const CREATE_TASK_SLICE_ALIAS = 'createTask';
 
 export interface ICreateTaskReducer {
-  task: TTask | null;
+  task: IResponseTask | null;
   showTaskCreatedMessage: boolean;
   loading: boolean;
   error: AxiosError | null;
@@ -22,10 +22,10 @@ export interface ICloneTaskArg {
 }
 
 export interface TTaskCloneResponse {
-  clone: TTask;
+  clone: IResponseTask;
 }
 
 export interface ICloneTaskAction {
-  task: TTask;
+  task: IResponseTask;
   edit: boolean;
 }

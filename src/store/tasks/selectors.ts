@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from 'store';
-import { BlockType, TTask } from 'constants/types/common';
+import { BlockType } from 'constants/types/common';
 import { getVerifyIdUser } from 'store/auth/verify/selectors';
 import {
   getUsersIdFromRoles,
@@ -9,6 +9,7 @@ import {
   isResponsible,
   isWatcher,
 } from 'store/common/task/selectors';
+import { IResponseTask } from 'store/common/task/types';
 import {
   blockTasksTotal,
   getMyTasks,
@@ -75,7 +76,7 @@ export const getTaskById = createSelector(
 export const getTaskWatchersIDParams = createSelector(
   [
     (state: RootState) => state.tasks.tasks,
-    (state, task: TTask | undefined) => task?.roles,
+    (state, task: IResponseTask | undefined) => task?.roles,
   ],
   (items, roles) => getUsersIdFromRoles(roles?.filter(isWatcher)),
 );
@@ -83,7 +84,7 @@ export const getTaskWatchersIDParams = createSelector(
 export const getTaskImplementersIDParams = createSelector(
   [
     (state: RootState) => state.tasks.tasks,
-    (state, task: TTask | undefined) => task?.roles,
+    (state, task: IResponseTask | undefined) => task?.roles,
   ],
   (items, roles) => getUsersIdFromRoles(roles?.filter(isImplementer)),
 );
@@ -91,7 +92,7 @@ export const getTaskImplementersIDParams = createSelector(
 export const getTaskResponsibleIDParams = createSelector(
   [
     (state: RootState) => state.tasks.tasks,
-    (state, task: TTask | undefined) => task?.roles,
+    (state, task: IResponseTask | undefined) => task?.roles,
   ],
   (items, roles) => roles?.find(isResponsible)?.assign_user.user_id,
 );
@@ -99,7 +100,7 @@ export const getTaskResponsibleIDParams = createSelector(
 export const getTaskAuthorIDParams = createSelector(
   [
     (state: RootState) => state.tasks.tasks,
-    (state, task: TTask | undefined) => task?.roles,
+    (state, task: IResponseTask | undefined) => task?.roles,
   ],
   (items, roles) => roles?.find(isAuthor)?.assign_user.user_id,
 );

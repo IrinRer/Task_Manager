@@ -1,4 +1,4 @@
 import { createContext } from 'react';
-import { TTask } from '../../constants/types/common';
+import { IResponseTask } from 'store/common/task/types';
 
-export const TaskContext = createContext<TTask | null>(null);
+export const TaskContext = createContext<IResponseTask | null>(null);
