@@ -3,23 +3,27 @@ import { Button, notification } from 'antd';
 import { TStatus } from 'constants/types/common';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { selectStatuses } from 'store/common/statuses/selectors';
+import {
+  getCompletedStatusID,
+  selectStatuses,
+} from 'store/common/statuses/selectors';
 import { changeTaskStatusAction } from 'store/tasks/thunk';
-import { changeEditTaskStatusAction } from 'store/editTask/thunk';
 import { getTaskById } from 'store/tasks/selectors';
 import classnames from 'classnames';
+import { format } from 'date-fns';
+import { DATE_FORMAT_SERVER } from 'constants/common';
 import styles from './index.module.scss';
 
 interface IProps {
   taskId: string;
-  edit?: boolean;
 }
 
 // флаг edit = true при изменении статуса в модальном окне. диспатчится другой экшн
 
-const StatusChange: React.FC<IProps> = ({ taskId, edit = false }) => {
+const StatusChange: React.FC<IProps> = ({ taskId }) => {
   const dispatch = useAppDispatch();
   const statuses = useAppSelector(selectStatuses);
+  const completedStatusId = useAppSelector(getCompletedStatusID);
   const task = useAppSelector((state) => getTaskById(state, taskId));
 
   const handleClick = (task_status_id: string) => {
@@ -27,11 +31,19 @@ const StatusChange: React.FC<IProps> = ({ taskId, edit = false }) => {
       notification.warn({ message: 'У Вас нет прав на изменение статуса' });
       return;
     }
-    if (edit) {
-      dispatch(changeEditTaskStatusAction({ task_id: taskId, task_status_id }));
-    } else {
-      dispatch(changeTaskStatusAction({ task_id: taskId, task_status_id }));
-    }
+
+    const dateStop =
+      task_status_id === completedStatusId
+        ? format(new Date(), DATE_FORMAT_SERVER)
+        : '';
+
+    dispatch(
+      changeTaskStatusAction({
+        task_id: taskId,
+        task_status_id,
+        exec_stop: dateStop,
+      }),
+    );
   };
 
   return (

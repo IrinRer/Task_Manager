@@ -1,17 +1,30 @@
 import { Avatar } from 'antd';
 import classnames from 'classnames';
+import { DATE_TIME_FORMAT } from 'constants/common';
 import { ROUTES } from 'constants/routes';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
+import { format } from 'date-fns';
+import ru from 'date-fns/locale/ru';
 import React, { useContext } from 'react';
 import { generatePath, useNavigate } from 'react-router-dom';
 import { changeNotificationViewedAction } from 'store/notifications/thunk';
 import { NotifierContext } from '../../../notifierContext';
 import styles from './index.module.scss';
+import ReadIcon from './ReadIcon';
 
 const Body = () => {
   const notification = useContext(NotifierContext);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  let dateCreated;
+
+  if (notification) {
+    dateCreated = format(
+      new Date(notification.history_command.created),
+      DATE_TIME_FORMAT,
+      { locale: ru },
+    );
+  }
 
   const classNames = classnames(
     styles.wrapper,
@@ -34,9 +47,8 @@ const Body = () => {
   };
 
   return (
-    <div className={classNames}>
-      {' '}
-      <div className={styles.header} onClick={openTask}>
+    <div className={classNames} onClick={openTask}>
+      <div className={styles.header}>
         {notification?.history_command.params.task?.title}
       </div>
       <div className={styles.body}>
@@ -49,6 +61,10 @@ const Body = () => {
             {notification?.history_command.command_name}
           </div>
         </div>
+      </div>
+      <div className={styles.footer}>
+        {notification?.viewed && <ReadIcon />}
+        <span>{dateCreated}</span>
       </div>
     </div>
   );

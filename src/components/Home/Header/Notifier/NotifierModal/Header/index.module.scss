@@ -38,4 +38,12 @@
     line-height: 20px;
     text-decoration: underline;
   }
+  .noNew {
+    color: $gray-800;
+    cursor: default;
+    font-size: $font-size-m;
+    font-weight: 300;
+    line-height: 20px;
+    text-decoration: underline;
+  }
 }

@@ -28,10 +28,12 @@ const Task: React.FC<IProps> = ({ type }) => {
       {/* Заголовок задачи с указателями вложений и прогресса */}
       <Col span={7} className={styles.title}>
         <Title />
-        <div className={styles.flex}>
-          <Attached />
-          <Progress />
-        </div>
+        {(task?.storage_files_meta.total > 0 || task?.progress) && (
+          <div className={styles.flex}>
+            <Attached />
+            <Progress />
+          </div>
+        )}
       </Col>
       {/* Статус со всплывающим селектором смены статуса */}
       <Col span={3} className={styles.status}>

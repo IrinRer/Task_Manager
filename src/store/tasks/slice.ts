@@ -114,6 +114,7 @@ export const tasksSlice = createSlice({
       state.tasks?.forEach((task) => {
         if (task.task_id === payload.task_id) {
           task.status = payload.status;
+          task.exec_stop = payload.exec_stop;
         }
       });
       state.loading = false;

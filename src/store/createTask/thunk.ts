@@ -37,23 +37,26 @@ export const cloneTaskAction = createAsyncThunk(
       );
       let task = { ...response.data.clone };
       // Удаляем всех кроме автора
-      response.data.clone.roles.forEach(async (role) => {
-        if (role.task_role.name !== ROLES.author && task.roles.length > 1) {
-          const roleResponse = await api().post(
-            `/api/v1.0/task/tasks/${response.data.clone.task_id}/role-unassign`,
-            {
-              task_role_id: role.task_role.task_role_id,
-              assign_user_id: role.assign_user.user_id,
-            },
-          );
-          task = { ...roleResponse.data.data };
-        }
-      });
+      if (response.data.clone.roles.length > 1) {
+        response.data.clone.roles.forEach(async (role) => {
+          if (role.task_role.name !== ROLES.author && task.roles.length > 1) {
+            const roleResponse = await api().post(
+              `/api/v1.0/task/tasks/${response.data.clone.task_id}/role-unassign`,
+              {
+                task_role_id: role.task_role.task_role_id,
+                assign_user_id: role.assign_user.user_id,
+              },
+            );
+            task = { ...roleResponse.data.clone };
+          }
+        });
+      }
       // Назначаем автора ответственным
       const responseResponsible = await api().post(
         `/api/v1.0/task/tasks/${task.task_id}/role-assign`,
         {
-          task_role_id: task.roles[1].task_role.task_role_id,
+          task_role_id:
+            '57a5360b-7c3b-4de0-b536-a5657ac7da32' /* task.roles[1].task_role.task_role_id */, // вставить роль ответственного
           assign_user_id: task.roles[0].assign_user.user_id,
         },
       );

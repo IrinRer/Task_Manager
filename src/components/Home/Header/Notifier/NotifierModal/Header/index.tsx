@@ -16,15 +16,19 @@ const Header = () => {
   };
 
   return (
-    // модульный стиль верхнего div съедается antd
+    // модульный стиль верхнего div съедается antd поэтому глобальный
     <div className="notify-header">
       <div className={styles.title}>
         <span>Уведомления</span>
         <span className={styles.count}>{newTotal}</span>
       </div>
-      <div className={styles.readAll} onClick={handleReadAll}>
-        Прочитать все
-      </div>
+      {newTotal > 0 ? (
+        <div className={styles.readAll} onClick={handleReadAll}>
+          Прочитать все
+        </div>
+      ) : (
+        <div className={styles.noNew}>Прочитано</div>
+      )}
     </div>
   );
 };

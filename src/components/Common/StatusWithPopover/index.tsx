@@ -31,7 +31,7 @@ const StatusWithPopover: React.FC<IProps> = ({ taskId, edit = false }) => {
   return (
     <Popover
       overlayClassName="status-popover"
-      content={<StatusChange taskId={taskId} edit={edit} />}
+      content={<StatusChange taskId={taskId} />}
       trigger={trigger}
     >
       <div className={styles.status}>

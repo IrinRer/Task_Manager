@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
-
+import React, { useEffect, useRef } from 'react';
+import { TTimer } from 'constants/types/common';
+import { RELOAD_TASKS_INTERVAL } from 'constants/common';
 import { fetchAllRoles } from 'store/common/roles/thunk';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
@@ -14,11 +15,13 @@ import { resetVerify } from 'store/auth/verify/slice';
 import { fetchUsersAction } from '../../store/users/thunk';
 import { fetchTagsAction } from '../../store/common/tags/thunk';
 import { fetchTasksAction } from '../../store/tasks/thunk';
+
 import { fetchPrioritiesAction } from '../../store/common/priorities/thunk';
 import { fetchStatusesAction } from '../../store/common/statuses/thunk';
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
+  const reloadTasksRef = useRef<TTimer>(null);
   const token = getToken();
   const verifyToken = useAppSelector(getVerifyToken);
   const modalVisible = useAppSelector(getModalVisible);
@@ -53,7 +56,18 @@ const App: React.FC = () => {
     if (verifyToken && !modalVisible) {
       dispatch(fetchTasksAction());
     }
+    reloadTasksRef.current = setInterval(() => {
+      dispatch(fetchTasksAction());
+    }, RELOAD_TASKS_INTERVAL);
+
+    return clearReloadTasksInterval;
   }, [dispatch, modalVisible, verifyToken]);
+
+  const clearReloadTasksInterval = () => {
+    if (reloadTasksRef.current) {
+      clearInterval(reloadTasksRef.current);
+    }
+  };
 
   return <CreateRoutes />;
 };

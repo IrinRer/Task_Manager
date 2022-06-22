@@ -1,0 +1,7 @@
+.wrapper {
+  svg {
+    rect:global(#rect-id) {
+      stroke: none;
+    }
+  }
+}

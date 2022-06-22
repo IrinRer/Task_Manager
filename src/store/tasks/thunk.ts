@@ -53,6 +53,15 @@ export const changeTaskStatusAction = createAsyncThunk(
           task_status_id: arg.task_status_id,
         },
       );
+
+      if (arg.exec_stop.length > 0) {
+        const responseDateStop = await api().post(
+          `/api/v1.0/task/tasks/${arg.task_id}/exec-stop-change`,
+          { exec_stop: arg.exec_stop },
+        );
+        if (responseDateStop.data.data) return responseDateStop.data.data;
+      }
+
       return response.data.data;
     } catch (error) {
       notification.error({ message: 'Ошибка изменения статуса' });

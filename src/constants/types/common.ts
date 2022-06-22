@@ -123,6 +123,7 @@ export enum SortField {
 export interface IStatusChangeArg {
   task_id: string;
   task_status_id: string;
+  exec_stop: string;
 }
 
 export enum TagColor {
@@ -144,3 +145,5 @@ export enum ROLES {
   /* any - любой авторизованный пользователь, может быть без роли для конкретной задачи */
   any = 'any',
 }
+
+export type TTimer = ReturnType<typeof setTimeout> | null;

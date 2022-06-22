@@ -91,3 +91,7 @@ export enum NOTIFIER_COMMANDS {
 }
 
 export const NOTIFICATION_COUNT_INCREMENT = 20;
+
+export const RELOAD_TASKS_INTERVAL = 420000; // Перезагружаем задачи каждые 7 минут
+
+export const DATE_TIME_FORMAT = 'dd MMM yyyy h:mm';
