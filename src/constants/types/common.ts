@@ -1,62 +1,8 @@
-// export type TRole = {
-//   task_to_role_id: string;
-//   task: { task_id: string };
-//   task_role: {
-//     task_role_id: string;
-//     name: ROLES;
-//     name_group: string;
-//     max_user_assigned: number;
-//     is_author: boolean;
-//     created: string;
-//     updated: string;
-//   };
-//   assign_user: {
-//     user_id: string;
-//     name: string;
-//     logo: string | null;
-//     permissions: Array<string>;
-//   };
-// };
-
 export type TProgress = {
   percent: number;
   completed: number;
   total: number;
 } | null;
-
-// export type IResponseTask = {
-//   progress: TProgress;
-//   roles: ITaskRoles[];
-//   // status: { name: string; task_status_id: string };
-//   // priority: null | { name: PriorityName };
-//   tags: TTag[];
-//   // storage_files_meta: { total: number };
-//   task_id: string;
-//   title: string;
-//   description: string;
-//   exec_start: string | null;
-//   exec_stop: string | null;
-//   created: string;
-//   updated: string;
-//   status: {
-//     task_status_id: string;
-//     name: string;
-//     form_result_required: false;
-//   };
-//   priority: IPriority | null;
-//   form: null;
-//   form_available: false;
-//   form_result: null;
-//   // roles: Array<ITaskRoles> | null;
-//   // tags: Array<ITag>;
-//   // progress: null;
-//   check_lists: [];
-//   storage_files: [];
-//   storage_files_meta: {
-//     total: number;
-//   };
-//   permissions: Array<string>;
-// };
 
 export type TStatus = {
   task_status_id: string;
@@ -66,20 +12,6 @@ export type TStatus = {
   created: string;
   updated: string;
 };
-
-// export type TTag = {
-//   task_to_tag_id: string;
-//   task: {
-//     task_id: string;
-//   };
-//   task_tag: {
-//     task_tag_id: string;
-//     name: string;
-//     color: TagColor;
-//     created: string;
-//     updated: string;
-//   };
-// };
 
 export type TAvatarSize = AVATAR_SIZE.large | AVATAR_SIZE.medium;
 
