@@ -21,6 +21,7 @@ import commonPrioritiesReducer from './common/priorities/slice';
 import commonStatusesReducer from './common/statuses/slice';
 import onetaskReducer from './common/task/slice';
 import editTaskReducer from './editTask/slice';
+import historyReducer from './history/slice';
 import createTaskReducer from './createTask/slice';
 import addCheckListReducer from './editTask/checkLists/addCheckList/slice';
 import deleteCheckListReducer from './editTask/checkLists/deleteCheckList/slice';
@@ -58,6 +59,7 @@ import { ISetCheckListItemPositionReducer } from './editTask/checkLists/setCheck
 export const store = configureStore({
   reducer: {
     tasks: tasksReducer,
+    history: historyReducer,
     editTask: combineReducers({
       editTaskReducer,
       additionalFunctions: combineReducers({
@@ -101,6 +103,7 @@ export type AppDispatch = typeof store.dispatch;
 
 export type RootState = {
   tasks: ITasksReducer;
+  history: any;
   editTask: CombinedState<{
     editTaskReducer: IEditTaskReducer;
     additionalFunctions: CombinedState<{

@@ -16,6 +16,7 @@ import { fetchTagsAction } from 'store/common/tags/thunk';
 import { fetchTasksAction } from 'store/tasks/thunk';
 import { fetchPrioritiesAction } from 'store/common/priorities/thunk';
 import { fetchStatusesAction } from 'store/common/statuses/thunk';
+import { historyCommandAction } from 'store/history/thunk';
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -46,6 +47,7 @@ const App: React.FC = () => {
       dispatch(fetchPrioritiesAction());
       dispatch(fetchStatusesAction());
       dispatch(fetchAllRoles());
+      dispatch(historyCommandAction())
     }
   }, [dispatch, verifyToken]);
 

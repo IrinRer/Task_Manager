@@ -2,6 +2,7 @@
 @import 'src/styles/color-variables';
 
 .history {
+  margin-top: 20px;
   p {
     font-size: $font-size-m;
     display: flex;
@@ -11,10 +12,54 @@
     margin-bottom: 0;
   }
   .historyElem {
-    display: inline-block;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    align-items: center;
+
+    :global(.ant-avatar) {
+      min-width: 32px;
+    }
   }
   .date {
     color: $heading;
     display: inline-block;
+  }
+}
+
+.spanUser {
+  margin-left: 10px;
+}
+
+.historyElemItem {
+  display: flex;
+  margin-left: 7%;
+
+  :global(.ant-avatar) {
+    min-width: 32px;
+  }
+}
+
+.historyElemDate {
+  display: flex;
+  align-items: center;
+  margin-left: 7%;
+
+  span {
+    margin-left: 10px;
+  }
+
+  .spanDate {
+    font-weight: bold;
+  }
+}
+
+.historyElemStatus {
+  display: flex;
+  margin-left: 7%;
+
+  .spanStatus {
+    font-weight: bold;
+    text-transform: uppercase;
   }
 }
