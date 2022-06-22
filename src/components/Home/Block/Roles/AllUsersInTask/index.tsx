@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { TRole } from 'constants/types/common';
-import { TaskContext } from 'constants/taskContext';
+import { TaskContext } from 'components/Home/taskContext';
 import style from './index.module.scss';
 
 const AllUsersInTask: React.FC = () => {
