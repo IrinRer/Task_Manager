@@ -2,7 +2,10 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { notification } from 'antd';
 import { ROLES } from 'constants/types/common';
 import { RootState } from 'store';
-import { getResponsibleRoleID } from 'store/common/roles/selectors';
+import {
+  getResponsibleRoleID,
+  getWatcherRoleID,
+} from 'store/common/roles/selectors';
 import { getTaskAuthorIDParams } from 'store/tasks/selectors';
 import { addTask } from 'store/tasks/slice';
 import { api } from '../../network';
@@ -20,23 +23,41 @@ export const createTaskAction = createAsyncThunk(
         title: arg.title,
         task_status_id: arg.task_status_id,
       });
-      dispatch(addTask(response.data.data));
-      return response.data.data;
+      let result = response;
 
       // Назначаем автора ответственным
-      /* const state = getState() as RootState;
+      const state = getState() as RootState;
       const responsibleRoleID = getResponsibleRoleID(state);
       const author_id = getTaskAuthorIDParams(state, response.data.data);
+      try {
+        const responseResponsible = await api().post(
+          `/api/v1.0/task/tasks/${response.data.data.task_id}/role-assign`,
+          {
+            assign_user_id: author_id,
+            task_role_id: responsibleRoleID,
+          },
+        );
+        result = responseResponsible;
+      } catch (error) {
+        /* */
+      }
 
-      const responseResponsible = await api().post(
-        `/api/v1.0/task/tasks/${response.data.data.task_id}/role-assign`,
-        {
-          assign_user_id: author_id,
-          task_role_id: responsibleRoleID,
-        },
-      );
-      dispatch(addTask(responseResponsible.data.data));
-      return responseResponsible.data.data; */
+      try {
+        // Назначаем автора наблюдателем
+        const watcherRoleID = getWatcherRoleID(state);
+        const responseWatcher = await api().post(
+          `/api/v1.0/task/tasks/${response.data.data.task_id}/role-assign`,
+          {
+            assign_user_id: author_id,
+            task_role_id: watcherRoleID,
+          },
+        );
+        result = responseWatcher;
+      } catch (error) {
+        /* */
+      }
+      dispatch(addTask(result.data.data));
+      return result.data.data;
     } catch (error) {
       notification.error({ message: 'Ошибка создания задачи' });
       return rejectWithValue(error.message);
@@ -54,6 +75,8 @@ export const cloneTaskAction = createAsyncThunk(
         {},
       );
       let task = { ...response.data.clone };
+      let result = response;
+
       // Удаляем всех кроме автора
       response.data.clone.roles.forEach(async (role) => {
         if (role.task_role.name !== ROLES.author && task.roles.length > 1) {
@@ -68,31 +91,42 @@ export const cloneTaskAction = createAsyncThunk(
         }
       });
 
-      /* const state = getState() as RootState;
+      // Назначаем автора ответственным
+      const state = getState() as RootState;
       const responsibleRoleID = getResponsibleRoleID(state);
       const author_id = getTaskAuthorIDParams(state, task);
 
-      const responseResponsible = await api().post(
-        `/api/v1.0/task/tasks/${task.task_id}/role-assign`,
-        {
-          task_role_id: responsibleRoleID,
-          assign_user_id: author_id,
-        },
-      ); */
+      try {
+        const responseResponsible = await api().post(
+          `/api/v1.0/task/tasks/${task.task_id}/role-assign`,
+          {
+            task_role_id: responsibleRoleID,
+            assign_user_id: author_id,
+          },
+        );
+        result = responseResponsible;
+      } catch (error) {
+        /* */
+      }
 
-      // Назначаем автора ответственным
-      const responseResponsible = await api().post(
-        `/api/v1.0/task/tasks/${task.task_id}/role-assign`,
-        {
-          task_role_id: task.roles[1].task_role.task_role_id,
-          assign_user_id: task.roles[0].assign_user.user_id,
-        },
-      );
+      try {
+        // Назначаем автора наблюдателем
+        const watcherRoleID = getWatcherRoleID(state);
+        const responseWatcher = await api().post(
+          `/api/v1.0/task/tasks/${task.task_id}/role-assign`,
+          {
+            assign_user_id: author_id,
+            task_role_id: watcherRoleID,
+          },
+        );
+        result = responseWatcher;
+      } catch (error) {
+        /* */
+      }
 
       // Пишем в таски чтоб не обновлять список с бэкэнда
-      dispatch(addTask(responseResponsible.data.data));
-      notification.success({ message: 'Копия задачи создана' });
-      return { task: responseResponsible.data.data, edit: args.edit };
+      dispatch(addTask(result.data.data));
+      return { task: result.data.data, edit: args.edit };
     } catch (error) {
       notification.error({ message: 'Ошибка дублирования задачи' });
       return rejectWithValue(error.message);
