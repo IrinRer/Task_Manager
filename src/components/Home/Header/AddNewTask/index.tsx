@@ -9,9 +9,7 @@ import AddTaskForm from '../AddTaskForm';
 import styles from './index.module.scss';
 
 const AddNewTask = () => {
-  const [showForm, setShowForm] = useState(false);
-  // const showMessage = useAppSelector(getShowTaskCreatedMessage);
-  // const dispatch = useAppDispatch();
+  const [showForm, setShowForm] = useState<boolean>(false);
 
   const closeForm = (): void => {
     setShowForm(false);

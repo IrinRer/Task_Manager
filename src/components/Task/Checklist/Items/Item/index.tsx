@@ -1,18 +1,18 @@
-import React from 'react';
-import { Checkbox, Popover } from 'antd';
+import React, { useState } from 'react';
+import { Checkbox } from 'antd';
 import classnames from 'classnames';
-import { ReactComponent as MoreIcon } from 'assets/icons/more.svg';
 import filterStyles from 'components/Home/Filters/index.module.scss';
 import { ICheckListItem } from 'store/common/task/types';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { ICheckListChangeCompleteStatus } from 'store/editTask/types';
-import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { getIsTaskEditable } from 'store/editTask/selectors';
-import { isDeleteCheckListItemLoading } from 'store/editTask/checkLists/deleteCheckListItem/selectors';
 import { setCompleteCheckListItem } from 'store/editTask/checkLists/setCompleteCheckListItem/thunk';
-import Spinner from 'components/Common/Spinner';
-import { deleteCheckListItem } from 'store/editTask/checkLists/deleteCheckListItem/thunk';
+import { useGetRights } from 'customHooks/useGetRights';
+import { RIGHTS_NAMES } from 'constants/rights';
+import { setDraggedItemId } from 'store/editTask/checkLists/setCheckListItemPosition/slice';
+import { setCheckListItemPosition } from 'store/editTask/checkLists/setCheckListItemPosition/thunk';
+import ActionsMenu from './ActionsMenu';
+import DragButton from './DragButton';
 import styles from './index.module.scss';
 
 interface IProps {
@@ -24,8 +24,15 @@ const CheckListItem: React.FC<IProps> = ({ checkListItem }) => {
 
   const { check_list_item_id, message, complete } = checkListItem;
 
-  const isTaskEditable = useAppSelector(getIsTaskEditable);
-  const isCheckListItemLoading = useAppSelector(isDeleteCheckListItemLoading);
+  const isRights = useGetRights(RIGHTS_NAMES.editChecklistItem);
+
+  const [isHover, setIsHover] = useState<boolean>(false);
+  const [isDraggedOver, setIsDraggedOver] = useState<boolean>(false);
+  const [isDraggable, setIsDraggable] = useState<boolean>(false);
+
+  const checkListItemClassName = classnames(styles.checkListItem, {
+    [styles.checkListItemDraggedOver]: isDraggedOver,
+  });
 
   const checkBoxClassName = classnames(
     filterStyles.checkboxGroup,
@@ -36,47 +43,70 @@ const CheckListItem: React.FC<IProps> = ({ checkListItem }) => {
     [styles.checkBoxTextCompleted]: complete,
   });
 
-  const handleDeleteCheckListItem = () => {
-    dispatch(deleteCheckListItem(check_list_item_id));
-  };
-
   const toggleCheckListItemComplete = (evt: CheckboxChangeEvent) => {
     const data: ICheckListChangeCompleteStatus = {
       check_list_item_id,
       complete: evt.target.checked,
     };
+
     dispatch(setCompleteCheckListItem(data));
   };
 
+  const handleCheckListItemHover = () => {
+    setIsHover(true);
+  };
+
+  const handleCheckListItemHoverLeave = () => {
+    setIsHover(false);
+  };
+
+  const handleDragStart = () => {
+    dispatch(setDraggedItemId(checkListItem.check_list_item_id));
+  };
+
+  const handleDragOver = (evt: React.MouseEvent) => {
+    evt.preventDefault();
+    setIsDraggedOver(true);
+  };
+
+  const handleOnDrop = () => {
+    dispatch(setCheckListItemPosition(checkListItem.check_list_item_id));
+    setIsDraggedOver(false);
+  };
+
+  function handleDragLeave() {
+    setIsDraggedOver(false);
+  }
+
+  const handleDragEnd = () => {
+    setIsDraggable(false);
+  };
+
+  const handleDragIconMouseDown = () => {
+    setIsDraggable(true);
+  };
+
   return (
-    <div className={styles.checkListItem}>
+    <div
+      className={checkListItemClassName}
+      draggable={isDraggable}
+      onDragStart={handleDragStart}
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDragEnd={handleDragEnd}
+      onDrop={handleOnDrop}
+      onMouseEnter={handleCheckListItemHover}
+      onMouseLeave={handleCheckListItemHoverLeave}
+    >
+      <DragButton isHover={isHover} onMouseDown={handleDragIconMouseDown} />
       <Checkbox
         checked={complete}
         className={checkBoxClassName}
         onChange={toggleCheckListItemComplete}
-        disabled={!isTaskEditable}
+        disabled={!isRights}
       />
       <p className={checkBoxTextClassName}>{message}</p>
-      <Popover
-        trigger="click"
-        content={
-          isCheckListItemLoading ? (
-            <Spinner />
-          ) : (
-            <button
-              type="button"
-              className={styles.menuOption}
-              onClick={handleDeleteCheckListItem}
-            >
-              Удалить&nbsp;пункт
-            </button>
-          )
-        }
-        overlayClassName={styles.popoverMenu}
-        placement="bottomRight"
-      >
-        {isTaskEditable && <MoreIcon className={styles.moreButton} />}
-      </Popover>
+      <ActionsMenu check_list_item_id={check_list_item_id} isHover={isHover} />
     </div>
   );
 };

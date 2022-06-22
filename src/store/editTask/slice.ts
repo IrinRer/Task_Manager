@@ -20,6 +20,7 @@ import { changeTaskStatusAction } from 'store/tasks/thunk';
 
 const initialState: IEditTaskReducer = {
   modalVisible: false,
+  modalDeleteTaskVisible: false,
   data: null,
   editLoading: {
     task: false,
@@ -62,6 +63,13 @@ export const editTaskSlice = createSlice({
       state.modalVisible = action.payload;
     },
 
+    setModalDeleteTaskVisible: (
+      state: IEditTaskReducer,
+      action: PayloadAction<boolean>,
+    ) => {
+      state.modalDeleteTaskVisible = action.payload;
+    },
+
     setNewSelectedMembers: (
       state: IEditTaskReducer,
       action: PayloadAction<Array<string>>,
@@ -99,6 +107,10 @@ export const editTaskSlice = createSlice({
     updateCheckListTitle: (state, { payload }: PayloadAction<ICheckList>) => {
       state.data!.check_lists[0].title = payload.title;
       state.data!.check_lists[0].updated = payload.updated;
+    },
+
+    updateCheckList: (state, { payload }: PayloadAction<ICheckList>) => {
+      state.data!.check_lists[0] = payload;
     },
 
     updateCheckListItem: (
@@ -226,7 +238,6 @@ export const editTaskSlice = createSlice({
       state: IEditTaskReducer,
       { payload }: PayloadAction<AxiosError>,
     ) => {
-      // state.response = null;
       state.editLoading.status = false;
       state.editError.status = payload;
     },
@@ -269,9 +280,11 @@ export const {
   setNewSelectedMembers,
   setUnselectedMembers,
   setModalVisible,
+  setModalDeleteTaskVisible,
   setEditTask,
   addCheckListItemToTask,
   removeCheckListItemFromTask,
+  updateCheckList,
   updateCheckListTitle,
   updateCheckListItem,
 } = editTaskSlice.actions;

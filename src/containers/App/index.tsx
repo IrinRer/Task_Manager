@@ -12,12 +12,11 @@ import CreateRoutes from 'containers/Routes';
 import { addVerifyToken, resetAuth } from 'store/auth/token/slice';
 import { getModalVisible } from 'store/editTask/selectors';
 import { resetVerify } from 'store/auth/verify/slice';
-import { fetchUsersAction } from '../../store/users/thunk';
-import { fetchTagsAction } from '../../store/common/tags/thunk';
-import { fetchTasksAction } from '../../store/tasks/thunk';
-
-import { fetchPrioritiesAction } from '../../store/common/priorities/thunk';
-import { fetchStatusesAction } from '../../store/common/statuses/thunk';
+import { fetchUsersAction } from 'store/users/thunk';
+import { fetchTagsAction } from 'store/common/tags/thunk';
+import { fetchTasksAction } from 'store/tasks/thunk';
+import { fetchPrioritiesAction } from 'store/common/priorities/thunk';
+import { fetchStatusesAction } from 'store/common/statuses/thunk';
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();

@@ -10,14 +10,15 @@ import { setTaskMemberAction } from 'store/editTask/thunk';
 import { selectPopulatedUsers } from 'store/users/selectors';
 import { IPopulatedUser } from 'store/users/types';
 import { ROLES } from 'constants/types/common';
-import SimpleSelect from 'components/Common/SimpleSelect';
-import { RoleContext } from 'constants/common';
+import MemberItem from 'components/Task/Members/MemberItem';
+import { RightsRoleContext } from 'components/Task/context';
 import styles from './index.module.scss';
 import useSelectOptions from '../TaskHook/useSelectOptions';
 import useMembersProps from '../MembersHook/useMembersProps';
+import CustomSelect from '../CustomSelect';
 
 const AddMemberButton: FC = () => {
-  const roleName = useContext(RoleContext);
+  const roleName = useContext(RightsRoleContext).role;
   const dispatch = useAppDispatch();
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const options = useSelectOptions();
@@ -65,7 +66,7 @@ const AddMemberButton: FC = () => {
   return (
     <div className={styles.addmemberWrapper}>
       {isVisible ? (
-        <SimpleSelect
+        <CustomSelect
           {...options.common}
           list={allUsers}
           itemKey="key"
@@ -85,7 +86,9 @@ const AddMemberButton: FC = () => {
           onChange={onChange}
           onBlur={onBlur}
           onSearch={options.particular.handleSearch}
-        />
+        >
+          {MemberItem}
+        </CustomSelect>
       ) : (
         <Button className={styles.addmember} onClick={showMemberModal}>
           + добавить участника

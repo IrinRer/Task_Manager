@@ -1,6 +1,6 @@
 import { createContext } from 'react';
-import { ROLES } from './types/common';
 import { TRights } from './rights';
+import { ROLES } from './types/common';
 
 export const BASE_DATE_FORMAT = 'DD.MM.YYYY' as const;
 
@@ -95,3 +95,4 @@ export const NOTIFICATION_COUNT_INCREMENT = 20;
 export const RELOAD_TASKS_INTERVAL = 420000; // Перезагружаем задачи каждые 7 минут
 
 export const DATE_TIME_FORMAT = 'dd MMM yyyy h:mm';
+export const MAX_USER_INITIALS = 2;

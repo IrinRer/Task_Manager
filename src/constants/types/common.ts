@@ -16,6 +16,7 @@ export type TRole = {
     user_id: string;
     name: string;
     logo: string | null;
+    permissions: Array<string>;
   };
 };
 
@@ -85,6 +86,13 @@ export type TTag = {
   };
 };
 
+export type TAvatarSize = AVATAR_SIZE.large | AVATAR_SIZE.medium;
+
+export interface IUserAvatar<T> {
+  obj: T;
+  size?: TAvatarSize;
+}
+
 export enum BlockType {
   in = 'in',
   work = 'work',
@@ -147,3 +155,7 @@ export enum ROLES {
 }
 
 export type TTimer = ReturnType<typeof setTimeout> | null;
+export enum AVATAR_SIZE {
+  large = 'L',
+  medium = 'M',
+}

@@ -1,8 +1,11 @@
+import React from 'react';
 import { Popover } from 'antd';
 import StatusChange from 'components/Common/StatusWithPopover/StatusChange';
-import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
+import { RIGHTS_NAMES } from 'constants/rights';
+import { useAppSelector } from 'customHooks/redux/useAppSelector';
+import { useGetRights } from 'customHooks/useGetRights';
 import { getTaskById } from 'store/tasks/selectors';
 import { getTask } from 'store/editTask/selectors';
 import { TTask } from 'constants/types/common';
@@ -16,17 +19,17 @@ interface IProps {
 }
 
 const StatusWithPopover: React.FC<IProps> = ({ taskId, edit = false }) => {
-  let task: TTask | IResponseTask | undefined | null = useSelector(
-    (state: RootState) => getTaskById(state, taskId),
+  let task: TTask | undefined | null = useSelector((state: RootState) =>
+    getTaskById(state, taskId),
   );
+  // let task = useAppSelector((state) => getTaskById(state, taskId));
   const editTask = useSelector(getTask);
   if (edit) {
     task = editTask;
   }
 
-  const trigger = task /* && canUserChangeTaskStatus(userId, task) */
-    ? 'click'
-    : '';
+  const isRights = useGetRights(RIGHTS_NAMES.editStatus, task);
+  const trigger = task && isRights ? 'click' : '';
 
   return (
     <Popover

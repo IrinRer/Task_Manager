@@ -9,9 +9,9 @@ import { selectPriorityCheckboxesValues } from 'store/filters/selectors';
 import { fetchTasksAction } from 'store/tasks/thunk';
 import { IPopulatedPriority } from 'store/common/priorities/types';
 import classnames from 'classnames';
+import FilterWrapper from 'components/Common/FilterWrapper';
 import filterStyles from '../index.module.scss';
 import styles from './index.module.scss';
-import FilterWrapper from '../../../Common/FilterWrapper';
 import PriorityCheckboxLabel from './PriorityCheckboxLabel';
 
 const PriorityCheckboxGroup: React.FC = () => {

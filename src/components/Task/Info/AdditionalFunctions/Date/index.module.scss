@@ -5,14 +5,18 @@
   font-weight: normal;
   font-size: $font-size-m;
   text-transform: none;
-  width: 56%;
 }
 
 .date {
-  display: grid;
-  align-items: center;
-  grid-template-columns: 47% 48%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   padding-bottom: 17px;
+
+  :global(.ant-picker) {
+    padding: 0;
+    width: 56%;
+  }
 
   :global(.ant-picker-input) {
     display: flex;

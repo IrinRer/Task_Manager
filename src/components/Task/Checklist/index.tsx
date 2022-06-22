@@ -1,7 +1,9 @@
 import React from 'react';
 
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { getCheckList, getIsTaskEditable } from 'store/editTask/selectors';
+import { getCheckList } from 'store/editTask/selectors';
+import { RIGHTS_NAMES } from 'constants/rights';
+import { useGetRights } from 'customHooks/useGetRights';
 import CheckListAddNewItem from './AddNewItem';
 import CheckListItems from './Items';
 import CheckListHeader from './Header';
@@ -10,7 +12,7 @@ import styles from './index.module.scss';
 
 const Checklist: React.FC = () => {
   const checkList = useAppSelector(getCheckList);
-  const isTaskEditable = useAppSelector(getIsTaskEditable);
+  const isRights = useGetRights(RIGHTS_NAMES.editChecklistItem);
 
   if (!checkList) {
     return null;
@@ -20,8 +22,8 @@ const Checklist: React.FC = () => {
     <div className={styles.checklist}>
       <CheckListHeader />
       <CheckListProgress />
-      {checkList.items.length > 0 && <CheckListItems items={checkList.items} />}
-      {isTaskEditable && <CheckListAddNewItem />}
+      {checkList.items && <CheckListItems items={checkList.items} />}
+      {isRights && <CheckListAddNewItem />}
     </div>
   );
 };

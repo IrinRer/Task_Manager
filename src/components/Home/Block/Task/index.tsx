@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { Col, Row } from 'antd';
 import { BlockType } from 'constants/types/common';
-
 import StatusWithPopover from 'components/Common/StatusWithPopover';
 import { TaskContext } from 'components/Home/taskContext';
 import Attached from './Attached';

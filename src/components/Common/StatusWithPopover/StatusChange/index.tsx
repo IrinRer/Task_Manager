@@ -12,6 +12,8 @@ import { getTaskById } from 'store/tasks/selectors';
 import classnames from 'classnames';
 import { format } from 'date-fns';
 import { DATE_FORMAT_SERVER } from 'constants/common';
+import { useGetRights } from 'customHooks/useGetRights';
+import { RIGHTS_NAMES } from 'constants/rights';
 import styles from './index.module.scss';
 
 interface IProps {
@@ -25,9 +27,10 @@ const StatusChange: React.FC<IProps> = ({ taskId }) => {
   const statuses = useAppSelector(selectStatuses);
   const completedStatusId = useAppSelector(getCompletedStatusID);
   const task = useAppSelector((state) => getTaskById(state, taskId));
+  const isRights = useGetRights(RIGHTS_NAMES.editStatus, task);
 
   const handleClick = (task_status_id: string) => {
-    if (!(task /* && canUserChangeTaskStatus(userId, task) */)) {
+    if (!(task && isRights)) {
       notification.warn({ message: 'У Вас нет прав на изменение статуса' });
       return;
     }

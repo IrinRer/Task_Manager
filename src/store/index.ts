@@ -11,6 +11,7 @@ import dateReducer from 'store/editTask/additionalFunctions/date/slice';
 import tagReducer from 'store/editTask/additionalFunctions/tag/slice';
 import filtersReducer from 'store/filters/slice';
 import notificationsReducer from 'store/notifications/slice';
+import modalVisibleReducers from 'store/editTask/additionalFunctions/tag/modalVisible/slice';
 import tokenReducer from 'store/auth/token/slice';
 import verifyReducer from 'store/auth/verify/slice';
 import commonRolesReducer from './common/roles/slice';
@@ -28,6 +29,7 @@ import addCheckListItemReducer from './editTask/checkLists/addCheckListItem/slic
 import deleteCheckListItemReducer from './editTask/checkLists/deleteCheckListItem/slice';
 import setCheckListTitleReducer from './editTask/checkLists/setCheckListTitle/slice';
 import setCompleteCheckListItemReducer from './editTask/checkLists/setCompleteCheckListItem/slice';
+import setCheckListItemPositionReducer from './editTask/checkLists/setCheckListItemPosition/slice';
 
 import { ICommonTagsReducer } from './common/tags/types';
 import { ICommonProgressesReducer } from './common/progresses/types';
@@ -52,6 +54,8 @@ import { IDeleteCheckListItemReducer } from './editTask/checkLists/deleteCheckLi
 import { ISetCheckListTitleReducer } from './editTask/checkLists/setCheckListTitle/types';
 import { ISetCompleteCheckListItemReducer } from './editTask/checkLists/setCompleteCheckListItem/types';
 import { INotificationsReducer } from './notifications/types';
+import { IModalVisibleReducer } from './editTask/additionalFunctions/tag/modalVisible/types';
+import { ISetCheckListItemPositionReducer } from './editTask/checkLists/setCheckListItemPosition/types';
 
 export const store = configureStore({
   reducer: {
@@ -61,7 +65,10 @@ export const store = configureStore({
       additionalFunctions: combineReducers({
         priority: priorityReducer,
         date: dateReducer,
-        tags: tagReducer,
+        tags: combineReducers({
+          tagReducer,
+          modalVisible: modalVisibleReducers,
+        }),
       }),
       checkLists: combineReducers({
         addCheckList: addCheckListReducer,
@@ -70,6 +77,7 @@ export const store = configureStore({
         deleteCheckListItem: deleteCheckListItemReducer,
         setCheckListTitle: setCheckListTitleReducer,
         setCompleteCheckListItem: setCompleteCheckListItemReducer,
+        setCheckListItemPosition: setCheckListItemPositionReducer,
       }),
     }),
     users: usersReducer,
@@ -101,7 +109,10 @@ export type RootState = {
     additionalFunctions: CombinedState<{
       priority: IPriorityReducer;
       date: IDateReducer;
-      tags: ITagReducer;
+      tags: CombinedState<{
+        tagReducer: ITagReducer;
+        modalVisible: IModalVisibleReducer;
+      }>;
     }>;
     checkLists: CombinedState<{
       addCheckList: IAddCheckListReducer;
@@ -110,6 +121,7 @@ export type RootState = {
       deleteCheckListItem: IDeleteCheckListItemReducer;
       setCheckListTitle: ISetCheckListTitleReducer;
       setCompleteCheckListItem: ISetCompleteCheckListItemReducer;
+      setCheckListItemPosition: ISetCheckListItemPositionReducer;
     }>;
   }>;
   users: IUsersReducer;

@@ -1,71 +1,38 @@
-import React, { useState } from 'react';
+import React from 'react';
 import classnames from 'classnames';
-import { Modal, Button, Typography, Input, Form, Radio } from 'antd';
+import { Button } from 'antd';
 import { createTagAction } from 'store/editTask/additionalFunctions/tag/thunk';
-import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import { allColorTag } from 'constants/additionalFunctions/color';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
+import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { uniqueTagNameSelector } from 'store/editTask/additionalFunctions/tag/selectors';
 import { getTaskId } from 'store/editTask/selectors';
-import { MAX_NUMBER_TAGS } from 'constants/additionalFunctions/tag';
-import { ITag } from 'store/common/tags/types';
-import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
-import { getRights } from 'helpers/rights';
+import {
+  setIsModalVisibleCreate,
+  setIsModalVisibleMain,
+} from 'store/editTask/additionalFunctions/tag/modalVisible/slice';
+import { isModalVisibleCreate } from 'store/editTask/additionalFunctions/tag/modalVisible/selectors';
 import { RIGHTS_NAMES } from 'constants/rights';
+import { useGetRights } from 'customHooks/useGetRights';
 import TagItem from './TagItem';
-
+import ModalNewTag from './ModalNewTag';
+import ModalTag from './ModalTag';
 import styles from './index.module.scss';
 
-const { Text } = Typography;
-
-interface IProps {
-  tagSelect: ITag[] | undefined
-}
-
-const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [colorTag, setColor] = useState('');
-  const [inputValue, setInputValue] = useState('');
-  const [form] = Form.useForm();
-
-  const dispatch = useAppDispatch();
+const SelectTag: React.FC = () => {
   const taskId = useAppSelector(getTaskId);
-
-  const myMaxRole = useAppSelector(getMyMaxRoleForTask);
-  const isRights = getRights(myMaxRole, RIGHTS_NAMES.editTag);
+  const dispatch = useAppDispatch();
+  const isRights = useGetRights(RIGHTS_NAMES.editTag);
+  const isVisibleCreate = useAppSelector(isModalVisibleCreate);
 
   const uniqueTagName = useAppSelector(uniqueTagNameSelector);
-  const isUniqueTag = uniqueTagName?.indexOf(inputValue) === -1 && inputValue;
+
+  const openWindowCreate = () => {
+    dispatch(setIsModalVisibleCreate(true));
+    dispatch(setIsModalVisibleMain(false));
+  };
 
   const showModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleOk = () => {
-    setIsModalVisible(false);
-    setColor('');
-    setInputValue('');
-    form.resetFields();
-
-    if (inputValue && isUniqueTag && uniqueTagName.length < MAX_NUMBER_TAGS) {
-      dispatch(
-        createTagAction({ name: inputValue, color: colorTag, task_id: taskId }),
-      );
-    }
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
-
-  const onChecked = (e) => {
-    if (e.target.checked) {
-      setColor(e.target.value);
-    } else setColor('');
-  };
-
-  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
+    dispatch(setIsModalVisibleMain(true));
   };
 
   const className = classnames(styles.wrapper_flex, {
@@ -74,8 +41,8 @@ const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
 
   return (
     <div className={className}>
-      <TagItem editable={isRights} tagSelect={tagSelect}/>
-      {isRights ? (
+      <TagItem editable={isRights} taskId={taskId || ''} />
+      {isRights && (
         <Button
           type="primary"
           onClick={showModal}
@@ -84,52 +51,15 @@ const SelectTag: React.FC<IProps> = ({ tagSelect }) => {
         >
           + Добавить метку
         </Button>
-      ) : null}
-      <Modal
-        title="Новая метка"
-        visible={isModalVisible}
-        width={310}
-        className={styles.modalTag}
-        footer={
-          <Button
-            className={styles.btn}
-            onClick={handleOk}
-            htmlType="submit"
-            disabled={!isUniqueTag}
-          >
-            Cохранить
-          </Button>
-        }
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        <Text type="secondary">Название метки</Text>
-        <Form form={form}>
-          <Form.Item name="input" key="input">
-            <Input
-              className={styles.input}
-              maxLength={15}
-              autoFocus
-              onChange={onChangeInput}
-            />
-          </Form.Item>
-          <Form.Item name="checkbox" key="checkbox">
-            <Radio.Group>
-              {allColorTag.map((item) => {
-                return (
-                  <div className={styles.wrapper} color={item} key={item}>
-                    <Radio.Button
-                      value={item}
-                      key={item}
-                      onChange={onChecked}
-                    />
-                  </div>
-                );
-              })}
-            </Radio.Group>
-          </Form.Item>
-        </Form>
-      </Modal>
+      )}
+      <ModalNewTag openWindowCreate={openWindowCreate} />
+      <ModalTag
+        text="Новая метка"
+        arg={{ taskId }}
+        action={createTagAction}
+        isVisible={isVisibleCreate}
+        setIsModalVisible={setIsModalVisibleCreate}
+      />
     </div>
   );
 };

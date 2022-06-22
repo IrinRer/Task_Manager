@@ -7,8 +7,8 @@ import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { selectAttachmentCheckboxValue } from 'store/filters/selectors';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { fetchTasksAction } from 'store/tasks/thunk';
+import FilterWrapper from 'components/Common/FilterWrapper';
 import filterStyles from '../index.module.scss';
-import FilterWrapper from '../../../Common/FilterWrapper';
 
 const AttachmentCheckbox: React.FC = () => {
   const dispatch = useAppDispatch();
