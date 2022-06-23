@@ -4,15 +4,13 @@ import React, { useEffect } from 'react';
 import { getTaskId } from 'store/editTask/selectors';
 import { getHistory } from 'store/history/selectors';
 import { historyAction } from 'store/history/thunk';
-import { HISTORY_COMMAND } from 'constants/common';
-import CustomTag from 'components/Common/CustomTag';
-import styles from './index.module.scss';
-import User from './User';
-import DateHistory from './DateHistory';
+import { HISTORY } from 'constants/common';
 import AssignUser from './AssignUser';
 import DateTask from './DateTask';
 import Status from './Status';
 import TagHistory from './Tag';
+import CreateTask from './CreateTask';
+import Title from './Title';
 
 const History: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -23,22 +21,35 @@ const History: React.FC = () => {
     if (taskId) {
       dispatch(historyAction(taskId));
     }
+    
   }, [taskId]);
 
   return history.map((item) => {
-    if (item.params.tag) {
+    if (item.command_code === HISTORY.tagAssign) {
       return <TagHistory item={item} key={item.history_command_id} />;
     }
-    if (item.params.assign_user) {
+    if (item.command_code === HISTORY.roleAssign) {
       return <AssignUser item={item} key={item.history_command_id} />;
     }
 
-    if (item.params.exec_stop) {
+    if (item.command_code === HISTORY.roleUnassign) {
+      return <AssignUser item={item} key={item.history_command_id} />;
+    }
+
+    if (item.command_code === HISTORY.dateChange) {
       return <DateTask item={item} key={item.history_command_id} />;
     }
 
-    if (item.params.status) {
+    if (item.command_code === HISTORY.statusChange) {
       return <Status item={item} key={item.history_command_id} />;
+    }
+
+    if (item.command_code === HISTORY.taskCreate) {
+      return <CreateTask item={item} key={item.history_command_id} />;
+    }
+
+    if(item.command_code === HISTORY.titleChange) {
+      return <Title item={item} key={item.history_command_id}/>
     }
 
     return null;

@@ -1,6 +1,7 @@
 import { ru } from 'date-fns/locale';
-import { ROLES } from './types/common';
+// import { de } from 'date-fns/locale';
 
+import { ROLES } from './types/common';
 
 export const BASE_DATE_FORMAT = 'DD.MM.YYYY' as const;
 
@@ -76,11 +77,14 @@ export const TITLE_TASK_MAX_LENGTH = 150;
 
 export const MAX_USER_INITIALS = 2;
 
-export const DATE_FORMAT_HISTORY = 'dd MMM yyyy HH:mm';
+export const DATE_FORMAT_HISTORY = 'dd MMM yyyy, HH:mm';
 
 export const formatRelativeLocale = {
   yesterday: "'вчера в' p",
   today: "'сегодня в' p",
+  tomorrow: DATE_FORMAT_HISTORY,
+  nextWeek: DATE_FORMAT_HISTORY,
+  lastWeek: DATE_FORMAT_HISTORY,
   other: DATE_FORMAT_HISTORY,
 };
 
@@ -92,6 +96,19 @@ export const locale = {
 export const HISTORY_COMMAND = {
   addTag: 'добавил(а) новые метки',
   assignUser: 'добавил(а) новых участников ',
+  unassignUser: 'удалил(а) участников',
   changeDate: 'изменил(а) срок задачи',
-  changeStatus: 'сменил(а) статус задачи'
-}
+  changeStatus: 'сменил(а) статус задачи',
+  createTask: 'создал(а) задачу',
+  changeTitle: 'изменил(а) заголовок задачи',
+};
+
+export const HISTORY = {
+  taskCreate: 'task.create',
+  statusChange: 'task.status_change',
+  dateChange: 'task.exec_stop_change',
+  roleAssign: 'task.role_assign',
+  roleUnassign: 'task.role_un_assign',
+  tagAssign: 'task.tag_assign',
+  titleChange: 'task.title_change',
+};

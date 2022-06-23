@@ -1,5 +1,5 @@
 import UserAvatar from 'components/Common/UserAvatar';
-import { HISTORY_COMMAND } from 'constants/common';
+import { HISTORY, HISTORY_COMMAND } from 'constants/common';
 import React from 'react';
 import DateHistory from '../DateHistory';
 import styles from '../index.module.scss';
@@ -9,7 +9,14 @@ const AssignUser = ({ item }) => {
   return (
     <div className={styles.history}>
       <div className={styles.historyElem}>
-        <User item={item} text={HISTORY_COMMAND.assignUser} />
+        <User
+          item={item}
+          text={
+            item.command_code === HISTORY.roleAssign
+              ? HISTORY_COMMAND.assignUser
+              : HISTORY_COMMAND.unassignUser
+          }
+        />
         <DateHistory item={item} />
       </div>
 
