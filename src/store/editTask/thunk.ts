@@ -59,8 +59,11 @@ export const setTaskMemberAction = createAsyncThunk(
       );
       return response.data.data;
     } catch (error) {
-      /// if 500
-      notification.error({ message: 'Ошибка назначения участника' });
+      if (error.response!.status !== 500) {
+        notification.error({ message: 'Ошибка назначения участника' });
+      } else {
+        window.location.reload();
+      }
       return rejectWithValue(error.message);
     }
   },
@@ -79,7 +82,11 @@ export const deleteTaskMemberAction = createAsyncThunk(
       );
       return response.data.data;
     } catch (error) {
-      notification.error({ message: 'Ошибка удаления участника' });
+      if (error.response!.status !== 500) {
+        notification.error({ message: 'Ошибка удаления участника' });
+      } else {
+        window.location.reload();
+      }
       return rejectWithValue(error.message);
     }
   },

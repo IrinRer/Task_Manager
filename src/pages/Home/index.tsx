@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { Layout, Progress } from 'antd';
+import { Layout } from 'antd';
 import Display from 'components/Home';
 import Filters from 'components/Home/Filters';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
