@@ -64,3 +64,5 @@ export const SETTINGS = {
     },
   ],
 };
+
+export const ATTACHMENTS_TITLE_MAX_LENGTH = 20;

@@ -41,8 +41,8 @@ const Preview: FC<IProps> = ({ previewVisible, setPreviewVisible }) => {
       }
     });
 
-    // eslint-disable-next-line
-  }, [imgRecieved, isTitle]);
+
+  }, [dispatch, imgRecieved, isTitle]);
 
   const onRemove = () => {
     setVisibleModalDelete(true);

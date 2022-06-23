@@ -82,14 +82,3 @@ export const getTaskInfoDateStop = (state: RootState) =>
   state.common.onetask.data?.exec_stop
     ? format(new Date(state.common.onetask.data?.exec_stop), DATE_FORMAT_UI)
     : undefined;
-
-// export const taskFile = (state: RootState) =>
-//   state.common.onetask?.data?.storage_files;
-
-// export const getTaskFileImg = createSelector(taskFile, (file) =>
-//   file?.filter(({ type }) => type === 'image'),
-// );
-
-// export const getTaskFileAllType = createSelector(taskFile, (file) =>
-//   file?.filter(({ type }) => type !== 'image'),
-// );

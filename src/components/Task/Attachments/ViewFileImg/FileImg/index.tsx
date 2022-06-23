@@ -6,6 +6,7 @@ import {
   setPreviewTitleReceived,
 } from 'store/editTask/attachments/preview/slice';
 import ModalDelete from 'components/Common/ModalDelete';
+import { ATTACHMENTS_TITLE_MAX_LENGTH } from 'constants/attachments/attachments';
 import classNames from 'classnames';
 import Preview from '../../Preview';
 import HoverButton from '../../HoverButton';
@@ -33,8 +34,8 @@ const FileImg = () => {
   }, [file.file.url]);
 
   const isLongText =
-    file.file.name && file.file.name?.length > 20
-      ? `${file.file.name?.slice(0, 20)}...`
+    file.file.name && file.file.name?.length > ATTACHMENTS_TITLE_MAX_LENGTH
+      ? `${file.file.name?.slice(0, ATTACHMENTS_TITLE_MAX_LENGTH)}...`
       : file.file.name;
 
   const customPreview = () => {

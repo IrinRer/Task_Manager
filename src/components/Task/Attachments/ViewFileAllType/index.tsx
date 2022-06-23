@@ -18,6 +18,7 @@ const ViewFileAllType = () => {
             onDownload={file.onDownload}
             preview={undefined}
             progress={0}
+            key={item.name_original}
           >
             <FileText key={item.name_original} />
           </ContextWrapperViewFile>

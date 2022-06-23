@@ -19,7 +19,8 @@ const ViewFileImg = () => {
             onDownload={file.onDownload}
             preview={undefined}
             progress={0}
-          >
+            key={item.name}
+            >
             <FileImg key={item.name} />
           </ContextWrapperViewFile>
         );
