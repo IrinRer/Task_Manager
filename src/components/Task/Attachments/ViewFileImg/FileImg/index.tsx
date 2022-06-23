@@ -1,47 +1,48 @@
-import React, { useEffect, useState, FC } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import {
   cleanRender,
   setImgRecieved,
   setPreviewTitleReceived,
 } from 'store/editTask/attachments/preview/slice';
-import { RcFile } from 'antd/lib/upload';
 import ModalDelete from 'components/Common/ModalDelete';
 import classNames from 'classnames';
-import Preview from '../Preview';
-import HoverButton from '../HoverButton';
+import Preview from '../../Preview';
+import HoverButton from '../../HoverButton';
 import styles from './index.module.scss';
+import { ViewFileContext } from '../../context';
 
-interface IProps {
-  file: { url: string; name: string; originFileObj?: RcFile };
-  preview?: () => void;
-  onDownload: (arg: string) => void;
-  onDeleteFile: (arg: string) => void;
-}
-
-const FileImg: FC<IProps> = ({ file, preview, onDownload, onDeleteFile }) => {
+const FileImg = () => {
   const dispatch = useAppDispatch();
+  const file = useContext(ViewFileContext);
 
   const [previewVisible, setPreviewVisible] = useState(false);
   const [visibleModalDelete, setVisibleModalDelete] = useState(false);
   const [hover, setHover] = useState(false);
 
   const url =
-    !file.url && file.originFileObj
-      ? URL.createObjectURL(file.originFileObj)
+    !file.file.url && file.file.originFileObj
+      ? URL.createObjectURL(file.file.originFileObj)
       : undefined;
 
   useEffect(() => {
-    dispatch(setImgRecieved({ url: url || file.url, name: file.name }));
-  }, [file.url]);
+    dispatch(
+      setImgRecieved({ url: url || file.file.url, name: file.file.name || '' }),
+    );
+    // eslint-disable-next-line
+  }, [file.file.url]);
 
   const isLongText =
-    file.name.length > 20 ? `${file.name.slice(0, 20)}...` : file.name;
+    file.file.name && file.file.name?.length > 20
+      ? `${file.file.name?.slice(0, 20)}...`
+      : file.file.name;
 
   const customPreview = () => {
-    setPreviewVisible(true);
-    dispatch(setPreviewTitleReceived(file.name));
-    dispatch(cleanRender());
+    if (file.file.name) {
+      setPreviewVisible(true);
+      dispatch(setPreviewTitleReceived(file.file.name));
+      dispatch(cleanRender());
+    }
   };
 
   const onHover = () => {
@@ -72,30 +73,25 @@ const FileImg: FC<IProps> = ({ file, preview, onDownload, onDeleteFile }) => {
         onMouseLeave={onBlur}
         className={classNameWrapper}
       >
-        <img src={file.url || url} alt="img" className={classNameImg} />
+        <img src={file.file.url || url} alt="img" className={classNameImg} />
         <p>{`${isLongText}`} </p>
         <HoverButton
           customPreview={customPreview}
-          onDownload={onDownload}
           onRemove={onRemove}
-          file={file}
           hover={hover}
-          preview={preview}
         />
       </div>
       <ModalDelete
-        textMain={`${file.name} будет безвозвратно удален`}
+        textMain={`${file.file.name} будет безвозвратно удален`}
         textButton="Удалить файл"
         visibleModalDelete={visibleModalDelete}
         setIsVisibleModalDelete={setVisibleModalDelete}
-        file={file.name || ''}
-        action={onDeleteFile}
+        file={file.file.name || ''}
+        action={file.onDeleteFile}
       />
       <Preview
         previewVisible={previewVisible}
         setPreviewVisible={setPreviewVisible}
-        onDeleteFile={onDeleteFile}
-        onDownload={onDownload}
       />
     </>
   );

@@ -3,7 +3,7 @@ import { Progress } from 'antd';
 import { COLOR_PROGRESS } from 'constants/attachments/attachments';
 
 interface IProps {
-  progress: number
+  progress?: number
 }
 
 const ProgressBar: FC<IProps> = ({ progress }) => {

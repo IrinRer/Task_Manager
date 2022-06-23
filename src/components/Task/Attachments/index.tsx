@@ -20,19 +20,18 @@ import { getTaskId } from 'store/editTask/selectors';
 import {
   getFileName,
   getStorageFile,
-  getTaskFileAllType,
   getTaskFileImg,
-  getViewFileImg,
 } from 'store/editTask/attachments/selectors';
 import { config } from 'helpers/progressBar';
 import { useGetRights } from 'customHooks/useGetRights';
 import { RIGHTS_NAMES } from 'constants/rights';
 import Preview from './Preview';
 import ItemRender from './ItemRender';
-import FileText from './FileText';
-import FileImg from './FileImg';
-
+import ContextWrapperAttachments from './ContextWrapper';
+import ContextWrapperViewFile from './ContextWrapper/ViewFileContex';
 import styles from './index.module.scss';
+import ViewFileImg from './ViewFileImg';
+import ViewFileAllType from './ViewFileAllType';
 
 const Attachments = () => {
   const dispatch = useAppDispatch();
@@ -41,10 +40,6 @@ const Attachments = () => {
   const taskFileImg = useAppSelector(getTaskFileImg);
   const allFileId = useAppSelector(getStorageFile);
   const isRights = useGetRights(RIGHTS_NAMES.editAttached);
-
-  const taskFile = useAppSelector(getTaskFileAllType);
-
-  const img = useAppSelector(getViewFileImg);
 
   useEffect(() => {
     taskFileImg?.map(({ storage_file_id, name_original }) =>
@@ -55,6 +50,7 @@ const Attachments = () => {
         }),
       ),
     );
+    // eslint-disable-next-line
   }, [dispatch]);
 
   const [fileList, setFile] = useState<Array<UploadFile>>([]);
@@ -100,29 +96,6 @@ const Attachments = () => {
     setFile(fileList);
   };
 
-  const onViewFileImg = img?.map((item: { name: string; url: string }) => {
-    return (
-      <FileImg
-        key={item.name}
-        file={{ url: item.url, name: item.name }}
-        preview={undefined}
-        onDeleteFile={onDeleteFile}
-        onDownload={onDownload}
-      />
-    );
-  });
-
-  const onViewFileAllType = taskFile?.map((item) => {
-    return (
-      <FileText
-        file={{ size: item.size, name: item.name_original }}
-        key={item.name_original}
-        onDeleteFile={onDeleteFile}
-        onDownload={onDownload}
-      />
-    );
-  });
-
   const handleSubmit = (options: IOptions) => {
     const { onSuccess, onError, onProgress } = options;
 
@@ -141,18 +114,26 @@ const Attachments = () => {
 
   const itemListRender = (
     _,
-    file: RcFile,
+    file: UploadFile,
     fileList: UploadFile[],
     actions: { download: () => void; preview: () => void; remove: () => void },
   ) => {
     return (
-      <ItemRender
-        file={file}
+      <ContextWrapperViewFile
+        file={{
+          percent: file.percent,
+          type: file.type,
+          originFileObj: file.originFileObj,
+          name: file.name,
+          size: file.size,
+        }}
         progress={progress}
-        preview={actions.preview}
         onDeleteFile={onDeleteFile}
         onDownload={onDownload}
-      />
+        preview={actions.preview}
+      >
+        <ItemRender />
+      </ContextWrapperViewFile>
     );
   };
 
@@ -168,40 +149,43 @@ const Attachments = () => {
   };
 
   return (
-    <Col className={styles.col}>
-      <div className={styles.wrapperFlex}>
-        <PaperClipOutlined className={styles.PaperClipOutlined} />
-        <p className={styles.text}>Вложения</p>
-      </div>
-      {isRights && (
-        <Upload.Dragger
-          className={styles.upload}
-          fileList={fileList}
-          accept={ACCEPT_FORMAT}
-          itemRender={itemListRender}
-          beforeUpload={beforeUpload}
-          customRequest={handleSubmit}
-          onChange={handleUpload}
-          onPreview={handlePreview}
-        >
-          <Button className={styles.btnAttachment}>
-            <PlusOutlined />
-          </Button>
-          Перетащите сюда или загрузите файл
-        </Upload.Dragger>
-      )}
+    <ContextWrapperAttachments
+      onDeleteFile={onDeleteFile}
+      onDownload={onDownload}
+    >
+      <Col className={styles.col}>
+        <div className={styles.wrapperFlex}>
+          <PaperClipOutlined className={styles.PaperClipOutlined} />
+          <p className={styles.text}>Вложения</p>
+        </div>
+        {isRights && (
+          <Upload.Dragger
+            className={styles.upload}
+            fileList={fileList}
+            accept={ACCEPT_FORMAT}
+            itemRender={itemListRender}
+            beforeUpload={beforeUpload}
+            customRequest={handleSubmit}
+            onChange={handleUpload}
+            onPreview={handlePreview}
+          >
+            <Button className={styles.btnAttachment}>
+              <PlusOutlined />
+            </Button>
+            Перетащите сюда или загрузите файл
+          </Upload.Dragger>
+        )}
 
-      <div className={styles.wrapper_all_file}>
-        {onViewFileImg}
-        {onViewFileAllType}
-      </div>
-      <Preview
-        previewVisible={previewVisible}
-        onDeleteFile={onDeleteFile}
-        onDownload={onDownload}
-        setPreviewVisible={setPreviewVisible}
-      />
-    </Col>
+        <div className={styles.wrapper_all_file}>
+          <ViewFileImg />
+          <ViewFileAllType />
+        </div>
+        <Preview
+          previewVisible={previewVisible}
+          setPreviewVisible={setPreviewVisible}
+        />
+      </Col>
+    </ContextWrapperAttachments>
   );
 };
 

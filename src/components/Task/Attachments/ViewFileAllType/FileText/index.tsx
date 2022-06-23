@@ -1,18 +1,14 @@
-import React, { useState, FC } from 'react';
+import React, { useState, useContext } from 'react';
 import shapeAttachment from 'assets/icons/shapeAttachment.svg';
 import ModalDelete from 'components/Common/ModalDelete';
 import classNames from 'classnames';
-import HoverButton from '../HoverButton';
+import HoverButton from '../../HoverButton';
+import { ViewFileContext } from '../../context';
 import styles from './index.module.scss';
 
-interface IProps {
-  file: { size: number; name?: string; name_original?: string };
-  onDownload: (arg: string) => void;
-  onDeleteFile: (arg: string) => void;
-}
-
-const FileText: FC<IProps> = ({ file, onDownload, onDeleteFile }) => {
-  const inKB = (file.size / 1024).toFixed(2);
+const FileText = () => {
+  const file = useContext(ViewFileContext);
+  const inKB = file.file?.size ? (file.file.size / 1024).toFixed(2) : null;
 
   const [hover, setHover] = useState(false);
 
@@ -51,28 +47,25 @@ const FileText: FC<IProps> = ({ file, onDownload, onDeleteFile }) => {
         </div>
         <div className={styles.wrapper_text}>
           <p className={styles.text_name}>{`${
-            file.name || file.name_original
+            file.file.name || file.file.name_original
           }`}</p>
           <p className={styles.text_size}>{`${inKB} Kb`}</p>
         </div>
         <HoverButton
           customPreview={undefined}
-          onDownload={onDownload}
           onRemove={onRemove}
-          file={file}
           hover={hover}
-          preview={undefined}
         />
       </div>
       <ModalDelete
         textMain={`${
-          file.name_original || file.name
+          file.file.name_original || file.file.name
         } будет безвозвратно удален`}
         textButton="Удалить файл"
         visibleModalDelete={visibleModalDelete}
         setIsVisibleModalDelete={setVisibleModalDelete}
-        file={file.name_original || file.name}
-        action={onDeleteFile}
+        file={file.file.name_original || file.file.name}
+        action={file.onDeleteFile}
       />
     </>
   );

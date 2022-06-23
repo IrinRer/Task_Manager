@@ -1,5 +1,5 @@
 import { Modal } from 'antd';
-import React, { useEffect, useState, FC } from 'react';
+import React, { useEffect, useState, FC, useContext } from 'react';
 import { CloseCircleOutlined } from '@ant-design/icons';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import {
@@ -13,24 +13,19 @@ import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { setIndex } from 'store/editTask/attachments/preview/slice';
 import Header from './Header';
 import ImgView from './ImgView/indes';
+import { AttachmentsContext } from '../context';
 import styles from './index.module.scss';
 
 interface IProps {
   previewVisible: boolean;
   setPreviewVisible: (arg: boolean) => void;
-  onDownload: (arg: string) => void;
-  onDeleteFile: (arg: string) => void;
 }
 
-const Preview: FC<IProps> = ({
-  previewVisible,
-  setPreviewVisible,
-  onDeleteFile,
-  onDownload,
-}) => {
+const Preview: FC<IProps> = ({ previewVisible, setPreviewVisible }) => {
   const imgRecieved = useAppSelector(getImgReceived);
   const dispatch = useAppDispatch();
   const previewTitleRender = useAppSelector(getPreviewTitleRender);
+  const file = useContext(AttachmentsContext);
 
   const previewTitleReceived = useAppSelector(getPreviewTitleReceived);
 
@@ -45,6 +40,8 @@ const Preview: FC<IProps> = ({
         dispatch(setIndex(+index));
       }
     });
+
+    // eslint-disable-next-line
   }, [imgRecieved, isTitle]);
 
   const onRemove = () => {
@@ -57,7 +54,7 @@ const Preview: FC<IProps> = ({
   };
 
   const onDeleteFileImg = (nameFile: string) => {
-    onDeleteFile(nameFile);
+    file.onDeleteFile(nameFile);
     setPreviewVisible(false);
   };
 
@@ -70,7 +67,6 @@ const Preview: FC<IProps> = ({
           <Header
             previewTitle={imgRecieved[index].name}
             onRemove={() => onRemove()}
-            onDownload={() => onDownload(imgRecieved[index].name)}
           />
         }
         footer={null}

@@ -1,19 +1,20 @@
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import { Button } from 'antd';
 import { ReactComponent as RecycleBinIcon } from 'assets/icons/recycleBin.svg';
 import { useGetRights } from 'customHooks/useGetRights';
 import { RIGHTS_NAMES } from 'constants/rights';
 import { CloudDownloadOutlined } from '@ant-design/icons';
 import styles from './index.module.scss';
+import { AttachmentsContext } from '../../context';
 
 interface IProps {
   previewTitle: string;
   onRemove: () => void;
-  onDownload: () => void;
 }
 
-const Header: FC<IProps> = ({ previewTitle, onRemove, onDownload }) => {
-  
+const Header: FC<IProps> = ({ previewTitle, onRemove }) => {
+  const file = useContext(AttachmentsContext);
+
   const isRights = useGetRights(RIGHTS_NAMES.editAttached);
 
   return (
@@ -30,7 +31,7 @@ const Header: FC<IProps> = ({ previewTitle, onRemove, onDownload }) => {
         <Button
           className={styles.btnDownload}
           icon={<CloudDownloadOutlined className={styles.icon} />}
-          onClick={onDownload}
+          onClick={() => file.onDownload(previewTitle)}
         />
       </div>
     </div>
