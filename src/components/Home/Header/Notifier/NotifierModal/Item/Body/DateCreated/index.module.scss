@@ -1,0 +1,8 @@
+@import 'src/styles/font-variables.scss';
+@import 'src/styles/colors';
+
+.date {
+  font-size: $font-size-s;
+  color: $gray-600;
+  font-weight: 400;
+}

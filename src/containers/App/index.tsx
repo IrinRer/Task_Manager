@@ -52,9 +52,13 @@ const App: React.FC = () => {
   }, [dispatch, verifyToken]);
 
   useEffect(() => {
+    // !modalVisible для перезагрузки задач при закрытии модального окна
+    // чтобы обновились задачи.
     if (verifyToken && !modalVisible) {
       dispatch(fetchTasksAction());
     }
+    // Запускаем таймер для периодической загрузки задач
+    clearReloadTasksInterval();
     reloadTasksRef.current = setInterval(() => {
       dispatch(fetchTasksAction());
     }, RELOAD_TASKS_INTERVAL);

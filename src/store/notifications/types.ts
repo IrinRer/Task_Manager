@@ -1,5 +1,6 @@
 import { AxiosError } from 'axios';
-import { ROLES } from 'constants/types/common';
+import { NotificationCommandName } from 'constants/notify';
+import { ROLES, TagColor } from 'constants/types/common';
 
 export const NOTIFICATIONS_SLICE_ALIAS = 'notifications';
 
@@ -16,9 +17,6 @@ export interface INotificationsReducer {
 
 enum NotificationCommandCode {
   taskRoleUnassign = 'task.role_un_assign',
-}
-enum NotificationCommandName {
-  taskRoleUnassign = 'Снятие с роли',
 }
 enum NotificationRelation {
   task = 'task',
@@ -38,8 +36,13 @@ export interface INotification {
       logo: string;
     };
     params: {
+      title?: string;
       message?: string;
       complete?: boolean;
+      status?: {
+        task_status_id: string;
+        name: string;
+      };
       assign_user?: {
         user_id: string;
         name: string;
@@ -51,6 +54,11 @@ export interface INotification {
       task_role?: {
         task_role_id: string;
         name: ROLES;
+      };
+      tag: {
+        task_tag_id: string;
+        name: string;
+        color: TagColor;
       };
       task?: {
         task_id: string;

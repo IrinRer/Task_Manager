@@ -7,12 +7,10 @@ import {
   getNotificationsToShow,
   getShowCount,
   getTotalNotificationsCount,
-  getViewedNotificationsStore,
 } from 'store/notifications/selectors';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { INotification } from 'store/notifications/types';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import { NOTIFICATION_COUNT_INCREMENT } from 'constants/common';
 import {
   incrementNewNotificationsPage,
   incrementViewedNotificationsPage,
@@ -23,6 +21,7 @@ import {
   loadViewedNotificationsAction,
 } from 'store/notifications/thunk';
 
+import { NOTIFICATION_COUNT_INCREMENT } from 'constants/notify';
 import Header from './Header';
 import Item from './Item';
 import styles from './index.module.scss';
@@ -39,7 +38,6 @@ const NotifierModal: React.FC<IProps> = ({ isOpen, onClose }) => {
   const loadedNotificationsCount = useAppSelector(getAllNotificationsLength);
   const notifications = useAppSelector(getNotificationsToShow);
   const newNotificationsStore = useAppSelector(getNewNotificationsStore);
-  const viewedNotificationsStore = useAppSelector(getViewedNotificationsStore);
   const showCount = useAppSelector(getShowCount);
   const dispatch = useAppDispatch();
 
@@ -47,17 +45,19 @@ const NotifierModal: React.FC<IProps> = ({ isOpen, onClose }) => {
     if (showCount > totalNotifications) {
       return;
     }
+    // Для только что открытого окна показывается 1. При показать больше прибавляем инкремент
     const newShowCount =
       showCount === 1
         ? showCount + NOTIFICATION_COUNT_INCREMENT - 1
         : showCount + NOTIFICATION_COUNT_INCREMENT;
-
     if (
+      // Если надо показывать больше чем загружено, и всего на бэке больше чем загружено
       (newShowCount > loadedNotificationsCount &&
-        totalNotifications > loadedNotificationsCount) ||
-      viewedNotificationsStore.pagination.items_total === 0
+        totalNotifications >= loadedNotificationsCount) ||
+      newNotificationsStore.pagination.items_total === 0
     ) {
       if (
+        // Если страница новых меньше тотал, подгружаем новые.
         newNotificationsStore.pagination.page_current <
         newNotificationsStore.pagination.page_total
       ) {
@@ -65,6 +65,7 @@ const NotifierModal: React.FC<IProps> = ({ isOpen, onClose }) => {
         dispatch(loadNewNotificationsAction());
       }
       if (newShowCount > newNotificationsStore.pagination.items_total) {
+        // Если число отображаемых больше тотал новых подгружаем прочитанные.
         dispatch(incrementViewedNotificationsPage());
         dispatch(loadViewedNotificationsAction());
       }

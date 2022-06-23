@@ -6,14 +6,16 @@ import classnames from 'classnames';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import {
   getIsNewNotifications,
+  getNotificationsLoading,
   getShowNotificationModal,
 } from 'store/notifications/selectors';
 import {
   initNotificationsToShow,
-  setShowCount,
+  resetNotifications,
   setShowNotificationModal,
 } from 'store/notifications/slice';
 import { useLocation } from 'react-router-dom';
+import { Spin } from 'antd';
 import NotifierModal from './NotifierModal';
 import styles from './index.module.scss';
 
@@ -23,10 +25,11 @@ const Notifier: React.FC = () => {
   const dispatch = useAppDispatch();
   const isNewNotifications = useAppSelector(getIsNewNotifications);
   const showNotificationModal = useAppSelector(getShowNotificationModal);
+  const loading = useAppSelector(getNotificationsLoading);
 
   const classNames = classnames(
     styles.notification,
-    isNewNotifications ? styles.new : '',
+    isNewNotifications && !loading ? styles.new : '',
   );
 
   useEffect(() => {
@@ -40,14 +43,20 @@ const Notifier: React.FC = () => {
 
   const handleClose = () => {
     dispatch(setShowNotificationModal(false));
-    dispatch(setShowCount(1));
+    dispatch(resetNotifications());
+    dispatch(loadNewNotificationsAction());
   };
 
   return (
     <>
       <div onClick={handleClick} className={classNames}>
-        <img src={notification} alt="notificationIcon" />
+        {loading ? (
+          <Spin size="small" />
+        ) : (
+          <img src={notification} alt="notificationIcon" />
+        )}
       </div>
+
       {/* При открытии модального окна убираем нашу модалку чтоб не мигала. isModalOpen запаздывает потому что рендеринг */}
       {location.pathname === '/' ? (
         <NotifierModal isOpen={showNotificationModal} onClose={handleClose} />

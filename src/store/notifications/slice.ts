@@ -200,6 +200,7 @@ export const {
   incrementNewNotificationsPage,
   incrementViewedNotificationsPage,
   resetNewNotifications,
+  resetNotifications,
   setShowNotificationModal,
 } = notificationsSlice.actions;
 export default notificationsSlice.reducer;
