@@ -1,4 +1,4 @@
-import { HISTORY_COMMAND } from 'constants/common';
+import { HISTORY_COMMAND } from 'constants/history/common';
 import React from 'react';
 import DateHistory from '../DateHistory';
 import User from '../User';
@@ -16,7 +16,7 @@ const Status = ({ item }) => {
         <span>Новый статус:&nbsp;</span>
         <span className={styles.spanStatus}> {item.params.status.name}</span>
       </div>
-    </div>
+    </div>  
   );
 };
 

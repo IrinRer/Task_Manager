@@ -1,5 +1,6 @@
 @import 'src/styles/font-variables';
 @import 'src/styles/color-variables';
+@import 'src/styles/colors';
 
 .history {
   margin-top: 20px;
@@ -14,9 +15,6 @@
   .historyElem {
     display: flex;
     justify-content: space-between;
-    flex-wrap: nowrap;
-    align-items: center;
-
     :global(.ant-avatar) {
       min-width: 32px;
     }
@@ -42,7 +40,6 @@
 
 .historyElemDate {
   display: flex;
-  align-items: center;
   margin-left: 7%;
 
   span {
@@ -62,4 +59,75 @@
     font-weight: bold;
     text-transform: uppercase;
   }
+}
+
+.checklist {
+  :global(.ant-checkbox-disabled) :global(.ant-checkbox-inner) {
+    width: 16px;
+    background-color: $gray-100;
+  }
+
+  span {
+    font-weight: 400;
+    color: $gray-700;
+    font-size: $font-size-m;
+  }
+}
+
+.complete_checklist {
+  :global(.ant-checkbox-disabled) :global(.ant-checkbox-inner) {
+    width: 16px;
+    border: none;
+    background-color: $checkbox-checked;
+
+    &::after {
+      border-color: white;
+    }
+  }
+
+  span {
+    font-weight: 400;
+    color: $gray-700;
+    font-size: $font-size-m;
+  }
+}
+
+.historyElemUser {
+  max-width: 70%;
+  display: flex;
+  justify-content: space-between;
+
+  :global(.ant-avatar) {
+    min-width: 32px;
+  }
+}
+
+.wrapper_priority {
+  display: flex;
+  align-items: center;
+}
+
+.low {
+  display: inline-block;
+  margin-right: 5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: $salad;
+}
+.middle {
+  display: inline-block;
+  margin-right: 5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: $orange;
+}
+.high {
+  display: inline-block;
+  margin-right: 5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: $red;
 }

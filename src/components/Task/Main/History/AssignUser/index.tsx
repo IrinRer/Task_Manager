@@ -1,5 +1,5 @@
 import UserAvatar from 'components/Common/UserAvatar';
-import { HISTORY, HISTORY_COMMAND } from 'constants/common';
+import { HISTORY, HISTORY_COMMAND } from 'constants/history/common';
 import React from 'react';
 import DateHistory from '../DateHistory';
 import styles from '../index.module.scss';

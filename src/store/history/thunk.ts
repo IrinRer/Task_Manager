@@ -14,7 +14,7 @@ export const historyAction = createAsyncThunk(
           per_page: 50,
         },
       });
-
+      console.log(response.data.data)
       return response.data.data;
     } catch (error) {
       notification.error({ message: 'Ошибка отображения истории' });

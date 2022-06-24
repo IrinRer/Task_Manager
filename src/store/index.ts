@@ -55,6 +55,7 @@ import { ISetCheckListTitleReducer } from './editTask/checkLists/setCheckListTit
 import { ISetCompleteCheckListItemReducer } from './editTask/checkLists/setCompleteCheckListItem/types';
 import { IModalVisibleReducer } from './editTask/additionalFunctions/tag/modalVisible/types';
 import { ISetCheckListItemPositionReducer } from './editTask/checkLists/setCheckListItemPosition/types';
+import { IHistoryReducer } from './history/types';
 
 export const store = configureStore({
   reducer: {
@@ -103,7 +104,7 @@ export type AppDispatch = typeof store.dispatch;
 
 export type RootState = {
   tasks: ITasksReducer;
-  history: any;
+  history: IHistoryReducer;
   editTask: CombinedState<{
     editTaskReducer: IEditTaskReducer;
     additionalFunctions: CombinedState<{

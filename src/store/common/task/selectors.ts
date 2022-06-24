@@ -82,3 +82,5 @@ export const getTaskInfoDateStop = (state: RootState) =>
   state.common.onetask.data?.exec_stop
     ? format(new Date(state.common.onetask.data?.exec_stop), DATE_FORMAT_UI)
     : undefined;
+
+export const getInfoAboutTask = (state: RootState) => state.common.onetask.data;

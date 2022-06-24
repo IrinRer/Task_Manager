@@ -15,3 +15,7 @@ export const getDateLoading = (state: RootState) =>
   state.editTask.additionalFunctions.date.loading;
 export const getDateError = (state: RootState) =>
   state.editTask.additionalFunctions.date.error;
+
+export const getInfoDate = (state: RootState) =>
+state.editTask.additionalFunctions.date;
+

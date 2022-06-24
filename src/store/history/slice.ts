@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
-import { historyAction, historyCommandAction } from './thunk';
-import { HISTORY_SLICE_ALIAS } from './types';
+import { historyAction } from './thunk';
+import { HISTORY_SLICE_ALIAS, IHistoryPayload, IHistoryReducer } from './types';
 
-const initialState: any = {
+const initialState: IHistoryReducer = {
   data: [],
-  command: [],
+  loading: false,
+  error: null
 };
 
 export const historySlice = createSlice({
@@ -13,40 +14,22 @@ export const historySlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [historyAction.pending.type]: (state: any) => {
+    [historyAction.pending.type]: (state) => {
       state.loading = true;
       state.error = null;
     },
     [historyAction.fulfilled.type]: (
       state,
-      { payload }: PayloadAction<any>,
+      { payload }: PayloadAction<Array<IHistoryPayload>>,
     ) => {
       state.data = payload;
+      state.loading = false;
     },
     [historyAction.rejected.type]: (
       state,
       { payload }: PayloadAction<AxiosError>,
     ) => {
       state.data = [];
-      state.loading = false;
-      state.error = payload;
-    },
-
-    [historyCommandAction.pending.type]: (state: any) => {
-      state.loading = true;
-      state.error = null;
-    },
-    [historyCommandAction.fulfilled.type]: (
-      state,
-      { payload }: PayloadAction<any>,
-    ) => {
-      state.command = payload;
-    },
-    [historyCommandAction.rejected.type]: (
-      state,
-      { payload }: PayloadAction<AxiosError>,
-    ) => {
-      state.command = [];
       state.loading = false;
       state.error = payload;
     },

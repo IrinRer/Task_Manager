@@ -15,9 +15,11 @@ import { setIsModalVisibleMain } from 'store/editTask/additionalFunctions/tag/mo
 import { uniqueTagNameSelector } from 'store/editTask/additionalFunctions/tag/selectors';
 import { allColorTag } from 'constants/additionalFunctions/color';
 import { ITagThunkEditCreat } from 'store/editTask/additionalFunctions/tag/types';
-import { MAX_NUMBER_TAGS } from 'constants/additionalFunctions/tag';
+import { MAX_NUMBER_TAGS, NEW_TAG } from 'constants/additionalFunctions/tag';
 import { TAGS_INPUT_MAX_LENGTH } from 'constants/common';
+import { selectPopulatedTags } from 'store/common/tags/selectors';
 import styles from '../index.module.scss';
+
 
 const { Text } = Typography;
 
@@ -61,6 +63,9 @@ const ModalTag: FC<IProps> = ({
 
   const uniqueTagName = useAppSelector(uniqueTagNameSelector);
   const isUniqueTag = uniqueTagName?.indexOf(inputValue) === -1 && inputValue;
+  const allTag = useAppSelector(selectPopulatedTags);
+
+  const conditionDisable = allTag.length >  2 && text === NEW_TAG;
 
   const resetForm = () => {
     setColor('');
@@ -111,7 +116,7 @@ const ModalTag: FC<IProps> = ({
           className={styles.btn}
           onClick={handleOk}
           htmlType="submit"
-          disabled={!isUniqueTag}
+          disabled={!isUniqueTag || conditionDisable}
         >
           Cохранить
         </Button>
