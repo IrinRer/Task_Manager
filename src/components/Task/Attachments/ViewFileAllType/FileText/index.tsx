@@ -16,7 +16,6 @@ const FileText = () => {
 
   const onRemove = () => {
     setVisibleModalDelete(true);
-    return false;
   };
 
   const onHover = () => {

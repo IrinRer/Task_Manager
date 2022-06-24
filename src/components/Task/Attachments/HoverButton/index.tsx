@@ -35,7 +35,7 @@ const HoverButton: FC<IProps> = ({ customPreview, onRemove, hover }) => {
       <Button
         icon={<CloudDownloadOutlined />}
         onClick={() =>
-          file.onDownload(file.file.name || '' || file.file.name_original || '')
+          file.onDownload(file.file.name ||  file.file.name_original || '')
         }
         className={styles.btn_hover_icon}
       />
