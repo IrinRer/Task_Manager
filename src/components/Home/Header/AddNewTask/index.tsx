@@ -15,15 +15,13 @@ const AddNewTask = () => {
   }
 
   return (
-    <>
-      <Button
-        className={styles.new}
-        type="link"
-        onClick={() => setShowForm(true)}
-      >
-        Создать новую задачу
-      </Button>
-    </>
+    <Button
+      className={styles.new}
+      type="link"
+      onClick={() => setShowForm(true)}
+    >
+      Создать новую задачу
+    </Button>
   );
 };
 

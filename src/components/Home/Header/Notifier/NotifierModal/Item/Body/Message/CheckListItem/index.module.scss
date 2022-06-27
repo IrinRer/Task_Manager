@@ -23,33 +23,3 @@
     }
   }
 }
-
-/* 
-.checkbox {
-  :global {
-    height: 20px;
-    margin-right: 18px;
-
-    .ant-checkbox {
-      top: 0;
-    }
-
-    .ant-checkbox-inner {
-      width: 20px;
-      height: 20px;
-    }
-    .ant-checkbox-checked {
-      border: none;
-      border-radius: 4px;
-      border-color: red;
-      background-color: $checkbox-checked;
-      span.ant-checkbox-inner {
-        border: none;
-        :after {
-          color: white;
-        }
-      }
-    }
-  }
-}
- */
