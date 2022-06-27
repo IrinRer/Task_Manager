@@ -4,14 +4,21 @@ import {
   NotificationMessageToShow,
 } from 'constants/notify';
 import React, { useContext } from 'react';
-import CheckListItemCreate from './CheckLictItemCreate';
+import CheckListItemCreate from './CheckListItemCreate';
 import CheckListTitleChange from './CheckListTitleChange';
 import TaskStatusChange from './TaskStatusChange';
 import styles from './index.module.scss';
 import TaskRoleAssign from './TaskRoleAssign';
 import TaskTagAssign from './TaskTagAssign';
 import TaskTitleChange from './TaskTitleChange';
+import TaskPriorityChange from './TaskPriorityChange';
+import TimeEndChange from './TimeEndChange';
+import TaskRoleUnassign from './TaskRoleUnassign';
+import CheckListItemChangeComplete from './CheckListItemChangeComplete';
+import TimeStartChange from './TimeStartChange';
+import TaskStorageFileAssign from './TaskStorageFileAssign';
 
+// eslint-disable-next-line
 const Message = () => {
   const notification = useContext(NotifierContext);
   if (!notification) return null;
@@ -27,6 +34,7 @@ const Message = () => {
       return <div>{NotificationMessageToShow.priorityCancel}</div>;
     case NotificationCommandName.taskTagUnassign:
       return <div>{NotificationMessageToShow.taskTagUnassign}</div>;
+
     case NotificationCommandName.taskCheckListAssign:
       return (
         <div>
@@ -55,6 +63,18 @@ const Message = () => {
       return (
         <CheckListItemCreate
           title={notification.history_command.params.check_list?.title || ''}
+          message={notification.history_command.params.message || ''}
+          complete={notification.history_command.params.complete || false}
+        />
+      );
+    case NotificationCommandName.checkListItemChangeComplete:
+      return (
+        <CheckListItemChangeComplete
+          title={notification.history_command.params.check_list?.title || ''}
+          message={
+            notification.history_command.params.check_list_item?.message || ''
+          }
+          complete={notification.history_command.params.complete || false}
         />
       );
     case NotificationCommandName.taskStatusChange:
@@ -71,19 +91,56 @@ const Message = () => {
           }
         />
       );
-    case NotificationCommandName.taskTagAssign:
+    case NotificationCommandName.taskRoleUnassign:
       return (
-        <TaskTagAssign
-          name={notification.history_command.params.tag?.name || ''}
-          color={notification.history_command.params.tag?.color || ''}
+        <TaskRoleUnassign
+          userId={
+            notification.history_command.params.assign_user?.user_id || ''
+          }
         />
       );
+    case NotificationCommandName.taskTagAssign:
+      return notification.history_command.params.tag ? (
+        <TaskTagAssign
+          name={notification.history_command.params.tag.name || ''}
+          color={notification.history_command.params.tag.color || ''}
+        />
+      ) : null;
     case NotificationCommandName.taskTitleChange:
       return (
         <TaskTitleChange
           title={notification.history_command.params.title || ''}
         />
       );
+    case NotificationCommandName.taskPriorityChange:
+      return notification.history_command.params.priority ? (
+        <TaskPriorityChange
+          priority={notification.history_command.params.priority.name}
+        />
+      ) : null;
+    case NotificationCommandName.timeEndChange:
+      return (
+        <TimeEndChange
+          time={notification.history_command.params.exec_stop || ''}
+        />
+      );
+    case NotificationCommandName.timeStartChange:
+      return (
+        <TimeStartChange
+          time={notification.history_command.params.exec_start || ''}
+        />
+      );
+    case NotificationCommandName.taskExecStopChange:
+      return <div>{NotificationMessageToShow.taskExecStopChange}</div>;
+    case NotificationCommandName.taskExecStartChange:
+      return <div>{NotificationMessageToShow.taskExecStartChange}</div>;
+    case NotificationCommandName.taskStorageFileAssign:
+      return notification.history_command.params.storage_file ? (
+        <TaskStorageFileAssign
+          file={notification.history_command.params.storage_file}
+        />
+      ) : null;
+
     default:
       return null;
   }

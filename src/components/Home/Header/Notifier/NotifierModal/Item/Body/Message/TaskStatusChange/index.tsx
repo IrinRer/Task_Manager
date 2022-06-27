@@ -9,7 +9,9 @@ interface IProps {
 const TaskStatusChange: React.FC<IProps> = ({ statusName }) => {
   return (
     <>
-      <div>{NotificationMessageToShow.taskStatusChange}</div>
+      <div className="notify-action">
+        {NotificationMessageToShow.taskStatusChange}
+      </div>
       <div>Новый статус:</div>
       <div className={styles.status}>{statusName}</div>
     </>

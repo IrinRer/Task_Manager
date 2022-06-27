@@ -8,7 +8,9 @@ interface IProps {
 const TaskTitleChange: React.FC<IProps> = ({ title }) => {
   return (
     <>
-      <div>{NotificationMessageToShow.taskTitleChange}</div>
+      <div className="notify-action">
+        {NotificationMessageToShow.taskTitleChange}
+      </div>
       <div>
         Новый заголовок: <b>{title}</b>
       </div>

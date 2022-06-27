@@ -39,6 +39,8 @@ export interface INotification {
       title?: string;
       message?: string;
       complete?: boolean;
+      exec_stop?: string;
+      exec_start?: string;
       status?: {
         task_status_id: string;
         name: string;
@@ -51,11 +53,19 @@ export interface INotification {
         check_list_id: string;
         title: string;
       };
+      check_list_item?: {
+        check_list_item_id: string;
+        message: string;
+      };
+      priority?: {
+        task_priority_id: string;
+        name: string;
+      };
       task_role?: {
         task_role_id: string;
         name: ROLES;
       };
-      tag: {
+      tag?: {
         task_tag_id: string;
         name: string;
         color: TagColor;
@@ -64,6 +74,7 @@ export interface INotification {
         task_id: string;
         title: string;
       };
+      storage_file?: INotifyFile;
     };
     relations: [
       {
@@ -76,6 +87,19 @@ export interface INotification {
       },
     ];
   };
+}
+
+export interface INotifyFile {
+  storage_file_id: string;
+  type: string;
+  name_original: string;
+  content_type: string;
+  size: number;
+  uploaded: boolean;
+  image_thumbnail: any;
+  image_width: number | null;
+  image_height: number | null;
+  modifications: any[];
 }
 
 export interface IGetNotificationsResponseData {

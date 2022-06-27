@@ -47,7 +47,7 @@ export const PRIORITY_COLORS = {
   Средний: 'Orange',
   Низкий: 'Green',
 };
-
+// Стили приоритета
 export const STYLES = ['high', 'middle', 'low'];
 
 export enum StatusClass {
@@ -57,7 +57,7 @@ export enum StatusClass {
   'Не выполнена' = 'paused',
 }
 
-export const PRIORITY_STYLES: string[] = ['high', 'middle', 'low'];
+// export const PRIORITY_STYLES: string[] = ['high', 'middle', 'low'];
 
 export enum BlockTitle {
   in = 'Входящие',
@@ -80,4 +80,5 @@ export const EditableContext = createContext<boolean>(false);
 export const RELOAD_TASKS_INTERVAL = 420000; // Перезагружаем задачи каждые 7 минут
 
 export const DATE_TIME_FORMAT = 'dd MMM yyyy h:mm';
+export const DATE_FORMAT = 'dd MMM yyyy';
 export const MAX_USER_INITIALS = 2;

@@ -12,7 +12,9 @@ interface IProps {
 const TaskTagAssign: React.FC<IProps> = ({ name, color }) => {
   return (
     <>
-      <div>{NotificationMessageToShow.taskTagAssign}</div>
+      <div className="notify-action">
+        {NotificationMessageToShow.taskTagAssign}
+      </div>
       <div className={styles.tags}>
         <CustomTag title={name} color={color} closable={false} />
       </div>

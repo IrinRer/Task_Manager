@@ -27,11 +27,15 @@
       font-weight: 400;
       color: $gray-800;
     }
+    :global(.notify-action) {
+      padding-bottom: 8px;
+    }
   }
   footer {
     width: 100%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    margin-top: 24px;
   }
 }

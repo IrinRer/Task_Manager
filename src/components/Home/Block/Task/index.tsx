@@ -47,7 +47,7 @@ const Task: React.FC<IProps> = ({ type }) => {
       {/* Приоритет */}
       {type !== BlockType.done && (
         <Col span={2} className={styles.priority}>
-          <Priority />
+          <Priority priority={task.priority?.name} />
         </Col>
       )}
       {/* Тэги */}
