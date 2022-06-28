@@ -15,7 +15,7 @@ interface IProps {
   handleCancel?: () => void;
 }
 
-const Notice = (settings: IProps): any => {
+const notice = (settings: IProps) => {
   const {
     text,
     textButton,
@@ -60,4 +60,4 @@ const Notice = (settings: IProps): any => {
 
   notification.open(config);
 };
-export default Notice;
+export default notice;
