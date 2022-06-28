@@ -1,19 +1,20 @@
 import { HISTORY_COMMAND } from 'constants/history/common';
-import React from 'react';
-import DateHistory from '../DateHistory';
-import User from '../User';
-
+import React, { FC } from 'react';
+import { IHistoryItem } from 'store/history/types';
+import CommonComponent from '../Common';
+import ContextWrapperHistory from '../ContextWrapper';
 import styles from '../index.module.scss';
 
-const CreateTask = ({ item }) => {
-  return (
+interface IProps {
+  item: IHistoryItem;
+}
+
+const CreateTask: FC<IProps> = ({ item }) => (
+  <ContextWrapperHistory item={item} text={HISTORY_COMMAND.createTask}>
     <div className={styles.history}>
-      <div className={styles.historyElem}>
-        <User item={item} text={HISTORY_COMMAND.createTask} />
-        <DateHistory item={item} />
-      </div>
+      <CommonComponent />
     </div>
-  );
-};
+  </ContextWrapperHistory>
+);
 
 export default CreateTask;

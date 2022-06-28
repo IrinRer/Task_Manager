@@ -11,7 +11,7 @@ export interface IUsersReducer {
 export interface IUser {
   user_id: string;
   name: string;
-  permissions: Array<string>;
+  permissions?: Array<string>;
   logo?: string;
 }
 

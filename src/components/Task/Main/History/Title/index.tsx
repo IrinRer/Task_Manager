@@ -1,28 +1,27 @@
 import { HISTORY_COMMAND } from 'constants/history/common';
-import React from 'react';
-import DateHistory from '../DateHistory';
-import User from '../User';
-
+import React, { FC } from 'react';
+import { IHistoryItem } from 'store/history/types';
+import ContextWrapperHistory from '../ContextWrapper';
+import CommonComponent from '../Common';
 import styles from '../index.module.scss';
 
-const Title = ({item}) => {
-    return (
-        <div className={styles.history}>
-        <div className={styles.historyElem}>
-          <User
-            item={item}
-            text={HISTORY_COMMAND.changeTitle}
-          />
-          <DateHistory item={item} />
-        </div>
-  
+interface IProps {
+  item: IHistoryItem;
+}
+
+const Title: FC<IProps> = ({ item }) => {
+  return (
+    <ContextWrapperHistory item={item} text={HISTORY_COMMAND.changeTitle}>
+      <div className={styles.history}>
+        <CommonComponent />
+
         <div className={styles.historyElemItem}>
-          <span>Новый заголовок:&nbsp;</span>
-          <span>{item.params.title}</span>
+          <span>Новый заголовок:&nbsp;&nbsp;</span>
+          <span className={styles.font_weight}>{item.params.title}</span>
         </div>
       </div>
-
-    )
-}
+    </ContextWrapperHistory>
+  );
+};
 
 export default Title;

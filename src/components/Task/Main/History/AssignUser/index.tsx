@@ -1,25 +1,24 @@
 import UserAvatar from 'components/Common/UserAvatar';
 import { HISTORY, HISTORY_COMMAND } from 'constants/history/common';
-import React from 'react';
-import DateHistory from '../DateHistory';
+import React, {FC} from 'react';
+import { IHistoryItem } from 'store/history/types';
+import CommonComponent from '../Common';
+import ContextWrapperHistory from '../ContextWrapper';
 import styles from '../index.module.scss';
-import User from '../User';
 
-const AssignUser = ({ item }) => {
+interface IProps {
+  item: IHistoryItem
+}
+
+const AssignUser: FC<IProps> = ({ item }) => {
   return (
+    <ContextWrapperHistory item={item} text={
+      item.command_code === HISTORY.roleAssign
+        ? HISTORY_COMMAND.assignUser
+        : HISTORY_COMMAND.unassignUser
+    }>
     <div className={styles.history}>
-      <div className={styles.historyElem}>
-        <User
-          item={item}
-          text={
-            item.command_code === HISTORY.roleAssign
-              ? HISTORY_COMMAND.assignUser
-              : HISTORY_COMMAND.unassignUser
-          }
-        />
-        <DateHistory item={item} />
-      </div>
-
+      <CommonComponent/>
       <div className={styles.historyElemItem}>
         <UserAvatar user={item.params.assign_user} />
         <span
@@ -27,6 +26,7 @@ const AssignUser = ({ item }) => {
         >{`${item.params.assign_user.name}`}</span>
       </div>
     </div>
+   </ContextWrapperHistory>
   );
 };
 

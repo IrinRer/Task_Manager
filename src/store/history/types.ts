@@ -2,13 +2,18 @@ import { AxiosError } from 'axios';
 
 export const HISTORY_SLICE_ALIAS = 'history';
 
-export interface IHistoryPayload {
+export interface IHistoryItem {
   command_code: string;
   command_name: string;
   created: string;
   history_command_id: string;
-  params: {};
-  relations: [];
+  params: any;
+  relations: [
+    {
+      relation_type: string;
+      relation_id: string;
+    },
+  ];
   user: {
     user_id: string;
     name: string;
@@ -16,8 +21,16 @@ export interface IHistoryPayload {
   };
 }
 
+export interface IHistoryPayload {
+  data: Array<IHistoryItem>;
+  taskId: string;
+  count: string;
+}
+
 export interface IHistoryReducer {
-    data: Array<IHistoryPayload>;
-    loading: boolean;
-    error: AxiosError | null;
+  data: Array<IHistoryItem>;
+  taskId: string;
+  count: string;
+  loading: boolean;
+  error: AxiosError | null;
 }

@@ -1,25 +1,28 @@
 import { HISTORY, HISTORY_COMMAND } from 'constants/history/common';
-import React from 'react';
-import DateHistory from '../../DateHistory';
-import User from '../../User';
-
+import React, { FC } from 'react';
+import { IHistoryItem } from 'store/history/types';
+import ContextWrapperHistory from '../../ContextWrapper';
+import CommonComponent from '../../Common';
 import styles from '../../index.module.scss';
 
-const ChecklistAssign = ({ item }) => {
+interface IProps {
+  item: IHistoryItem;
+}
+
+const ChecklistAssign: FC<IProps> = ({ item }) => {
   return (
-    <div className={styles.history}>
-      <div className={styles.historyElem}>
-        <User
-          item={item}
-          text={
-            item.command_code === HISTORY.checklistAssign
-              ? HISTORY_COMMAND.assignChecklist
-              : HISTORY_COMMAND.unassignChecklist
-          }
-        />
-        <DateHistory item={item} />
+    <ContextWrapperHistory
+      item={item}
+      text={
+        item.command_code === HISTORY.checklistAssign
+          ? HISTORY_COMMAND.assignChecklist
+          : HISTORY_COMMAND.unassignChecklist
+      }
+    >
+      <div className={styles.history}>
+        <CommonComponent />
       </div>
-    </div>
+    </ContextWrapperHistory>
   );
 };
 

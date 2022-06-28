@@ -1,29 +1,33 @@
 import { HISTORY, HISTORY_COMMAND } from 'constants/history/common';
-import React from 'react';
-import DateHistory from '../DateHistory';
-import User from '../User';
+import React, { FC } from 'react';
+import { IHistoryItem } from 'store/history/types';
+import ContextWrapperHistory from '../ContextWrapper';
 import styles from '../index.module.scss';
+import CommonComponent from '../Common';
 
-const Attachments = ({ item }) => {
+interface IProps {
+  item: IHistoryItem;
+}
+
+const Attachments: FC<IProps> = ({ item }) => {
   return (
-    <div className={styles.history}>
-      <div className={styles.historyElem}>
-        <User
-          item={item}
-          text={
-            item.command_code === HISTORY.fileAssign
-              ? HISTORY_COMMAND.assignFile
-              : HISTORY_COMMAND.unassignFile
-          }
-        />
-        <DateHistory item={item} />
-      </div>
+    <ContextWrapperHistory
+      item={item}
+      text={
+        item.command_code === HISTORY.fileAssign
+          ? HISTORY_COMMAND.assignFile
+          : HISTORY_COMMAND.unassignFile
+      }
+    >
+      <div className={styles.history}>
+        <CommonComponent />
 
-      {HISTORY_COMMAND.assignFile ? <div>картинка</div> : null}
-      {/* <div className={styles.historyElemItem}>
+        {HISTORY_COMMAND.assignFile ? <div>картинка</div> : null}
+        {/* <div className={styles.historyElemItem}>
             
           </div> */}
-    </div>
+      </div>
+    </ContextWrapperHistory>
   );
 };
 

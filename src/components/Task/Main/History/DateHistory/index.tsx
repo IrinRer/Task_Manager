@@ -1,12 +1,14 @@
-import React from 'react';
-import { locale, DATE_FORMAT_HISTORY } from 'constants/history/common';
+import React, { useContext } from 'react';
+import { locale } from 'constants/history/common';
 import { formatRelative } from 'date-fns';
 import styles from '../index.module.scss';
+import { HistoryContext } from '../context';
 
-const DateHistory = ({ item }) => {
+const DateHistory = () => {
+  const data = useContext(HistoryContext);
   return (
     <span className={styles.date}>{`${formatRelative(
-      new Date(item.created),
+      new Date(data.item?.created || ''),
       new Date(),
       { locale },
     )}`}</span>

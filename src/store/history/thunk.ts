@@ -5,31 +5,21 @@ import { HISTORY_SLICE_ALIAS } from './types';
 
 export const historyAction = createAsyncThunk(
   `${HISTORY_SLICE_ALIAS}/fetchAll`,
-  async (taskId: string, { rejectWithValue }) => {
+  async (history: { taskId: string; page: number }, { rejectWithValue }) => {
     try {
       const response = await api().get('/api/v1.0/history/commands', {
         params: {
-          relation_id: taskId,
-          page: 1,
-          per_page: 50,
+          relation_id: history.taskId,
+          page: history.page,
+          per_page: 7,
         },
       });
-      console.log(response.data.data)
-      return response.data.data;
-    } catch (error) {
-      notification.error({ message: 'Ошибка отображения истории' });
-      return rejectWithValue(error.message);
-    }
-  },
-);
 
-export const historyCommandAction = createAsyncThunk(
-  `${HISTORY_SLICE_ALIAS}/fetchAllCommand`,
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await api().get('/api/v1.0/history/available-commands');
-
-      return response.data.data;
+      return {
+        count: response.data.pagination.items_total,
+        data: response.data.data,
+        taskId: history.taskId,
+      };
     } catch (error) {
       notification.error({ message: 'Ошибка отображения истории' });
       return rejectWithValue(error.message);
