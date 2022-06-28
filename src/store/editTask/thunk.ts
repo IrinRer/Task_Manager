@@ -4,6 +4,7 @@ import { AxiosResponse } from 'axios';
 import { IStatusChangeArg } from 'constants/types/common';
 
 import { api } from 'network';
+import { fetchTaskAction } from 'store/common/task/thunk';
 
 import {
   ITaskAssignUser,
@@ -48,7 +49,7 @@ export const setTaskTitle = createAsyncThunk(
 
 export const setTaskMemberAction = createAsyncThunk(
   `${EDIT_TASK_SLICE_ALIAS}/setMember`,
-  async (data: ITaskAssignUser, { rejectWithValue }) => {
+  async (data: ITaskAssignUser, { rejectWithValue, dispatch }) => {
     try {
       const response: AxiosResponse = await api().post(
         `/api/v1.0/task/tasks/${data.task_id}/role-assign`,
@@ -62,7 +63,7 @@ export const setTaskMemberAction = createAsyncThunk(
       if (error.response!.status !== 500) {
         notification.error({ message: 'Ошибка назначения участника' });
       } else {
-        window.location.reload();
+        await dispatch(fetchTaskAction(data.task_id));
       }
       return rejectWithValue(error.message);
     }
@@ -71,7 +72,7 @@ export const setTaskMemberAction = createAsyncThunk(
 
 export const deleteTaskMemberAction = createAsyncThunk(
   `${EDIT_TASK_SLICE_ALIAS}/deleteMember`,
-  async (data: ITaskAssignUser, { rejectWithValue }) => {
+  async (data: ITaskAssignUser, { rejectWithValue, dispatch }) => {
     try {
       const response: AxiosResponse = await api().post(
         `/api/v1.0/task/tasks/${data.task_id}/role-unassign`,
@@ -85,7 +86,7 @@ export const deleteTaskMemberAction = createAsyncThunk(
       if (error.response!.status !== 500) {
         notification.error({ message: 'Ошибка удаления участника' });
       } else {
-        window.location.reload();
+        await dispatch(fetchTaskAction(data.task_id));
       }
       return rejectWithValue(error.message);
     }

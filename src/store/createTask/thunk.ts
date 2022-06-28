@@ -6,6 +6,7 @@ import {
   getResponsibleRoleID,
   getWatcherRoleID,
 } from 'store/common/roles/selectors';
+import { fetchTaskAction } from 'store/common/task/thunk';
 import { setTaskMemberAction } from 'store/editTask/thunk';
 import { getTaskAuthorIDParams } from 'store/tasks/selectors';
 import { fetchTasksAction } from 'store/tasks/thunk';
@@ -42,7 +43,12 @@ export const createTaskAction = createAsyncThunk(
           );
         }
       } catch (error) {
-        /* */
+        if (error.response!.status !== 500) {
+          notification.error({ message: 'Ошибка назначения участника' });
+        } else {
+          await dispatch(fetchTaskAction(task.task_id));
+        }
+        return rejectWithValue(error.message);
       }
 
       try {
@@ -58,7 +64,12 @@ export const createTaskAction = createAsyncThunk(
           );
         }
       } catch (error) {
-        /* */
+        if (error.response!.status !== 500) {
+          notification.error({ message: 'Ошибка назначения участника' });
+        } else {
+          await dispatch(fetchTaskAction(task.task_id));
+        }
+        return rejectWithValue(error.message);
       }
 
       // Обновляем список с бэкэнда

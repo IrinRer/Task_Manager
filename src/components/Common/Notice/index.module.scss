@@ -51,7 +51,7 @@
   border-top: 4px solid $button-main;
   content: '';
   width: 100%;
-  animation: progress $TIME_SHOW_NOTICE linear;
+  animation: progress $TIME_SHOW_NOTICE_IN_SECONDS linear;
   animation-fill-mode: forwards;
 }
 

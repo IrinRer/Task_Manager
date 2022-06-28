@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { Button, notification } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { ReactComponent as CloseIcon } from 'assets/icons/close.svg';
-import { TIME_SHOW_NOTICE } from 'constants/common';
+import { TIME_SHOW_NOTICE_IN_SECONDS } from 'constants/common';
 import styles from './index.module.scss';
 
 interface IProps {
@@ -19,7 +19,7 @@ const Notice = (settings: IProps): any => {
   const {
     text,
     textButton,
-    duration = TIME_SHOW_NOTICE,
+    duration = TIME_SHOW_NOTICE_IN_SECONDS,
     className,
     icon = <InfoCircleOutlined />,
     handleOk,
@@ -38,22 +38,20 @@ const Notice = (settings: IProps): any => {
     notification.close(key);
   };
 
-  const btn = (
-    <Button
-      type="link"
-      size="small"
-      className={styles.cancelBtn}
-      onClick={cancel}
-    >
-      {textButton}
-    </Button>
-  );
-
   const config = {
     message: text,
     duration,
     icon,
-    btn,
+    btn: (
+      <Button
+        type="link"
+        size="small"
+        className={styles.cancelBtn}
+        onClick={cancel}
+      >
+        {textButton}
+      </Button>
+    ),
     key,
     className: `commonNotice ${className}`,
     closeIcon: <CloseIcon id="closeNotify" />,
