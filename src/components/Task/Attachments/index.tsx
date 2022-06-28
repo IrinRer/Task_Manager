@@ -22,7 +22,7 @@ import {
   getStorageFile,
   getTaskFileImg,
 } from 'store/editTask/attachments/selectors';
-import { config } from 'helpers/progressBar';
+import { setConfig } from 'helpers/progressBar';
 import { useGetRights } from 'customHooks/useGetRights';
 import { RIGHTS_NAMES } from 'constants/rights';
 import Preview from './Preview';
@@ -42,7 +42,7 @@ const Attachments = () => {
   const isRights = useGetRights(RIGHTS_NAMES.editAttached);
 
   useEffect(() => {
-    taskFileImg?.map(({ storage_file_id, name_original }) =>
+    taskFileImg?.forEach(({ storage_file_id, name_original }) =>
       dispatch(
         viewFile({
           fileId: storage_file_id,
@@ -99,7 +99,7 @@ const Attachments = () => {
   const handleSubmit = (options: IOptions) => {
     const { onSuccess, onError, onProgress } = options;
 
-    const configProgressBar = config(setProgress, onProgress);
+    const configProgressBar = setConfig(setProgress, onProgress);
 
     dispatch(
       assignFile({
@@ -145,6 +145,7 @@ const Attachments = () => {
 
     setPreviewVisible(true);
     dispatch(setImgRecieved({ url: file.url, name: file.name }));
+    dispatch(setImgRecieved(file));
     dispatch(setPreviewTitleRender(file.name));
   };
 

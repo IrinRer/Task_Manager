@@ -9,39 +9,43 @@ import ModalDelete from 'components/Common/ModalDelete';
 import { ATTACHMENTS_TITLE_MAX_LENGTH } from 'constants/attachments/attachments';
 import classNames from 'classnames';
 import Preview from '../../Preview';
+import { ViewFileContext } from '../../Context/contextViewFile';
 import HoverButton from '../../HoverButton';
 import styles from './index.module.scss';
-import { ViewFileContext } from '../../context';
 
 const FileImg = () => {
   const dispatch = useAppDispatch();
-  const file = useContext(ViewFileContext);
+  const valueContext = useContext(ViewFileContext);
 
   const [previewVisible, setPreviewVisible] = useState(false);
   const [visibleModalDelete, setVisibleModalDelete] = useState(false);
   const [hover, setHover] = useState(false);
 
   const url =
-    !file.file.url && file.file.originFileObj
-      ? URL.createObjectURL(file.file.originFileObj)
+    !valueContext.file.url && valueContext.file.originFileObj
+      ? URL.createObjectURL(valueContext.file.originFileObj)
       : undefined;
 
   useEffect(() => {
     dispatch(
-      setImgRecieved({ url: url || file.file.url, name: file.file.name || '' }),
+      setImgRecieved({
+        url: url || valueContext.file.url,
+        name: valueContext.file.name || '',
+      }),
     );
     // eslint-disable-next-line
-  }, [file.file.url]);
+  }, [valueContext.file.url]);
 
   const isLongText =
-    file.file.name && file.file.name?.length > ATTACHMENTS_TITLE_MAX_LENGTH
-      ? `${file.file.name?.slice(0, ATTACHMENTS_TITLE_MAX_LENGTH)}...`
-      : file.file.name;
+    valueContext.file.name &&
+    valueContext.file.name?.length > ATTACHMENTS_TITLE_MAX_LENGTH
+      ? `${valueContext.file.name?.slice(0, ATTACHMENTS_TITLE_MAX_LENGTH)}...`
+      : valueContext.file.name;
 
   const customPreview = () => {
-    if (file.file.name) {
+    if (valueContext.file.name) {
       setPreviewVisible(true);
-      dispatch(setPreviewTitleReceived(file.file.name));
+      dispatch(setPreviewTitleReceived(valueContext.file.name));
       dispatch(cleanRender());
     }
   };
@@ -74,7 +78,11 @@ const FileImg = () => {
         onMouseLeave={onBlur}
         className={classNameWrapper}
       >
-        <img src={file.file.url || url} alt="img" className={classNameImg} />
+        <img
+          src={valueContext.file.url || url}
+          alt="img"
+          className={classNameImg}
+        />
         <p>{`${isLongText}`} </p>
         <HoverButton
           customPreview={customPreview}
@@ -83,12 +91,12 @@ const FileImg = () => {
         />
       </div>
       <ModalDelete
-        textMain={`${file.file.name} будет безвозвратно удален`}
+        textMain={`${valueContext.file.name} будет безвозвратно удален`}
         textButton="Удалить файл"
         visibleModalDelete={visibleModalDelete}
         setIsVisibleModalDelete={setVisibleModalDelete}
-        file={file.file.name || ''}
-        action={file.onDeleteFile}
+        target={valueContext.file.name || ''}
+        action={valueContext.onDeleteFile}
       />
       <Preview
         previewVisible={previewVisible}

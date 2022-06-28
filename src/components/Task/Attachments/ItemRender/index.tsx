@@ -2,24 +2,19 @@ import React, { useContext } from 'react';
 import ProgressBar from 'components/Common/Progress';
 import FileText from '../ViewFileAllType/FileText';
 import FileImg from '../ViewFileImg/FileImg';
-import { ViewFileContext } from '../context';
+import { ViewFileContext } from '../Context/contextViewFile';
 
 const ItemRender = () => {
-  const file = useContext(ViewFileContext);
-  const isProgress =
-    file.progress && file.progress > 0 && file.file.percent !== 100 ? (
-      <ProgressBar progress={file.progress} />
-    ) : null;
+  const valueContext = useContext(ViewFileContext);
 
-  return file.file?.type?.includes('image') ? (
+  return (
     <>
-      <FileImg />
-      {isProgress}
-    </>
-  ) : (
-    <>
-      <FileText />
-      {isProgress}
+      {valueContext.file?.type?.includes('image') ? <FileImg /> : <FileText />}
+      {valueContext.progress &&
+      valueContext.progress > 0 &&
+      valueContext.file.percent !== 100 ? (
+        <ProgressBar progress={valueContext.progress} />
+      ) : null}
     </>
   );
 };

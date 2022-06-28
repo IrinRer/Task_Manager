@@ -87,7 +87,7 @@ const ModalNewTag: FC<IProps> = ({ openWindowCreate }) => {
         textButton="Удалить метку"
         visibleModalDelete={visibleModalDelete}
         setIsVisibleModalDelete={setVisibleModalDelete}
-        file={id || ''}
+        target={id || ''}
         action={onDelete}
       />
       <ModalTag

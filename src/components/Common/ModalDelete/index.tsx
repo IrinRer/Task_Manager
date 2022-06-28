@@ -2,10 +2,6 @@ import React from 'react';
 import { Modal, Button } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { UploadFile } from 'antd/lib/upload/interface';
-import { setIsVisibleModalDelete } from 'store/editTask/additionalFunctions/tag/modalVisible/slice';
-import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import { isModalVisibleDelete } from 'store/editTask/additionalFunctions/tag/modalVisible/selectors';
-import { useAppSelector } from 'customHooks/redux/useAppSelector';
 
 import styles from './index.module.scss';
 
@@ -16,7 +12,7 @@ type IProps = {
   action: (arg: string | UploadFile) => void;
   visibleModalDelete: boolean;
   setIsVisibleModalDelete: (arg: boolean) => void;
-  file?: string | UploadFile;
+  target?: string | UploadFile;
 }
 
 const ModalDelete: React.FC<IProps> = ({
@@ -25,12 +21,12 @@ const ModalDelete: React.FC<IProps> = ({
   action,
   visibleModalDelete,
   setIsVisibleModalDelete,
-  file,
+  target
 }) => {
 
   const handleOk = () => {
-    if(file) {
-      action(file);
+    if(target) {
+      action(target);
     }
     setIsVisibleModalDelete(false);
   };

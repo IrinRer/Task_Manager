@@ -1,7 +1,7 @@
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import React, { useContext } from 'react';
 import { getTaskFileAllType } from 'store/editTask/attachments/selectors';
-import { AttachmentsContext } from '../context';
+import { AttachmentsContext } from '../Context/contextAttachments';
 import ContextWrapperViewFile from '../ContextWrapper/ViewFileContex';
 import FileText from './FileText';
 
@@ -13,7 +13,7 @@ const ViewFileAllType = () => {
       {taskFile?.map((item) => {
         return (
           <ContextWrapperViewFile
-            file={{ size: item.size, name: item.name_original }}
+            file={item}
             onDeleteFile={file.onDeleteFile}
             onDownload={file.onDownload}
             preview={undefined}

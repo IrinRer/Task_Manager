@@ -5,7 +5,7 @@ import { useGetRights } from 'customHooks/useGetRights';
 import { RIGHTS_NAMES } from 'constants/rights';
 import { CloudDownloadOutlined } from '@ant-design/icons';
 import styles from './index.module.scss';
-import { AttachmentsContext } from '../../context';
+import { AttachmentsContext } from '../../Context/contextAttachments';
 
 interface IProps {
   previewTitle: string;

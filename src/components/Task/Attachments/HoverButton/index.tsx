@@ -5,9 +5,8 @@ import { ReactComponent as RecycleBinIcon } from 'assets/icons/recycleBin.svg';
 import classNames from 'classnames';
 import { useGetRights } from 'customHooks/useGetRights';
 import { RIGHTS_NAMES } from 'constants/rights';
-
+import { ViewFileContext } from '../Context/contextViewFile';
 import styles from './index.module.scss';
-import { ViewFileContext } from '../context';
 
 interface IProps {
   customPreview?: () => void;
@@ -17,7 +16,7 @@ interface IProps {
 
 const HoverButton: FC<IProps> = ({ customPreview, onRemove, hover }) => {
   const isRights = useGetRights(RIGHTS_NAMES.editAttached);
-  const file = useContext(ViewFileContext);
+  const valueContext = useContext(ViewFileContext);
 
   const classNameBtn = classNames(styles.not_hover_icon, {
     [styles.hover_icon]: hover,
@@ -35,14 +34,16 @@ const HoverButton: FC<IProps> = ({ customPreview, onRemove, hover }) => {
       <Button
         icon={<CloudDownloadOutlined />}
         onClick={() =>
-          file.onDownload(file.file.name ||  file.file.name_original || '')
+          valueContext.onDownload(
+            valueContext.file.name || valueContext.file.name_original || '',
+          )
         }
         className={styles.btn_hover_icon}
       />
       {customPreview && (
         <Button
           icon={<EyeOutlined />}
-          onClick={file.preview || customPreview}
+          onClick={valueContext.preview || customPreview}
           className={styles.btn_hover_icon}
         />
       )}

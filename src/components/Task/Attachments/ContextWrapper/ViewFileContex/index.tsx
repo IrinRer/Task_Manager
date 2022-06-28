@@ -3,16 +3,16 @@ import {
   IViewFileContext,
   useViewFileContextValue,
   ViewFileContext,
-} from '../../context';
+} from '../../Context/contextViewFile';
 
 interface IProps extends IViewFileContext {
   children: React.ReactNode;
 }
 
 const ContextWrapperViewFile: React.FC<IProps> = ({
+  file,
   onDeleteFile,
   onDownload,
-  file,
   preview,
   progress,
   children,
@@ -20,9 +20,9 @@ const ContextWrapperViewFile: React.FC<IProps> = ({
   return (
     <ViewFileContext.Provider
       value={useViewFileContextValue(
+        file,
         onDeleteFile,
         onDownload,
-        file,
         preview,
         progress,
       )}

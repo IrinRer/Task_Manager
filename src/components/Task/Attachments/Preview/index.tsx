@@ -13,7 +13,7 @@ import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { setIndex } from 'store/editTask/attachments/preview/slice';
 import Header from './Header';
 import ImgView from './ImgView/indes';
-import { AttachmentsContext } from '../context';
+import { AttachmentsContext } from '../Context/contextAttachments';
 import styles from './index.module.scss';
 
 interface IProps {
@@ -40,8 +40,6 @@ const Preview: FC<IProps> = ({ previewVisible, setPreviewVisible }) => {
         dispatch(setIndex(+index));
       }
     });
-
-
   }, [dispatch, imgRecieved, isTitle]);
 
   const onRemove = () => {
@@ -80,7 +78,7 @@ const Preview: FC<IProps> = ({ previewVisible, setPreviewVisible }) => {
         textButton="Удалить файл"
         visibleModalDelete={visibleModalDelete}
         setIsVisibleModalDelete={setVisibleModalDelete}
-        file={imgRecieved[index].name || ''}
+        target={imgRecieved[index].name || ''}
         action={onDeleteFileImg}
       />
     </>

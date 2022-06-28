@@ -3,12 +3,14 @@ import shapeAttachment from 'assets/icons/shapeAttachment.svg';
 import ModalDelete from 'components/Common/ModalDelete';
 import classNames from 'classnames';
 import HoverButton from '../../HoverButton';
-import { ViewFileContext } from '../../context';
+import { ViewFileContext } from '../../Context/contextViewFile';
 import styles from './index.module.scss';
 
 const FileText = () => {
-  const file = useContext(ViewFileContext);
-  const inKB = file.file?.size ? (file.file.size / 1024).toFixed(2) : null;
+  const valueContext = useContext(ViewFileContext);
+  const inKB = valueContext.file?.size
+    ? (valueContext.file.size / 1024).toFixed(2)
+    : null;
 
   const [hover, setHover] = useState(false);
 
@@ -46,7 +48,7 @@ const FileText = () => {
         </div>
         <div className={styles.wrapper_text}>
           <p className={styles.text_name}>{`${
-            file.file.name || file.file.name_original
+            valueContext.file.name || valueContext.file.name_original
           }`}</p>
           <p className={styles.text_size}>{`${inKB} Kb`}</p>
         </div>
@@ -58,13 +60,13 @@ const FileText = () => {
       </div>
       <ModalDelete
         textMain={`${
-          file.file.name_original || file.file.name
+          valueContext.file.name_original || valueContext.file.name
         } будет безвозвратно удален`}
         textButton="Удалить файл"
         visibleModalDelete={visibleModalDelete}
         setIsVisibleModalDelete={setVisibleModalDelete}
-        file={file.file.name_original || file.file.name}
-        action={file.onDeleteFile}
+        target={valueContext.file.name_original || valueContext.file.name}
+        action={valueContext.onDeleteFile}
       />
     </>
   );

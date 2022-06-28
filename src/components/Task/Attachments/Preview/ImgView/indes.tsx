@@ -12,7 +12,6 @@ import { setIndex } from 'store/editTask/attachments/preview/slice';
 import classNames from 'classnames';
 import styles from './index.module.scss';
 
-
 const ImgView = () => {
   const imgRecieved = useAppSelector(getImgReceived);
   const index = useAppSelector(getIndex);
@@ -51,14 +50,13 @@ const ImgView = () => {
 
   return (
     <>
-      <img alt="img" className={styles.img} src={imgRecieved[index].url} />
-
       <div className={styles.wrapper_icon}>
         <Button
           icon={<LeftOutlined />}
           onClick={prevClick}
           className={styles.icon_left}
         />
+        <img alt="img" className={styles.img} src={imgRecieved[index].url} />
         <Button
           icon={<RightOutlined />}
           onClick={nextClick}

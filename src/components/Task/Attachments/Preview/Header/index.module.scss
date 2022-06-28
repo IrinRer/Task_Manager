@@ -35,6 +35,13 @@
   }
 }
 
+@media screen and (max-width: 500px) {
+
+  :global(.ant-btn).btnDownload {
+    margin-right: 50px !important;
+  }
+}
+
 .wrapper {
   display: flex;
   justify-content: space-between;

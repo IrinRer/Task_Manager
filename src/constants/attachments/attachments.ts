@@ -9,28 +9,35 @@ export interface IFileList extends Blob, RcFile {
   name: string;
   lastModified: number;
   lastModifiedDate: Date;
+  size: number;
+  type: string;
+  uid: string;
   originFileObj?: RcFile;
   percent?: number;
   response?: string;
-  size: number;
   status?: undefined;
   thumbUrl?: string;
-  type: string;
-  uid: string;
   xhr?: undefined;
 }
 
 export interface IOptions extends UploadRequestOption {
   file: string | RcFile | Blob;
-  onError?: ((event: ProgressEvent<EventTarget>) => void) | undefined;
   onProgress: (event: UploadProgressEvent) => void;
+  onError?: ((event: ProgressEvent<EventTarget>) => void) | undefined;
   onSuccess?: ((xhr?: XMLHttpRequest | undefined) => void) | undefined;
 }
 
 export const COLOR_PROGRESS = '#0062ff';
 
-export const ACCEPT_FORMAT =
-  '.doc,.png,.jpg,.jpeg,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf';
+export const ACCEPT_FORMAT = [
+  '.doc',
+  '.png',
+  '.jpg',
+  '.docx',
+  'xml,application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  '.pdf',
+].join(',');
 
 export const SETTINGS = {
   dots: true,

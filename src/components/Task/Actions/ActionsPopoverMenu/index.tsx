@@ -17,12 +17,12 @@ const ActionsPopoverMenu = () => {
   const dispatch = useAppDispatch();
   const checkList = useAppSelector(getCheckList);
   const isCheckListLoading = useAppSelector(isAddCheckListLoading);
-  const addCheckListButtonIsActive = !!checkList;
+  const addCheckListButtonIsActive = Boolean(checkList);
 
   const isClickedAttachmentsBtn = useAppSelector(isClickedAttachments);
   const attachments = useAppSelector(getFileName);
   const addAttachmentsButtonIsActive =
-    isClickedAttachmentsBtn || !!attachments.length;
+    isClickedAttachmentsBtn || Boolean(attachments.length);
 
   const addCheckListButtonClassName = classnames(styles.menuOption, {
     [styles.menuOptionDisabled]: addCheckListButtonIsActive,

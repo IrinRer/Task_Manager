@@ -3,7 +3,7 @@ import {
   AttachmentsContext,
   IAttachmentsContext,
   useAttachmentsContextValue,
-} from '../context';
+} from '../Context/contextAttachments';
 
 interface IProps extends IAttachmentsContext {
   children: React.ReactNode;
