@@ -15,6 +15,7 @@ export type TAllViewParameters = {
 
 export interface ITasksReducer {
   tasks: Array<TTask>;
+  task_id_todelete: string | null;
   itemsTotal: number;
   loading: boolean;
   error: AxiosError | null;

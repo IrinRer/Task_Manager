@@ -45,9 +45,9 @@ export const RIGHTS: Record<RIGHTS_NAMES, Array<TRights>> = {
 
   /* дублирование задачи */
   copyTask: [
-    ROLES.any,
+    // ROLES.any,
+    // ROLES.watcher,
     ROLES.author,
-    ROLES.watcher,
     ROLES.implementer,
     ROLES.responsible,
   ],
