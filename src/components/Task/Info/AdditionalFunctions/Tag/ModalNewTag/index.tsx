@@ -38,7 +38,7 @@ const ModalNewTag: FC<IProps> = ({ openWindowCreate }) => {
   const [visibleModalDelete, setVisibleModalDelete] = useState(false);
 
   const onClickDelete = (id: string, name: string) => {
-    setIsVisibleModalDelete(true);
+    setVisibleModalDelete(true);
     setName(name);
     setId(id);
   };
