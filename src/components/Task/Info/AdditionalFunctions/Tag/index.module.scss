@@ -1,24 +1,58 @@
+@import 'src/styles/mixins.scss';
 @import 'src/styles/color-variables';
 @import 'src/styles/colors';
 @import 'src/styles/font-variables';
 
-.wrapper_flex {
+.infoLine {
   display: flex;
+  justify-content: space-between;
+  font-size: $font-size-m;
+  padding-bottom: 22px;
+  font-weight: normal;
+  text-transform: none;
+  align-items: flex-start;
+  position: relative;
+
+  :global(.ant-btn-primary).btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding-left: 0;
+    padding-right: 0;
+    width: 56%;
+    text-align: left;
+
+    @include media-breakpoint-down($size: xs) {
+      left: 0;
+    }
+  }
+}
+
+.wrapper_flex {
+  /*display: flex;
   justify-content: space-between;
   align-items: center;
 
   :global(.ant-btn-primary).btn {
     margin-right: 14%;
+  }*/
+
+  @include media-breakpoint-down($size: xs) {
+    flex-direction: column;
   }
 }
 
 .wrapper_grid {
-  display: grid;
+  /*display: grid;
   grid-template-columns: 42% 57%;
   align-items: center;
 
   :global(.ant-btn-primary).btn {
     margin-left: 96%;
+  }*/
+
+  @include media-breakpoint-down($size: xs) {
+    flex-direction: column;
   }
 }
 
@@ -184,10 +218,13 @@
   font-size: $font-size-m;
   font-weight: 500;
   text-transform: none;
+}
 
-  :global(.ant-tag-close-icon) {
-    font-size: 14px;
-  }
+.tag {
+  display: flex;
+  flex-direction: column;
+  width: 56%;
+  margin-bottom: 8px;
 }
 
 :global(.ant-tag-orange) {
@@ -286,7 +323,9 @@
 
 :global(.ant-menu-sub:not([class*='-active'])) {
   border: none;
-  border-radius: 16px !important;
+  border-radius: 8px !important;
+  padding: 5px;
+  padding-right: 0;
 }
 
 :global(.ant-btn).btn_modal {

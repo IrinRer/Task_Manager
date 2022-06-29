@@ -35,9 +35,13 @@ const SelectTag: React.FC = () => {
     dispatch(setIsModalVisibleMain(true));
   };
 
-  const className = classnames(styles.wrapper_flex, {
-    [styles.wrapper_grid]: uniqueTagName?.length,
-  });
+  const className = classnames(
+    styles.wrapper_flex,
+    {
+      [styles.wrapper_grid]: uniqueTagName?.length,
+    },
+    styles.infoLine,
+  );
 
   return (
     <div className={className}>

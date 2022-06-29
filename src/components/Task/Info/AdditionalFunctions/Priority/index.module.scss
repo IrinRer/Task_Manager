@@ -1,3 +1,4 @@
+@import 'src/styles/mixins.scss';
 @import 'src/styles/font-variables';
 @import 'src/styles/colors';
 
@@ -9,18 +10,32 @@
   text-transform: none;
 }
 
-.priority {
+.infoLine {
   display: flex;
+  justify-content: space-between;
+  font-size: $font-size-m;
+  padding-bottom: 22px;
+  font-weight: normal;
+  text-transform: none;
+  align-items: center;
+}
+
+.priority {
+  /*display: flex;
   justify-content: space-between;
   align-items: center;
 
   grid-template-columns: 47% 50%;
-  margin-bottom: 10px;
+  margin-bottom: 10px;*/
 
   .text {
     font-weight: normal;
     font-size: $font-size-m;
     text-transform: none;
+
+    @include media-breakpoint-down($size: xs) {
+      margin-bottom: 11px;
+    }
   }
 
   :global(.ant-select) {
@@ -48,6 +63,14 @@
 
   :global(.ant-select-clear) {
     background: none;
+    left: 56%;
+  }
+
+  @include media-breakpoint-down($size: xs) {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 0;
+    padding-bottom: 10px;
   }
 }
 

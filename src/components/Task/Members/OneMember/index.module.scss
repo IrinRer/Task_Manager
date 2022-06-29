@@ -1,3 +1,4 @@
+@import 'src/styles/mixins.scss';
 @import 'src/styles/_colors.scss';
 
 .counterWrapper {
@@ -27,6 +28,10 @@
 
 .nolist {
   width: 56%;
+
+  @include media-breakpoint-down($size: xs) {
+    width: 100%;
+  }
 }
 
 .noedit {

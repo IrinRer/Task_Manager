@@ -11,6 +11,7 @@ import { STYLES } from 'constants/common';
 import { getPriorityName } from 'store/editTask/additionalFunctions/priority/selectors';
 import { RIGHTS_NAMES } from 'constants/rights';
 import { useGetRights } from 'customHooks/useGetRights';
+import classnames from 'classnames';
 import styles from './index.module.scss';
 
 const { Text } = Typography;
@@ -32,7 +33,7 @@ const SelectPriority: React.FC = () => {
   };
 
   return (
-    <div className={styles.priority}>
+    <div className={classnames(styles.priority, styles.infoLine)}>
       <Text className={styles.text}>Приоритет</Text>
       {isRights && (
         <Select
