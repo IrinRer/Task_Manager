@@ -13,6 +13,9 @@
   span:first-of-type {
     text-align: left;
   }
+  .rolename {
+    padding-right: 10px;
+  }
   .members {
     width: 56%;
   }
@@ -28,6 +31,7 @@
   }
   .expand {
     cursor: pointer;
+    padding-right: 10px;
   }
   .expand:hover {
     color: $blue;

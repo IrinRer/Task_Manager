@@ -41,7 +41,7 @@ const MembersWrapperMulti: FC<TProps> = ({ children }) => {
     </div>
   ) : (
     <div className={styles.infoLine}>
-      <span>{roleShowName}</span>
+      <span className={styles.rolename}>{roleShowName}</span>
       {children}
     </div>
   );

@@ -1,14 +1,23 @@
+@import 'src/styles/_colors.scss';
+
 .counterWrapper {
   display: flex;
   text-align: center;
   justify-content: flex-start;
+  flex-wrap: wrap;
 
   .counter {
     display: flex;
     margin-bottom: 8px;
-    justify-content: left;
+    border: 1px solid $gray-300;
+    border-radius: 16px;
+    text-align: center;
+    justify-content: center;
     align-items: center;
-    padding-left: 3px;
+    padding: 0 3px;
+    width: 30px;
+    height: 30px;
+    margin-left: 3px;
   }
 }
 
@@ -25,5 +34,6 @@
   .counter {
     margin-bottom: 0;
     padding-left: 9px;
+    border: none;
   }
 }
