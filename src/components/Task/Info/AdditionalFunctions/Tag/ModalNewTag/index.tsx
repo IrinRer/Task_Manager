@@ -1,9 +1,10 @@
-import React, { useState, FC } from 'react';
+import React, { useState, FC, useEffect } from 'react';
 import { Modal, Button } from 'antd';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { editTagAction } from 'store/editTask/additionalFunctions/tag/thunk';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { getTag } from 'store/editTask/additionalFunctions/tag/selectors';
+import { setAssignTagToDelete } from 'store/editTask/additionalFunctions/tag/slice';
 import {
   setIsModalVisibleEdit,
   setIsModalVisibleMain,
@@ -15,7 +16,8 @@ import {
 } from 'store/editTask/additionalFunctions/tag/modalVisible/selectors';
 import { deleteTagAction } from 'store/common/tags/thunk';
 import { MAX_NUMBER_TAGS } from 'constants/additionalFunctions/tag';
-import ModalDelete from 'components/Common/ModalDelete';
+import { setTagToDelete } from 'store/common/tags/slice';
+import ModalDeleteDelayWithNotice from 'components/Common/ModalDeleteDelayWithNotice';
 import ModalTag from '../ModalTag';
 import MenuTag from './Menu';
 
@@ -34,10 +36,12 @@ const ModalNewTag: FC<IProps> = ({ openWindowCreate }) => {
   const [name, setName] = useState('');
   const [tagId, setTagId] = useState<string>('');
   const [color, setColor] = useState('');
+  const [visibleModalDelete, setVisibleModalDelete] = useState(false);
   const [id, setId] = useState<string>('');
 
   const onClickDelete = (id: string, name: string) => {
     dispatch(setIsVisibleModalDelete(true));
+    setVisibleModalDelete(true);
     setName(name);
     setId(id);
   };
@@ -51,12 +55,24 @@ const ModalNewTag: FC<IProps> = ({ openWindowCreate }) => {
     dispatch(setIsModalVisibleEdit(true));
   };
 
+  const handleOkDelete = () => {
+    setVisibleModalDelete(false);
+    dispatch(setTagToDelete(id));
+    dispatch(setAssignTagToDelete(id));
+  };
+
+  const handleCancelDelete = () => {
+    setVisibleModalDelete(false);
+    dispatch(setAssignTagToDelete(''));
+    dispatch(setTagToDelete(''));
+  };
+
   const onDelete = () => {
     dispatch(deleteTagAction(id));
-    dispatch(setIsModalVisibleMain(false));
   };
 
   const handleCancel = () => {
+    setVisibleModalDelete(false);
     dispatch(setIsModalVisibleMain(false));
   };
 
@@ -81,11 +97,16 @@ const ModalNewTag: FC<IProps> = ({ openWindowCreate }) => {
       >
         <MenuTag onClickDelete={onClickDelete} onClickEdit={onClickEdit} />
       </Modal>
-      <ModalDelete
+      <ModalDeleteDelayWithNotice
+        visible={visibleModalDelete}
         textMain={`Метка ${name} будет удалена из списка меток и из всех задач проекта`}
         textButton="Удалить метку"
-        file={id || ''}
-        action={onDelete}
+        textNotice="Метка удалена"
+        handleOk={handleOkDelete}
+        handleCancel={handleCancel}
+        handleOkNotice={onDelete}
+        handleCancelNotify={handleCancelDelete}
+        showNotice
       />
       <ModalTag
         text="Изменить метку"

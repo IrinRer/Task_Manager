@@ -5,6 +5,8 @@ export const TAG_SLICE_ALIAS = 'tag';
 
 export interface ITagReducer {
   sentTag: Array<ITag>;
+  tag_delete: string | null;
+  initialTag: Array<ITag>;
   loading: boolean;
   error: AxiosError | null;
 }

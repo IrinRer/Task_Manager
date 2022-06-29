@@ -27,7 +27,6 @@ export const deleteTagAction = createAsyncThunk(
   async (tagId: string | undefined, { rejectWithValue }) => {
     try {
       const response = await api().delete(`/api/v1.0/task/tags/${tagId}`);
-      notification.success({ message: 'Метка успешно удалена' });
       return response.data.data;
     } catch (error) {
       notification.error({ message: 'Произошла ошибка удаления!' });
