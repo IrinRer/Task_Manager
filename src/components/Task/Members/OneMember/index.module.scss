@@ -1,9 +1,29 @@
+.counterWrapper {
+  display: flex;
+  text-align: center;
+  justify-content: flex-start;
+
+  .counter {
+    display: flex;
+    margin-bottom: 8px;
+    justify-content: left;
+    align-items: center;
+    padding-left: 3px;
+  }
+}
+
 .inlist {
   width: 100%;
 }
+
 .nolist {
   width: 56%;
 }
+
 .noedit {
   margin-bottom: 15px;
+  .counter {
+    margin-bottom: 0;
+    padding-left: 9px;
+  }
 }
