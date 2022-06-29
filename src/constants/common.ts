@@ -82,3 +82,4 @@ export const RELOAD_TASKS_INTERVAL = 420000; // Перезагружаем за�
 export const DATE_TIME_FORMAT = 'dd MMM yyyy h:mm';
 export const DATE_FORMAT = 'dd MMM yyyy';
 export const MAX_USER_INITIALS = 2;
+export const MAX_TAGS_TO_SHOW = 3;

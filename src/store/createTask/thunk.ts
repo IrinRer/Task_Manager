@@ -1,6 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { notification } from 'antd';
 import { ROLES } from 'constants/types/common';
+import { RootState } from 'store';
+import { getResponsibleRoleID } from 'store/common/roles/selectors';
 import { addTask } from 'store/tasks/slice';
 import { api } from '../../network';
 import {
@@ -28,8 +30,11 @@ export const createTaskAction = createAsyncThunk(
 
 export const cloneTaskAction = createAsyncThunk(
   `${CREATE_TASK_SLICE_ALIAS}/cloneTask`,
-  async (args: ICloneTaskArg, { rejectWithValue, dispatch }) => {
+  async (args: ICloneTaskArg, { rejectWithValue, dispatch, getState }) => {
     try {
+      const state = getState() as RootState;
+      const responsibleRoleID = getResponsibleRoleID(state);
+
       // Клонируем задачу
       const response = await api().post(
         `/api/v1.0/task/tasks/${args.id}/clone`,
@@ -55,8 +60,7 @@ export const cloneTaskAction = createAsyncThunk(
       const responseResponsible = await api().post(
         `/api/v1.0/task/tasks/${task.task_id}/role-assign`,
         {
-          task_role_id:
-            '57a5360b-7c3b-4de0-b536-a5657ac7da32' /* task.roles[1].task_role.task_role_id */, // вставить роль ответственного
+          task_role_id: responsibleRoleID,
           assign_user_id: task.roles[0].assign_user.user_id,
         },
       );

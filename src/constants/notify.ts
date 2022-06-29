@@ -1,4 +1,4 @@
-export enum NotificationCommandName {
+export enum Command {
   taskStatusChange = 'Смена статуса',
   taskPriorityChange = 'Смена приоритета',
   priorityCancel = 'Отмена приоритета',
@@ -45,5 +45,29 @@ export enum NotificationMessageToShow {
   checkListItemDelete = 'удалил(а) пункт в чеклисте ',
   checkListItemChangeComplete = 'отметил(а) пункты в чек-листе',
 }
+
+export const NOTIFY_MESSAGE = {
+  [Command.taskStatusChange]: 'сменил(а) статус задачи',
+  [Command.taskPriorityChange]: 'изменил(а) приоритет задачи',
+  [Command.priorityCancel]: 'удалил(а) приоритет',
+  [Command.descriptionEdit]: 'изменил(а) описание',
+  [Command.taskTagUnassign]: 'удалил(а) метки',
+  [Command.taskTagAssign]: 'добавил(а) новые метки',
+  [Command.timeEndChange]: 'изменил(а) срок задачи ',
+  [Command.taskExecStopChange]: 'удалил(а) срок',
+  [Command.taskExecStartChange]: 'удалил(а) время начала',
+  [Command.timeStartChange]: 'изменил(а) времени начала',
+  [Command.taskRoleUnassign]: 'удалил(а) участников',
+  [Command.taskTitleChange]: 'изменил(а) заголовок задачи',
+  [Command.taskRoleAssign]: 'добавил(а) новых участников ',
+  [Command.taskStorageFileAssign]: 'добавил(а) вложения',
+  [Command.taskStorageFileUnassign]: 'удалил(а) вложение',
+  [Command.taskCheckListAssign]: 'добавил(а) чек-лист ',
+  [Command.taskCheckListUnassign]: 'удалил(а) чек-лист',
+  [Command.checkListTitleChange]: 'изменил(а) название чек-листа',
+  [Command.checkListItemCreate]: 'добавил(а) новый пункт в чек-лист ',
+  [Command.checkListItemDelete]: 'удалил(а) пункт в чеклисте ',
+  [Command.checkListItemChangeComplete]: 'отметил(а) пункты в чек-листе',
+};
 
 export const NOTIFICATION_COUNT_INCREMENT = 20;

@@ -41,7 +41,7 @@ export interface IResponseTask {
   permissions: Array<string>;
 }
 
-interface IResponseTags {
+export interface IResponseTags {
   task_to_tag_id: string;
   task: {
     task_id: string;

@@ -1,3 +1,4 @@
+import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from 'store';
 
 export const getNewNotifications = (state: RootState) =>
@@ -17,13 +18,12 @@ export const getViewedNotificationsStore = (state: RootState) =>
 export const getTotalNotificationsCount = (state: RootState) =>
   state.notifications.new.pagination.items_total +
   state.notifications.viewed.pagination.items_total;
+
+const getAllNotifications = (state: RootState) =>
+  state.notifications.allNotifications;
+
 export const getAllNotificationsLength = (state: RootState) =>
   state.notifications.allNotifications.length;
-
-// export const getNotificationsToShow = (state: RootState) =>
-//   state.notifications.notificationsToShow;
-export const getNotificationsToShow = (state: RootState) =>
-  state.notifications.allNotifications.slice(0, state.notifications.showCount);
 
 export const getNewTotal = (state: RootState) =>
   state.notifications.new.pagination?.items_total;
@@ -32,3 +32,9 @@ export const getIsNewNotifications = (state: RootState) =>
   state.notifications.new.data.length > 0;
 
 export const getShowCount = (state: RootState) => state.notifications.showCount;
+
+export const getNotificationsToShow = createSelector(
+  getAllNotifications,
+  getShowCount,
+  (notifications, showCount) => notifications.slice(0, showCount),
+);

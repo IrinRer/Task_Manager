@@ -1,7 +1,8 @@
 import { NotifierContext } from 'components/Home/Header/Notifier/notifierContext';
 import {
-  NotificationCommandName,
+  Command,
   NotificationMessageToShow,
+  NOTIFY_MESSAGE,
 } from 'constants/notify';
 import React, { useContext } from 'react';
 import CheckListItemCreate from './CheckListItemCreate';
@@ -24,18 +25,20 @@ const Message = () => {
   if (!notification) return null;
 
   switch (notification.history_command.command_name) {
-    case NotificationCommandName.descriptionEdit:
+    case Command.descriptionEdit:
       return <div>{NotificationMessageToShow.descriptionEdit}</div>;
-    case NotificationCommandName.taskCheckListUnassign:
-      return <div>{NotificationMessageToShow.taskCheckListUnassign}</div>;
-    case NotificationCommandName.taskStorageFileUnassign:
+    case Command.taskCheckListUnassign:
+      return (
+        <div>{NOTIFY_MESSAGE[notification.history_command.command_name]}</div>
+      );
+    case Command.taskStorageFileUnassign:
       return <div>{NotificationMessageToShow.taskStorageFileUnassign}</div>;
-    case NotificationCommandName.priorityCancel:
+    case Command.priorityCancel:
       return <div>{NotificationMessageToShow.priorityCancel}</div>;
-    case NotificationCommandName.taskTagUnassign:
+    case Command.taskTagUnassign:
       return <div>{NotificationMessageToShow.taskTagUnassign}</div>;
 
-    case NotificationCommandName.taskCheckListAssign:
+    case Command.taskCheckListAssign:
       return (
         <div>
           {NotificationMessageToShow.taskCheckListAssign}
@@ -44,7 +47,7 @@ const Message = () => {
           </span>
         </div>
       );
-    case NotificationCommandName.checkListItemDelete:
+    case Command.checkListItemDelete:
       return (
         <div>
           {NotificationMessageToShow.checkListItemDelete}
@@ -53,13 +56,13 @@ const Message = () => {
           </span>
         </div>
       );
-    case NotificationCommandName.checkListTitleChange:
+    case Command.checkListTitleChange:
       return (
         <CheckListTitleChange
           title={notification.history_command.params.check_list?.title || ''}
         />
       );
-    case NotificationCommandName.checkListItemCreate:
+    case Command.checkListItemCreate:
       return (
         <CheckListItemCreate
           title={notification.history_command.params.check_list?.title || ''}
@@ -67,7 +70,7 @@ const Message = () => {
           complete={notification.history_command.params.complete || false}
         />
       );
-    case NotificationCommandName.checkListItemChangeComplete:
+    case Command.checkListItemChangeComplete:
       return (
         <CheckListItemChangeComplete
           title={notification.history_command.params.check_list?.title || ''}
@@ -77,13 +80,13 @@ const Message = () => {
           complete={notification.history_command.params.complete || false}
         />
       );
-    case NotificationCommandName.taskStatusChange:
+    case Command.taskStatusChange:
       return (
         <TaskStatusChange
           statusName={notification.history_command.params.status?.name || ''}
         />
       );
-    case NotificationCommandName.taskRoleAssign:
+    case Command.taskRoleAssign:
       return (
         <TaskRoleAssign
           userId={
@@ -91,7 +94,7 @@ const Message = () => {
           }
         />
       );
-    case NotificationCommandName.taskRoleUnassign:
+    case Command.taskRoleUnassign:
       return (
         <TaskRoleUnassign
           userId={
@@ -99,42 +102,42 @@ const Message = () => {
           }
         />
       );
-    case NotificationCommandName.taskTagAssign:
+    case Command.taskTagAssign:
       return notification.history_command.params.tag ? (
         <TaskTagAssign
           name={notification.history_command.params.tag.name || ''}
           color={notification.history_command.params.tag.color || ''}
         />
       ) : null;
-    case NotificationCommandName.taskTitleChange:
+    case Command.taskTitleChange:
       return (
         <TaskTitleChange
           title={notification.history_command.params.title || ''}
         />
       );
-    case NotificationCommandName.taskPriorityChange:
+    case Command.taskPriorityChange:
       return notification.history_command.params.priority ? (
         <TaskPriorityChange
           priority={notification.history_command.params.priority.name}
         />
       ) : null;
-    case NotificationCommandName.timeEndChange:
+    case Command.timeEndChange:
       return (
         <TimeEndChange
           time={notification.history_command.params.exec_stop || ''}
         />
       );
-    case NotificationCommandName.timeStartChange:
+    case Command.timeStartChange:
       return (
         <TimeStartChange
           time={notification.history_command.params.exec_start || ''}
         />
       );
-    case NotificationCommandName.taskExecStopChange:
+    case Command.taskExecStopChange:
       return <div>{NotificationMessageToShow.taskExecStopChange}</div>;
-    case NotificationCommandName.taskExecStartChange:
+    case Command.taskExecStartChange:
       return <div>{NotificationMessageToShow.taskExecStartChange}</div>;
-    case NotificationCommandName.taskStorageFileAssign:
+    case Command.taskStorageFileAssign:
       return notification.history_command.params.storage_file ? (
         <TaskStorageFileAssign
           file={notification.history_command.params.storage_file}
