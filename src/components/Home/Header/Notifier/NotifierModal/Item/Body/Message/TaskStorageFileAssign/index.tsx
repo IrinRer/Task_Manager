@@ -1,19 +1,17 @@
-import { NotificationMessageToShow } from 'constants/notify';
-import React from 'react';
-import { INotifyFile } from 'store/notifications/types';
+import { NotifierContext } from 'components/Home/Header/Notifier/notifierContext';
+import React, { useContext } from 'react';
+import MessageAction from '../MessageAction';
 
-interface IProps {
-  file: INotifyFile;
-}
+const TaskStorageFileAssign = () => {
+  const notification = useContext(NotifierContext);
+  if (!notification) return null;
 
-const TaskStorageFileAssign: React.FC<IProps> = ({ file }) => {
+  const file = notification.history_command.params.storage_file;
+
   return (
-    <>
-      <div className="notify-action">
-        {NotificationMessageToShow.taskStorageFileAssign}:
-      </div>
-      <b>{file.name_original}</b>
-    </>
+    <MessageAction>
+      <b>{file?.name_original || ''}</b>
+    </MessageAction>
   );
 };
 

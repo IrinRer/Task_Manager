@@ -50,22 +50,26 @@ const NotifierModal: React.FC<IProps> = ({ isOpen, onClose }) => {
       showCount === 1
         ? showCount + NOTIFICATION_COUNT_INCREMENT - 1
         : showCount + NOTIFICATION_COUNT_INCREMENT;
-    if (
-      // Если надо показывать больше чем загружено, и всего на бэке больше чем загружено
+
+    // Если надо показывать больше чем загружено, и всего на бэке больше чем загружено
+    const needLoadNotifications =
       (newShowCount > loadedNotificationsCount &&
         totalNotifications >= loadedNotificationsCount) ||
-      newNotificationsStore.pagination.items_total === 0
-    ) {
-      if (
-        // Если страница новых меньше тотал, подгружаем новые.
-        newNotificationsStore.pagination.page_current <
-        newNotificationsStore.pagination.page_total
-      ) {
+      newNotificationsStore.pagination.items_total === 0;
+    // Если страница новых меньше тотал, подгружаем новые.
+    const morePagesToLoadNew =
+      newNotificationsStore.pagination.page_current <
+      newNotificationsStore.pagination.page_total;
+    // Если число отображаемых больше тотал новых подгружаем прочитанные.
+    const notEnoughNew =
+      newShowCount > newNotificationsStore.pagination.items_total;
+
+    if (needLoadNotifications) {
+      if (morePagesToLoadNew) {
         dispatch(incrementNewNotificationsPage());
         dispatch(loadNewNotificationsAction());
       }
-      if (newShowCount > newNotificationsStore.pagination.items_total) {
-        // Если число отображаемых больше тотал новых подгружаем прочитанные.
+      if (notEnoughNew) {
         dispatch(incrementViewedNotificationsPage());
         dispatch(loadViewedNotificationsAction());
       }

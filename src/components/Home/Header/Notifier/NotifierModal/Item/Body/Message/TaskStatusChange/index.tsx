@@ -1,20 +1,18 @@
-import { NotificationMessageToShow } from 'constants/notify';
-import React from 'react';
+import { NotifierContext } from 'components/Home/Header/Notifier/notifierContext';
+import React, { useContext } from 'react';
+import MessageAction from '../MessageAction';
 import styles from './index.module.scss';
 
-interface IProps {
-  statusName: string;
-}
+const TaskStatusChange = () => {
+  const notification = useContext(NotifierContext);
+  if (!notification) return null;
 
-const TaskStatusChange: React.FC<IProps> = ({ statusName }) => {
   return (
-    <>
-      <div className="notify-action">
-        {NotificationMessageToShow.taskStatusChange}
+    <MessageAction comment="Новый статус:">
+      <div className={styles.status}>
+        {notification.history_command.params.status?.name || ''}
       </div>
-      <div>Новый статус:</div>
-      <div className={styles.status}>{statusName}</div>
-    </>
+    </MessageAction>
   );
 };
 

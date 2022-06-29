@@ -1,21 +1,17 @@
 import Priority from 'components/Home/Block/Task/Priority';
-import { NotificationMessageToShow } from 'constants/notify';
-import React from 'react';
+import { NotifierContext } from 'components/Home/Header/Notifier/notifierContext';
+import React, { useContext } from 'react';
+import MessageAction from '../MessageAction';
 
-interface IProps {
-  priority: string;
-}
+const TaskPriorityChange = () => {
+  const notification = useContext(NotifierContext);
+  if (!notification) return null;
 
-const TaskPriorityChange: React.FC<IProps> = ({ priority }) => {
-  return (
-    <>
-      <div className="notify-action">
-        {NotificationMessageToShow.taskPriorityChange}
-      </div>
-      <div>Новый приоритет: </div>
-      <Priority priority={priority} />
-    </>
-  );
+  return notification.history_command.params.priority ? (
+    <MessageAction comment="Новый приоритет:">
+      <Priority priority={notification.history_command.params.priority.name} />
+    </MessageAction>
+  ) : null;
 };
 
 export default TaskPriorityChange;

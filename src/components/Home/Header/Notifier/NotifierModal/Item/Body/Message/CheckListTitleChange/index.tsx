@@ -1,20 +1,19 @@
-import { NotificationMessageToShow } from 'constants/notify';
-import React from 'react';
+import { NotifierContext } from 'components/Home/Header/Notifier/notifierContext';
+import React, { useContext } from 'react';
+import MessageAction from '../MessageAction';
+import SimpleMessage from '../SimpleMessage';
 
-interface IProps {
-  title: string;
-}
+const CheckListTitleChange = () => {
+  const notification = useContext(NotifierContext);
+  if (!notification) return null;
 
-const CheckListTitleChange: React.FC<IProps> = ({ title }) => {
   return (
-    <>
-      <div className="notify-action">
-        {NotificationMessageToShow.checkListTitleChange}
-      </div>
-      <div>
-        Новое название: <b>{title}</b>
-      </div>
-    </>
+    <MessageAction>
+      <SimpleMessage
+        text="Новое название: "
+        item={notification.history_command.params.check_list?.title || ''}
+      />
+    </MessageAction>
   );
 };
 

@@ -43,7 +43,7 @@ export enum NotificationMessageToShow {
   checkListTitleChange = 'изменил(а) название чек-листа',
   checkListItemCreate = 'добавил(а) новый пункт в чек-лист ',
   checkListItemDelete = 'удалил(а) пункт в чеклисте ',
-  checkListItemChangeComplete = 'отметил(а) пункты в чек-листе',
+  checkListItemChangeComplete = 'отметил(а) пункты в чек-листе ',
 }
 
 export const NOTIFY_MESSAGE = {
@@ -64,10 +64,10 @@ export const NOTIFY_MESSAGE = {
   [Command.taskStorageFileUnassign]: 'удалил(а) вложение',
   [Command.taskCheckListAssign]: 'добавил(а) чек-лист ',
   [Command.taskCheckListUnassign]: 'удалил(а) чек-лист',
-  [Command.checkListTitleChange]: 'изменил(а) название чек-листа',
+  [Command.checkListTitleChange]: 'изменил(а) название чек-листа ',
   [Command.checkListItemCreate]: 'добавил(а) новый пункт в чек-лист ',
   [Command.checkListItemDelete]: 'удалил(а) пункт в чеклисте ',
-  [Command.checkListItemChangeComplete]: 'отметил(а) пункты в чек-листе',
+  [Command.checkListItemChangeComplete]: 'отметил(а) пункты в чек-листе ',
 };
 
 export const NOTIFICATION_COUNT_INCREMENT = 20;

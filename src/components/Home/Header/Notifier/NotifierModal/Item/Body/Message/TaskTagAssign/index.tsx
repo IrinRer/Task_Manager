@@ -1,24 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import CustomTag from 'components/Common/CustomTag';
-import { NotificationMessageToShow } from 'constants/notify';
-import { TagColor } from 'constants/types/common';
-import styles from './index.module.scss';
+import { NotifierContext } from 'components/Home/Header/Notifier/notifierContext';
+import MessageAction from '../MessageAction';
 
-interface IProps {
-  name: string;
-  color: TagColor;
-}
+const TaskTagAssign = () => {
+  const notification = useContext(NotifierContext);
+  const name = notification?.history_command.params?.tag?.name || '';
+  const color = notification?.history_command.params?.tag?.color;
 
-const TaskTagAssign: React.FC<IProps> = ({ name, color }) => {
+  if (!notification) return null;
+
   return (
-    <>
-      <div className="notify-action">
-        {NotificationMessageToShow.taskTagAssign}
-      </div>
-      <div className={styles.tags}>
-        <CustomTag title={name} color={color} closable={false} />
-      </div>
-    </>
+    <MessageAction>
+      {color && <CustomTag title={name} color={color} closable={false} />}
+    </MessageAction>
   );
 };
 

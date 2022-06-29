@@ -1,18 +1,19 @@
-import { NotificationMessageToShow } from 'constants/notify';
-import React from 'react';
+import { NotifierContext } from 'components/Home/Header/Notifier/notifierContext';
+import { NOTIFY_MESSAGE } from 'constants/notify';
+import React, { useContext } from 'react';
 
-interface IProps {
-  title: string;
-}
+const TaskTitleChange = () => {
+  const notification = useContext(NotifierContext);
+  if (!notification) return null;
 
-const TaskTitleChange: React.FC<IProps> = ({ title }) => {
   return (
     <>
       <div className="notify-action">
-        {NotificationMessageToShow.taskTitleChange}
+        {NOTIFY_MESSAGE[notification.history_command.command_name]}
       </div>
       <div>
-        Новый заголовок: <b>{title}</b>
+        Новый заголовок:{' '}
+        <b>{notification.history_command.params.title || ''}</b>
       </div>
     </>
   );
