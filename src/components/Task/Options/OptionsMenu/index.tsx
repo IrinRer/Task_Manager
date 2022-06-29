@@ -2,10 +2,9 @@ import React from 'react';
 import { Button } from 'antd';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { cloneTaskAction } from 'store/createTask/thunk';
-import { deleteTaskAction } from 'store/tasks/thunk';
 import { IResponseTask } from 'store/common/task/types';
 import { RIGHTS_NAMES } from 'constants/rights';
-import ModalDeleteDelay from 'components/Common/ModalDeleteDelay';
+import ModalDeleteDelayWithNotice from 'components/Common/ModalDeleteDelayWithNotice';
 import { useNavigate } from 'react-router-dom';
 import {
   clearEditDataTask,
@@ -17,6 +16,7 @@ import { ROUTES } from 'constants/routes';
 import { useGetRights } from 'customHooks/useGetRights';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { getModalDeleteTaskVisible } from 'store/editTask/selectors';
+import { setTaskToDelete } from 'store/tasks/slice';
 import styles from './index.module.scss';
 
 interface IProps {
@@ -38,9 +38,9 @@ const OptionsMenu: React.FC<IProps> = ({ task, setVisibleOptions }) => {
     }
   };
 
-  const handleOk = () => {
+  const handleOkDelete = () => {
     if (task) {
-      dispatch(deleteTaskAction(task.task_id));
+      dispatch(setTaskToDelete(task.task_id));
     }
     dispatch(setModalDeleteTaskVisible(false));
     setVisibleOptions(false);
@@ -50,7 +50,7 @@ const OptionsMenu: React.FC<IProps> = ({ task, setVisibleOptions }) => {
     navigate(ROUTES.tasks.path);
   };
 
-  const handleCancel = () => {
+  const handleCancelDelete = () => {
     dispatch(setModalDeleteTaskVisible(false));
     setVisibleOptions(false);
   };
@@ -82,12 +82,12 @@ const OptionsMenu: React.FC<IProps> = ({ task, setVisibleOptions }) => {
       >
         Удалить задачу
       </Button>
-      <ModalDeleteDelay
+      <ModalDeleteDelayWithNotice
         visible={isVisibleTaskDelete}
-        textMain={`Задача будет удалена через N сек... Для отмены нажмите "Отмена"`}
-        textButton="Удалить"
-        handleOk={handleOk}
-        handleCancel={handleCancel}
+        textMain="Задача будет удалена"
+        textButton="Удалить задачу"
+        handleOk={handleOkDelete}
+        handleCancel={handleCancelDelete}
       />
     </div>
   );
