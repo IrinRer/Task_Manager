@@ -2,7 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { notification } from 'antd';
 import { ROLES } from 'constants/types/common';
 import { RootState } from 'store';
-import { addTask } from 'store/tasks/slice';
 import {
   getResponsibleRoleID,
   getWatcherRoleID,
