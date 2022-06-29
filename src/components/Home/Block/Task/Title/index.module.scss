@@ -9,8 +9,15 @@
   color: $text-dark;
   font-weight: 600;
   overflow-wrap: break-word;
-  .done {
+
+  .done,
+  .done:hover {
     color: $heading;
+    a,
+    a:hover {
+      color: $text-dark;
+      background: none;
+    }
   }
   cursor: pointer;
 }

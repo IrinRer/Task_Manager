@@ -1,0 +1,71 @@
+@import 'src/styles/color-variables';
+@import 'src/styles/colors';
+@import 'src/styles/font-variables';
+
+.modalDelete {
+  :global(.ant-modal-content),
+  :global(.ant-modal),
+  :global(.ant-modal-body) {
+    border-radius: 16px !important;
+  }
+
+  :global(.ant-modal-body) {
+    padding: 0 24px 32px !important;
+  }
+
+  :global(.ant-modal-body) p {
+    margin: 0;
+    color: $text-dark;
+    font-size: $font-size-l;
+  }
+
+  :global(.ant-modal-header) {
+    border-radius: 16px !important;
+    border-bottom: none !important;
+    padding: 24px 24px 32px;
+  }
+
+  :global(.ant-modal-title) {
+    color: $text-title !important;
+    font-size: $font-size-xl;
+  }
+
+  :global(.ant-modal-footer) {
+    text-align: left !important;
+    display: flex;
+    padding: 24px;
+    padding-top: 0;
+    border-top: none !important;
+    justify-content: space-around;
+  }
+
+  :global(.ant-btn).btn_modal {
+    border-radius: 8px;
+    height: 40px;
+  }
+  :global(.ant-btn).btn_modal:first-of-type span {
+    padding-left: 9px;
+  }
+
+  :global(.ant-modal-close) svg path {
+    fill: $dark-primary;
+  }
+  :global(.ant-modal-close):hover svg path {
+    fill: $heading;
+  }
+  :global(.ant-modal-close-x) {
+    padding-top: 21px;
+    padding-right: 21px;
+    width: fit-content;
+    height: fit-content;
+    line-height: 1;
+    font-size: $font-size-m;
+  }
+}
+.iconDeleteBtn {
+  fill: $white;
+  width: 16px;
+  height: 16px;
+  vertical-align: text-bottom;
+  margin-bottom: 2px;
+}

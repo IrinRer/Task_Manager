@@ -26,6 +26,9 @@ export const getOnlyMyTasksFlag = (state: RootState) => state.tasks.onlyMyTasks;
 export const getViewParameters = (state: RootState) =>
   state.tasks.viewParameters;
 
+export const getTaskToDelete = (state: RootState) =>
+  state.tasks.task_id_todelete;
+
 // Возвращает либо все задачи либо мои задачи в зависимости от флага tasks.onlyMyTasks
 export const getTasksToShow = createSelector(
   selectTasks,
