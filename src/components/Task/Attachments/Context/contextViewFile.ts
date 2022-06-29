@@ -25,21 +25,13 @@ export const ViewFileContext = createContext<IViewFileContext>({
   progress: 0,
 });
 
-export const useViewFileContextValue = (
-  file: {
-    url?: string;
-    name?: string;
-    name_original?: string;
-    originFileObj?: RcFile;
-    size?: number;
-    type?: string;
-    percent?: number;
-  },
-  onDeleteFile: (arg: string) => void | null,
-  onDownload: (arg: string) => void,
-  preview?: () => void,
-  progress?: number,
-) => {
+export const useViewFileContextValue = ({
+  file,
+  preview,
+  progress,
+  onDeleteFile,
+  onDownload,
+}: IViewFileContext) => {
   return useMemo(
     () => ({
       file,

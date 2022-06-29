@@ -19,13 +19,13 @@ const ContextWrapperViewFile: React.FC<IProps> = ({
 }) => {
   return (
     <ViewFileContext.Provider
-      value={useViewFileContextValue(
+      value={useViewFileContextValue({
         file,
         onDeleteFile,
         onDownload,
         preview,
         progress,
-      )}
+      })}
     >
       {children}
     </ViewFileContext.Provider>

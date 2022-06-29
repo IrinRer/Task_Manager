@@ -58,7 +58,6 @@ import { IPreviewReducer } from './editTask/attachments/preview/types';
 import { IModalVisibleReducer } from './editTask/additionalFunctions/tag/modalVisible/types';
 import { ISetCheckListItemPositionReducer } from './editTask/checkLists/setCheckListItemPosition/types';
 
-
 export const store = configureStore({
   reducer: {
     tasks: tasksReducer,

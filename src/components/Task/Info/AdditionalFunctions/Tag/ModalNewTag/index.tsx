@@ -7,7 +7,6 @@ import { getTag } from 'store/editTask/additionalFunctions/tag/selectors';
 import {
   setIsModalVisibleEdit,
   setIsModalVisibleMain,
-  setIsVisibleModalDelete,
 } from 'store/editTask/additionalFunctions/tag/modalVisible/slice';
 import {
   isModalVisibleEdit,

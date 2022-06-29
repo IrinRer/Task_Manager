@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'antd';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { getCheckList } from 'store/editTask/selectors';
@@ -42,22 +43,23 @@ const ActionsPopoverMenu = () => {
         <Spinner />
       ) : (
         <div className={styles.action}>
-          <button
-            type="button"
+          <Button
+            type="text"
             className={addCheckListButtonClassName}
             disabled={addCheckListButtonIsActive}
             onClick={handleAddCheckList}
           >
-            Добавить&nbsp;чек-лист
-          </button>
-          <button
-            type="button"
+            Добавить чек-лист
+          </Button>
+
+          <Button
+            type="text"
             className={addCheckListButtonClassName}
             disabled={addAttachmentsButtonIsActive}
             onClick={handleAttachments}
           >
             Добавить вложения
-          </button>
+          </Button>
         </div>
       )}
     </div>
