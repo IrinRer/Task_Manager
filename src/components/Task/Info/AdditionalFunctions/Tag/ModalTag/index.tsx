@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FC, useRef } from 'react';
+import React, { useState, useEffect, FC, useRef} from 'react';
 import {
   Modal,
   Button,
@@ -19,7 +19,6 @@ import { MAX_NUMBER_TAGS, NEW_TAG } from 'constants/additionalFunctions/tag';
 import { TAGS_INPUT_MAX_LENGTH } from 'constants/common';
 import { selectPopulatedTags } from 'store/common/tags/selectors';
 import styles from '../index.module.scss';
-
 
 const { Text } = Typography;
 
@@ -65,7 +64,7 @@ const ModalTag: FC<IProps> = ({
   const isUniqueTag = uniqueTagName?.indexOf(inputValue) === -1 && inputValue;
   const allTag = useAppSelector(selectPopulatedTags);
 
-  const conditionDisable = allTag.length >  2 && text === NEW_TAG;
+  const conditionDisable = allTag.length > 2 && text === NEW_TAG;
 
   const resetForm = () => {
     setColor('');
@@ -130,8 +129,8 @@ const ModalTag: FC<IProps> = ({
           <Input
             className={styles.input}
             maxLength={TAGS_INPUT_MAX_LENGTH}
-            autoFocus
             onChange={onChangeInput}
+            autoFocus
           />
         </Form.Item>
         <Form.Item name="checkbox" key="checkbox">
