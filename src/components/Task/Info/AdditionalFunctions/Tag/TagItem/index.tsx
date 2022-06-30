@@ -37,7 +37,7 @@ const TagItem: FC<TProps> = ({ editable, taskId }) => {
     );
   });
 
-  return (
+  return tag.length > 0 ? (
     <>
       <Menu mode="vertical" className={styles.menu}>
         <Menu.SubMenu
@@ -52,6 +52,8 @@ const TagItem: FC<TProps> = ({ editable, taskId }) => {
       </Menu>
       <div className={styles.tag}>{tag?.slice(0, MIN_NUMBER_TAGS_ON_PAGE)}</div>
     </>
+  ) : (
+    <div className={styles.menuLabel}>Метка</div>
   );
 };
 

@@ -26,6 +26,17 @@
       left: 0;
     }
   }
+
+  .menuLabel {
+    @include media-breakpoint-down($size: xs) {
+      margin-bottom: 11px;
+    }
+  }
+}
+
+:global(.ant-picker-input .ant-picker-clear) {
+  left: 130px;
+  background: none;
 }
 
 .wrapper_flex {

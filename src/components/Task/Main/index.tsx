@@ -23,12 +23,13 @@ const Main: React.FC = () => {
     <div className={styles.taskMain}>
       <div className={styles.taskHeader}>
         <div className={styles.titleRow}>
-          <Title />
+          {(size.width || 0) >= 768 && <Title />}
           <div className={styles.options}>
             <Actions />
             <Options />
           </div>
         </div>
+        {(size.width || 0) < 768 && <Title />}
         <div className={styles.border} />
       </div>
 

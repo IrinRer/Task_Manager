@@ -41,6 +41,10 @@
   .expand {
     cursor: pointer;
     padding-right: 10px;
+
+    @include media-breakpoint-down($size: xs) {
+      margin-bottom: 11px;
+    }
   }
   .expand:hover {
     color: $blue;
