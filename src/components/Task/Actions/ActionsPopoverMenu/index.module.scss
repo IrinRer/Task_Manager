@@ -7,11 +7,9 @@
   padding: 0;
   font-weight: 400;
   font-size: $font-size-m;
-  line-height: $line-height-m;
   color: $gray-800;
   cursor: pointer;
   border: none;
-  background-color: $bg-secondary;
 
   &:hover {
     color: darken($gray-800, 20%);
@@ -23,6 +21,33 @@
 
     &:hover {
       color: $gray-500;
+    }
+  }
+}
+
+.action {
+  display: flex;
+  flex-direction: column;
+
+  :global(.ant-btn) {
+    border: none;
+    width: 100%;
+    text-transform: uppercase;
+    font-size: $font-size-s;
+    font-weight: 700;
+    box-shadow: none;
+    margin: 0;
+
+    &:hover {
+      background: rgba(196, 219, 255, 0.15);
+    }
+  }
+
+  :global(.ant-btn[disabled]) {
+    background: none;
+
+    &:hover {
+      background: none;
     }
   }
 }

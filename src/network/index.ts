@@ -12,3 +12,4 @@ export const api = (requireAuth: boolean = false): AxiosInstance => {
     headers: token ? { Authorization: `Bearer ${token}` } : undefined,
   });
 };
+

@@ -135,3 +135,12 @@ export const getIsCheckListTitleLoading = (state: RootState): boolean =>
 
 export const getCheckListTitle = (state: RootState): string =>
   state.editTask.editTaskReducer.data!.check_lists[0].title;
+
+
+const taskFile = (state: RootState) =>
+  state.editTask.editTaskReducer.data?.storage_files;
+
+  
+export const getTaskFileAllType = createSelector(taskFile, (file) =>
+  file?.filter(({ type }) => type !== 'image'),
+);

@@ -1,0 +1,72 @@
+@import 'src/styles/font-variables';
+@import 'src/styles/colors';
+
+.wrapper_img {
+  margin-top: 20px;
+  width: 160px;
+  border-radius: 8px;
+  height: 88px;
+
+  .img {
+    border-radius: 8px;
+    max-width: 100%;
+    height: 100%;
+    display: block;
+    margin: auto;
+  }
+
+  p {
+    color: $gray-600;
+    font-size: $font-size-s;
+    max-width: 100%;
+    margin: auto;
+  }
+}
+
+.hover_icon {
+  display: flex !important;
+  position: absolute;
+  top: 40%;
+  left: 25%;
+
+  background: none;
+
+  :global(.ant-btn).btn_hover_icon {
+    border: none;
+    box-shadow: none;
+    background: none;
+    fill: white;
+    width: 20px;
+    margin-right: 10px;
+
+    height: 20px;
+    &:hover {
+      fill: darken($coral, 10%);
+      background: none;
+    }
+
+    svg {
+      color: white;
+      width: 20px;
+      height: 20px;
+
+      &:hover {
+        color: $blue;
+        background: none;
+      }
+    }
+  }
+}
+
+.not_hover_icon {
+  display: none;
+}
+
+.wrapper_img_hover {
+  background: rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+.img_hover {
+  filter: brightness(50%);
+}

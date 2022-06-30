@@ -7,7 +7,7 @@
   justify-content: space-between;
   align-items: center;
 
-  :global(.ant-btn-primary).btn {
+  .btnTag {
     margin-right: 14%;
   }
 }
@@ -17,15 +17,15 @@
   grid-template-columns: 42% 57%;
   align-items: center;
 
-  :global(.ant-btn-primary).btn {
+  .btnTag {
     margin-left: 96%;
   }
 }
 
-:global(.ant-btn-primary).btn,
-:global(.ant-btn-primary).btn:hover,
-:global(.ant-btn-primary).btn:active,
-:global(.ant-btn-primary).btn:focus {
+:global(.ant-btn).btnTag,
+:global(.ant-btn).btnTag:hover,
+:global(.ant-btn).btnTag:active,
+:global(.ant-btn).btnTag:focus {
   background: none;
   font-weight: 600;
   text-shadow: none;

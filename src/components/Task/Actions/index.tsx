@@ -21,6 +21,7 @@ const Actions = () => {
       content={ActionsPopoverMenu}
       overlayClassName={checkListItemStyle.popoverMenu}
       placement="bottomRight"
+      className={styles.wrapper}
     >
       <PlusIcon className={styles.actionIcon} />
     </Popover>
