@@ -1,14 +1,13 @@
 import CustomTag from 'components/Common/CustomTag';
+import { TaskContext } from 'components/Home/taskContext';
 import { MAX_TAGS_TO_SHOW } from 'constants/common';
-import React from 'react';
-import { IResponseTags } from 'store/common/task/types';
+import React, { useContext } from 'react';
 import styles from './index.module.scss';
 
-interface IProps {
-  tags: IResponseTags[];
-}
+const RenderTags = () => {
+  const task = useContext(TaskContext);
+  const tags = task?.tags || [];
 
-const RenderTags: React.FC<IProps> = ({ tags }) => {
   const renderedTags =
     tags.length > MAX_TAGS_TO_SHOW
       ? tags.slice(0, MAX_TAGS_TO_SHOW)

@@ -8,9 +8,7 @@ const Tags: React.FC = () => {
   const tags = task?.tags;
 
   return (
-    <div className={styles.wrapper}>
-      {tags?.length ? <RenderTags tags={tags} /> : null}
-    </div>
+    <div className={styles.wrapper}>{tags?.length ? <RenderTags /> : null}</div>
   );
 };
 

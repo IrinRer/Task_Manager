@@ -28,11 +28,7 @@ const Message = () => {
 
     case Command.checkListItemDelete:
     case Command.taskCheckListAssign:
-      return (
-        <MessageAction
-          target={notification.history_command.params.check_list?.title}
-        />
-      );
+      return <MessageAction />;
 
     case Command.taskStatusChange:
       return <TaskStatusChange />;

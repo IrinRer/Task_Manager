@@ -3,19 +3,16 @@ import { NOTIFY_MESSAGE } from 'constants/notify';
 import React, { ReactElement, useContext } from 'react';
 
 interface IProps {
-  target?: string | null;
   comment?: string | null;
   children?: ReactElement | Array<ReactElement> | string;
 }
 
-const MessageAction: React.FC<IProps> = ({
-  target = null,
-  comment = null,
-  children,
-}) => {
+const MessageAction: React.FC<IProps> = ({ comment = null, children }) => {
   const notification = useContext(NotifierContext);
   if (!notification) return null;
+
   const command = notification?.history_command.command_name;
+  const target = notification.history_command.params.check_list?.title || '';
 
   return (
     <>

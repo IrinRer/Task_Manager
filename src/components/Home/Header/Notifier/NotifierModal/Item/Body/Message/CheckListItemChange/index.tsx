@@ -10,7 +10,6 @@ const CheckListItemChange = () => {
 
   const { params } = notification.history_command;
 
-  const title = params.check_list?.title || '';
   const message =
     notification.history_command.command_name ===
     Command.checkListItemChangeComplete
@@ -19,7 +18,7 @@ const CheckListItemChange = () => {
   const complete = params.complete || false;
 
   return (
-    <MessageAction target={title}>
+    <MessageAction>
       <CheckListItem title={message} complete={complete} />
     </MessageAction>
   );

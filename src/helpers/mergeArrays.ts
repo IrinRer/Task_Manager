@@ -1,7 +1,9 @@
+import { INotification } from 'store/notifications/types';
+
 export const mergeArrays = (
-  targetArray: Array<any>,
-  addedArray: Array<any>,
-): Array<any> => {
+  targetArray: Array<INotification>,
+  addedArray: Array<INotification>,
+): Array<INotification> => {
   const newArray = [...targetArray];
   addedArray.forEach((el) => {
     const index = newArray.findIndex(

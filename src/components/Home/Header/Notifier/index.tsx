@@ -7,7 +7,6 @@ import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import {
   getIsNewNotifications,
   getNotificationsLoading,
-  getShowNotificationModal,
 } from 'store/notifications/selectors';
 import {
   initNotificationsToShow,
@@ -24,7 +23,6 @@ const Notifier: React.FC = () => {
 
   const dispatch = useAppDispatch();
   const isNewNotifications = useAppSelector(getIsNewNotifications);
-  const showNotificationModal = useAppSelector(getShowNotificationModal);
   const loading = useAppSelector(getNotificationsLoading);
 
   const classNames = classnames(
@@ -59,7 +57,7 @@ const Notifier: React.FC = () => {
 
       {/* При открытии модального окна убираем нашу модалку чтоб не мигала. isModalOpen запаздывает потому что рендеринг */}
       {location.pathname === '/' ? (
-        <NotifierModal isOpen={showNotificationModal} onClose={handleClose} />
+        <NotifierModal onClose={handleClose} />
       ) : null}
     </>
   );

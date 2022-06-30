@@ -6,6 +6,7 @@ import {
   getNotificationsLoading,
   getNotificationsToShow,
   getShowCount,
+  getShowNotificationModal,
   getTotalNotificationsCount,
 } from 'store/notifications/selectors';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
@@ -28,11 +29,11 @@ import styles from './index.module.scss';
 import { NotifierContext } from '../notifierContext';
 
 interface IProps {
-  isOpen: boolean;
   onClose: () => void;
 }
 
-const NotifierModal: React.FC<IProps> = ({ isOpen, onClose }) => {
+const NotifierModal: React.FC<IProps> = ({ onClose }) => {
+  const isOpen = useAppSelector(getShowNotificationModal);
   const totalNotifications = useAppSelector(getTotalNotificationsCount);
   const loading = useAppSelector(getNotificationsLoading);
   const loadedNotificationsCount = useAppSelector(getAllNotificationsLength);
@@ -41,16 +42,14 @@ const NotifierModal: React.FC<IProps> = ({ isOpen, onClose }) => {
   const showCount = useAppSelector(getShowCount);
   const dispatch = useAppDispatch();
 
-  const handleShowMore = () => {
-    if (showCount > totalNotifications) {
-      return;
-    }
+  const nextShowCount = () => {
     // Для только что открытого окна показывается 1. При показать больше прибавляем инкремент
-    const newShowCount =
-      showCount === 1
-        ? showCount + NOTIFICATION_COUNT_INCREMENT - 1
-        : showCount + NOTIFICATION_COUNT_INCREMENT;
+    return showCount === 1
+      ? showCount + NOTIFICATION_COUNT_INCREMENT - 1
+      : showCount + NOTIFICATION_COUNT_INCREMENT;
+  };
 
+  const calculateParameters = (newShowCount: number) => {
     // Если надо показывать больше чем загружено, и всего на бэке больше чем загружено
     const needLoadNotifications =
       (newShowCount > loadedNotificationsCount &&
@@ -64,17 +63,28 @@ const NotifierModal: React.FC<IProps> = ({ isOpen, onClose }) => {
     const notEnoughNew =
       newShowCount > newNotificationsStore.pagination.items_total;
 
-    if (needLoadNotifications) {
-      if (morePagesToLoadNew) {
-        dispatch(incrementNewNotificationsPage());
-        dispatch(loadNewNotificationsAction());
+    return { needLoadNotifications, morePagesToLoadNew, notEnoughNew };
+  };
+
+  const handleShowMore = () => {
+    // Когда грузятся только новые уведомления, totalNotifications равно totalNew, поэтому <=
+    if (showCount <= totalNotifications) {
+      const newShowCount = nextShowCount();
+      const { needLoadNotifications, morePagesToLoadNew, notEnoughNew } =
+        calculateParameters(newShowCount);
+
+      if (needLoadNotifications) {
+        if (morePagesToLoadNew) {
+          dispatch(incrementNewNotificationsPage());
+          dispatch(loadNewNotificationsAction());
+        }
+        if (notEnoughNew) {
+          dispatch(incrementViewedNotificationsPage());
+          dispatch(loadViewedNotificationsAction());
+        }
       }
-      if (notEnoughNew) {
-        dispatch(incrementViewedNotificationsPage());
-        dispatch(loadViewedNotificationsAction());
-      }
+      dispatch(setShowCount(newShowCount));
     }
-    dispatch(setShowCount(newShowCount));
   };
 
   return (
@@ -84,23 +94,21 @@ const NotifierModal: React.FC<IProps> = ({ isOpen, onClose }) => {
         visible={isOpen}
         width={460}
         closable={false}
-        onCancel={onClose} /* onOk={handleOk}  */
+        onCancel={onClose}
       >
         <Header />
         <div className={styles.list}>
           {notifications.length > 0
-            ? notifications
-                .slice(0, showCount)
-                .map((notification: INotification) => {
-                  return (
-                    <NotifierContext.Provider
-                      key={notification.subscribe_notify_id}
-                      value={notification}
-                    >
-                      <Item />
-                    </NotifierContext.Provider>
-                  );
-                })
+            ? notifications.map((notification: INotification) =>
+                notification ? (
+                  <NotifierContext.Provider
+                    key={notification.subscribe_notify_id}
+                    value={notification}
+                  >
+                    <Item />
+                  </NotifierContext.Provider>
+                ) : null,
+              )
             : null}
         </div>
         {loading ? <Spin /> : null}

@@ -22,30 +22,6 @@ export enum Command {
   checkListItemChangeComplete = 'Изменение состояния пункта у чеклиста',
 }
 
-export enum NotificationMessageToShow {
-  taskStatusChange = 'сменил(а) статус задачи',
-  taskPriorityChange = 'изменил(а) приоритет задачи',
-  priorityCancel = 'удалил(а) приоритет',
-  descriptionEdit = 'изменил(а) описание',
-  taskTagUnassign = 'удалил(а) метки',
-  taskTagAssign = 'добавил(а) новые метки',
-  timeEndChange = 'изменил(а) срок задачи ',
-  taskExecStopChange = 'удалил(а) срок',
-  taskExecStartChange = 'удалил(а) время начала',
-  timeStartChange = 'изменил(а) времени начала',
-  taskRoleUnassign = 'удалил(а) участников',
-  taskTitleChange = 'изменил(а) заголовок задачи',
-  taskRoleAssign = 'добавил(а) новых участников ',
-  taskStorageFileAssign = 'добавил(а) вложения',
-  taskStorageFileUnassign = 'удалил(а) вложение',
-  taskCheckListAssign = 'добавил(а) чек-лист ',
-  taskCheckListUnassign = 'удалил(а) чек-лист',
-  checkListTitleChange = 'изменил(а) название чек-листа',
-  checkListItemCreate = 'добавил(а) новый пункт в чек-лист ',
-  checkListItemDelete = 'удалил(а) пункт в чеклисте ',
-  checkListItemChangeComplete = 'отметил(а) пункты в чек-листе ',
-}
-
 export const NOTIFY_MESSAGE = {
   [Command.taskStatusChange]: 'сменил(а) статус задачи',
   [Command.taskPriorityChange]: 'изменил(а) приоритет задачи',
@@ -63,7 +39,7 @@ export const NOTIFY_MESSAGE = {
   [Command.taskStorageFileAssign]: 'добавил(а) вложения',
   [Command.taskStorageFileUnassign]: 'удалил(а) вложение',
   [Command.taskCheckListAssign]: 'добавил(а) чек-лист ',
-  [Command.taskCheckListUnassign]: 'удалил(а) чек-лист',
+  [Command.taskCheckListUnassign]: 'удалил(а) чек-лист ',
   [Command.checkListTitleChange]: 'изменил(а) название чек-листа ',
   [Command.checkListItemCreate]: 'добавил(а) новый пункт в чек-лист ',
   [Command.checkListItemDelete]: 'удалил(а) пункт в чеклисте ',
