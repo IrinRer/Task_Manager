@@ -10,10 +10,14 @@
   padding-bottom: 22px;
   font-weight: normal;
   text-transform: none;
-  align-items: flex-start;
+  align-items: flex-end;
   position: relative;
 
-  :global(.ant-btn-primary).btn {
+  @include media-breakpoint-down($size: xs) {
+    align-items: flex-start;
+  }
+
+  :global(.ant-btn-primary).btnTag {
     position: absolute;
     bottom: 0;
     right: 0;
@@ -31,9 +35,9 @@
     @include media-breakpoint-down($size: xs) {
       margin-bottom: 11px;
     }
-    .btnTag {
+    /*.btnTag {
       margin-right: 14%;
-    }
+    }*/
   }
 }
 
@@ -52,9 +56,9 @@
   @include media-breakpoint-down($size: xs) {
     flex-direction: column;
 
-    .btnTag {
+    /*.btnTag {
       margin-left: 96%;
-    }
+    }*/
   }
 }
 
