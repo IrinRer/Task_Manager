@@ -79,3 +79,20 @@
     display: none;
   }
 }
+
+.wrapper {
+  max-width: 400px;
+}
+.wrapper > button {
+  position: absolute;
+  bottom: -5px;
+  margin-top: 10px;
+
+  &:last-child {
+    left: 120px;
+  }
+
+  &:nth-child(2) {
+    left: 80px;
+  }
+}

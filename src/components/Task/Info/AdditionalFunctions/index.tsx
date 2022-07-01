@@ -60,7 +60,7 @@ const AdditionalFunctions = () => {
   );
 
   return (
-    <div>
+    <div className={styles.wrapper}>
       <DateTasks />
       <PriorityTasks />
       <TagTasks />
