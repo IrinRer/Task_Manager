@@ -39,3 +39,6 @@
 .flex {
   display: flex;
 }
+:global(.ant-row).overdue {
+  border: 1px solid $red;
+}

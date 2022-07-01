@@ -85,12 +85,6 @@
     border: none;
     margin-bottom: 30px;
     height: 28px !important;
-
-    @include media-breakpoint-down($size: md) {
-      /*position: absolute;
-      top: 31px;
-      right: 160px;*/
-    }
   }
 }
 

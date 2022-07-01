@@ -40,28 +40,12 @@
 }
 
 .wrapper_flex {
-  /*display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  :global(.ant-btn-primary).btn {
-    margin-right: 14%;
-  }*/
-
   @include media-breakpoint-down($size: xs) {
     flex-direction: column;
   }
 }
 
 .wrapper_grid {
-  /*display: grid;
-  grid-template-columns: 42% 57%;
-  align-items: center;
-
-  :global(.ant-btn-primary).btn {
-    margin-left: 96%;
-  }*/
-
   @include media-breakpoint-down($size: xs) {
     flex-direction: column;
   }

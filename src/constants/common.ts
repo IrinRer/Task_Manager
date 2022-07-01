@@ -75,3 +75,5 @@ export const TITLE_TASK_MAX_LENGTH = 150;
 export const MAX_USER_INITIALS = 2;
 
 export const TIME_SHOW_NOTICE_IN_SECONDS = 5;
+
+export const ERROR_MESSAGE_SET_MEMBERS = 'Ошибка назначения участника';

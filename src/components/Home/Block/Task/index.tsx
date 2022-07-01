@@ -3,6 +3,7 @@ import { Col, Row } from 'antd';
 import { BlockType } from 'constants/types/common';
 import StatusWithPopover from 'components/Common/StatusWithPopover';
 import { TaskContext } from 'constants/taskContext';
+import classnames from 'classnames';
 import Attached from '../Attached';
 import Progress from '../Progress';
 import DateString from '../Date';
@@ -19,11 +20,28 @@ interface IProps {
 
 const Task: React.FC<IProps> = ({ type }) => {
   const task = useContext(TaskContext);
+  const taskDateStop = task?.exec_stop;
+
+  const taskDateStopMiliisec = taskDateStop
+    ? new Date(taskDateStop).getTime()
+    : null;
+  const timestamp = new Date().getTime();
+  const isTaskOverdue =
+    taskDateStopMiliisec &&
+    task &&
+    task.status.name !== 'Выполнена' &&
+    timestamp >= taskDateStopMiliisec;
 
   if (!task) return null;
 
   return (
-    <Row className={styles.wrapper} justify="space-between">
+    <Row
+      className={classnames(
+        styles.wrapper,
+        isTaskOverdue ? styles.overdue : '',
+      )}
+      justify="space-between"
+    >
       {/* Заголовок задачи с указателями вложений и прогресса */}
       <Col span={7} className={styles.title}>
         <Title />
