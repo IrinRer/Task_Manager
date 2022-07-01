@@ -31,8 +31,9 @@
     @include media-breakpoint-down($size: xs) {
       margin-bottom: 11px;
     }
-  .btnTag {
-    margin-right: 14%;
+    .btnTag {
+      margin-right: 14%;
+    }
   }
 }
 
@@ -51,8 +52,9 @@
   @include media-breakpoint-down($size: xs) {
     flex-direction: column;
 
-  .btnTag {
-    margin-left: 96%;
+    .btnTag {
+      margin-left: 96%;
+    }
   }
 }
 
