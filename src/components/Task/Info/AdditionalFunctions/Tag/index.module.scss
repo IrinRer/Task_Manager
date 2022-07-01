@@ -18,9 +18,6 @@
   }
 
   :global(.ant-btn-primary).btnTag {
-    position: absolute;
-    bottom: 0;
-    right: 0;
     padding-left: 0;
     padding-right: 0;
     width: 56%;
@@ -29,6 +26,12 @@
     @include media-breakpoint-down($size: xs) {
       left: 0;
     }
+  }
+
+  :global(.ant-btn-primary).onlyBtn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
   }
 
   .menuLabel {
