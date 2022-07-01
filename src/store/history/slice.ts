@@ -26,7 +26,7 @@ export const historySlice = createSlice({
     ) => {
       if (state.taskId === payload.taskId) {
         const arr = state.data.concat(payload.data);
-        arr.sort((a, b) => +new Date(b.created) - +new Date(a.created));
+        arr.sort((a, b) => Number(new Date(b.created)) - Number(new Date(a.created)));
         state.data = arr.filter(
           (item, i) =>
             arr.findIndex(

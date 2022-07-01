@@ -96,6 +96,7 @@ export const tagSlice = createSlice({
       { payload }: PayloadAction<string>,
     ) => {
       state.sentTag = state.sentTag?.filter((item) => item.name !== payload);
+      state.initialTag = state.initialTag?.filter((item) => item.name !== payload);
       state.loading = false;
     },
     [unassignTagAction.rejected.type]: (

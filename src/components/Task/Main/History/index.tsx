@@ -66,9 +66,9 @@ const History = () => {
           {history.map((item) => {
             switch (item.command_code) {
               case HISTORY.tagAssign:
+              case HISTORY.tagUnassign:
                 return <TagHistory item={item} key={item.history_command_id} />;
               case HISTORY.roleAssign:
-                return <AssignUser item={item} key={item.history_command_id} />;
               case HISTORY.roleUnassign:
                 return <AssignUser item={item} key={item.history_command_id} />;
               case HISTORY.dateChange:
@@ -84,8 +84,6 @@ const History = () => {
                 return (
                   <Attachments item={item} key={item.history_command_id} />
                 );
-              case HISTORY.tagUnassign:
-                return <TagHistory item={item} key={item.history_command_id} />;
               case HISTORY.descriptionChange:
                 return (
                   <Description item={item} key={item.history_command_id} />

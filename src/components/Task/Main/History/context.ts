@@ -10,6 +10,6 @@ export const HistoryContext = createContext<IHistory>({
   text: 'задача',
 });
 
-export const useHistoryValue = (item: any, text: string) => {
+export const useHistoryValue = (item: IHistoryItem | undefined, text: string) => {
   return useMemo(() => ({ item, text }), [item, text]);
 };
