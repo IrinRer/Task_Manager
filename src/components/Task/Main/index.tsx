@@ -5,6 +5,11 @@ import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import Spinner from 'components/Common/Spinner';
 import { isDeleteCheckListLoading } from 'store/editTask/checkLists/deleteCheckList/selectors';
 import { useWindowSize } from 'customHooks/useWindowSize';
+import {
+  getFileName,
+  isClickedAttachments,
+} from 'store/editTask/attachments/selectors';
+import Attachments from 'components/Task/Attachments';
 import styles from './index.module.scss';
 import History from './History';
 import InputWrapper from './InputWrapper';
@@ -17,6 +22,9 @@ import Info from '../Info';
 
 const Main: React.FC = () => {
   const isCheckListLoading = useAppSelector(isDeleteCheckListLoading);
+  const isClickedAttachmentsBtn = useAppSelector(isClickedAttachments);
+  const attachments = useAppSelector(getFileName);
+  const isAttachments = isClickedAttachmentsBtn || attachments.length;
   const size = useWindowSize();
 
   return (
@@ -43,6 +51,7 @@ const Main: React.FC = () => {
       </InputWrapper>
 
       {isCheckListLoading ? <Spinner /> : <Checklist />}
+      {isAttachments && <Attachments />}
 
       <InputWrapper
         labelText="Действия"

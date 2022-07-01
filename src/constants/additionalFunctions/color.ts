@@ -8,12 +8,4 @@ export const allColorTag: TagColor[] = [
   TagColor.purple,
   TagColor.yellow,
   TagColor.blue,
-
-  // 'orange',
-  // 'red',
-  // 'green',
-  // 'purple',
-  // 'pink',
-  // 'blue',
-  // 'yellow',
 ];
