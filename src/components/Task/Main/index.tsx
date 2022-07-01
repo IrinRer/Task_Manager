@@ -4,7 +4,10 @@ import historyIcon from 'assets/icons/history.svg';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import Spinner from 'components/Common/Spinner';
 import { isDeleteCheckListLoading } from 'store/editTask/checkLists/deleteCheckList/selectors';
-import { getFileName, isClickedAttachments } from 'store/editTask/attachments/selectors';
+import {
+  getFileName,
+  isClickedAttachments,
+} from 'store/editTask/attachments/selectors';
 import Attachments from 'components/Task/Attachments';
 import styles from './index.module.scss';
 import History from './History';
@@ -44,12 +47,7 @@ const Main: React.FC = () => {
       {isCheckListLoading ? <Spinner /> : <Checklist />}
       {isAttachments && <Attachments />}
 
-      <InputWrapper
-        labelText="Действия"
-        icon={<img src={historyIcon} alt="history" />}
-      >
-        <History />
-      </InputWrapper>
+      <History />
     </div>
   );
 };

@@ -29,6 +29,9 @@ export interface IHistoryPayload {
 
 export interface IHistoryReducer {
   data: Array<IHistoryItem>;
+  dataReceived: any,
+  name: string;
+  attachments:  Array<{name: string; url:string}>;
   taskId: string;
   count: string;
   loading: boolean;

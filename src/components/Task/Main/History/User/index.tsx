@@ -14,11 +14,18 @@ const User = () => {
           <UserAvatar user={data.item.user} />
           <span
             className={styles.spanUser}
-          >{`${data.item.user.name} ${data.text}`}</span>
+          ><b>{data.item.user.name}</b> {data.text}</span>
         </>
       ) : null}
     </div>
   );
 };
 
+// {/* <span
+// className={styles.spanUser}
+// >{data.item.user.name}&nbsp;</span>
+// <span>&nbsp;{data.text}</span> */}
+
+
 export default User;
+

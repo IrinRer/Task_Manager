@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { notification } from 'antd';
 import { api } from 'network';
+import { IFileThunk } from 'store/editTask/attachments/types';
 import { HISTORY_SLICE_ALIAS } from './types';
 
 export const historyAction = createAsyncThunk(
@@ -22,6 +23,27 @@ export const historyAction = createAsyncThunk(
       };
     } catch (error) {
       notification.error({ message: 'Ошибка отображения истории' });
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
+export const viewFileHistory = createAsyncThunk(
+  `${HISTORY_SLICE_ALIAS}/view`,
+  async (file: IFileThunk, { rejectWithValue }) => {
+    try {
+      const response = await api().get(
+        `/api/v1.0/storage/files/${file.fileId}/download`,
+        { responseType: 'blob' },
+      );
+
+      return {
+        url: URL.createObjectURL(response.data),
+        name: file.name,
+        storageId: file.fileId,
+      };
+    } catch (error) {
+      notification.error({ message: 'Ошибка скачивания файла' });
       return rejectWithValue(error.message);
     }
   },

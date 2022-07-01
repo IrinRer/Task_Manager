@@ -1,11 +1,13 @@
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import classNames from 'classnames';
+import historyIcon from 'assets/icons/history.svg';
 import React, { useEffect, useState } from 'react';
 import { getTask, getTaskId } from 'store/editTask/selectors';
 import { Button } from 'antd';
 import { getHistory, isLoading, totalCount } from 'store/history/selectors';
-import { historyAction } from 'store/history/thunk';
+import { historyAction, viewFileHistory } from 'store/history/thunk';
+import { getStorageFile } from 'store/editTask/attachments/selectors';
 import { HISTORY } from 'constants/history/common';
 import Spinner from 'components/Common/Spinner';
 import { getInfoDate } from 'store/editTask/additionalFunctions/date/selectors';
@@ -35,15 +37,30 @@ const History = () => {
   const countItem = useAppSelector(totalCount);
   const tag = useAppSelector(getTag);
   const loadind = useAppSelector(isLoading);
+  const attachments = useAppSelector(getStorageFile);
 
   const [page, setPage] = useState(2);
+  // const [attachments, setAttachments] = useState<any>();
 
   useEffect(() => {
     if (taskId) {
       dispatch(historyAction({ taskId, page: 1 }));
     }
     // eslint-disable-next-line
-  }, [editTask, date, tag, priority]);
+  }, [attachments, editTask, date, tag, priority]);
+
+  useEffect(() => {
+    history.forEach((item) => {
+      if (item.params.storage_file) {
+        dispatch(
+          viewFileHistory({
+            fileId: item.params?.storage_file.storage_file_id,
+            name: item.params?.storage_file.name_original,
+          }),
+        );
+      }
+    });
+  }, [history]);
 
   const onLoadMore = () => {
     setPage(page + 1);
@@ -59,6 +76,10 @@ const History = () => {
 
   return (
     <div className={styles.wrapper}>
+      <div className={styles.wrapperFlex}>
+           <img src={historyIcon} alt="history" className={styles.history_text}/>
+          <p className={styles.text}>Действия</p>
+        </div>
       {loadind ? (
         <Spinner />
       ) : (
@@ -82,7 +103,10 @@ const History = () => {
               case HISTORY.fileAssign:
               case HISTORY.fileUnassign:
                 return (
-                  <Attachments item={item} key={item.history_command_id} />
+                  <Attachments
+                    item={item}
+                    key={item.history_command_id}
+                  />
                 );
               case HISTORY.descriptionChange:
                 return (

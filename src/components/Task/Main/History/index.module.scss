@@ -4,9 +4,9 @@
 
 @media screen and (min-width: 750px) {
   .historyElemUser {
-    max-width: 70%;
-    display: flex;
-    justify-content: space-between;
+    max-width: 80%;
+    // display: flex;
+    // justify-content: space-between;
 
     :global(.ant-avatar) {
       min-width: 32px;
@@ -15,6 +15,7 @@
 
   .date {
     color: $heading;
+    font-size: $font-size-s;
     display: inline-block;
   }
 
@@ -94,11 +95,12 @@
   }
 
   .date {
+    font-size: $font-size-s;
     display: none;
   }
 
   .historyElemItem {
-   display: block !important;
+    display: block !important;
     margin-left: 0 !important;
     margin-top: 10px;
 
@@ -112,7 +114,6 @@
     margin-left: 0 !important;
     margin-top: 10px;
 
-
     span {
       margin-left: 10px;
     }
@@ -124,12 +125,10 @@
   }
 
   .historyElemStatus {
-  
-    margin-top: 10px; 
+    margin-top: 10px;
 
     display: block !important;
     margin-left: 0 !important;
-
 
     .spanStatus {
       font-weight: bold;
@@ -138,6 +137,24 @@
   }
 }
 
+.history_text {
+  font-weight: 500;
+  padding: 0;
+  color: $text-title;
+}
+.wrapperFlex {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+
+  img {
+    margin-right: 20px;
+  }
+  
+  p {
+    margin-bottom: 0;
+  }
+}
 .btn_not {
   display: none !important;
 }
@@ -146,6 +163,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 40px;
 
   :global(.ant-btn).btn {
     max-width: 200px;
@@ -182,6 +200,10 @@
 
 .font_weight {
   font-weight: bold;
+}
+
+.span_size {
+  width: 100%;
 }
 
 .spanUser {
@@ -249,6 +271,7 @@
   span {
     font-weight: 400;
     color: $gray-700;
+    text-decoration: line-through;
     font-size: $font-size-m;
   }
 }
@@ -281,4 +304,30 @@
   height: 8px;
   border-radius: 50%;
   background-color: $red;
+}
+
+.wrapper_img {
+  width: 170px;
+  border-radius: 8px;
+  height: 98px;
+  padding-bottom: 10px;
+
+  .img {
+    border-radius: 8px;
+    max-width: 100%;
+    height: 100%;
+    display: block;
+    margin: auto;
+  }
+
+  p {
+    color: $gray-600;
+    font-size: $font-size-s;
+    margin: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    width: 150px;
+    text-overflow: ellipsis;
+  }
 }

@@ -1,12 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
-import { historyAction } from './thunk';
+import { historyAction, viewFileHistory } from './thunk';
 import { HISTORY_SLICE_ALIAS, IHistoryReducer, IHistoryPayload } from './types';
 
 const initialState: IHistoryReducer = {
   data: [],
+  dataReceived: [],
+  attachments: [],
   taskId: '',
   count: '',
+  name: '',
   loading: false,
   error: null,
 };
@@ -14,7 +17,11 @@ const initialState: IHistoryReducer = {
 export const historySlice = createSlice({
   name: HISTORY_SLICE_ALIAS,
   initialState,
-  reducers: {},
+  reducers: {
+    setName: (state, { payload }: PayloadAction<string>) => {
+      state.name = payload;
+    },
+  },
   extraReducers: {
     [historyAction.pending.type]: (state) => {
       state.loading = true;
@@ -48,7 +55,35 @@ export const historySlice = createSlice({
       state.loading = false;
       state.error = payload;
     },
+
+    [viewFileHistory.pending.type]: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+
+    [viewFileHistory.fulfilled.type]: (
+      state,
+      { payload }: PayloadAction<{ name: string; url: string }>,
+    ) => {
+      const arr = state.attachments.concat(payload);
+      state.attachments = arr.filter(
+        (item, i) => arr.findIndex((a) => a.name === item.name) === i,
+      );
+      // state.attachments.push(payload);
+      state.loading = false;
+    },
+
+    [viewFileHistory.rejected.type]: (
+      state,
+      { payload }: PayloadAction<AxiosError>,
+    ) => {
+      state.loading = false;
+      state.error = payload;
+    },
   },
 });
 
+export const {
+  setName
+} = historySlice.actions;
 export default historySlice.reducer;
