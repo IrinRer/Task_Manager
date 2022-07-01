@@ -1,0 +1,42 @@
+@import 'src/styles/colors';
+
+.hover_icon {
+  display: flex !important;
+  justify-content: center;
+  width: 100%;
+  position: absolute;
+  top: 40%;
+
+  background: none;
+
+  :global(.ant-btn).btn_hover_icon {
+    border: none;
+    box-shadow: none;
+    background: none;
+    fill: white;
+    width: 20px;
+    margin-right: 10px;
+
+    height: 20px;
+    &:hover {
+      fill: darken($coral, 10%);
+      background: none;
+    }
+
+    svg {
+      color: white;
+      width: 20px;
+      height: 20px;
+
+      &:hover {
+        color: $blue;
+        background: none;
+      }
+    }
+  }
+}
+
+.not_hover_icon {
+  display: none;
+}
+

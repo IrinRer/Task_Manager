@@ -8,7 +8,6 @@ import { setAssignTagToDelete } from 'store/editTask/additionalFunctions/tag/sli
 import {
   setIsModalVisibleEdit,
   setIsModalVisibleMain,
-  setIsVisibleModalDelete,
 } from 'store/editTask/additionalFunctions/tag/modalVisible/slice';
 import {
   isModalVisibleEdit,
@@ -40,7 +39,6 @@ const ModalNewTag: FC<IProps> = ({ openWindowCreate }) => {
   const [id, setId] = useState<string>('');
 
   const onClickDelete = (id: string, name: string) => {
-    dispatch(setIsVisibleModalDelete(true));
     setVisibleModalDelete(true);
     setName(name);
     setId(id);
