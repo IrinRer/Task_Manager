@@ -38,9 +38,6 @@
     @include media-breakpoint-down($size: xs) {
       margin-bottom: 11px;
     }
-    /*.btnTag {
-      margin-right: 14%;
-    }*/
   }
 }
 
@@ -58,10 +55,6 @@
 .wrapper_grid {
   @include media-breakpoint-down($size: xs) {
     flex-direction: column;
-
-    /*.btnTag {
-      margin-left: 96%;
-    }*/
   }
 }
 
