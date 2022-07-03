@@ -10,6 +10,7 @@ import {
   isClickedAttachments,
 } from 'store/editTask/attachments/selectors';
 import Attachments from 'components/Task/Attachments';
+import { MIN_DESKTOP_WIDTH } from 'constants/common';
 import styles from './index.module.scss';
 import History from './History';
 import InputWrapper from './InputWrapper';
@@ -31,17 +32,17 @@ const Main: React.FC = () => {
     <div className={styles.taskMain}>
       <div className={styles.taskHeader}>
         <div className={styles.titleRow}>
-          {(size.width || 0) >= 768 && <Title />}
+          {(size.width || 0) >= MIN_DESKTOP_WIDTH && <Title />}
           <div className={styles.options}>
             <Actions />
             <Options />
           </div>
         </div>
-        {(size.width || 0) < 768 && <Title />}
+        {(size.width || 0) < MIN_DESKTOP_WIDTH && <Title />}
         <div className={styles.border} />
       </div>
 
-      {(size.width || 0) < 768 && <Info />}
+      {(size.width || 0) < MIN_DESKTOP_WIDTH && <Info />}
 
       <InputWrapper
         labelText="Описание"

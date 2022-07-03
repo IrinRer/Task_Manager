@@ -53,6 +53,17 @@
     width: 100% !important;
   }
 
+  @include media-breakpoint-down($size: md) {
+    margin: 0;
+    max-width: 100%;
+  }
+
+  :global(.ant-modal-content),
+  :global(.ant-modal),
+  :global(.ant-modal-body) {
+    border-radius: 16px !important;
+  }
+
   .taskContainer {
     display: flex;
     justify-content: space-between;

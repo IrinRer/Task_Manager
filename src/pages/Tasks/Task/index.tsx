@@ -18,6 +18,7 @@ import { ROUTES } from 'constants/routes';
 import { ReactComponent as CloseIcon } from 'assets/icons/close.svg';
 
 import { useWindowSize } from 'customHooks/useWindowSize';
+import { MIN_DESKTOP_WIDTH } from 'constants/common';
 import styles from './index.module.scss';
 
 const Task: React.FC = () => {
@@ -66,7 +67,7 @@ const Task: React.FC = () => {
     >
       <div className={styles.taskContainer}>
         <Main />
-        {(size.width || 0) >= 768 && <Info />}
+        {(size.width || 0) >= MIN_DESKTOP_WIDTH && <Info />}
       </div>
     </Modal>
   ) : null;
