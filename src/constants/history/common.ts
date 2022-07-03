@@ -59,3 +59,5 @@ export enum HISTORY  {
 };
 
 export const PRIORITY_CHANGE = 'изменил(а) приоритет задачи';
+
+export const ADAPTIVE_HISTORY_WIDTH = 900;

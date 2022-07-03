@@ -22,7 +22,6 @@ const MenuTag: FC<IProps> = ({ onClickDelete, onClickEdit }) => {
   const taskId = useAppSelector(getTaskId);
 
   const onSelect = (item: IPopulatedTag) => {
-    setIsModalVisibleMain(true);
     if (item.task_tag_id && taskId) {
       dispatch(
         assignTagAction({

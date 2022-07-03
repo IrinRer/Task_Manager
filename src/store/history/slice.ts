@@ -5,7 +5,6 @@ import { HISTORY_SLICE_ALIAS, IHistoryReducer, IHistoryPayload } from './types';
 
 const initialState: IHistoryReducer = {
   data: [],
-  dataReceived: [],
   attachments: [],
   taskId: '',
   count: '',
@@ -63,13 +62,12 @@ export const historySlice = createSlice({
 
     [viewFileHistory.fulfilled.type]: (
       state,
-      { payload }: PayloadAction<{ name: string; url: string }>,
+      { payload }: PayloadAction<{ name: string; url: string, type: string, size: string }>,
     ) => {
       const arr = state.attachments.concat(payload);
       state.attachments = arr.filter(
         (item, i) => arr.findIndex((a) => a.name === item.name) === i,
       );
-      // state.attachments.push(payload);
       state.loading = false;
     },
 

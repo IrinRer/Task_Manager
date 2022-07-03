@@ -1,14 +1,12 @@
 import { HISTORY, HISTORY_COMMAND } from 'constants/history/common';
-import React, { FC, useCallback, useEffect, useMemo } from 'react';
+import React, { FC } from 'react';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-// import { getAttachments } from 'store/history/selectors';
 import { IHistoryItem } from 'store/history/types';
-import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
+import { useDefineAdaptive } from 'customHooks/useDefineAdaptive';
 import { attachmentsAll } from 'store/history/selectors';
-import { viewFileHistory } from 'store/history/thunk';
+import shapeAttachment from 'assets/icons/shapeAttachment.svg';
 import ContextWrapperHistory from '../ContextWrapper';
 import styles from '../index.module.scss';
-import CommonComponent from '../Common';
 
 interface IProps {
   item: IHistoryItem;
@@ -16,35 +14,42 @@ interface IProps {
 
 const Attachments: FC<IProps> = ({ item }) => {
   const attachmentsImg = useAppSelector(attachmentsAll);
+  const condition =
+    item.command_code === HISTORY.fileAssign
+      ? HISTORY_COMMAND.assignFile
+      : HISTORY_COMMAND.unassignFile;
+
+  const component = useDefineAdaptive(
+    <div className={styles.historyElemItem}>
+      {attachmentsImg.map(({ url, name, type, size }) => {
+        if (name === item.params.storage_file.name_original) {
+          return type.includes('image') ? (
+            <div className={styles.wrapper_img} key={name}>
+              <img src={url} alt={name} className={styles.img} />
+              <p>{name}</p>
+            </div>
+          ) : (
+            <div className={styles.wrapper_doc} key={name}>
+              <div className={styles.wrapper_icon}>
+                <img src={shapeAttachment} alt="attachmentIcon" />
+              </div>
+              <div className={styles.wrapper_text}>
+                <p className={styles.text_name}>{name}</p>
+                <p className={styles.text_size}>{`${(
+                  Number(size) / 1024
+                ).toFixed(2)} Kb`}</p>
+              </div>
+            </div>
+          );
+        }
+        return null;
+      })}
+    </div>,
+  );
 
   return (
-    <ContextWrapperHistory
-      item={item}
-      text={
-        item.command_code === HISTORY.fileAssign
-          ? HISTORY_COMMAND.assignFile
-          : HISTORY_COMMAND.unassignFile
-      }
-    >
-      <div className={styles.history}>
-        <CommonComponent />
-
-        {HISTORY_COMMAND.assignFile ? (
-          <div className={styles.historyElemItem}>
-            {attachmentsImg.map(({ url, name }) => {
-              if (name === item.params.storage_file.name_original) {
-                return (
-                  <div className={styles.wrapper_img}>
-                    <img src={url} alt={name} className={styles.img} />
-                    <p>{name}</p>
-                  </div>
-                );
-              }
-              return null;
-            })}
-          </div>
-        ) : HISTORY_COMMAND.unassignFile}
-      </div>
+    <ContextWrapperHistory item={item} text={condition}>
+      <div className={styles.history}>{component}</div>
     </ContextWrapperHistory>
   );
 };

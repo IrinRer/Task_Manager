@@ -29,11 +29,17 @@ export interface IHistoryPayload {
 
 export interface IHistoryReducer {
   data: Array<IHistoryItem>;
-  dataReceived: any,
   name: string;
-  attachments:  Array<{name: string; url:string}>;
+  attachments: Array<{ name: string; url: string, type: string, size: string }>;
   taskId: string;
   count: string;
   loading: boolean;
   error: AxiosError | null;
+}
+
+export interface IFileThunkHistory {
+  type: string;
+  fileId: string;
+  name: string;
+  size: string;
 }

@@ -40,7 +40,6 @@ const History = () => {
   const attachments = useAppSelector(getStorageFile);
 
   const [page, setPage] = useState(2);
-  // const [attachments, setAttachments] = useState<any>();
 
   useEffect(() => {
     if (taskId) {
@@ -56,10 +55,13 @@ const History = () => {
           viewFileHistory({
             fileId: item.params?.storage_file.storage_file_id,
             name: item.params?.storage_file.name_original,
+            type: item.params?.storage_file.type,
+            size: item.params?.storage_file.size,
           }),
         );
       }
     });
+    // eslint-disable-next-line
   }, [history]);
 
   const onLoadMore = () => {
@@ -77,9 +79,9 @@ const History = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.wrapperFlex}>
-           <img src={historyIcon} alt="history" className={styles.history_text}/>
-          <p className={styles.text}>Действия</p>
-        </div>
+        <img src={historyIcon} alt="history" className={styles.history_text} />
+        <p className={styles.text}>Действия</p>
+      </div>
       {loadind ? (
         <Spinner />
       ) : (
@@ -103,10 +105,7 @@ const History = () => {
               case HISTORY.fileAssign:
               case HISTORY.fileUnassign:
                 return (
-                  <Attachments
-                    item={item}
-                    key={item.history_command_id}
-                  />
+                  <Attachments item={item} key={item.history_command_id} />
                 );
               case HISTORY.descriptionChange:
                 return (

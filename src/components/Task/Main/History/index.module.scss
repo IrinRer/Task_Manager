@@ -5,8 +5,6 @@
 @media screen and (min-width: 750px) {
   .historyElemUser {
     max-width: 80%;
-    // display: flex;
-    // justify-content: space-between;
 
     :global(.ant-avatar) {
       min-width: 32px;
@@ -52,6 +50,7 @@
       text-transform: uppercase;
     }
   }
+
   .historyElemItem {
     display: flex;
     align-items: center;
@@ -87,6 +86,17 @@
   }
 }
 
+@media screen and (max-width: 900px) {
+  .historyElem {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .date {
+    margin-left: 7%;
+  }
+}
+
 @media screen and (max-width: 749px) {
   .historyElemUser {
     :global(.ant-avatar) {
@@ -96,7 +106,6 @@
 
   .date {
     font-size: $font-size-s;
-    display: none;
   }
 
   .historyElemItem {
@@ -142,6 +151,7 @@
   padding: 0;
   color: $text-title;
 }
+
 .wrapperFlex {
   display: flex;
   align-items: flex-start;
@@ -150,11 +160,12 @@
   img {
     margin-right: 20px;
   }
-  
+
   p {
     margin-bottom: 0;
   }
 }
+
 .btn_not {
   display: none !important;
 }
@@ -189,9 +200,11 @@
     margin-top: 14px;
     margin-bottom: 0;
   }
+
   .historyElem {
     display: flex;
     justify-content: space-between;
+
     :global(.ant-avatar) {
       min-width: 32px;
     }
@@ -289,6 +302,7 @@
   border-radius: 50%;
   background-color: $salad;
 }
+
 .middle {
   display: inline-block;
   margin-right: 5px;
@@ -297,6 +311,7 @@
   border-radius: 50%;
   background-color: $orange;
 }
+
 .high {
   display: inline-block;
   margin-right: 5px;
@@ -329,5 +344,41 @@
     display: inline-block;
     width: 150px;
     text-overflow: ellipsis;
+  }
+}
+
+.wrapper_doc {
+  max-width: 260px;
+  background: rgba(196, 219, 255, 0.15);
+  border-radius: 8px;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  padding: 10px 10px;
+}
+
+.wrapper_icon {
+  padding: 8px;
+  border-radius: 8px;
+  background-color: rgba($blue-secondary, 0.15);
+}
+
+.wrapper_text {
+  display: flex;
+  max-width: 260px;
+  flex-direction: column;
+
+  .text_name {
+    font-size: $font-size-s;
+    margin: 0;
+    margin-left: 8px;
+    line-height: 16px;
+  }
+
+  .text_size {
+    color: $gray-600;
+    font-size: $font-size-s;
+    margin: 0;
+    margin-left: 8px;
   }
 }
