@@ -68,4 +68,5 @@ const AdditionalFunctions = () => {
   );
 };
 
-export default AdditionalFunctions;
+// export default AdditionalFunctions;
+export default React.memo(AdditionalFunctions);
