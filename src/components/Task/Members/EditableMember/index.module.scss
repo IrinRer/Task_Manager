@@ -7,11 +7,12 @@
   border: 1px solid $dark-secondary;
   border-radius: 16px;
   text-align: center;
-  width: max-content;
+  max-width: max-content;
   display: flex;
   margin-bottom: 8px;
   justify-content: left;
   align-items: center;
+  width: 100%;
   span {
     max-width: 180px;
     overflow: hidden;
@@ -22,7 +23,7 @@
   }
   .delete {
     font-size: $font-size-s;
-    width: 11px;
+    width: 12px;
     margin-left: 11px;
     color: $dark-primary;
     cursor: pointer;

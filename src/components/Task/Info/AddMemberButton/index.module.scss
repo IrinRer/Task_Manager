@@ -9,6 +9,9 @@
     font-size: $font-size-m !important;
     padding: 9px 12px 9px 20px !important;
   }
+  :global(.ant-select-item-option .anticon-close) {
+    vertical-align: sub;
+  }
 }
 
 .addmemberWrapper {
@@ -23,11 +26,14 @@
     padding: 0;
     height: 24px;
     box-shadow: none;
+    width: 100%;
   }
   :global(.ant-btn).addmember span {
     padding-top: 0;
     text-align: left;
     width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   :global(.ant-btn).addmember:hover,
   :global(.ant-btn).addmember:active {

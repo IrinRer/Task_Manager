@@ -9,9 +9,9 @@ import styles from './index.module.scss';
 
 const DateString: React.FC = () => {
   const task = useContext(TaskContext);
-  if (!task) return null;
 
-  const date = format(new Date(task.created), DATE_FORMAT_UI, { locale: ru });
+  if (!task || !task.exec_stop) return null;
+  const date = format(new Date(task.exec_stop), DATE_FORMAT_UI, { locale: ru });
 
   return (
     <FlexWrapper wrapperClassName={styles.wrapper}>

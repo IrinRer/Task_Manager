@@ -17,6 +17,8 @@ import Preloader from 'components/Common/Preloader';
 import { ROUTES } from 'constants/routes';
 import { ReactComponent as CloseIcon } from 'assets/icons/close.svg';
 
+import { useWindowSize } from 'customHooks/useWindowSize';
+import { MIN_DESKTOP_WIDTH } from 'constants/common';
 import styles from './index.module.scss';
 
 const Task: React.FC = () => {
@@ -25,6 +27,7 @@ const Task: React.FC = () => {
   const modalVisible = useAppSelector(getModalVisible);
   const errorTask = useAppSelector(getEditTaskError);
   const params = useParams();
+  const size = useWindowSize();
   const taskId = params.id;
 
   useEffect(() => {
@@ -64,7 +67,7 @@ const Task: React.FC = () => {
     >
       <div className={styles.taskContainer}>
         <Main />
-        <Info />
+        {(size.width || 0) >= MIN_DESKTOP_WIDTH && <Info />}
       </div>
     </Modal>
   ) : null;

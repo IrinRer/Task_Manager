@@ -35,9 +35,13 @@ const SelectTag: React.FC = () => {
     dispatch(setIsModalVisibleMain(true));
   };
 
-  const className = classnames(styles.wrapper_flex, {
-    [styles.wrapper_grid]: uniqueTagName?.length,
-  });
+  const className = classnames(
+    styles.wrapper_flex,
+    {
+      [styles.wrapper_grid]: uniqueTagName?.length,
+    },
+    styles.infoLine,
+  );
 
   return (
     <div className={className}>
@@ -46,7 +50,10 @@ const SelectTag: React.FC = () => {
         <Button
           type="primary"
           onClick={showModal}
-          className={styles.btnTag}
+          className={classnames(
+            styles.btnTag,
+            uniqueTagName?.length > 0 ? styles.onlyBtn : '',
+          )}
           shape="round"
         >
           + Добавить метку

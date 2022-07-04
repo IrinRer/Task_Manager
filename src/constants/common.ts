@@ -84,4 +84,11 @@ export const DATE_FORMAT = 'dd MMM yyyy' as const;
 export const MAX_USER_INITIALS = 2 as const;
 export const MAX_TAGS_TO_SHOW = 3 as const;
 
+export const ERROR_MESSAGE_SET_MEMBERS = 'Ошибка назначения участника';
+
+export const MIN_DESKTOP_WIDTH = 768;
+export const MIN_DESKTOP_WIDTH_HOMEPAGE = 1350;
+export const DESKTOP_WIDTH_HOMEPAGE_MOVE_TAGS = 1160;
+export const DESKTOP_WIDTH_HOMEPAGE_MOVE_ROLES = 1024;
+
 export const TIME_SHOW_NOTICE_IN_SECONDS = 5 as const;

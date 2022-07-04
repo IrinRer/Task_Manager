@@ -1,0 +1,29 @@
+@import 'src/styles/color-variables';
+@import 'src/styles/font-variables';
+@import 'src/styles/mixins';
+
+.button {
+  display: none;
+  :global {
+    .ant-btn {
+      border: none;
+      font-size: $font-size-m;
+      line-height: $line-height-m;
+      width: 24px;
+      height: 24px;
+      padding: 0;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      box-shadow: none;
+    }
+
+    svg path {
+      fill: $dark-primary;
+    }
+
+    @include media-breakpoint-down($size: md) {
+      display: block;
+    }
+  }
+}
