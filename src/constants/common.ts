@@ -79,3 +79,7 @@ export const TIME_SHOW_NOTICE_IN_SECONDS = 5;
 export const ERROR_MESSAGE_SET_MEMBERS = 'Ошибка назначения участника';
 
 export const MIN_DESKTOP_WIDTH = 768;
+
+export const MIN_DESKTOP_WIDTH_HOMEPAGE = 1350;
+export const DESKTOP_WIDTH_HOMEPAGE_MOVE_TAGS = 1160;
+export const DESKTOP_WIDTH_HOMEPAGE_MOVE_ROLES = 1024;
