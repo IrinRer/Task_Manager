@@ -1,0 +1,48 @@
+@import 'src/styles/font-variables';
+@import 'src/styles/colors';
+@import 'src/styles/color-variables';
+
+.wrapper_btn {
+  display: flex;
+
+  :global(.ant-btn) {
+    border: none;
+    text-shadow: none;
+    box-shadow: none;
+  }
+
+  :global(.anticon).icon {
+    svg {
+      color: $text-light;
+      width: 24px;
+      height: 24px;
+
+      &:hover {
+        color: $blue;
+      }
+    }
+  }
+
+  :global(.ant-btn).btnDeleted {
+    fill: $text-light;
+    &:hover {
+      fill: darken($coral, 10%);
+    }
+  }
+
+  :global(.ant-btn).btnDownload {
+    margin-right: 40px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+
+  :global(.ant-btn).btnDownload {
+    margin-right: 50px !important;
+  }
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+}

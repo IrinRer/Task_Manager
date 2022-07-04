@@ -1,9 +1,10 @@
+import { ITag } from 'store/common/tags/types';
 import { AxiosError } from 'axios';
 import { TProgress } from 'constants/types/common';
 import { IUser } from 'store/users/types';
+import { IPayloadFile } from 'store/editTask/attachments/types';
 import { IPriority } from '../priorities/types';
 import { IRoles } from '../roles/types';
-import { ITag } from '../tags/types';
 
 export const ONETASK_SLICE_ALIAS = 'onetask';
 
@@ -34,7 +35,7 @@ export interface IResponseTask {
   tags: IResponseTags[];
   progress: TProgress;
   check_lists: Array<ICheckList>;
-  storage_files: [];
+  storage_files: Array<IPayloadFile>;
   storage_files_meta: {
     total: number;
   };

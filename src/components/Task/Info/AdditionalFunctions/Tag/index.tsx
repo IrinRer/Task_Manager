@@ -46,7 +46,7 @@ const SelectTag: React.FC = () => {
         <Button
           type="primary"
           onClick={showModal}
-          className={styles.btn}
+          className={styles.btnTag}
           shape="round"
         >
           + Добавить метку
