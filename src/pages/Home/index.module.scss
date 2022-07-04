@@ -1,6 +1,7 @@
 @import 'src/styles/color-variables.scss';
 @import 'src/styles/font-variables.scss';
 @import 'src/styles/colors';
+@import 'styles/mixins.scss';
 
 :global(.ant-layout).tasks {
   background-color: $white;
@@ -15,4 +16,30 @@
 .sider {
   padding: 0px;
   color: $text-dark;
+
+  @include media-breakpoint-down($size: md) {
+    position: fixed;
+    z-index: 100;
+    //animation: slideFilterIn 3s ease-in-out forwards;
+    left: -80%;
+    //animation: slideFilterOut 2s ease-in-out forwards;
+  }
+
+  @keyframes slideFilterIn {
+    0% {
+      left: -80%;
+    }
+    100% {
+      left: 0;
+    }
+  }
+
+  @keyframes slideFilterOut {
+    to {
+      left: -80%;
+    }
+    from {
+      left: 0;
+    }
+  }
 }

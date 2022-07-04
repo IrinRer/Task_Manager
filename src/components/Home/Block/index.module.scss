@@ -1,3 +1,4 @@
+@import 'styles/mixins.scss';
 @import 'src/styles/color-variables.scss';
 @import 'src/styles/font-variables.scss';
 @import 'src/styles/colors';
@@ -14,14 +15,24 @@
     margin-right: 9px;
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
+
+    @include media-breakpoint-down($size: md) {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
     h2 {
-      padding-top: 8px;
+      padding-top: 0;
       margin: 0;
       font-size: $font-size-xl;
       font-weight: 600;
       line-height: $line-height-xl;
       color: $dark-primary;
+
+      @include media-breakpoint-down($size: md) {
+        padding-top: 0;
+      }
     }
   }
   .pagination {

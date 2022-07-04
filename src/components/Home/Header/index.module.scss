@@ -1,6 +1,14 @@
+@import 'styles/mixins.scss';
 @import 'src/styles/color-variables.scss';
 @import 'src/styles/font-variables.scss';
 @import 'src/styles/colors';
+
+.buttonsRow {
+  @include media-breakpoint-down($size: mdl) {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+}
 
 .titleRow,
 .buttonsRow {
@@ -58,11 +66,33 @@
         cursor: default;
       }
     }
+    .filter {
+      border: 1px solid $gray-200;
+      border-radius: 8px;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: $white;
+      margin-right: 20px;
+      padding: 0;
+    }
+
+    /*:global(.ant-btn).filter[ant-click-animating-without-extra-node='true']::after {
+      //border: 0 none;
+      //opacity: 0;
+      left: 0;
+      //animation: none 0 ease 0 1 normal;
+    }*/
   }
 
   :global(.ant-col).newtask {
     display: flex;
     justify-content: flex-end;
+    @include media-breakpoint-down($size: mdl) {
+      justify-content: flex-start;
+    }
   }
 }
 

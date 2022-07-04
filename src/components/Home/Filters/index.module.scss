@@ -1,5 +1,6 @@
 @import 'src/styles/color-variables.scss';
 @import 'src/styles/font-variables.scss';
+@import 'styles/mixins.scss';
 
 .container {
   display: flex;
@@ -9,6 +10,10 @@
   background-color: $bg-secondary;
   padding: 40px 20px 40px 16px;
   max-width: 250px;
+
+  @include media-breakpoint-down($size: md) {
+    border-right: 1px solid $dark-secondary;
+  }
 }
 
 .inputContainer {

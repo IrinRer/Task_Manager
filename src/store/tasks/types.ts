@@ -20,6 +20,7 @@ export interface ITasksReducer {
   loading: boolean;
   error: AxiosError | null;
   onlyMyTasks: boolean;
+  isShowFilter: boolean;
   viewParameters: TAllViewParameters;
 }
 export type TsetSortFieldPayload = {
