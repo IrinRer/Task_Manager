@@ -1,0 +1,51 @@
+@import 'src/styles/color-variables.scss';
+@import 'src/styles/font-variables.scss';
+@import 'src/styles/colors';
+
+.wrapper {
+  border-radius: 20px;
+  padding: 16px 18px;
+  margin: 4px 0px;
+  background-color: $white;
+  position: relative;
+
+  .taskLine {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .between {
+    justify-content: space-between;
+  }
+
+  .flexElem {
+    margin-right: 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .flexElem:last-of-type {
+    margin-right: 0;
+  }
+
+  .options {
+    cursor: pointer;
+    text-align: right;
+    width: 20px;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+  }
+
+  .flex {
+    display: flex;
+  }
+}
+.overdue {
+  border: 1px solid $red;
+}
