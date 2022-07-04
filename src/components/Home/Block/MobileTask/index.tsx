@@ -1,21 +1,21 @@
 import React, { useContext } from 'react';
 import { BlockType } from 'constants/types/common';
 import StatusWithPopover from 'components/Common/StatusWithPopover';
-import { TaskContext } from 'constants/taskContext';
 import classnames from 'classnames';
 import { useWindowSize } from 'customHooks/useWindowSize';
 import {
   DESKTOP_WIDTH_HOMEPAGE_MOVE_ROLES,
   DESKTOP_WIDTH_HOMEPAGE_MOVE_TAGS,
 } from 'constants/common';
-import Attached from '../Attached';
-import Progress from '../Progress';
-import DateString from '../Date';
-import Tags from '../Tags';
-import Roles from '../Roles';
-import Priority from '../Priority';
-import Title from '../Title';
-import Options from '../Options';
+import { TaskContext } from 'components/Home/taskContext';
+import Attached from '../Task/Attached';
+import Title from '../Task/Title';
+import DateString from '../Task/Date';
+import Priority from '../Task/Priority';
+import Tags from '../Task/Tags';
+import Roles from '../Task/Roles';
+import Progress from '../Task/Progress';
+import Options from '../Task/Options';
 import styles from './index.module.scss';
 
 interface IProps {
@@ -58,7 +58,9 @@ const MobileTask: React.FC<IProps> = ({ type }) => {
           {type !== BlockType.done && <DateString />}
         </div>
         <div className={styles.flexElem}>
-          {type !== BlockType.done && <Priority />}
+          {type !== BlockType.done && (
+            <Priority priority={task.priority?.name} />
+          )}
         </div>
         {(size.width || 0) > DESKTOP_WIDTH_HOMEPAGE_MOVE_TAGS && (
           <div className={styles.flexElem}>
