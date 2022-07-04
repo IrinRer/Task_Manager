@@ -2,7 +2,7 @@
 @import 'src/styles/colors';
 
 .wrapper_doc {
-  max-width: 260px;
+  max-width: 250px;
   background: rgba(196, 219, 255, 0.15);
   border-radius: 8px;
   margin-top: 10px;
@@ -19,7 +19,7 @@
 
 .wrapper_text {
   display: flex;
-  max-width: 260px;
+  max-width: 232px;
   flex-direction: column;
 
   .text_name {

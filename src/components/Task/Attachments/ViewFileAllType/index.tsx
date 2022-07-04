@@ -18,6 +18,8 @@ const ViewFileAllType = () => {
             onDownload={file.onDownload}
             preview={undefined}
             progress={0}
+            setFile={file.setFile}
+            fileList={file.fileList}
             key={item.name_original}
           >
             <FileText key={item.name_original} />

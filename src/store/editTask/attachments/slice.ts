@@ -14,6 +14,9 @@ const initialState: IAttachmentsReducer = {
   dataReceived: [],
   data: [],
   viewFileImg: [],
+  file_delete: '',
+  initialViewFile: [],
+  initialDataFile: [],
   isClicked: false,
   loading: false,
   error: null,
@@ -26,6 +29,28 @@ export const attachmentsSlice = createSlice({
     setClickedAttachments: (state, action: PayloadAction<boolean>) => {
       state.isClicked = action.payload;
     },
+
+    setAssignFileToDelete: (state, action: PayloadAction<string | null>) => {
+      state.file_delete = action.payload;
+
+      if (action.payload) {
+        state.viewFileImg = state.viewFileImg.filter(
+          (item) => item.name !== action.payload,
+        );
+        state.data = state.data.filter(
+          (item) => item.name_original !== action.payload,
+        );
+
+        state.dataReceived = state.dataReceived.filter(
+          (item) => item.name_original !== action.payload,
+        );
+
+      } else {
+        state.viewFileImg = state.initialViewFile;
+        state.dataReceived = state.initialDataFile;
+        state.data = state.initialDataFile;
+      }
+    },
   },
   extraReducers: {
     [assignFile.pending.type]: (state) => {
@@ -37,6 +62,7 @@ export const attachmentsSlice = createSlice({
       { payload }: PayloadAction<IPayloadFile>,
     ) => {
       state.data.push(payload);
+      state.initialDataFile.push(payload);
     },
 
     [assignFile.rejected.type]: (
@@ -52,6 +78,7 @@ export const attachmentsSlice = createSlice({
     ) => {
       state.dataReceived = payload?.storage_files;
       state.data = payload?.storage_files;
+      state.initialDataFile = payload?.storage_files;
     },
 
     [deleteFile.pending.type]: (state) => {
@@ -69,6 +96,9 @@ export const attachmentsSlice = createSlice({
 
       state.viewFileImg = state.viewFileImg?.filter(
         (item) => item.name !== payload,
+      );
+      state.initialDataFile = state.initialDataFile?.filter(
+        (item) => item.name_original !== payload,
       );
     },
 
@@ -93,6 +123,10 @@ export const attachmentsSlice = createSlice({
         (item, i) => arr.findIndex((a) => a.name === item.name) === i,
       );
       state.loading = false;
+
+      state.initialViewFile = arr.filter(
+        (item, i) => arr.findIndex((a) => a.name === item.name) === i,
+      );
     },
 
     [viewFile.rejected.type]: (
@@ -105,5 +139,6 @@ export const attachmentsSlice = createSlice({
   },
 });
 
-export const { setClickedAttachments } = attachmentsSlice.actions;
+export const { setClickedAttachments, setAssignFileToDelete } =
+  attachmentsSlice.actions;
 export default attachmentsSlice.reducer;

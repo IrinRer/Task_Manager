@@ -18,6 +18,7 @@ import {
 } from 'store/editTask/attachments/preview/slice';
 import { getTaskId } from 'store/editTask/selectors';
 import {
+  attachmentsData,
   getFileName,
   getStorageFile,
   getTaskFileImg,
@@ -53,7 +54,7 @@ const Attachments = () => {
     // eslint-disable-next-line
   }, [dispatch]);
 
-  const [fileList, setFile] = useState<Array<UploadFile>>([]);
+  const [fileList, setFile] = useState<Array<any>>([]);
   const [progress, setProgress] = useState(0);
   const [previewVisible, setPreviewVisible] = useState(false);
 
@@ -130,6 +131,8 @@ const Attachments = () => {
         progress={progress}
         onDeleteFile={onDeleteFile}
         onDownload={onDownload}
+        setFile={setFile}
+        fileList={fileList}
         preview={actions.preview}
       >
         <ItemRender />
@@ -153,7 +156,10 @@ const Attachments = () => {
     <ContextWrapperAttachments
       onDeleteFile={onDeleteFile}
       onDownload={onDownload}
+      setFile={setFile}
+      fileList={fileList}
     >
+    <div className={styles.scroll}>
       <Col className={styles.col}>
         <div className={styles.wrapperFlex}>
           <PaperClipOutlined className={styles.PaperClipOutlined} />
@@ -186,6 +192,7 @@ const Attachments = () => {
           setPreviewVisible={setPreviewVisible}
         />
       </Col>
+      </div>
     </ContextWrapperAttachments>
   );
 };

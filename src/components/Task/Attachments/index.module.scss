@@ -1,8 +1,27 @@
 @import 'src/styles/font-variables';
 @import 'src/styles/colors';
 
+.scroll {
+  ::-webkit-scrollbar {
+    width: 13px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: $gray-200;
+    border-radius: 16px 16px 16px 16px;
+    width: 13px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 16px 16px 16px 16px;
+    background-color: $gray-300;
+  }
+}
+
 .col {
   margin-top: 40px;
+  overflow: auto; 
+  max-height: 300px;
 
   .btnAttachment {
     width: 32px;
@@ -30,6 +49,7 @@
 
 .text {
   font-size: $font-size-l;
+  color: #171725;
 }
 
 :global(.ant-upload.ant-upload-drag).upload {
@@ -71,6 +91,7 @@
     align-items: center;
     margin-bottom: 10px;
   }
+  
 
   :global(.ant-upload-list-item) {
     border-radius: 8px;

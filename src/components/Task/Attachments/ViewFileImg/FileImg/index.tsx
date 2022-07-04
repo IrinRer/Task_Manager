@@ -5,8 +5,11 @@ import {
   setImgRecieved,
   setPreviewTitleReceived,
 } from 'store/editTask/attachments/preview/slice';
-import ModalDelete from 'components/Common/ModalDelete';
+import ModalDeleteDelayWithNotice from 'components/Common/ModalDeleteDelayWithNotice';
 import { ATTACHMENTS_TITLE_MAX_LENGTH } from 'constants/attachments/attachments';
+import { getFileName } from 'store/editTask/attachments/selectors';
+import { useAppSelector } from 'customHooks/redux/useAppSelector';
+import { setAssignFileToDelete } from 'store/editTask/attachments/slice';
 import classNames from 'classnames';
 import Preview from '../../Preview';
 import { ViewFileContext } from '../../Context/contextViewFile';
@@ -16,6 +19,7 @@ import styles from './index.module.scss';
 const FileImg = () => {
   const dispatch = useAppDispatch();
   const valueContext = useContext(ViewFileContext);
+  const fileName = useAppSelector(getFileName);
 
   const [previewVisible, setPreviewVisible] = useState(false);
   const [visibleModalDelete, setVisibleModalDelete] = useState(false);
@@ -63,6 +67,26 @@ const FileImg = () => {
     return false;
   };
 
+  const handleOkDelete = () => {
+    setVisibleModalDelete(false);
+    dispatch(setAssignFileToDelete(valueContext.file.name || ''));
+    valueContext.setFile(valueContext.fileList?.filter((item) => item.name !== valueContext.file.name));
+  };
+
+  const handleCancelDelete = () => {
+    setVisibleModalDelete(false);
+    dispatch(setAssignFileToDelete(''));
+    valueContext.setFile(valueContext.fileList)
+  };
+
+  const handleCancel = () => {
+    setVisibleModalDelete(false);
+  };
+
+  const onDelete = () => {
+    valueContext.onDeleteFile(valueContext.file.name || '');
+  };
+
   const classNameWrapper = classNames(styles.wrapper_img, {
     [styles.wrapper_img_hover]: hover,
   });
@@ -73,30 +97,36 @@ const FileImg = () => {
 
   return (
     <>
-      <div
-        onMouseEnter={onHover}
-        onMouseLeave={onBlur}
-        className={classNameWrapper}
-      >
-        <img
-          src={valueContext.file.url || url}
-          alt="img"
-          className={classNameImg}
-        />
-        <p>{`${isLongText}`} </p>
-        <HoverButton
-          customPreview={customPreview}
-          onRemove={onRemove}
-          hover={hover}
-        />
-      </div>
-      <ModalDelete
-        textMain={`${valueContext.file.name} будет безвозвратно удален`}
+      {valueContext.file.name ? (
+        <div
+          onMouseEnter={onHover}
+          onMouseLeave={onBlur}
+          className={classNameWrapper}
+        >
+          <img
+            src={valueContext.file.url || url}
+            alt="img"
+            className={classNameImg}
+          />
+          <p>{`${isLongText}`} </p>
+          <HoverButton
+            customPreview={customPreview}
+            onRemove={onRemove}
+            hover={hover}
+          />
+        </div>
+      ) : null}
+
+      <ModalDeleteDelayWithNotice
+        visible={visibleModalDelete}
+        textMain={`Файл ${valueContext.file.name} будет безвозвратно удален`}
         textButton="Удалить файл"
-        visibleModalDelete={visibleModalDelete}
-        setIsVisibleModalDelete={setVisibleModalDelete}
-        target={valueContext.file.name || ''}
-        action={valueContext.onDeleteFile}
+        textNotice="Файл удален"
+        handleOk={handleOkDelete}
+        handleCancel={handleCancel}
+        handleOkNotice={onDelete}
+        handleCancelNotify={handleCancelDelete}
+        showNotice
       />
       <Preview
         previewVisible={previewVisible}

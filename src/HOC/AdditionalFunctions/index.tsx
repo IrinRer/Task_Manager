@@ -15,13 +15,10 @@ export const withAdditionalFunctions = <T, P>(
       setClick(true);
     };
 
-    console.log(value);
-    console.log(accepted);
-
     return (
       <>
         {isClick || value[0] || accepted[0] ? (
-          <BaseComponent  />
+          <BaseComponent />
         ) : (
           <Button
             icon={<Icon />}

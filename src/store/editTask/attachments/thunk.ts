@@ -16,16 +16,21 @@ export const assignFile = createAsyncThunk(
         { name_original: file.fileList?.name },
       );
 
+      await api().post(
+        `/api/v1.0/task/tasks/${file.taskId}/storage-file-assign`,
+        { storage_file_id: responseCreate.data.data.storage_file_id },
+      );
+
       const responseFile = await api().post(
         `/api/v1.0/storage/files/${responseCreate.data.data.storage_file_id}/upload`,
         formData,
         file.configProgressBar,
       );
 
-      await api().post(
-        `/api/v1.0/task/tasks/${file.taskId}/storage-file-assign`,
-        { storage_file_id: responseCreate.data.data.storage_file_id },
-      );
+      // await api().post(
+      //   `/api/v1.0/task/tasks/${file.taskId}/storage-file-assign`,
+      //   { storage_file_id: responseCreate.data.data.storage_file_id },
+      // );
 
       file.onSuccess('Ok');
 
@@ -46,8 +51,6 @@ export const deleteFile = createAsyncThunk(
         `/api/v1.0/task/tasks/${file.taskId}/storage-file-un-assign`,
         { storage_file_id: file.fileId },
       );
-
-      notification.success({ message: 'Файл успешно удален' });
 
       return file.name;
     } catch (error) {

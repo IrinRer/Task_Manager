@@ -12,6 +12,7 @@ import Info from 'components/Task/Info';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { fetchTaskAction } from 'store/common/task/thunk';
+import { setClickedAttachments } from 'store/editTask/attachments/slice';
 import { clearDataTask } from 'store/common/task/slice';
 import Preloader from 'components/Common/Preloader';
 import { ROUTES } from 'constants/routes';
@@ -38,6 +39,7 @@ const Task: React.FC = () => {
     dispatch(setModalVisible(false));
     dispatch(clearDataTask());
     dispatch(clearEditDataTask());
+    dispatch(setClickedAttachments(false))
     navigate(ROUTES.tasks.path);
   };
 
