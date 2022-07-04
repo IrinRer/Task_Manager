@@ -30,7 +30,9 @@ const Task: React.FC<IProps> = ({ type }) => {
         {(task?.storage_files_meta.total > 0 || task?.progress) && (
           <div className={styles.flex}>
             <Attached />
+            {/* {task.check_lists && task.check_lists.length > 0 ? ( */}
             <Progress />
+            {/* ) : null} */}
           </div>
         )}
       </Col>

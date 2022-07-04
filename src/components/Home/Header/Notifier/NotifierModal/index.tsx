@@ -68,7 +68,7 @@ const NotifierModal: React.FC<IProps> = ({ onClose }) => {
 
   const handleShowMore = () => {
     // Когда грузятся только новые уведомления, totalNotifications равно totalNew, поэтому <=
-    if (showCount <= totalNotifications) {
+    if (showCount <= totalNotifications || totalNotifications === 0) {
       const newShowCount = nextShowCount();
       const { needLoadNotifications, morePagesToLoadNew, notEnoughNew } =
         calculateParameters(newShowCount);

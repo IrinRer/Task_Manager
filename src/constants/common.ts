@@ -1,4 +1,5 @@
 import { createContext } from 'react';
+import { ru } from 'date-fns/locale';
 import { TRights } from './rights';
 import { ROLES } from './types/common';
 
@@ -6,6 +7,22 @@ export const BASE_DATE_FORMAT = 'DD.MM.YYYY' as const;
 
 export const DATE_FORMAT_UI = 'dd MMM yyyy' as const;
 export const DATE_FORMAT_SERVER = 'yyyy-MM-dd' as const;
+export const DATE_FORMAT_HISTORY = 'dd MMM yyyy, HH:mm' as const;
+export const DATE_TIME_FORMAT = 'dd MMM yyyy h:mm' as const;
+export const DATE_FORMAT = 'dd MMM yyyy' as const;
+
+export const formatRelativeLocale = {
+  yesterday: "'вчера в' p",
+  today: "'сегодня в' p",
+  tomorrow: DATE_FORMAT_HISTORY,
+  nextWeek: DATE_FORMAT_HISTORY,
+  lastWeek: DATE_FORMAT_HISTORY,
+  other: DATE_FORMAT_HISTORY,
+};
+export const locale = {
+  ...ru,
+  formatRelative: (token: string) => formatRelativeLocale[token],
+};
 
 export const AVATAR_COLORS = [
   '#64D9D1',
@@ -79,8 +96,6 @@ export const EditableContext = createContext<boolean>(false);
 
 export const RELOAD_TASKS_INTERVAL = 420000 as const; // Перезагружаем задачи каждые 7 минут
 
-export const DATE_TIME_FORMAT = 'dd MMM yyyy h:mm' as const;
-export const DATE_FORMAT = 'dd MMM yyyy' as const;
 export const MAX_USER_INITIALS = 2 as const;
 export const MAX_TAGS_TO_SHOW = 3 as const;
 
