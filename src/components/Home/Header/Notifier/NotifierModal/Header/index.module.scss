@@ -1,0 +1,49 @@
+@import 'src/styles/color-variables.scss';
+@import 'src/styles/font-variables.scss';
+@import 'src/styles/colors';
+
+:global(.notify-header) {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  .title {
+    display: flex;
+    font-size: $font-size-xl;
+    line-height: $line-height-s;
+    font-weight: 500;
+    color: $gray-800;
+    gap: 8px;
+    .count {
+      min-width: 24px;
+      height: 24px;
+      padding: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 8px;
+      background-color: $success;
+      color: $white;
+      font-size: $font-size-m;
+      line-height: 24px;
+      font-weight: 600;
+    }
+  }
+  .readAll {
+    color: $blue-hover;
+    cursor: pointer;
+    font-size: $font-size-m;
+    font-weight: 300;
+    line-height: 20px;
+    text-decoration: underline;
+  }
+  .noNew {
+    color: $gray-800;
+    cursor: default;
+    font-size: $font-size-m;
+    font-weight: 300;
+    line-height: 20px;
+    text-decoration: underline;
+  }
+}

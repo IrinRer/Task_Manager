@@ -20,6 +20,26 @@
       padding-top: 8px;
       height: 48px !important;
     }
+    &:disabled {
+      cursor: default;
+    }
   }
-  @include status-change;
+  // Текущий статус подсвечивается синим если мы не навели мышь на другой статус
+  .current {
+    background-color: rgba(0, 98, 255, 0.05);
+    &:hover {
+      background-color: rgba(0, 98, 255, 0.05) !important;
+      cursor: default;
+    }
+  }
+  // Если мышь над wrapper и над другим статусом, то текущий не подсвечивается.
+  &:hover {
+    .current {
+      background-color: $white;
+      &:hover {
+        background-color: rgba(0, 98, 255, 0.05) !important;
+        cursor: default;
+      }
+    }
+  }
 }

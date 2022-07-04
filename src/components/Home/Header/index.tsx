@@ -24,6 +24,7 @@ import { fetchTasksAction } from 'store/tasks/thunk';
 import AddNewTask from './AddNewTask';
 import UserMenu from './UserMenu';
 import styles from './index.module.scss';
+import Notifier from './Notifier';
 
 const tasksButtonClass = (flag: boolean): string => {
   return flag ? styles.inactive : styles.active;
@@ -73,6 +74,7 @@ const Header: React.FC = () => {
         <h1>Задачи</h1>
 
         <div className={styles.user}>
+          <Notifier />
           <UserAvatar user={user} />
           <UserMenu />
           <CaretDownOutlined className={styles.menuicon} />

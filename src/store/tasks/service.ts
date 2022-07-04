@@ -4,9 +4,9 @@ import {
   PriorityName,
   SortField,
   TaskStatuses,
-  TTask,
 } from 'constants/types/common';
 import { compareDates, compareStrings } from 'helpers/compareTasks';
+import { IResponseTask } from 'store/common/task/types';
 import { TAllViewParameters, TViewParameters } from './types';
 
 // const isMyTask = (role:TRole):boolean => {
@@ -14,14 +14,14 @@ import { TAllViewParameters, TViewParameters } from './types';
 //   }
 
 export const getMyTasks = (
-  tasks: TTask[],
+  tasks: IResponseTask[],
   onlyMyTasks: boolean,
   userId: string,
-): TTask[] => {
+): IResponseTask[] => {
   return onlyMyTasks
     ? tasks.filter((task) => {
         return (
-          task.roles.find(
+          task?.roles?.find(
             (role) =>
               MY_TASKS_ROLES.includes(role.task_role.name) &&
               role.assign_user.user_id === userId,
@@ -31,7 +31,10 @@ export const getMyTasks = (
     : tasks;
 };
 
-export const blockTasks = (tasks: TTask[], blockType: BlockType): TTask[] => {
+export const blockTasks = (
+  tasks: IResponseTask[],
+  blockType: BlockType,
+): IResponseTask[] => {
   if (blockType === BlockType.in) {
     return tasks.filter(
       (task) =>
@@ -46,7 +49,7 @@ export const blockTasks = (tasks: TTask[], blockType: BlockType): TTask[] => {
 };
 
 export const blockTasksTotal = (
-  tasks: TTask[],
+  tasks: IResponseTask[],
   blockType: BlockType,
 ): number => {
   return blockTasks(tasks, blockType).length;
@@ -56,8 +59,8 @@ export const blockTasksTotal = (
 // Используется для сортировки задач по полю sortField
 
 export const isFirstGTSecond = (
-  firstTask: TTask,
-  secondTask: TTask,
+  firstTask: IResponseTask,
+  secondTask: IResponseTask,
   sortField: SortField,
 ): number => {
   if (sortField === SortField.priority) {
@@ -79,9 +82,9 @@ export const isFirstGTSecond = (
 
 // Возвращает сортированный список задач обрезанный по странице page с числом задач на странице tasksOnPage
 export const sortPaginate = (
-  tasks: TTask[],
+  tasks: IResponseTask[],
   viewParameters: TViewParameters,
-): TTask[] => {
+): IResponseTask[] => {
   const { sortField, page, tasksOnPage } = viewParameters;
   const sortedTasks = tasks.sort((a, b) => isFirstGTSecond(a, b, sortField));
   if (sortField === SortField.created) {
@@ -91,9 +94,9 @@ export const sortPaginate = (
 };
 
 export const getTasksSortedPaginated = (
-  tasks: TTask[],
+  tasks: IResponseTask[],
   viewParameters: TAllViewParameters,
   blockType: BlockType,
-): TTask[] => {
+): IResponseTask[] => {
   return sortPaginate(blockTasks(tasks, blockType), viewParameters[blockType]);
 };

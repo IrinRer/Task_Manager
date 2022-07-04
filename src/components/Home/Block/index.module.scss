@@ -35,6 +35,10 @@
       }
     }
   }
+  .emptyTask {
+    padding-left: 20px;
+    color: $gray-800;
+  }
   .pagination {
     display: flex;
     justify-content: flex-end;
