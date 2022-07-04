@@ -12,20 +12,13 @@ const User = () => {
       {data.item ? (
         <>
           <UserAvatar user={data.item.user} />
-          <span
-            className={styles.spanUser}
-          ><b>{data.item.user.name}</b> {data.text}</span>
+          <span className={styles.spanUser}>
+            <b>{data.item.user.name}</b> {data.text}
+          </span>
         </>
       ) : null}
     </div>
   );
 };
 
-// {/* <span
-// className={styles.spanUser}
-// >{data.item.user.name}&nbsp;</span>
-// <span>&nbsp;{data.text}</span> */}
-
-
 export default User;
-

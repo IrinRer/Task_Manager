@@ -9,9 +9,10 @@ import styles from '../../index.module.scss';
 
 interface IProps {
   item: IHistoryItem;
+  width: string;
 }
 
-const ItemChecklist: FC<IProps> = ({ item }) => {
+const ItemChecklist: FC<IProps> = ({ item, width }) => {
   const conditionCreate = item.command_code === HISTORY.itemChecklistCreate;
   const conditionComplete = item.command_code === HISTORY.itemChecklistComplete;
   const conditionText = conditionCreate
@@ -24,7 +25,7 @@ const ItemChecklist: FC<IProps> = ({ item }) => {
     [styles.complete_checklist]: conditionComplete,
   });
 
-  const component = useDefineAdaptive(
+  const component = useDefineAdaptive(width, 
     conditionCreate || conditionComplete ? (
       <div className={styles.historyElemItem}>
         <Checkbox

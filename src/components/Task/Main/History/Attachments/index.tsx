@@ -10,16 +10,17 @@ import styles from '../index.module.scss';
 
 interface IProps {
   item: IHistoryItem;
+  width: string;
 }
 
-const Attachments: FC<IProps> = ({ item }) => {
+const Attachments: FC<IProps> = ({ item, width }) => {
   const attachmentsImg = useAppSelector(attachmentsAll);
   const condition =
     item.command_code === HISTORY.fileAssign
       ? HISTORY_COMMAND.assignFile
       : HISTORY_COMMAND.unassignFile;
 
-  const component = useDefineAdaptive(
+  const component = useDefineAdaptive(width, 
     <div className={styles.historyElemItem}>
       {attachmentsImg.map(({ url, name, type, size }) => {
         if (name === item.params.storage_file.name_original) {
@@ -44,14 +45,17 @@ const Attachments: FC<IProps> = ({ item }) => {
         }
         return null;
       })}
+      <div className={styles.support} />
     </div>,
   );
 
   return (
     <ContextWrapperHistory item={item} text={condition}>
-      <div className={styles.history}>{component}</div>
+      <div className={styles.history}>
+        {component}
+      </div>
     </ContextWrapperHistory>
   );
 };
 
-export default Attachments;
+export default React.memo(Attachments);

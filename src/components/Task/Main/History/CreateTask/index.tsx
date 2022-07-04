@@ -7,9 +7,10 @@ import styles from '../index.module.scss';
 
 interface IProps {
   item: IHistoryItem;
+  width: string;
 }
 
-const CreateTask: FC<IProps> = ({ item }) => (
+const CreateTask: FC<IProps> = ({ item, width }) => (
   <ContextWrapperHistory item={item} text={HISTORY_COMMAND.createTask}>
     <div className={styles.history}>
       <CommonComponentNoChildren />

@@ -7,8 +7,6 @@ import {
 } from 'store/editTask/attachments/preview/slice';
 import ModalDeleteDelayWithNotice from 'components/Common/ModalDeleteDelayWithNotice';
 import { ATTACHMENTS_TITLE_MAX_LENGTH } from 'constants/attachments/attachments';
-import { getFileName } from 'store/editTask/attachments/selectors';
-import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { setAssignFileToDelete } from 'store/editTask/attachments/slice';
 import classNames from 'classnames';
 import Preview from '../../Preview';
@@ -19,7 +17,6 @@ import styles from './index.module.scss';
 const FileImg = () => {
   const dispatch = useAppDispatch();
   const valueContext = useContext(ViewFileContext);
-  const fileName = useAppSelector(getFileName);
 
   const [previewVisible, setPreviewVisible] = useState(false);
   const [visibleModalDelete, setVisibleModalDelete] = useState(false);
@@ -70,13 +67,17 @@ const FileImg = () => {
   const handleOkDelete = () => {
     setVisibleModalDelete(false);
     dispatch(setAssignFileToDelete(valueContext.file.name || ''));
-    valueContext.setFile(valueContext.fileList?.filter((item) => item.name !== valueContext.file.name));
+    valueContext.setFile(
+      valueContext.fileList?.filter(
+        (item) => item.name !== valueContext.file.name,
+      ),
+    );
   };
 
   const handleCancelDelete = () => {
     setVisibleModalDelete(false);
     dispatch(setAssignFileToDelete(''));
-    valueContext.setFile(valueContext.fileList)
+    valueContext.setFile(valueContext.fileList);
   };
 
   const handleCancel = () => {

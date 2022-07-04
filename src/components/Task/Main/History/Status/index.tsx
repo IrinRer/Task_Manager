@@ -7,10 +7,11 @@ import styles from '../index.module.scss';
 
 interface IProps {
   item: IHistoryItem;
+  width: string;
 }
 
-const Status: FC<IProps> = ({ item }) => {
-  const component = useDefineAdaptive(
+const Status: FC<IProps> = ({ item, width }) => {
+  const component = useDefineAdaptive(width,
     <div className={styles.historyElemStatus}>
       <span>Новый статус:&nbsp;&nbsp;</span>
       <span className={styles.spanStatus}> {item.params.status.name}</span>

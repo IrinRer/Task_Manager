@@ -8,12 +8,13 @@ import styles from '../index.module.scss';
 
 interface IProps {
   item: IHistoryItem;
+  width: string;
 }
 
-const TagHistory: FC<IProps> = ({ item }) => {
+const TagHistory: FC<IProps> = ({ item, width }) => {
   const condition = item.command_code === HISTORY.tagAssign;
 
-  const component = useDefineAdaptive(
+  const component = useDefineAdaptive(width,
     condition ? (
       <div className={styles.historyElemItem}>
         <CustomTag

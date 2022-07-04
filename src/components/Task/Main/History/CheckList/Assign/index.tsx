@@ -7,9 +7,10 @@ import CommonComponentNoChildren from '../../Common/CommonComponent';
 
 interface IProps {
   item: IHistoryItem;
+  width: string;
 }
 
-const ChecklistAssign: FC<IProps> = ({ item }) => {
+const ChecklistAssign: FC<IProps> = ({ item, width }) => {
   const condition =
     item.command_code === HISTORY.checklistAssign
       ? HISTORY_COMMAND.assignChecklist

@@ -7,10 +7,11 @@ import styles from '../../index.module.scss';
 
 interface IProps {
   item: IHistoryItem;
+  width: string;
 }
 
-const ChecklistTitle: FC<IProps> = ({ item }) => {
-  const component = useDefineAdaptive(
+const ChecklistTitle: FC<IProps> = ({ item, width}) => {
+  const component = useDefineAdaptive(width,
     <div className={styles.historyElemItem}>
       <span>Новое название:&nbsp;&nbsp;</span>
       <span className={styles.font_weight}>{item.params.title}</span>

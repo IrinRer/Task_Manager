@@ -7,9 +7,10 @@ import CommonComponentNoChildren from '../Common/CommonComponent';
 
 interface IProps {
   item: IHistoryItem;
+  width: string;
 }
 
-const Description: FC<IProps> = ({ item }) => {
+const Description: FC<IProps> = ({ item, width}) => {
   return (
     <ContextWrapperHistory item={item} text={HISTORY_COMMAND.changeDescription}>
       <div className={styles.history}>

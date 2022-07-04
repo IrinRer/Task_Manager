@@ -30,7 +30,7 @@ export interface IHistoryPayload {
 export interface IHistoryReducer {
   data: Array<IHistoryItem>;
   name: string;
-  attachments: Array<{ name: string; url: string, type: string, size: string }>;
+  attachments: Array<{ name: string; url: string; type: string; size: string }>;
   taskId: string;
   count: string;
   loading: boolean;

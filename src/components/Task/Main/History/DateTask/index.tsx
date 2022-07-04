@@ -11,9 +11,10 @@ import ContextWrapperHistory from '../ContextWrapper';
 
 interface IProps {
   item: IHistoryItem;
+  width: string;
 }
 
-const DateTask: FC<IProps> = ({ item }) => {
+const DateTask: FC<IProps> = ({ item, width}) => {
   const date = item.params.exec_stop
     ? format(new Date(item.params.exec_stop), DATE_FORMAT_UI, {
         locale: ru,
@@ -21,7 +22,7 @@ const DateTask: FC<IProps> = ({ item }) => {
     : null;
 
   const condition = date ? HISTORY_COMMAND.changeDate : 'удалил(а) срок';
-  const component = useDefineAdaptive(
+  const component = useDefineAdaptive(width,
     date ? (
       <div className={styles.historyElemDate}>
         <div className={styles.wrapper_date_icon}>

@@ -13,13 +13,14 @@ import styles from '../index.module.scss';
 
 interface IProps {
   item: IHistoryItem;
+  width: string;
 }
 
-const Priority: FC<IProps> = ({ item }) => {
+const Priority: FC<IProps> = ({ item, width }) => {
   const condition = HISTORY.priorityChange
     ? HISTORY_COMMAND.changePriority
     : PRIORITY_CHANGE;
-  const component = useDefineAdaptive(
+  const component = useDefineAdaptive(width,
     item.params.priority ? (
       <div className={styles.historyElemStatus}>
         <span>Новый приоритет:&nbsp;&nbsp;</span>

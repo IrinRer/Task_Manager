@@ -11,6 +11,11 @@
     }
   }
 
+  .support {
+    width: 30px;
+    height: 50px;
+  }
+
   .date {
     color: $heading;
     font-size: $font-size-s;
@@ -104,6 +109,10 @@
     }
   }
 
+  .support {
+    display: none;
+  }
+
   .date {
     font-size: $font-size-s;
     margin-left: 7%;
@@ -154,7 +163,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-  
+
     .img {
       border-radius: 8px;
       max-width: 100%;
@@ -162,7 +171,7 @@
       display: block;
       margin: auto;
     }
-  
+
     p {
       color: $gray-600;
       font-size: $font-size-s;
@@ -173,7 +182,6 @@
       text-overflow: ellipsis;
     }
   }
-  
 }
 
 .history_text {

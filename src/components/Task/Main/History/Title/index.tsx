@@ -7,10 +7,11 @@ import styles from '../index.module.scss';
 
 interface IProps {
   item: IHistoryItem;
+  width: string;
 }
 
-const Title: FC<IProps> = ({ item }) => {
-  const component = useDefineAdaptive(
+const Title: FC<IProps> = ({ item, width }) => {
+  const component = useDefineAdaptive(width,
     <div className={styles.historyElemItem}>
       <span>Новый заголовок:&nbsp;&nbsp;</span>
       <span className={styles.font_weight}>{item.params.title}</span>

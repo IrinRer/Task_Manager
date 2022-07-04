@@ -18,7 +18,6 @@ import {
 } from 'store/editTask/attachments/preview/slice';
 import { getTaskId } from 'store/editTask/selectors';
 import {
-  attachmentsData,
   getFileName,
   getStorageFile,
   getTaskFileImg,
@@ -72,7 +71,6 @@ const Attachments = () => {
 
   const onDeleteFile = (nameFile: string) => {
     const index = determineIndex(nameFile);
-    setFile(fileList?.filter((item) => item.name !== nameFile));
     dispatch(
       deleteFile({
         fileId: allFileId[index].storageId,
@@ -159,39 +157,39 @@ const Attachments = () => {
       setFile={setFile}
       fileList={fileList}
     >
-    <div className={styles.scroll}>
-      <Col className={styles.col}>
-        <div className={styles.wrapperFlex}>
-          <PaperClipOutlined className={styles.PaperClipOutlined} />
-          <p className={styles.text}>Вложения</p>
-        </div>
-        {isRights && (
-          <Upload.Dragger
-            className={styles.upload}
-            fileList={fileList}
-            accept={ACCEPT_FORMAT}
-            itemRender={itemListRender}
-            beforeUpload={beforeUpload}
-            customRequest={handleSubmit}
-            onChange={handleUpload}
-            onPreview={handlePreview}
-          >
-            <Button className={styles.btnAttachment}>
-              <PlusOutlined />
-            </Button>
-            Перетащите сюда или загрузите файл
-          </Upload.Dragger>
-        )}
+      <div className={styles.scroll}>
+        <Col className={styles.col}>
+          <div className={styles.wrapperFlex}>
+            <PaperClipOutlined className={styles.PaperClipOutlined} />
+            <p className={styles.text}>Вложения</p>
+          </div>
+          {isRights && (
+            <Upload.Dragger
+              className={styles.upload}
+              fileList={fileList}
+              accept={ACCEPT_FORMAT}
+              itemRender={itemListRender}
+              beforeUpload={beforeUpload}
+              customRequest={handleSubmit}
+              onChange={handleUpload}
+              onPreview={handlePreview}
+            >
+              <Button className={styles.btnAttachment}>
+                <PlusOutlined />
+              </Button>
+              Перетащите сюда или загрузите файл
+            </Upload.Dragger>
+          )}
 
-        <div className={styles.wrapper_all_file}>
-          <ViewFileImg />
-          <ViewFileAllType />
-        </div>
-        <Preview
-          previewVisible={previewVisible}
-          setPreviewVisible={setPreviewVisible}
-        />
-      </Col>
+          <div className={styles.wrapper_all_file}>
+            <ViewFileImg />
+            <ViewFileAllType />
+          </div>
+          <Preview
+            previewVisible={previewVisible}
+            setPreviewVisible={setPreviewVisible}
+          />
+        </Col>
       </div>
     </ContextWrapperAttachments>
   );
