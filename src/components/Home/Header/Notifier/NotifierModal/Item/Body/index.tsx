@@ -5,7 +5,6 @@ import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import React, { useContext } from 'react';
 import { generatePath, useNavigate } from 'react-router-dom';
 import { changeNotificationViewedAction } from 'store/notifications/thunk';
-import { INotification } from 'store/notifications/types';
 import { NotifierContext } from '../../../notifierContext';
 import DateCreated from './DateCreated';
 import styles from './index.module.scss';
