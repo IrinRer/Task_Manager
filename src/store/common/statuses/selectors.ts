@@ -33,3 +33,12 @@ export const getCreatedStatusID = createSelector(
     ); // find может возвращать undefined, хотя в нашем случае этого не должно бы быть? а если statuses не загрузились?
   },
 );
+export const getCompletedStatusID = createSelector(
+  selectStatuses,
+  (statuses): string => {
+    return (
+      statuses.find((status: IStatus) => status.name === TaskStatuses.Completed)
+        ?.task_status_id || ''
+    );
+  },
+);

@@ -1,4 +1,3 @@
-import { IAttachmentsReducer } from 'store/editTask/attachments/types';
 import {
   configureStore,
   ThunkAction,
@@ -11,6 +10,7 @@ import priorityReducer from 'store/editTask/additionalFunctions/priority/slice';
 import dateReducer from 'store/editTask/additionalFunctions/date/slice';
 import tagReducer from 'store/editTask/additionalFunctions/tag/slice';
 import filtersReducer from 'store/filters/slice';
+import notificationsReducer from 'store/notifications/slice';
 import modalVisibleReducers from 'store/editTask/additionalFunctions/tag/modalVisible/slice';
 import tokenReducer from 'store/auth/token/slice';
 import verifyReducer from 'store/auth/verify/slice';
@@ -23,9 +23,9 @@ import commonStatusesReducer from './common/statuses/slice';
 import onetaskReducer from './common/task/slice';
 import editTaskReducer from './editTask/slice';
 import historyReducer from './history/slice';
+import createTaskReducer from './createTask/slice';
 import attachmentsReducer from './editTask/attachments/slice';
 import previewReducer from './editTask/attachments/preview/slice';
-import createTaskReducer from './createTask/slice';
 import addCheckListReducer from './editTask/checkLists/addCheckList/slice';
 import deleteCheckListReducer from './editTask/checkLists/deleteCheckList/slice';
 import addCheckListItemReducer from './editTask/checkLists/addCheckListItem/slice';
@@ -33,6 +33,8 @@ import deleteCheckListItemReducer from './editTask/checkLists/deleteCheckListIte
 import setCheckListTitleReducer from './editTask/checkLists/setCheckListTitle/slice';
 import setCompleteCheckListItemReducer from './editTask/checkLists/setCompleteCheckListItem/slice';
 import setCheckListItemPositionReducer from './editTask/checkLists/setCheckListItemPosition/slice';
+import { IAttachmentsReducer } from './editTask/attachments/types';
+
 import { ICommonTagsReducer } from './common/tags/types';
 import { ICommonProgressesReducer } from './common/progresses/types';
 import { ICommonPrioritiesReducer } from './common/priorities/types';
@@ -55,6 +57,7 @@ import { IAddCheckListItemReducer } from './editTask/checkLists/addCheckListItem
 import { IDeleteCheckListItemReducer } from './editTask/checkLists/deleteCheckListItem/types';
 import { ISetCheckListTitleReducer } from './editTask/checkLists/setCheckListTitle/types';
 import { ISetCompleteCheckListItemReducer } from './editTask/checkLists/setCompleteCheckListItem/types';
+import { INotificationsReducer } from './notifications/types';
 import { IPreviewReducer } from './editTask/attachments/preview/types';
 import { IModalVisibleReducer } from './editTask/additionalFunctions/tag/modalVisible/types';
 import { ISetCheckListItemPositionReducer } from './editTask/checkLists/setCheckListItemPosition/types';
@@ -90,6 +93,7 @@ export const store = configureStore({
     }),
     users: usersReducer,
     filters: filtersReducer,
+    notifications: notificationsReducer,
     auth: combineReducers({
       token: tokenReducer,
       verify: verifyReducer,
@@ -138,6 +142,7 @@ export type RootState = {
   }>;
   users: IUsersReducer;
   filters: IFiltersReducer;
+  notifications: INotificationsReducer;
   auth: CombinedState<{
     token: IAuthReducer;
     verify: IVerifyReducer;

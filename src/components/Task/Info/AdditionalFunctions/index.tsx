@@ -60,7 +60,7 @@ const AdditionalFunctions = () => {
   );
 
   return (
-    <div className={styles.wrapper} >
+    <div className={styles.wrapper}>
       <DateTasks />
       <PriorityTasks />
       <TagTasks />
@@ -68,4 +68,5 @@ const AdditionalFunctions = () => {
   );
 };
 
-export default AdditionalFunctions;
+// export default AdditionalFunctions;
+export default React.memo(AdditionalFunctions);

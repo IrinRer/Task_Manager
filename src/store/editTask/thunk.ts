@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { notification } from 'antd';
 import { AxiosResponse } from 'axios';
-import { IStatusChangeArg } from 'constants/types/common';
 
 import { api } from 'network';
 import { fetchTaskAction } from 'store/common/task/thunk';
@@ -151,24 +150,6 @@ export const deleteTaskMemberGroupAction = createAsyncThunk(
       return 1;
     } catch (error) {
       notification.error({ message: 'Ошибка удаления участников' });
-      return rejectWithValue(error.message);
-    }
-  },
-);
-
-export const changeEditTaskStatusAction = createAsyncThunk(
-  `${EDIT_TASK_SLICE_ALIAS}/changeEditTaskStatus`,
-  async (arg: IStatusChangeArg, { rejectWithValue }) => {
-    try {
-      const response = await api().post(
-        `/api/v1.0/task/tasks/${arg.task_id}/status-change`,
-        {
-          task_status_id: arg.task_status_id,
-        },
-      );
-      return response.data.data;
-    } catch (error) {
-      notification.error({ message: 'Ошибка изменения статуса' });
       return rejectWithValue(error.message);
     }
   },

@@ -1,11 +1,14 @@
 import React from 'react';
 import { Popover } from 'antd';
+import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import StatusChange from 'components/Common/StatusWithPopover/StatusChange';
 import { RIGHTS_NAMES } from 'constants/rights';
-import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { useGetRights } from 'customHooks/useGetRights';
 import { getTaskById } from 'store/tasks/selectors';
+import { getTask } from 'store/editTask/selectors';
+import { IResponseTask } from 'store/common/task/types';
 import Status from './Status';
+import styles from './index.module.scss';
 
 interface IProps {
   taskId: string;
@@ -13,17 +16,24 @@ interface IProps {
 }
 
 const StatusWithPopover: React.FC<IProps> = ({ taskId, edit = false }) => {
-  const task = useAppSelector((state) => getTaskById(state, taskId));
+  let task: IResponseTask | undefined | null = useAppSelector((state) =>
+    getTaskById(state, taskId),
+  );
+  const editTask = useAppSelector(getTask);
+  if (edit) {
+    task = editTask;
+  }
+
   const isRights = useGetRights(RIGHTS_NAMES.editStatus, task);
   const trigger = task && isRights ? 'click' : '';
 
   return (
     <Popover
-      overlayClassName="popover"
-      content={<StatusChange taskId={taskId} edit={edit} />}
+      overlayClassName="status-popover"
+      content={<StatusChange taskId={taskId} />}
       trigger={trigger}
     >
-      <div>
+      <div className={styles.status}>
         {task?.status.name ? (
           <Status
             statusName={task?.status.name || ''}

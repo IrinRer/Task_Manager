@@ -1,3 +1,4 @@
+@import 'src/styles/mixins.scss';
 @import 'src/styles/font-variables';
 @import 'src/styles/color-variables';
 
@@ -22,6 +23,10 @@
   background-color: $bg-secondary;
   border-top-left-radius: 16px;
 
+  @include media-breakpoint-down(md) {
+    border-radius: unset;
+  }
+
   :global(.ant-input).comm {
     font-size: $font-size-m;
     line-height: $line-height-m;
@@ -45,6 +50,13 @@
     justify-content: space-between;
     column-gap: 30px;
   }
+
+  @include media-breakpoint-down($size: md) {
+    width: 100%;
+  }
+  @include media-breakpoint-down($size: xsl) {
+    padding: 29px 18px;
+  }
 }
 
 .taskHeader {
@@ -55,11 +67,19 @@
 .titleRow {
   display: flex;
   column-gap: 30px;
+
+  @include media-breakpoint-down($size: md) {
+    justify-content: flex-end;
+  }
 }
 
 .options {
   display: flex;
   column-gap: 22px;
+
+  @include media-breakpoint-down($size: md) {
+    padding-right: 45px;
+  }
 }
 
 .border {

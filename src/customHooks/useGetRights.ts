@@ -1,11 +1,11 @@
 import { RIGHTS, RIGHTS_NAMES } from 'constants/rights';
-import { TTask } from 'constants/types/common';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
+import { IResponseTask } from 'store/common/task/types';
 
 export const useGetRights = (
   element: RIGHTS_NAMES,
-  task?: TTask | null,
+  task?: IResponseTask | null,
 ): boolean => {
   const myMaxRole = useAppSelector(
     task ? (state) => getMyMaxRoleForTask(state, task) : getMyMaxRoleForTask,

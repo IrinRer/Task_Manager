@@ -1,9 +1,14 @@
+@import 'src/styles/mixins.scss';
 .watchers {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   flex-direction: column;
   width: 56%;
+
+  @include media-breakpoint-down($size: xs) {
+    width: 100%;
+  }
   .members {
     width: 100%;
   }

@@ -1,0 +1,41 @@
+@import 'src/styles/font-variables.scss';
+@import 'src/styles/colors';
+
+.wrapper {
+  flex-grow: 1;
+  cursor: pointer;
+  padding: 16px;
+  border: 1px solid $gray-200;
+  border-radius: 16px;
+  background-color: $white;
+  &.new {
+    background-color: $gray-100;
+  }
+  header {
+    cursor: pointer;
+    margin-bottom: 13px;
+    font-size: $font-size-s;
+    font-weight: 500;
+    line-height: $line-height-s;
+    color: $gray-600;
+  }
+  main {
+    display: flex;
+    gap: 8px;
+    .info {
+      font-size: $font-size-m;
+      font-weight: 400;
+      color: $gray-800;
+    }
+    :global(.notify-action) {
+      padding-bottom: 8px;
+    }
+  }
+  footer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 24px;
+  }
+}

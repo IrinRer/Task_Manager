@@ -10,12 +10,10 @@ export const compareStrings = (
   firstString: string,
   secondString: string,
 ): number => {
-  for (
-    let i = 0;
-    i < Math.min(firstString.length, secondString.length);
-    i += 1
-  ) {
-    const diff = charWeight(firstString[i]) - charWeight(secondString[i]);
+  const first = firstString.toLowerCase();
+  const second = secondString.toLowerCase();
+  for (let i = 0; i < Math.min(first.length, second.length); i += 1) {
+    const diff = charWeight(first[i]) - charWeight(second[i]);
     if (diff !== 0) return diff;
   }
   return 0;

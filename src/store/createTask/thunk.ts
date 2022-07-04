@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { notification } from 'antd';
+import { ERROR_MESSAGE_SET_MEMBERS } from 'constants/common';
 import { ROLES } from 'constants/types/common';
 import { RootState } from 'store';
 import {
@@ -44,7 +45,7 @@ export const createTaskAction = createAsyncThunk(
         }
       } catch (error) {
         if (error.response!.status !== 500) {
-          notification.error({ message: 'Ошибка назначения участника' });
+          notification.error({ message: ERROR_MESSAGE_SET_MEMBERS });
         } else {
           await dispatch(fetchTaskAction(task.task_id));
         }
@@ -65,7 +66,7 @@ export const createTaskAction = createAsyncThunk(
         }
       } catch (error) {
         if (error.response!.status !== 500) {
-          notification.error({ message: 'Ошибка назначения участника' });
+          notification.error({ message: ERROR_MESSAGE_SET_MEMBERS });
         } else {
           await dispatch(fetchTaskAction(task.task_id));
         }
@@ -123,7 +124,8 @@ export const cloneTaskAction = createAsyncThunk(
           );
         }
       } catch (error) {
-        /* */
+        await dispatch(fetchTaskAction(task.task_id));
+        return rejectWithValue(error.message);
       }
 
       try {
@@ -139,7 +141,8 @@ export const cloneTaskAction = createAsyncThunk(
           );
         }
       } catch (error) {
-        /* */
+        await dispatch(fetchTaskAction(task.task_id));
+        return rejectWithValue(error.message);
       }
 
       // Обновляем список с бэкэнда

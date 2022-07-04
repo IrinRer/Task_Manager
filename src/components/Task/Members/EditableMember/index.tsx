@@ -47,7 +47,9 @@ const EditableMember: FC<TProps> = ({ user }) => {
   return (
     <div className={styles.editMembers}>
       <MemberItem obj={user} />
-      <CloseOutlined className={styles.delete} onClick={deleteMember} />
+      <div>
+        <CloseOutlined className={styles.delete} onClick={deleteMember} />
+      </div>
     </div>
   );
 };

@@ -1,24 +1,24 @@
 import { DATE_FORMAT_UI } from 'constants/common';
 import { createSelector } from '@reduxjs/toolkit';
 import { format } from 'date-fns';
-import { ROLES, TRole } from 'constants/types/common';
+import { ROLES } from 'constants/types/common';
 import { RootState } from 'store';
 import { ITaskRoles } from 'store/common/task/types';
 import { IUser } from 'store/users/types';
 
-export function isAuthor(element: ITaskRoles | TRole): boolean {
+export function isAuthor(element: ITaskRoles): boolean {
   return element.task_role.name === ROLES.author;
 }
 
-export function isWatcher(element: ITaskRoles | TRole): boolean {
+export function isWatcher(element: ITaskRoles): boolean {
   return element.task_role.name === ROLES.watcher;
 }
 
-export function isImplementer(element: ITaskRoles | TRole): boolean {
+export function isImplementer(element: ITaskRoles): boolean {
   return element.task_role.name === ROLES.implementer;
 }
 
-export function isResponsible(element: ITaskRoles | TRole): boolean {
+export function isResponsible(element: ITaskRoles): boolean {
   return element.task_role.name === ROLES.responsible;
 }
 
@@ -27,9 +27,7 @@ export function getUsersFromRoles(roles: Array<ITaskRoles> | undefined) {
   return arr;
 }
 
-export function getUsersIdFromRoles(
-  roles: Array<ITaskRoles> | Array<TRole> | undefined,
-) {
+export function getUsersIdFromRoles(roles: Array<ITaskRoles> | undefined) {
   const arr: Array<string> =
     roles?.map((element) => element.assign_user.user_id) || [];
   return arr;
