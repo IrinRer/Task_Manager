@@ -1,21 +1,35 @@
+@import 'src/styles/mixins.scss';
 @import 'src/styles/font-variables';
 @import 'src/styles/colors';
+
+.infoLine {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-size: $font-size-m;
+  padding-bottom: 22px;
+  font-weight: normal;
+  text-transform: none;
+}
 
 .text {
   font-weight: normal;
   font-size: $font-size-m;
   text-transform: none;
+
+  @include media-breakpoint-down($size: xs) {
+    margin-bottom: 11px;
+  }
 }
 
 .date {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding-bottom: 17px;
-
   :global(.ant-picker) {
     padding: 0;
     width: 56%;
+
+    @include media-breakpoint-down($size: xs) {
+      width: 100%;
+    }
   }
 
   :global(.ant-picker-input) {
@@ -42,6 +56,15 @@
   :global(.ant-picker-input > input[disabled]) {
     color: black;
     cursor: default;
+  }
+
+  :global(.ant-picker-suffix) {
+    margin-left: 0;
+  }
+
+  @include media-breakpoint-down($size: xs) {
+    flex-direction: column;
+    padding-bottom: 22px;
   }
 }
 

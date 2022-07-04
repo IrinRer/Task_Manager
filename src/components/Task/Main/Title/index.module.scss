@@ -1,10 +1,15 @@
+@import 'src/styles/mixins.scss';
 @import 'src/styles/font-variables';
 @import 'src/styles/color-variables';
 
 .wrapname {
   display: flex;
-  align-items: flex-end;
   width: 100%;
+  align-items: flex-start;
+
+  @include media-breakpoint-down($size: md) {
+    align-items: flex-end;
+  }
 
   span {
     font-size: $font-size-xxl;

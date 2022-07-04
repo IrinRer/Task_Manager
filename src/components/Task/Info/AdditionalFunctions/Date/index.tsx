@@ -10,6 +10,7 @@ import { getTaskId } from 'store/editTask/selectors';
 import { getDateStop } from 'store/editTask/additionalFunctions/date/selectors';
 import { RIGHTS_NAMES } from 'constants/rights';
 import { useGetRights } from 'customHooks/useGetRights';
+import classnames from 'classnames';
 import styles from './index.module.scss';
 
 const { Text } = Typography;
@@ -35,7 +36,7 @@ const SelectDate: React.FC = () => {
     : undefined;
 
   return (
-    <div className={styles.date}>
+    <div className={classnames(styles.date, styles.infoLine)}>
       <Text className={styles.text}>Срок</Text>
       <DatePicker
         defaultValue={isAcceptDateStop || undefined}

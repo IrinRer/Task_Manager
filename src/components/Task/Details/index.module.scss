@@ -1,3 +1,4 @@
+@import 'src/styles/mixins.scss';
 @import 'src/styles/font-variables';
 @import 'src/styles/color-variables.scss';
 @import 'src/styles/colors';
@@ -11,8 +12,16 @@
   font-weight: normal;
   text-transform: none;
 
+  @include media-breakpoint-down($size: xs) {
+    flex-direction: column;
+  }
+
   span:first-of-type {
     text-align: left;
+
+    @include media-breakpoint-down($size: xs) {
+      margin-bottom: 11px;
+    }
   }
   .second {
     display: flex;
@@ -23,6 +32,18 @@
     display: flex;
     justify-content: center;
     padding-left: 50px;
+  }
+}
+
+.infoLine:nth-child(2) {
+  @include media-breakpoint-down($size: xs) {
+    padding-bottom: 0;
+  }
+}
+
+.infoLine:last-of-type {
+  @include media-breakpoint-down($size: xs) {
+    padding-bottom: 5px;
   }
 }
 

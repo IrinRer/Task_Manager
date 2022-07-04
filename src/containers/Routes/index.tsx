@@ -6,8 +6,12 @@ import Error from 'components/Common/Error';
 import Auth from 'pages/Auth';
 import PrivateRoute from 'containers/Routes/PrivateRoute';
 import Preloader from 'components/Common/Preloader';
+import { useWindowSize } from 'customHooks/useWindowSize';
+import { MIN_DESKTOP_WIDTH } from 'constants/common';
 
 const CreateRoutes: React.FC = () => {
+  const size = useWindowSize();
+
   const Home = lazy(() => import('pages/Home'));
   const Task = lazy(() => import('pages/Tasks/Task'));
 
@@ -29,7 +33,7 @@ const CreateRoutes: React.FC = () => {
               element={
                 <PrivateRoute>
                   <>
-                    <Home />
+                    {(size.width || 0) >= MIN_DESKTOP_WIDTH && <Home />}
                     <Task />
                   </>
                 </PrivateRoute>

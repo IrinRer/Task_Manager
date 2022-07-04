@@ -26,9 +26,16 @@ const MembersByOne: FC<TProps> = ({ multiAdd, usersMaxCount }) => {
 
   return (
     <div className={styles.watchers}>
-      {users?.slice(0, USERS_BY_ONE_MAX_COUNT).map((el) => (
-        <OneMember key={el.user_id} user={el} />
-      ))}
+      {users?.slice(0, USERS_BY_ONE_MAX_COUNT).map((el, index) => {
+        let countValue: number | undefined;
+        if (
+          users.length > USERS_BY_ONE_MAX_COUNT &&
+          index === USERS_BY_ONE_MAX_COUNT - 1
+        ) {
+          countValue = users.length - USERS_BY_ONE_MAX_COUNT;
+        }
+        return <OneMember key={el.user_id} user={el} count={countValue} />;
+      })}
       {users?.length < usersMaxCount && editable ? addMemberBtn : null}
     </div>
   );
