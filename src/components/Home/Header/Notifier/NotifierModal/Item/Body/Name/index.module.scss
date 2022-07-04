@@ -1,0 +1,8 @@
+@import 'src/styles/font-variables.scss';
+@import 'src/styles/colors';
+
+.name {
+  font-size: $font-size-m;
+  font-weight: 600;
+  color: $gray-800;
+}

@@ -2,15 +2,15 @@ import React, { useContext } from 'react';
 import { Col, Row } from 'antd';
 import { BlockType } from 'constants/types/common';
 import StatusWithPopover from 'components/Common/StatusWithPopover';
-import { TaskContext } from 'constants/taskContext';
-import Attached from '../Attached';
-import Progress from '../Progress';
-import DateString from '../Date';
-import Tags from '../Tags';
-import Roles from '../Roles';
-import Priority from '../Priority';
-import Title from '../Title';
-import Options from '../Options';
+import { TaskContext } from 'components/Home/taskContext';
+import Attached from './Attached';
+import Progress from './Progress';
+import DateString from './Date';
+import Tags from './Tags';
+import Roles from './Roles';
+import Priority from './Priority';
+import Title from './Title';
+import Options from './Options';
 import styles from './index.module.scss';
 
 interface IProps {
@@ -27,10 +27,12 @@ const Task: React.FC<IProps> = ({ type }) => {
       {/* Заголовок задачи с указателями вложений и прогресса */}
       <Col span={7} className={styles.title}>
         <Title />
-        <div className={styles.flex}>
-          <Attached />
-          <Progress />
-        </div>
+        {(task?.storage_files_meta.total > 0 || task?.progress) && (
+          <div className={styles.flex}>
+            <Attached />
+            <Progress />
+          </div>
+        )}
       </Col>
       {/* Статус со всплывающим селектором смены статуса */}
       <Col span={3} className={styles.status}>
@@ -45,7 +47,7 @@ const Task: React.FC<IProps> = ({ type }) => {
       {/* Приоритет */}
       {type !== BlockType.done && (
         <Col span={2} className={styles.priority}>
-          <Priority />
+          <Priority priority={task.priority?.name} />
         </Col>
       )}
       {/* Тэги */}

@@ -1,5 +1,6 @@
 import { AxiosError } from 'axios';
 import { TRights } from 'constants/rights';
+import { ROLES } from 'constants/types/common';
 
 export const ONETASK_SLICE_ROLES = 'roles';
 
@@ -10,12 +11,12 @@ export interface IRolesReducer {
 }
 export interface IRoles {
   task_role_id: string;
-  name: string;
+  name: ROLES;
   name_group: string;
   max_user_assigned: number;
   is_author: boolean;
-  created: Date;
-  updated: Date;
+  created: string;
+  updated: string;
 }
 
 export type TasksRoles = {

@@ -1,9 +1,11 @@
+import { createContext } from 'react';
+import { TRights } from './rights';
 import { ROLES } from './types/common';
 
 export const BASE_DATE_FORMAT = 'DD.MM.YYYY' as const;
 
-export const DATE_FORMAT_UI = 'dd MMM yyyy';
-export const DATE_FORMAT_SERVER = 'yyyy-MM-dd';
+export const DATE_FORMAT_UI = 'dd MMM yyyy' as const;
+export const DATE_FORMAT_SERVER = 'yyyy-MM-dd' as const;
 
 export const AVATAR_COLORS = [
   '#64D9D1',
@@ -20,10 +22,10 @@ export const AVATAR_COLORS = [
   '#5E95AB',
   '#AD5795',
   '#FF715B',
-];
-export const AVATAR_TEXT_COLOR = '#ffffff';
+] as const;
+export const AVATAR_TEXT_COLOR = '#ffffff' as const;
 
-export const DEBOUNCE_TIMEOUT = 500;
+export const DEBOUNCE_TIMEOUT = 500 as const;
 
 // для проверки ролей моих задач
 export const MY_TASKS_ROLES = [
@@ -34,19 +36,19 @@ export const MY_TASKS_ROLES = [
 ];
 // TODO: Длина обрезки заголовка будет зависеть от разрешения экрана
 // переделается в дальшейшем
-export const TITLE_LENGTH = 100;
+export const TITLE_LENGTH = 100 as const;
 
-export const PARTICIPANTS_INPUT_MAX_LENGTH = 50;
+export const PARTICIPANTS_INPUT_MAX_LENGTH = 50 as const;
 
-export const TAGS_INPUT_MAX_LENGTH = 15;
+export const TAGS_INPUT_MAX_LENGTH = 15 as const;
 
 export const PRIORITY_COLORS = {
   Высокий: 'Red',
   Средний: 'Orange',
   Низкий: 'Green',
-};
-
-export const STYLES = ['high', 'middle', 'low'];
+} as const;
+// Стили приоритета
+export const STYLES = ['high', 'middle', 'low'] as const;
 
 export enum StatusClass {
   'Создана' = 'created',
@@ -55,23 +57,31 @@ export enum StatusClass {
   'Не выполнена' = 'paused',
 }
 
-export const PRIORITY_STYLES: string[] = ['high', 'middle', 'low'];
+// export const PRIORITY_STYLES: string[] = ['high', 'middle', 'low'];
 
 export enum BlockTitle {
   in = 'Входящие',
   work = 'В работе',
   done = 'Завершено',
 }
-export const USERS_BY_ONE_MAX_COUNT = 3;
+export const USERS_BY_ONE_MAX_COUNT = 3 as const;
 
-export const DEFAULT_CHECK_LIST_TITLE = 'Чек-лист';
+export const DEFAULT_CHECK_LIST_TITLE = 'Чек-лист' as const;
 
-export const DESCRIPTION_LENGTH_EXPAND = 300;
+export const DESCRIPTION_LENGTH_EXPAND = 300 as const;
 
-export const DESCRIPTION_MAX_LENGTH = 500;
+export const DESCRIPTION_MAX_LENGTH = 500 as const;
 
-export const TITLE_TASK_MAX_LENGTH = 150;
+export const TITLE_TASK_MAX_LENGTH = 150 as const;
 
-export const MAX_USER_INITIALS = 2;
+export const RoleContext = createContext<TRights | ''>('');
+export const EditableContext = createContext<boolean>(false);
 
-export const TIME_SHOW_NOTICE_IN_SECONDS = 5;
+export const RELOAD_TASKS_INTERVAL = 420000 as const; // Перезагружаем задачи каждые 7 минут
+
+export const DATE_TIME_FORMAT = 'dd MMM yyyy h:mm' as const;
+export const DATE_FORMAT = 'dd MMM yyyy' as const;
+export const MAX_USER_INITIALS = 2 as const;
+export const MAX_TAGS_TO_SHOW = 3 as const;
+
+export const TIME_SHOW_NOTICE_IN_SECONDS = 5 as const;

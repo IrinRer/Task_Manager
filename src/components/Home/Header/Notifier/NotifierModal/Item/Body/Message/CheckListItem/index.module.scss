@@ -1,0 +1,25 @@
+@import 'src/styles/color-variables.scss';
+@import 'src/styles/font-variables.scss';
+@import 'src/styles/colors';
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  label {
+    width: 16px;
+    height: 16px;
+    margin-bottom: 5px;
+  }
+  .checkBoxText {
+    font-weight: 400;
+    font-size: $font-size-l;
+    line-height: $line-height-l;
+    color: $gray-700;
+    margin: 0 auto 0 0;
+
+    &Completed {
+      text-decoration: line-through;
+    }
+  }
+}
