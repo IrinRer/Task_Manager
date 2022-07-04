@@ -1,4 +1,3 @@
-import { IAttachmentsReducer } from './editTask/attachments/types';
 import {
   configureStore,
   ThunkAction,
@@ -33,6 +32,8 @@ import deleteCheckListItemReducer from './editTask/checkLists/deleteCheckListIte
 import setCheckListTitleReducer from './editTask/checkLists/setCheckListTitle/slice';
 import setCompleteCheckListItemReducer from './editTask/checkLists/setCompleteCheckListItem/slice';
 import setCheckListItemPositionReducer from './editTask/checkLists/setCheckListItemPosition/slice';
+import { IAttachmentsReducer } from './editTask/attachments/types';
+
 import { ICommonTagsReducer } from './common/tags/types';
 import { ICommonProgressesReducer } from './common/progresses/types';
 import { ICommonPrioritiesReducer } from './common/priorities/types';
