@@ -1,0 +1,9 @@
+@import 'src/styles/color-variables.scss';
+@import 'src/styles/font-variables.scss';
+@import 'src/styles/colors';
+
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}

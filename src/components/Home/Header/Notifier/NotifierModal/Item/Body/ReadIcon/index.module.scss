@@ -1,0 +1,8 @@
+svg.icon {
+  rect {
+    fill: none;
+  }
+  rect:global(#rect-id) {
+    stroke: none;
+  }
+}

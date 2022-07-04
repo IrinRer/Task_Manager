@@ -27,3 +27,8 @@ export const getCurrentUser = createSelector(
   getVerifyIdUser,
   (users, id) => users.find((user) => user.user_id === id),
 );
+
+export const getUserById = createSelector(
+  [selectUsers, (_, userId: string) => userId],
+  (users, userId: string) => users.find((user) => user.user_id === userId),
+);

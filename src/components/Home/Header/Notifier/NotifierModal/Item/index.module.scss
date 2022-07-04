@@ -1,0 +1,8 @@
+@import 'src/styles/font-variables.scss';
+@import 'src/styles/colors';
+
+.item {
+  width: 100%;
+  display: flex;
+  gap: 8px;
+}

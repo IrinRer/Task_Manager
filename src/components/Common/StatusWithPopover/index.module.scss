@@ -1,0 +1,39 @@
+@import 'src/styles/color-variables.scss';
+@import 'src/styles/font-variables.scss';
+@import 'src/styles/colors';
+
+:global(.ant-popover.status-popover) {
+  :global(.ant-popover-arrow) {
+    display: none;
+  }
+  :global(.ant-popover-inner) {
+    border-radius: 8px;
+    padding: 16px 0px 16px 0px;
+    padding-bottom: 16px;
+    width: 160px;
+    .options {
+      width: 200px;
+    }
+    :global(.ant-popover-inner-content) {
+      padding: 0px;
+      :global(.ant-btn.ant-btn-text) {
+        height: 32px;
+        color: $text-dark;
+        font-weight: 700;
+        font-size: $font-size-s;
+        padding-left: 20px;
+        padding-right: 20px;
+        &:hover {
+          background-color: rgba($blue, 0.05);
+        }
+      }
+    }
+  }
+}
+
+:global(.ant-popover.status-popover.options.ant-popover-placement-top),
+:global(.ant-popover.status-popover.ant-popover-placement-bottom) {
+  :global(.ant-popover-inner) {
+    width: 200px;
+  }
+}

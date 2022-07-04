@@ -38,6 +38,7 @@
 }
 .flex {
   display: flex;
+  margin-top: 7px;
 }
 :global(.ant-row).overdue {
   border: 1px solid $red;
