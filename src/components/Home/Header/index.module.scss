@@ -44,6 +44,11 @@
   .buttons {
     display: flex;
     flex-direction: row;
+
+    @include media-breakpoint-down($size: xsm) {
+      flex-direction: column;
+    }
+
     :global(.ant-btn) {
       border-radius: 8px;
       height: 36px;
@@ -65,7 +70,11 @@
         background-color: $white;
         cursor: default;
       }
+      @include media-breakpoint-down($size: xsm) {
+        margin-bottom: 10px;
+      }
     }
+
     .filter {
       border: 1px solid $gray-200;
       border-radius: 8px;
@@ -78,13 +87,6 @@
       margin-right: 20px;
       padding: 0;
     }
-
-    /*:global(.ant-btn).filter[ant-click-animating-without-extra-node='true']::after {
-      //border: 0 none;
-      //opacity: 0;
-      left: 0;
-      //animation: none 0 ease 0 1 normal;
-    }*/
   }
 
   :global(.ant-col).newtask {

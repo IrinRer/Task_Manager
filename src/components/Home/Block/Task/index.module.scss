@@ -1,6 +1,7 @@
 @import 'src/styles/color-variables.scss';
 @import 'src/styles/font-variables.scss';
 @import 'src/styles/colors';
+@import 'styles/mixins.scss';
 
 :global(.ant-row).wrapper {
   display: flex;
@@ -34,6 +35,12 @@
     cursor: pointer;
     text-align: right;
     width: 20px;
+
+    @include media-breakpoint-down($size: xxxl) {
+      position: absolute;
+      top: auto;
+      right: 10px;
+    }
   }
 }
 .flex {

@@ -5,6 +5,9 @@
 .wrapper {
   padding: 37px;
   background-color: $bg-primary;
+  min-width: 320px;
+  max-width: 2560px;
+
   .blocks {
     width: 100%;
     display: flex;

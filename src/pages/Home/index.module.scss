@@ -4,42 +4,56 @@
 @import 'styles/mixins.scss';
 
 :global(.ant-layout).tasks {
-  background-color: $white;
+  background-color: $bg-primary;
   :global(.ant-layout-sider) {
     background-color: transparent;
   }
   :global(.ant-layout-content) {
     border-left: 1px solid $border-primary;
+    background-color: $bg-primary;
+    max-width: 2560px;
   }
 }
 
 .sider {
   padding: 0px;
   color: $text-dark;
+  z-index: 1001 !important;
+  border-bottom: 1px solid $border-primary;
+  border-left: 1px solid $border-primary;
 
   @include media-breakpoint-down($size: md) {
+    overflow: auto;
+    height: 100vh;
     position: fixed;
     z-index: 100;
-    //animation: slideFilterIn 3s ease-in-out forwards;
-    left: -80%;
-    //animation: slideFilterOut 2s ease-in-out forwards;
   }
-
-  @keyframes slideFilterIn {
-    0% {
-      left: -80%;
-    }
-    100% {
-      left: 0;
-    }
+  @include media-breakpoint-only(md) {
+    flex: none !important;
+    max-width: unset !important;
+    min-width: 0 !important;
+    width: unset !important;
   }
-
-  @keyframes slideFilterOut {
-    to {
-      left: -80%;
-    }
-    from {
-      left: 0;
-    }
+  @include media-breakpoint-only(lg) {
+    flex: none !important;
+    max-width: unset !important;
+    min-width: 0 !important;
+    width: unset !important;
   }
+  @include media-breakpoint-only(xl) {
+    flex: none !important;
+    max-width: unset !important;
+    min-width: 0 !important;
+    width: unset !important;
+  }
+}
+.mask {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.15);
 }

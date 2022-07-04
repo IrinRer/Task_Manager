@@ -35,6 +35,10 @@
     @media (max-width: 359.98px) {
       @content;
     }
+  } @else if $size == xsm {
+    @media (max-width: 380px) {
+      @content;
+    }
   } @else if $size == xsl {
     @media (max-width: 440px) {
       @content;
@@ -61,6 +65,10 @@
     }
   } @else if($size == xxl) {
     @media (max-width: 1400px) {
+      @content;
+    }
+  } @else if($size == xxxl) {
+    @media (max-width: 1500px) {
       @content;
     }
   }

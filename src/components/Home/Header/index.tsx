@@ -68,6 +68,14 @@ const Header: React.FC = () => {
     dispatch(toggleFilter());
   };
 
+  useEffect(() => {
+    if (isShowFilter) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'visible';
+    }
+  }, [isShowFilter]);
+
   return (
     <>
       <Row className={styles.titleRow}>
@@ -87,7 +95,7 @@ const Header: React.FC = () => {
           {(size.width || 0) < MIN_DESKTOP_WIDTH && (
             <Button
               type={isShowFilter ? 'default' : 'text'}
-              className={styles.filter}
+              className={classnames(styles.filter, 'trigger')}
               onClick={handleFilterClick}
             >
               <FilterIcon />

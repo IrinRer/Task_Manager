@@ -46,14 +46,25 @@ const Home: React.FC = () => {
     }
   }, [handleCancelDeleteTask, handleDeleteTask, taskIDtoDelete]);
 
+  const optionsCollapsed =
+    (size.width || 0) < MIN_DESKTOP_WIDTH
+      ? {
+          trigger: null,
+          collapsed: !isShowFilter && (size.width || 0) < MIN_DESKTOP_WIDTH,
+          collapsedWidth: 0,
+          width: size.width && size.width < 440 ? size.width : 440,
+        }
+      : null;
+
   return (
     <Layout className={styles.tasks}>
-      <Sider className={styles.sider} width={250}>
-        {
-          /* (isShowFilter || (size.width || 0) >= MIN_DESKTOP_WIDTH) && */ <Filters />
-        }
+      <Sider className={styles.sider} width={250} {...optionsCollapsed}>
+        <Filters />
       </Sider>
       <Content>
+        {(size.width || 0) < MIN_DESKTOP_WIDTH && isShowFilter ? (
+          <div className={styles.mask} />
+        ) : null}
         <Display />
       </Content>
     </Layout>
