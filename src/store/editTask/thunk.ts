@@ -59,7 +59,7 @@ export const setTaskMemberAction = createAsyncThunk(
       );
       return response.data.data;
     } catch (error) {
-      if (error.response!.status !== 500) {
+      if (error.response!.status !== 500 && error.response!.status !== 400) {
         notification.error({ message: 'Ошибка назначения участника' });
       } else {
         await dispatch(fetchTaskAction(data.task_id));
@@ -82,7 +82,7 @@ export const deleteTaskMemberAction = createAsyncThunk(
       );
       return response.data.data;
     } catch (error) {
-      if (error.response!.status !== 500) {
+      if (error.response!.status !== 500 && error.response!.status !== 400) {
         notification.error({ message: 'Ошибка удаления участника' });
       } else {
         await dispatch(fetchTaskAction(data.task_id));
