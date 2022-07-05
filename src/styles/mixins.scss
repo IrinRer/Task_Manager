@@ -72,7 +72,7 @@
       @content;
     }
   } @else if $size == mdl {
-    @media (max-width: 900px) {
+    @media (max-width: 1000px) {
       @content;
     }
   } @else if $size == sm {

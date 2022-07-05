@@ -13,7 +13,7 @@ interface IProps {
 const ChecklistTitle: FC<IProps> = ({ item, width}) => {
   const component = useDefineAdaptive(width,
     <div className={styles.historyElemItem}>
-      <span>Новое название:  </span>
+      <span>Новое название:&nbsp;&nbsp;</span>
       <span className={styles.font_weight}>{item.params.title}</span>
     </div>,
   );

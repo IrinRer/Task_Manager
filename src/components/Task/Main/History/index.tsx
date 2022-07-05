@@ -39,7 +39,7 @@ const History = () => {
   const loadind = useAppSelector(isLoading);
   const attachments = useAppSelector(getStorageFile);
 
-  const [page, setPage] = useState(2);
+  const [page, setPage] = useState<number>(2);
 
   useEffect(() => {
     if (taskId) {
