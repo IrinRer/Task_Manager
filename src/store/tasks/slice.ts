@@ -91,6 +91,15 @@ export const tasksSlice = createSlice({
     ) => {
       state.task_id_todelete = action.payload;
     },
+    changeTaskRoles: (
+      state: ITasksReducer,
+      action: PayloadAction<IResponseTask>,
+    ) => {
+      const taskIndex: number = state.tasks.findIndex(
+        (item) => item.task_id === action.payload.task_id,
+      );
+      state.tasks[taskIndex].roles = action.payload.roles;
+    },
   },
   extraReducers: {
     [fetchTasksAction.pending.type]: (state: ITasksReducer) => {
@@ -172,5 +181,6 @@ export const {
   resetTasks,
   setTaskToDelete,
   toggleFilter,
+  changeTaskRoles,
 } = tasksSlice.actions;
 export default tasksSlice.reducer;
