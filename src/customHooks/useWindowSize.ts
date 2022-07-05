@@ -14,8 +14,12 @@ export const useWindowSize = (): Size => {
   useEffect(() => {
     function handleResize() {
       if (
-        windowSize.width !== window.innerWidth ||
-        windowSize.height !== window.innerHeight
+        (windowSize.width !== undefined &&
+          Math.abs(windowSize.width - window.innerWidth) > 10) ||
+        (windowSize.height !== undefined &&
+          Math.abs(windowSize.height - window.innerHeight) > 10) ||
+        windowSize.width === undefined ||
+        windowSize.height === undefined
       ) {
         setWindowSize({
           width: window.innerWidth,
