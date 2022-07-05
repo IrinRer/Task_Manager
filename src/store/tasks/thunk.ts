@@ -14,7 +14,7 @@ export const fetchTasksAction = createAsyncThunk(
     try {
       const state = getState() as RootState;
       const tasksQuery = selectTaskQuery(state);
-
+      // Предзапрос для определения количества задач
       const response = await api().get('/api/v1.0/task/tasks', {
         params: {
           search: tasksQuery.searchQuery || null,
@@ -29,11 +29,27 @@ export const fetchTasksAction = createAsyncThunk(
         },
       });
 
+      const total = response.data.pagination.items_total;
+
+      const responseTasks = await api().get('/api/v1.0/task/tasks', {
+        params: {
+          search: tasksQuery.searchQuery || null,
+          assign_user_id: tasksQuery.users.map((user) => user.user_id),
+          status_id: tasksQuery.statuses,
+          tag_id: tasksQuery.tags.map((tag) => tag.task_tag_id),
+          storage_files_gte: tasksQuery.attachments ? 1 : null,
+          priority_id: tasksQuery.priorities,
+          progress_gte: tasksQuery.progress,
+          page: 1,
+          per_page: total,
+        },
+      });
+
       dispatch(fetchStatusCounters());
 
       dispatch(filtersSyncState());
 
-      return response.data;
+      return responseTasks.data;
     } catch (error) {
       dispatch(filtersRollBack());
 

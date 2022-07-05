@@ -14,9 +14,6 @@ const UserMenu: React.FC = () => {
       dropdownClassName={style.dropdown}
       bordered={false}
     >
-      <Option key="1">
-        <span>Настройки</span>
-      </Option>
       <Option key="2">
         <Signout title="Выйти" />
       </Option>

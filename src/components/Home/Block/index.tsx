@@ -34,7 +34,7 @@ const Block: React.FC<IProps> = ({ blockType }) => {
   // Если число задач обновилось и страниц стало больше чем хватает задач, уменьшаем число страниц
   useEffect(() => {
     if (tasksTotal < tasksOnPage * (page - 1)) {
-      const newPage = Math.floor(tasksTotal / tasksOnPage) + 1;
+      const newPage = Math.ceil(tasksTotal / tasksOnPage);
       dispatch(setPage({ blockType, page: newPage }));
     }
     /*     if (pageRef?.current) {
@@ -104,7 +104,6 @@ const Block: React.FC<IProps> = ({ blockType }) => {
 
       {/* Пагинация */}
       <Col ref={pageRef} className={styles.pagination} span={24}>
-        {/* {tasksTotal > tasksOnPage && ( */}
         <>
           <Pagination
             total={tasksTotal}
@@ -112,6 +111,7 @@ const Block: React.FC<IProps> = ({ blockType }) => {
             defaultCurrent={1}
             pageSize={tasksOnPage}
             defaultPageSize={tasksOnPage}
+            showSizeChanger={false}
             showTotal={paginationTotal}
             onChange={handlePageChange}
           />
@@ -120,7 +120,6 @@ const Block: React.FC<IProps> = ({ blockType }) => {
             handler={handleTasksOnPageChange}
           />
         </>
-        {/* )} */}
       </Col>
     </Row>
   );
