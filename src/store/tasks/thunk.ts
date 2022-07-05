@@ -31,28 +31,30 @@ export const fetchTasksAction = createAsyncThunk(
 
       const total = response.data.pagination.items_total;
 
-      const responseTasks = await api().get('/api/v1.0/task/tasks', {
-        params: {
-          search: tasksQuery.searchQuery || null,
-          assign_user_id: tasksQuery.users.map((user) => user.user_id),
-          status_id: tasksQuery.statuses,
-          tag_id: tasksQuery.tags.map((tag) => tag.task_tag_id),
-          storage_files_gte: tasksQuery.attachments ? 1 : null,
-          priority_id: tasksQuery.priorities,
-          progress_gte: tasksQuery.progress,
-          page: 1,
-          per_page: total,
-        },
-      });
+      if (total !== 0) {
+        const responseTasks = await api().get('/api/v1.0/task/tasks', {
+          params: {
+            search: tasksQuery.searchQuery || null,
+            assign_user_id: tasksQuery.users.map((user) => user.user_id),
+            status_id: tasksQuery.statuses,
+            tag_id: tasksQuery.tags.map((tag) => tag.task_tag_id),
+            storage_files_gte: tasksQuery.attachments ? 1 : null,
+            priority_id: tasksQuery.priorities,
+            progress_gte: tasksQuery.progress,
+            page: 1,
+            per_page: total,
+          },
+        });
 
-      dispatch(fetchStatusCounters());
+        dispatch(fetchStatusCounters());
 
-      dispatch(filtersSyncState());
+        dispatch(filtersSyncState());
 
-      return responseTasks.data;
+        return responseTasks.data;
+      }
+      return response.data;
     } catch (error) {
       dispatch(filtersRollBack());
-
       notification.error({ message: 'Ошибка сети' });
       return rejectWithValue(error.message);
     }
