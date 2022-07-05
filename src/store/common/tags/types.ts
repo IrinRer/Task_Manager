@@ -5,9 +5,11 @@ export const COMMON_TAGS_SLICE_ALIAS = 'common/tags';
 
 export interface ICommonTagsReducer {
   tags: Array<ITag>;
-  sentTag?: Array<ITag>;
+  initialTag:  Array<ITag>;
   loading: boolean;
   error: AxiosError | null;
+  sentTag?: Array<ITag>;
+  tag_delete?: string | null;
 }
 
 export interface ITag {

@@ -8,6 +8,9 @@ export interface IAttachmentsReducer {
   viewFileImg: Array<{name: string; url:string}>;
   isClicked: boolean;
   dataReceived: IPayloadFile[];
+  file_delete: string | null,
+  initialViewFile: any,
+  initialDataFile: any,
   loading: boolean;
   error: AxiosError | null;
 }

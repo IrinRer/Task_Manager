@@ -14,6 +14,8 @@ import { TAG_SLICE_ALIAS, ITagReducer } from './types';
 
 const initialState: ITagReducer = {
   sentTag: [],
+  tag_delete: '',
+  initialTag: [],
   loading: false,
   error: null,
 };
@@ -21,7 +23,20 @@ const initialState: ITagReducer = {
 export const tagSlice = createSlice({
   name: TAG_SLICE_ALIAS,
   initialState,
-  reducers: {},
+  reducers: {
+    setAssignTagToDelete: (
+      state: ITagReducer,
+      action: PayloadAction<string | null>,
+    ) => {
+      state.tag_delete = action.payload;
+
+      if(action.payload) {
+        state.sentTag = state.sentTag.filter((item) => item.task_tag_id !== action.payload);
+      } else {
+        state.sentTag = state.initialTag;
+      }
+    },
+  },
   extraReducers: {
     [createTagAction.pending.type]: (state) => {
       state.loading = true;
@@ -32,6 +47,7 @@ export const tagSlice = createSlice({
       { payload }: PayloadAction<ITag>,
     ) => {
       state.sentTag?.push(payload);
+      state.initialTag?.push(payload);
       state.loading = false;
     },
     [createTagAction.rejected.type]: (
@@ -67,6 +83,7 @@ export const tagSlice = createSlice({
       { payload }: PayloadAction<IResponseTask>,
     ) => {
       state.sentTag = payload.tags.map(({ task_tag }) => task_tag);
+      state.initialTag = payload.tags.map(({ task_tag }) => task_tag);
       state.loading = false;
     },
 
@@ -79,6 +96,7 @@ export const tagSlice = createSlice({
       { payload }: PayloadAction<string>,
     ) => {
       state.sentTag = state.sentTag?.filter((item) => item.name !== payload);
+      state.initialTag = state.initialTag?.filter((item) => item.name !== payload);
       state.loading = false;
     },
     [unassignTagAction.rejected.type]: (
@@ -96,6 +114,9 @@ export const tagSlice = createSlice({
       state.sentTag = state.sentTag?.filter(
         (item) => item.name !== payload.name,
       );
+      state.initialTag = state.initialTag?.filter(
+        (item) => item.name !== payload.name,
+      );
       state.loading = false;
     },
 
@@ -109,10 +130,19 @@ export const tagSlice = createSlice({
         }
         return item;
       });
+
+      // eslint-disable-next-line
+      state.initialTag = state.initialTag?.map((item) => {
+        if (item.task_tag_id === payload.task_tag_id) {
+          return payload;
+        }
+        return item;
+      });
       state.loading = false;
     },
   },
 });
 
+export const {  setAssignTagToDelete } =  tagSlice.actions;
 export default tagSlice.reducer;
 

@@ -18,6 +18,8 @@ const ViewFileImg = () => {
             onDeleteFile={file.onDeleteFile}
             onDownload={file.onDownload}
             preview={undefined}
+            fileList={file.fileList}
+            setFile={file.setFile}
             progress={0}
             key={item.name}
           >

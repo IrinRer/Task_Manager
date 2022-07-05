@@ -14,6 +14,7 @@ interface IProps {
   handleOk: () => void;
   handleCancel: () => void;
   handleOkNotice?: () => void;
+  handleCancelNotify?: () => void;
 }
 
 const ModalDeleteDelayWithNotice: React.FC<IProps> = (props: IProps) => {
@@ -26,6 +27,7 @@ const ModalDeleteDelayWithNotice: React.FC<IProps> = (props: IProps) => {
     handleOk,
     handleCancel,
     handleOkNotice = () => {},
+    handleCancelNotify = () => {}
   } = props;
 
   const submitModal = () => {
@@ -37,6 +39,7 @@ const ModalDeleteDelayWithNotice: React.FC<IProps> = (props: IProps) => {
         className: 'iconDeleteNotice',
         icon: <RecycleBinIcon />,
         handleOk: handleOkNotice,
+        handleCancel: handleCancelNotify
       });
     }
   };

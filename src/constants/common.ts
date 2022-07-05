@@ -109,3 +109,5 @@ export const MIN_SORT_WIDTH = 480 as const;
 export const SHORT_SORT_WIDTH = 440 as const;
 
 export const TIME_SHOW_NOTICE_IN_SECONDS = 5 as const;
+
+export const HISTORY_ADAPTIVE = 999 as const;

@@ -1,6 +1,5 @@
 import React from 'react';
 import descriptionIcon from 'assets/icons/description.svg';
-import historyIcon from 'assets/icons/history.svg';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import Spinner from 'components/Common/Spinner';
 import { isDeleteCheckListLoading } from 'store/editTask/checkLists/deleteCheckList/selectors';
@@ -54,12 +53,7 @@ const Main: React.FC = () => {
       {isCheckListLoading ? <Spinner /> : <Checklist />}
       {isAttachments ? <Attachments /> : null}
 
-      <InputWrapper
-        labelText="Действия"
-        icon={<img src={historyIcon} alt="history" />}
-      >
-        <History />
-      </InputWrapper>
+      <History />
     </div>
   );
 };

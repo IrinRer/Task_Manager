@@ -8,7 +8,8 @@ import {
   getPreviewTitleReceived,
   getPreviewTitleRender,
 } from 'store/editTask/attachments/preview/selectors';
-import ModalDelete from 'components/Common/ModalDelete';
+import ModalDeleteDelayWithNotice from 'components/Common/ModalDeleteDelayWithNotice';
+import { setAssignFileToDelete } from 'store/editTask/attachments/slice';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { setIndex } from 'store/editTask/attachments/preview/slice';
 import Header from './Header';
@@ -51,9 +52,29 @@ const Preview: FC<IProps> = ({ previewVisible, setPreviewVisible }) => {
     setPreviewVisible(false);
   };
 
-  const onDeleteFileImg = (nameFile: string) => {
-    file.onDeleteFile(nameFile);
+  const onDelete = () => {
+    if (imgRecieved[index].name) {
+      file.onDeleteFile(imgRecieved[index]?.name);
+    }
     setPreviewVisible(false);
+  };
+
+  const handleOkDelete = () => {
+    setVisibleModalDelete(false);
+    if (imgRecieved[index]?.name && file.fileList) {
+      dispatch(setAssignFileToDelete(imgRecieved[index]?.name));
+      file.setFile(
+        file.fileList.filter((item) => item.name !== imgRecieved[index].name),
+      );
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setVisibleModalDelete(false);
+    dispatch(setAssignFileToDelete(''));
+    if (file.fileList) {
+      file.setFile(file.fileList);
+    }
   };
 
   return imgRecieved[index] ? (
@@ -73,13 +94,16 @@ const Preview: FC<IProps> = ({ previewVisible, setPreviewVisible }) => {
       >
         <ImgView />
       </Modal>
-      <ModalDelete
+      <ModalDeleteDelayWithNotice
+        visible={visibleModalDelete}
         textMain={`${imgRecieved[index]?.name} будет безвозвратно удален`}
         textButton="Удалить файл"
-        visibleModalDelete={visibleModalDelete}
-        setIsVisibleModalDelete={setVisibleModalDelete}
-        target={imgRecieved[index].name || ''}
-        action={onDeleteFileImg}
+        textNotice="Файл удален"
+        handleOk={handleOkDelete}
+        handleCancel={handleCancel}
+        handleOkNotice={onDelete}
+        handleCancelNotify={handleCancelDelete}
+        showNotice
       />
     </>
   ) : null;

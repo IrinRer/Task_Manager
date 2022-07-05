@@ -22,6 +22,7 @@ import commonPrioritiesReducer from './common/priorities/slice';
 import commonStatusesReducer from './common/statuses/slice';
 import onetaskReducer from './common/task/slice';
 import editTaskReducer from './editTask/slice';
+import historyReducer from './history/slice';
 import createTaskReducer from './createTask/slice';
 import attachmentsReducer from './editTask/attachments/slice';
 import previewReducer from './editTask/attachments/preview/slice';
@@ -60,10 +61,12 @@ import { INotificationsReducer } from './notifications/types';
 import { IPreviewReducer } from './editTask/attachments/preview/types';
 import { IModalVisibleReducer } from './editTask/additionalFunctions/tag/modalVisible/types';
 import { ISetCheckListItemPositionReducer } from './editTask/checkLists/setCheckListItemPosition/types';
+import { IHistoryReducer } from './history/types';
 
 export const store = configureStore({
   reducer: {
     tasks: tasksReducer,
+    history: historyReducer,
     editTask: combineReducers({
       editTaskReducer,
       additionalFunctions: combineReducers({
@@ -112,6 +115,7 @@ export type AppDispatch = typeof store.dispatch;
 
 export type RootState = {
   tasks: ITasksReducer;
+  history: IHistoryReducer;
   editTask: CombinedState<{
     editTaskReducer: IEditTaskReducer;
     additionalFunctions: CombinedState<{

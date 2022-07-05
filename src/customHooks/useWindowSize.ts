@@ -10,6 +10,7 @@ export const useWindowSize = (): Size => {
     width: undefined,
     height: undefined,
   });
+
   useEffect(() => {
     function handleResize() {
       setWindowSize({

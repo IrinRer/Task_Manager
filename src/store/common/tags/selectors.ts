@@ -16,3 +16,4 @@ export const selectPopulatedTags = createSelector(
       return { ...tag, value: tag.name, key: tag.task_tag_id };
     }),
 );
+

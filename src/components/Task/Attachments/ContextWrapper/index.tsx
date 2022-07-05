@@ -12,11 +12,18 @@ interface IProps extends IAttachmentsContext {
 const ContextWrapperAttachments: React.FC<IProps> = ({
   onDeleteFile,
   onDownload,
+  setFile,
+  fileList,
   children,
 }) => {
   return (
     <AttachmentsContext.Provider
-      value={useAttachmentsContextValue(onDeleteFile, onDownload)}
+      value={useAttachmentsContextValue(
+        onDeleteFile,
+        onDownload,
+        setFile,
+        fileList,
+      )}
     >
       {children}
     </AttachmentsContext.Provider>
