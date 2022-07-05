@@ -2,7 +2,7 @@ import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import classNames from 'classnames';
 import historyIcon from 'assets/icons/history.svg';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getTask, getTaskId } from 'store/editTask/selectors';
 import { Button } from 'antd';
 import { getHistory, isLoading, totalCount } from 'store/history/selectors';
@@ -76,11 +76,8 @@ const History = () => {
     [styles.btn_not]: history.length >= countItem,
   });
 
-  const objectRef = useRef<any>();
-  const width = objectRef.current ? Number(objectRef.current.clientWidth) : 0;
-
   return (
-    <div className={styles.wrapper} ref={objectRef}>
+    <div className={styles.wrapper}>
       <div className={styles.wrapperFlex}>
         <img src={historyIcon} alt="history" className={styles.history_text} />
         <p className={styles.text}>Действия</p>
@@ -93,106 +90,44 @@ const History = () => {
             switch (item.command_code) {
               case HISTORY.tagAssign:
               case HISTORY.tagUnassign:
-                return (
-                  <TagHistory
-                    item={item}
-                    key={item.history_command_id}
-                    width={width}
-                  />
-                );
+                return <TagHistory item={item} key={item.history_command_id} />;
               case HISTORY.roleAssign:
               case HISTORY.roleUnassign:
-                return (
-                  <AssignUser
-                    item={item}
-                    key={item.history_command_id}
-                    width={width}
-                  />
-                );
+                return <AssignUser item={item} key={item.history_command_id} />;
               case HISTORY.dateChange:
-                return (
-                  <DateTask
-                    item={item}
-                    key={item.history_command_id}
-                    width={width}
-                  />
-                );
+                return <DateTask item={item} key={item.history_command_id} />;
               case HISTORY.statusChange:
-                return (
-                  <Status
-                    item={item}
-                    key={item.history_command_id}
-                    width={width}
-                  />
-                );
+                return <Status item={item} key={item.history_command_id} />;
               case HISTORY.taskCreate:
-                return (
-                  <CreateTask
-                    item={item}
-                    key={item.history_command_id}
-                    width={width}
-                  />
-                );
+                return <CreateTask item={item} key={item.history_command_id} />;
               case HISTORY.titleChange:
-                return (
-                  <Title
-                    item={item}
-                    key={item.history_command_id}
-                    width={width}
-                  />
-                );
+                return <Title item={item} key={item.history_command_id} />;
               case HISTORY.fileAssign:
               case HISTORY.fileUnassign:
                 return (
-                  <Attachments
-                    item={item}
-                    key={item.history_command_id}
-                    width={width}
-                  />
+                  <Attachments item={item} key={item.history_command_id} />
                 );
               case HISTORY.descriptionChange:
                 return (
-                  <Description
-                    item={item}
-                    key={item.history_command_id}
-                    width={width}
-                  />
+                  <Description item={item} key={item.history_command_id} />
                 );
               case HISTORY.checklistUnassign:
               case HISTORY.checklistAssign:
                 return (
-                  <ChecklistAssign
-                    item={item}
-                    key={item.history_command_id}
-                    width={width}
-                  />
+                  <ChecklistAssign item={item} key={item.history_command_id} />
                 );
               case HISTORY.titleChecklistChange:
                 return (
-                  <ChecklistTitle
-                    item={item}
-                    key={item.history_command_id}
-                    width={width}
-                  />
+                  <ChecklistTitle item={item} key={item.history_command_id} />
                 );
               case HISTORY.itemChecklistCreate:
               case HISTORY.itemChecklistComplete:
               case HISTORY.itemChecklistDelete:
                 return (
-                  <ItemChecklist
-                    item={item}
-                    key={item.history_command_id}
-                    width={width}
-                  />
+                  <ItemChecklist item={item} key={item.history_command_id} />
                 );
               case HISTORY.priorityChange:
-                return (
-                  <Priority
-                    item={item}
-                    key={item.history_command_id}
-                    width={width}
-                  />
-                );
+                return <Priority item={item} key={item.history_command_id} />;
 
               default:
                 return null;

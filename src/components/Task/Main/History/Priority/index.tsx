@@ -1,11 +1,12 @@
 import React, { FC } from 'react';
 import {
-  HISTORY,
   HISTORY_COMMAND,
   PRIORITY_CHANGE,
 } from 'constants/history/common';
 import { useDefineAdaptive } from 'customHooks/useDefineAdaptive';
 import { IHistoryItem } from 'store/history/types';
+
+import UserAvatar from 'components/Common/UserAvatar';
 import { STYLES } from 'constants/common';
 import { PriorityName } from 'constants/types/common';
 import ContextWrapperHistory from '../ContextWrapper';
@@ -13,15 +14,15 @@ import styles from '../index.module.scss';
 
 interface IProps {
   item: IHistoryItem;
-  width: number;
 }
 
-const Priority: FC<IProps> = ({ item, width }) => {
-  const condition = HISTORY.priorityChange
-    ? HISTORY_COMMAND.changePriority
-    : PRIORITY_CHANGE;
-  const component = useDefineAdaptive(width,
-    item.params.priority ? (
+const Priority: FC<IProps> = ({ item }) => {
+  const condition = item.params.priority
+    ? PRIORITY_CHANGE
+    : HISTORY_COMMAND.changePriority;
+
+  const component = useDefineAdaptive(
+    item.params.priority && condition === PRIORITY_CHANGE ? (
       <div className={styles.historyElemStatus}>
         <span>Новый приоритет:&nbsp;&nbsp;</span>
         <div className={styles.wrapper_priority}>
@@ -36,7 +37,10 @@ const Priority: FC<IProps> = ({ item, width }) => {
 
   return (
     <ContextWrapperHistory item={item} text={condition}>
-      <div className={styles.history}>{component}</div>
+      <div className={styles.history}>
+        <UserAvatar user={item.user} />
+        {component}
+      </div>
     </ContextWrapperHistory>
   );
 };

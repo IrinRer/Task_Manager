@@ -92,3 +92,5 @@ export const DESKTOP_WIDTH_HOMEPAGE_MOVE_TAGS = 1160;
 export const DESKTOP_WIDTH_HOMEPAGE_MOVE_ROLES = 1024;
 
 export const TIME_SHOW_NOTICE_IN_SECONDS = 5 as const;
+
+export const HISTORY_ADAPTIVE = 999 as const;

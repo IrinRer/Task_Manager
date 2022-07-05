@@ -1,4 +1,3 @@
-import UserAvatar from 'components/Common/UserAvatar';
 import React, { useContext } from 'react';
 import { HistoryContext } from '../context';
 
@@ -10,12 +9,9 @@ const User = () => {
   return (
     <div >
       {data.item ? (
-        <>
-          <UserAvatar user={data.item.user} />
           <span className={styles.spanUser}>
             <b>{data.item.user.name}</b> {data.text}
           </span>
-        </>
       ) : null}
     </div>
   );

@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { HISTORY, HISTORY_COMMAND } from 'constants/history/common';
 import { useDefineAdaptive } from 'customHooks/useDefineAdaptive';
+import UserAvatar from 'components/Common/UserAvatar';
 import { IHistoryItem } from 'store/history/types';
 import classNames from 'classnames';
 import { Checkbox } from 'antd';
@@ -9,10 +10,9 @@ import styles from '../../index.module.scss';
 
 interface IProps {
   item: IHistoryItem;
-  width: number;
 }
 
-const ItemChecklist: FC<IProps> = ({ item, width }) => {
+const ItemChecklist: FC<IProps> = ({ item }) => {
   const conditionCreate = item.command_code === HISTORY.itemChecklistCreate;
   const conditionComplete = item.command_code === HISTORY.itemChecklistComplete;
   const conditionText = conditionCreate
@@ -25,7 +25,7 @@ const ItemChecklist: FC<IProps> = ({ item, width }) => {
     [styles.complete_checklist]: conditionComplete,
   });
 
-  const component = useDefineAdaptive(width, 
+  const component = useDefineAdaptive(
     conditionCreate || conditionComplete ? (
       <div className={styles.historyElemChecklist}>
         <Checkbox
@@ -44,7 +44,10 @@ const ItemChecklist: FC<IProps> = ({ item, width }) => {
       item={item}
       text={`${conditionText} ${item.params.check_list.title}`}
     >
-      <div className={styles.history}>{component}</div>
+      <div className={styles.history}>
+        <UserAvatar user={item.user} />
+        {component}
+      </div>
     </ContextWrapperHistory>
   );
 };

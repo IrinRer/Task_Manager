@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { IHistoryItem } from 'store/history/types';
+import UserAvatar from 'components/Common/UserAvatar';
 import { useDefineAdaptive } from 'customHooks/useDefineAdaptive';
 import CustomTag from 'components/Common/CustomTag';
 import { HISTORY, HISTORY_COMMAND } from 'constants/history/common';
@@ -8,13 +9,12 @@ import styles from '../index.module.scss';
 
 interface IProps {
   item: IHistoryItem;
-  width: number;
 }
 
-const TagHistory: FC<IProps> = ({ item, width }) => {
+const TagHistory: FC<IProps> = ({ item }) => {
   const condition = item.command_code === HISTORY.tagAssign;
 
-  const component = useDefineAdaptive(width,
+  const component = useDefineAdaptive(
     condition ? (
       <div className={styles.historyElemItem}>
         <CustomTag
@@ -31,7 +31,10 @@ const TagHistory: FC<IProps> = ({ item, width }) => {
       item={item}
       text={condition ? HISTORY_COMMAND.addTag : HISTORY_COMMAND.unassignTag}
     >
-      <div className={styles.history}>{component}</div>
+      <div className={styles.history}>
+        <UserAvatar user={item.user} />
+        {component}
+      </div>
     </ContextWrapperHistory>
   );
 };

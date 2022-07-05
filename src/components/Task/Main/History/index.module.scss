@@ -26,38 +26,48 @@
 .date {
   color: $heading;
   font-size: $font-size-s;
-  display: flex;
-  width: 180px;
-  justify-content: center;
 }
 
-.historyElemItem {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 220px;
-  margin-top: 10px;
+.historyElemItemTitle {
+  span {
+    display: flex;
+    align-items: center;
+
+    b {
+      width: 200px;
+      text-overflow: ellipsis;
+      display: inline-block;
+      white-space: nowrap;
+      overflow: hidden;
+      }
+  }
+
 
   :global(.ant-avatar) {
     min-width: 32px;
+    margin-right: 5px;
   }
 }
 
-.historyElemChecklist {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 180px;
-  margin-top: 10px;
+.historyElemItem {
+
+  :global(.ant-avatar) {
+    min-width: 32px;
+    margin-right: 5px;
+  }
 }
+
+.historyElemAttach {
+ display: flex;
+ flex-direction: row;
+}
+
+
 
 .historyElemDate {
   display: flex;
-  width: 330px;
-  justify-content: center;
 
   @include media-breakpoint-history($size: sm) {
-    align-items: flex-end;
     margin-top: 10px;
   }
 
@@ -73,8 +83,6 @@
 
 .historyElemStatus {
   display: flex;
-  justify-content: center;
-  width: 280px;
 
   @include media-breakpoint-history($size: sm) {
     margin-top: 10px;
@@ -131,6 +139,11 @@
 
 .history {
   margin-top: 20px;
+  display: flex;
+
+  :global(.ant-avatar) {
+    min-width: 32px;
+  }
 
   p {
     font-size: $font-size-m;
@@ -141,16 +154,28 @@
     margin-bottom: 0;
   }
 
+  .historyElemRow {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 5px;
+    width: 100%;
+    flex-direction: row !important;
+  }
+
   .historyElem {
     display: flex;
     justify-content: space-between;
+    margin-left: 5px;
+    width: 100%;
+    flex-direction: column !important;
 
-    @include media-breakpoint-history($size: mdl) {
-      flex-direction: column;
+    @include media-breakpoint-history($size: sm) {
+    
     }
 
     :global(.ant-avatar) {
       min-width: 32px;
+      margin-right: 5px;
     }
   }
 }
@@ -161,10 +186,6 @@
 
 .span_size {
   width: 100%;
-}
-
-.spanUser {
-  margin-left: 10px;
 }
 
 .checklist {

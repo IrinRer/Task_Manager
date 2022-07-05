@@ -8,16 +8,15 @@ import styles from '../index.module.scss';
 
 interface IProps {
   item: IHistoryItem;
-  width: number;
 }
 
-const AssignUser: FC<IProps> = ({ item, width}) => {
+const AssignUser: FC<IProps> = ({ item }) => {
   const condition =
     item.command_code === HISTORY.roleAssign
       ? HISTORY_COMMAND.assignUser
       : HISTORY_COMMAND.unassignUser;
 
-  const component = useDefineAdaptive(width, 
+  const component = useDefineAdaptive(
     condition ? (
       <div className={styles.historyElemItem}>
         <UserAvatar user={item.params.assign_user} />
@@ -30,7 +29,10 @@ const AssignUser: FC<IProps> = ({ item, width}) => {
 
   return (
     <ContextWrapperHistory item={item} text={condition}>
-      <div className={styles.history}>{component}</div>
+      <div className={styles.history}>
+        <UserAvatar user={item.user} />
+        {component}
+      </div>
     </ContextWrapperHistory>
   );
 };

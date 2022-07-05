@@ -2,6 +2,7 @@ import { HISTORY, HISTORY_COMMAND } from 'constants/history/common';
 import React, { FC } from 'react';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { IHistoryItem } from 'store/history/types';
+import UserAvatar from 'components/Common/UserAvatar';
 import { useDefineAdaptive } from 'customHooks/useDefineAdaptive';
 import { attachmentsAll } from 'store/history/selectors';
 import shapeAttachment from 'assets/icons/shapeAttachment.svg';
@@ -10,18 +11,17 @@ import styles from '../index.module.scss';
 
 interface IProps {
   item: IHistoryItem;
-  width: number;
 }
 
-const Attachments: FC<IProps> = ({ item, width }) => {
+const Attachments: FC<IProps> = ({ item }) => {
   const attachmentsImg = useAppSelector(attachmentsAll);
   const condition =
     item.command_code === HISTORY.fileAssign
       ? HISTORY_COMMAND.assignFile
       : HISTORY_COMMAND.unassignFile;
 
-  const component = useDefineAdaptive(width, 
-    <div className={styles.historyElemItem}>
+  const component = useDefineAdaptive(
+    <div className={styles.historyElemAttach}>
       {attachmentsImg.map(({ url, name, type, size }) => {
         if (name === item.params.storage_file.name_original) {
           return type.includes('image') ? (
@@ -52,6 +52,7 @@ const Attachments: FC<IProps> = ({ item, width }) => {
   return (
     <ContextWrapperHistory item={item} text={condition}>
       <div className={styles.history}>
+        <UserAvatar user={item.user} />
         {component}
       </div>
     </ContextWrapperHistory>

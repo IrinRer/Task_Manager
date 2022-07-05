@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { IHistoryItem } from 'store/history/types';
+import UserAvatar from 'components/Common/UserAvatar';
 import { ReactComponent as Calendar } from 'assets/icons/calendar.svg';
 import { HISTORY_COMMAND } from 'constants/history/common';
 import { useDefineAdaptive } from 'customHooks/useDefineAdaptive';
@@ -11,10 +12,9 @@ import ContextWrapperHistory from '../ContextWrapper';
 
 interface IProps {
   item: IHistoryItem;
-  width: number;
 }
 
-const DateTask: FC<IProps> = ({ item, width}) => {
+const DateTask: FC<IProps> = ({ item }) => {
   const date = item.params.exec_stop
     ? format(new Date(item.params.exec_stop), DATE_FORMAT_UI, {
         locale: ru,
@@ -22,7 +22,7 @@ const DateTask: FC<IProps> = ({ item, width}) => {
     : null;
 
   const condition = date ? HISTORY_COMMAND.changeDate : 'удалил(а) срок';
-  const component = useDefineAdaptive(width,
+  const component = useDefineAdaptive(
     date ? (
       <div className={styles.historyElemDate}>
         <div className={styles.wrapper_date_icon}>
@@ -41,7 +41,10 @@ const DateTask: FC<IProps> = ({ item, width}) => {
 
   return (
     <ContextWrapperHistory item={item} text={condition}>
-      <div className={styles.history}>{component}</div>
+      <div className={styles.history}>
+        <UserAvatar user={item.user} />
+        {component}
+      </div>
     </ContextWrapperHistory>
   );
 };
