@@ -27,11 +27,6 @@ export const assignFile = createAsyncThunk(
         file.configProgressBar,
       );
 
-      // await api().post(
-      //   `/api/v1.0/task/tasks/${file.taskId}/storage-file-assign`,
-      //   { storage_file_id: responseCreate.data.data.storage_file_id },
-      // );
-
       file.onSuccess('Ok');
 
       return responseFile.data.data;

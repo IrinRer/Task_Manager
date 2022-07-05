@@ -53,7 +53,9 @@ const Preview: FC<IProps> = ({ previewVisible, setPreviewVisible }) => {
   };
 
   const onDelete = () => {
-    file.onDeleteFile(imgRecieved[index]?.name);
+    if(imgRecieved[index].name) {
+      file.onDeleteFile(imgRecieved[index]?.name);
+    }
     setPreviewVisible(false);
   };
 

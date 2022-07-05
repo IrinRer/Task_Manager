@@ -8,7 +8,7 @@ import styles from '../index.module.scss';
 
 interface IProps {
   item: IHistoryItem;
-  width: string;
+  width: number;
 }
 
 const TagHistory: FC<IProps> = ({ item, width }) => {

@@ -93,3 +93,7 @@ export const DESKTOP_WIDTH_HOMEPAGE_MOVE_ROLES = 1024;
 
 export const TIME_SHOW_NOTICE_IN_SECONDS = 5 as const;
 
+export const MAX_SIZE_WIDTH = 1500 as const;
+export const SIZE_WIDTH_LIMIT = 1400 as const;
+export const MIN_ADAPTIVE_HISTORY = 500 as const;
+export const ADAPATIVE_HISTORY = 899 as const;

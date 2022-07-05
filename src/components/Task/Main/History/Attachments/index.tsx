@@ -10,7 +10,7 @@ import styles from '../index.module.scss';
 
 interface IProps {
   item: IHistoryItem;
-  width: string;
+  width: number;
 }
 
 const Attachments: FC<IProps> = ({ item, width }) => {

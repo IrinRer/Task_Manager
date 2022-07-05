@@ -77,7 +77,7 @@ const History = () => {
   });
 
   const objectRef = useRef<any>();
-  const width = objectRef.current ? objectRef.current.clientWidth : null;
+  const width = objectRef.current ? Number(objectRef.current.clientWidth) : 0;
 
   return (
     <div className={styles.wrapper} ref={objectRef}>

@@ -11,7 +11,7 @@ import ContextWrapperHistory from '../ContextWrapper';
 
 interface IProps {
   item: IHistoryItem;
-  width: string;
+  width: number;
 }
 
 const DateTask: FC<IProps> = ({ item, width}) => {

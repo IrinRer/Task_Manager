@@ -7,7 +7,7 @@ import styles from '../index.module.scss';
 
 interface IProps {
   item: IHistoryItem;
-  width: string;
+  width: number;
 }
 
 const Status: FC<IProps> = ({ item, width }) => {

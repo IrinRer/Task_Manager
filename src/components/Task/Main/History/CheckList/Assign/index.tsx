@@ -7,7 +7,7 @@ import CommonComponentNoChildren from '../../Common/CommonComponent';
 
 interface IProps {
   item: IHistoryItem;
-  width: string;
+  width: number;
 }
 
 const ChecklistAssign: FC<IProps> = ({ item, width }) => {

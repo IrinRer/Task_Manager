@@ -65,6 +65,23 @@
     }
   }
 }
+
+@mixin media-breakpoint-history($size) {
+  @if $size == md {
+    @media (min-width: 750) {
+      @content;
+    }
+  } @else if $size == mdl {
+    @media (max-width: 900px) {
+      @content;
+    }
+  } @else if $size == sm {
+    @media (max-width: 749px) {
+      @content;
+    }
+  }
+}
+
 // Кнопка статуса. цвет в зависимости от статуса.
 @mixin status-element($color) {
   border: 1px solid $color;

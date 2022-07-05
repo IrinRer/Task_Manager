@@ -85,7 +85,9 @@ const FileImg = () => {
   };
 
   const onDelete = () => {
-    valueContext.onDeleteFile(valueContext.file.name || '');
+    if(valueContext.file.name) {
+      valueContext.onDeleteFile(valueContext.file.name);
+    }
   };
 
   const classNameWrapper = classNames(styles.wrapper_img, {

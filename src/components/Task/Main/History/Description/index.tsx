@@ -7,7 +7,7 @@ import CommonComponentNoChildren from '../Common/CommonComponent';
 
 interface IProps {
   item: IHistoryItem;
-  width: string;
+  width: number;
 }
 
 const Description: FC<IProps> = ({ item, width}) => {

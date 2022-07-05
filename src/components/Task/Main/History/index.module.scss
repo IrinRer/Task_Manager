@@ -1,8 +1,9 @@
 @import 'src/styles/font-variables';
 @import 'src/styles/color-variables';
+@import 'src/styles/mixins';
 @import 'src/styles/colors';
 
-@media screen and (min-width: 750px) {
+@include media-breakpoint-history($size: md) {
   .historyElemUser {
     max-width: 80%;
 
@@ -91,7 +92,7 @@
   }
 }
 
-@media screen and (max-width: 900px) {
+@include media-breakpoint-history($size: mdl) {
   .historyElem {
     display: flex;
     flex-direction: column;
@@ -102,7 +103,7 @@
   }
 }
 
-@media screen and (max-width: 749px) {
+@include media-breakpoint-history($size: sm) {
   .historyElemUser {
     :global(.ant-avatar) {
       min-width: 32px;

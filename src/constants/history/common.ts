@@ -16,12 +16,12 @@ export const locale = {
   formatRelative: (token: string) => formatRelativeLocale[token],
 };
 
-export enum HISTORY_COMMAND  {
+export enum HISTORY_COMMAND {
   'addTag' = 'добавил(а) новые метки',
   'unassignTag' = 'удалил(а) метки',
   'assignUser' = 'добавил(а) новых участников ',
   'unassignUser' = 'удалил(а) участников',
-  'changeDate' =  'изменил(а) срок задачи',
+  'changeDate' = 'изменил(а) срок задачи',
   'changeStatus' = 'сменил(а) статус задачи',
   'createTask' = 'создал(а) задачу',
   'changeTitle' = 'изменил(а) заголовок задачи',
@@ -31,13 +31,13 @@ export enum HISTORY_COMMAND  {
   'assignChecklist' = 'добавил(а) чек-лист',
   'unassignChecklist' = 'удалил(а) чек-лист',
   'сhangeTitleChecklist' = 'изменил(а) название чек-листа',
-  'createItemChecklist'  = 'добавил(а) новый пункт в чек-лист',
-  'deleteItemChecklist'  = 'удалил(а) пункт в чек-листе',
+  'createItemChecklist' = 'добавил(а) новый пункт в чек-лист',
+  'deleteItemChecklist' = 'удалил(а) пункт в чек-листе',
   'completeItemChecklist' = 'отметил(а) пункты в чек-листе',
-  'changePriority' = 'удалил(а) приоритет'
-};
+  'changePriority' = 'удалил(а) приоритет',
+}
 
-export enum HISTORY  {
+export enum HISTORY {
   'taskCreate' = 'task.create',
   'statusChange' = 'task.status_change',
   'dateChange' = 'task.exec_stop_change',
@@ -55,9 +55,7 @@ export enum HISTORY  {
   'itemChecklistCreate' = 'check_list.item_create',
   'itemChecklistDelete' = 'check_list.item_delete',
   'itemChecklistComplete' = 'check_list.item_change_complete',
-  'priorityChange' = 'task.priority_change'
-};
+  'priorityChange' = 'task.priority_change',
+}
 
 export const PRIORITY_CHANGE = 'изменил(а) приоритет задачи';
-
-export const ADAPTIVE_HISTORY_WIDTH = 900;
