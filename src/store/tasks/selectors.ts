@@ -29,6 +29,8 @@ export const getViewParameters = (state: RootState) =>
 export const getTaskToDelete = (state: RootState) =>
   state.tasks.task_id_todelete;
 
+export const getIsShowFilter = (state: RootState) => state.tasks.isShowFilter;
+
 // Возвращает либо все задачи либо мои задачи в зависимости от флага tasks.onlyMyTasks
 export const getTasksToShow = createSelector(
   selectTasks,

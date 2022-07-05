@@ -25,6 +25,7 @@ const initialState: ITasksReducer = {
   loading: false,
   error: null,
   onlyMyTasks: false,
+  isShowFilter: false,
   viewParameters: {
     in: {
       sortField: SortField.created,
@@ -49,6 +50,9 @@ export const tasksSlice = createSlice({
   name: TASKS_SLICE_ALIAS,
   initialState,
   reducers: {
+    toggleFilter: (state: ITasksReducer) => {
+      state.isShowFilter = !state.isShowFilter;
+    },
     showOnlyMyTasks: (state: ITasksReducer) => {
       state.onlyMyTasks = true;
     },
@@ -167,5 +171,6 @@ export const {
   resetPages,
   resetTasks,
   setTaskToDelete,
+  toggleFilter,
 } = tasksSlice.actions;
 export default tasksSlice.reducer;
