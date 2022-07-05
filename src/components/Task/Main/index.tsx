@@ -64,4 +64,5 @@ const Main: React.FC = () => {
   );
 };
 
-export default Main;
+// export default Main;
+export default React.memo(Main);
