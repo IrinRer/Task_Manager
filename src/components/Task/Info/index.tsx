@@ -40,5 +40,4 @@ const Info: React.FC = () => {
   );
 };
 
-// export default Info;
-export default React.memo(Info);
+export default Info;

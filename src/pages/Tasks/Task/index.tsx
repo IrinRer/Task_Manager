@@ -49,7 +49,7 @@ const Task: React.FC = () => {
   const isNotShow = errorTask || !taskId;
 
   if (loadingTask) {
-    // return <Preloader size="large" />;
+    return <Preloader size="large" />;
   }
 
   if (isNotShow) {

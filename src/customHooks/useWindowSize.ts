@@ -18,10 +18,10 @@ export const useWindowSize = (): Size => {
       });
     }
 
-    window.addEventListener('resize', handleResize);
-    handleResize();
+    // window.addEventListener('resize', handleResize);
+    // handleResize();
 
-    return () => window.removeEventListener('resize', handleResize);
+    // return () => window.removeEventListener('resize', handleResize);
   }, []);
   return windowSize;
 };
