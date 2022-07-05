@@ -1,12 +1,17 @@
 @import 'src/styles/color-variables.scss';
 @import 'src/styles/font-variables.scss';
 @import 'src/styles/colors';
+@import 'styles/mixins.scss';
 
 .wrapper {
   display: flex;
   align-items: center;
   font-size: $font-size-m;
   line-height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
   span {
     font-weight: 300;
     color: $dark-primary;
@@ -20,6 +25,14 @@
     transform: translateY(-30%);
     right: 0px;
     z-index: 1;
+  }
+  .menuiconSort {
+    display: inline;
+    font-size: $font-size-s;
+    color: $gray-600;
+    right: 0px;
+    z-index: 1;
+    margin-right: 15px;
   }
   /* ======= Стили для свернутого селекта начало. Внутри компонента и с модульным стилем */
   .selector {
@@ -37,6 +50,10 @@
       text-align: right;
       font-weight: 600;
       color: $text-dark;
+
+      @include media-breakpoint-down($size: xsl) {
+        display: none;
+      }
     }
     // Встроенная иконка выпадения antd
     :global(.ant-select-arrow) {
@@ -67,6 +84,11 @@
     }
     &:global(.ant-select-item-option-active) {
       background-color: transparent;
+
+      @include media-breakpoint-down($size: xsl) {
+        background-color: rgba($blue, 0.05);
+      }
+
       &:hover {
         background-color: rgba($blue, 0.05);
       }

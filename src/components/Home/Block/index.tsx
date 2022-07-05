@@ -4,21 +4,26 @@ import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { setPage, setSortField, setTasksOnPage } from 'store/tasks/slice';
 import { getViewParameters } from 'store/tasks/selectors';
 import { Col, Pagination, Row } from 'antd';
+
 import { BlockType, SortField } from 'constants/types/common';
-import { BlockTitle } from 'constants/common';
+import { BlockTitle, MIN_DESKTOP_WIDTH_HOMEPAGE } from 'constants/common';
 import { TaskContext } from 'components/Home/taskContext';
+import { useWindowSize } from 'customHooks/useWindowSize';
 import { IResponseTask } from 'store/common/task/types';
+
 import Sorter from './Sorter';
 import Task from './Task';
 import PaginationLabel from './PaginationLabel';
 import { getTasksSelector, getTotalTasksSelector } from './service';
 import styles from './index.module.scss';
+import MobileTask from './MobileTask';
 
 interface IProps {
   blockType: BlockType;
 }
 const Block: React.FC<IProps> = ({ blockType }) => {
   const dispatch = useAppDispatch();
+  const size = useWindowSize();
   const pageRef = useRef<HTMLDivElement>(null);
   const viewParameters = useAppSelector(getViewParameters);
   const tasks = useAppSelector(getTasksSelector(blockType));
@@ -83,7 +88,12 @@ const Block: React.FC<IProps> = ({ blockType }) => {
           tasks.map((task: IResponseTask) => {
             return (
               <TaskContext.Provider key={task.task_id} value={task}>
-                <Task type={blockType} />
+                {(size.width || 0) < MIN_DESKTOP_WIDTH_HOMEPAGE && (
+                  <MobileTask type={blockType} />
+                )}
+                {(size.width || 0) >= MIN_DESKTOP_WIDTH_HOMEPAGE && (
+                  <Task type={blockType} />
+                )}
               </TaskContext.Provider>
             );
           })

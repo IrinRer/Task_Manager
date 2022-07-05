@@ -8,9 +8,6 @@ import { TaskStatuses } from 'constants/types/common';
 import { TaskContext } from 'components/Home/taskContext';
 import styles from './index.module.scss';
 
-// TODO: Длина обрезки заголовка TITLE_LENGTH будет зависеть от разрешения экрана
-// переделается в дальшейшем
-
 const Title: React.FC = () => {
   const task = useContext(TaskContext);
   const path = generatePath(ROUTES.editTask.route, { id: task?.task_id });
