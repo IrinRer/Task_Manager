@@ -66,12 +66,15 @@ const FileImg = () => {
 
   const handleOkDelete = () => {
     setVisibleModalDelete(false);
-    dispatch(setAssignFileToDelete(valueContext.file.name || ''));
-    valueContext.setFile(
-      valueContext.fileList?.filter(
-        (item) => item.name !== valueContext.file.name,
-      ),
-    );
+    if(valueContext.file.name) {
+      dispatch(setAssignFileToDelete(valueContext.file.name));
+
+      valueContext.setFile(
+        valueContext.fileList?.filter(
+          (item) => item.name !== valueContext.file.name,
+        ),
+      );
+    }
   };
 
   const handleCancelDelete = () => {
