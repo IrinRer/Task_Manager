@@ -53,7 +53,7 @@ const Preview: FC<IProps> = ({ previewVisible, setPreviewVisible }) => {
   };
 
   const onDelete = () => {
-    if(imgRecieved[index].name) {
+    if (imgRecieved[index].name) {
       file.onDeleteFile(imgRecieved[index]?.name);
     }
     setPreviewVisible(false);
@@ -61,8 +61,8 @@ const Preview: FC<IProps> = ({ previewVisible, setPreviewVisible }) => {
 
   const handleOkDelete = () => {
     setVisibleModalDelete(false);
-    dispatch(setAssignFileToDelete(imgRecieved[index]?.name));
-    if (file.fileList) {
+    if (imgRecieved[index]?.name && file.fileList) {
+      dispatch(setAssignFileToDelete(imgRecieved[index]?.name));
       file.setFile(
         file.fileList.filter((item) => item.name !== imgRecieved[index].name),
       );
