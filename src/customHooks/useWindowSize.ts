@@ -15,9 +15,7 @@ export const useWindowSize = (): Size => {
     function handleResize() {
       if (
         (windowSize.width !== undefined &&
-          Math.abs(windowSize.width - window.innerWidth) > 100) /* ||
-        (windowSize.height !== undefined &&
-          Math.abs(windowSize.height - window.innerHeight) > 100) */ ||
+          Math.abs(windowSize.width - window.innerWidth) > 10) ||
         windowSize.width === undefined ||
         windowSize.height === undefined
       ) {
