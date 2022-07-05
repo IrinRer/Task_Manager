@@ -15,11 +15,13 @@ import {
 } from 'store/notifications/slice';
 import { useLocation } from 'react-router-dom';
 import { Spin } from 'antd';
+import { getVerifyIdUser } from 'store/auth/verify/selectors';
 import NotifierModal from './NotifierModal';
 import styles from './index.module.scss';
 
 const Notifier: React.FC = () => {
   const location = useLocation();
+  const userId = useAppSelector(getVerifyIdUser);
 
   const dispatch = useAppDispatch();
   const isNewNotifications = useAppSelector(getIsNewNotifications);
@@ -31,8 +33,9 @@ const Notifier: React.FC = () => {
   );
 
   useEffect(() => {
+    dispatch(resetNotifications());
     dispatch(loadNewNotificationsAction());
-  }, [dispatch]);
+  }, [dispatch, userId]);
 
   const handleClick = () => {
     dispatch(setShowNotificationModal(true));

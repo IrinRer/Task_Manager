@@ -39,6 +39,10 @@ export const selectFilterUsersNames = createSelector(
 export const selectStatusCounters = (state: RootState) =>
   state.filters.currentState.statusCounters.counters;
 
+export const totalTasks = createSelector(selectStatusCounters, (counters) =>
+  Object.keys(counters).reduce((total, key) => total + counters[key], 0),
+);
+
 export const selectStatusCountersAreLoading = (state: RootState) =>
   state.filters.currentState.statusCounters.isLoading;
 
