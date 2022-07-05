@@ -8,7 +8,7 @@ const User = () => {
   const data = useContext(HistoryContext);
 
   return (
-    <div className={styles.historyElemUser}>
+    <div >
       {data.item ? (
         <>
           <UserAvatar user={data.item.user} />

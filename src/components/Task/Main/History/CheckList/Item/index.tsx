@@ -27,7 +27,7 @@ const ItemChecklist: FC<IProps> = ({ item, width }) => {
 
   const component = useDefineAdaptive(width, 
     conditionCreate || conditionComplete ? (
-      <div className={styles.historyElemItem}>
+      <div className={styles.historyElemChecklist}>
         <Checkbox
           disabled
           defaultChecked={conditionComplete}

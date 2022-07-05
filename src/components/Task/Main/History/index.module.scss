@@ -26,25 +26,35 @@
 .date {
   color: $heading;
   font-size: $font-size-s;
-  display: inline-block;
+  display: flex;
+  width: 180px;
+  justify-content: center;
 }
 
 .historyElemItem {
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: 220px;
+  margin-top: 10px;
 
   :global(.ant-avatar) {
     min-width: 32px;
   }
+}
 
-  @include media-breakpoint-history($size: sm) {
-    display: block !important;
-    margin-top: 10px;
-  }
+.historyElemChecklist {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 180px;
+  margin-top: 10px;
 }
 
 .historyElemDate {
   display: flex;
+  width: 330px;
+  justify-content: center;
 
   @include media-breakpoint-history($size: sm) {
     align-items: flex-end;
@@ -63,10 +73,11 @@
 
 .historyElemStatus {
   display: flex;
+  justify-content: center;
+  width: 280px;
 
   @include media-breakpoint-history($size: sm) {
     margin-top: 10px;
-    display: block !important;
   }
 
   .spanStatus {
