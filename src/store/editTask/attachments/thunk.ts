@@ -31,7 +31,6 @@ export const assignFile = createAsyncThunk(
 
       return responseFile.data.data;
     } catch (error) {
-      notification.error({ message: 'Ошибка добавления файла' });
       file.onError({ error });
       return rejectWithValue(error.message);
     }
@@ -93,7 +92,6 @@ export const viewFile = createAsyncThunk(
         storageId: file.fileId,
       };
     } catch (error) {
-      notification.error({ message: 'Ошибка скачивания файла' });
       return rejectWithValue(error.message);
     }
   },
