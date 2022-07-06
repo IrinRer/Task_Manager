@@ -1,11 +1,19 @@
 @import 'src/styles/color-variables.scss';
 @import 'src/styles/font-variables.scss';
 @import 'src/styles/colors';
+@import 'styles/mixins.scss';
 
 .wrapper {
   display: flex;
   align-items: center;
   gap: 8px;
+
+  @include media-breakpoint-down($size: sm) {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
 
   :global(.ant-input-affix-wrapper).input {
     padding-left: 0px;
@@ -16,6 +24,12 @@
     border-bottom: 1px solid $gray-500;
     color: $gray-500;
     width: 298px;
+
+    @include media-breakpoint-down($size: mdl) {
+      width: 100%;
+      max-width: 298px;
+    }
+
     :global(.ant-input) {
       background-color: transparent;
       font-size: $font-size-m;
