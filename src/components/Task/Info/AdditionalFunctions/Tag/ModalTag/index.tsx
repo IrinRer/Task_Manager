@@ -64,7 +64,7 @@ const ModalTag: FC<IProps> = ({
   const isUniqueTag = uniqueTagName?.indexOf(inputValue) === -1 && inputValue;
   const allTag = useAppSelector(selectPopulatedTags);
 
-  const conditionDisable = allTag.length >  MAX_NUMBER_TAGS && text === NEW_TAG;
+  const conditionDisable = allTag.length >=  MAX_NUMBER_TAGS && text === NEW_TAG;
 
   const resetForm = () => {
     setColor('');
