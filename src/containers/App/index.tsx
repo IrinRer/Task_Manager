@@ -17,6 +17,8 @@ import { fetchTagsAction } from 'store/common/tags/thunk';
 import { fetchTasksAction } from 'store/tasks/thunk';
 import { fetchPrioritiesAction } from 'store/common/priorities/thunk';
 import { fetchStatusesAction } from 'store/common/statuses/thunk';
+import { resetNotifications } from 'store/notifications/slice';
+import { loadNewNotificationsAction } from 'store/notifications/thunk';
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -61,6 +63,8 @@ const App: React.FC = () => {
     clearReloadTasksInterval();
     reloadTasksRef.current = setInterval(() => {
       dispatch(fetchTasksAction());
+      dispatch(resetNotifications());
+      dispatch(loadNewNotificationsAction());
     }, RELOAD_TASKS_INTERVAL);
 
     return clearReloadTasksInterval;
