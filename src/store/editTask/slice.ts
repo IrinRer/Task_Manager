@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { IEditTaskReducer, EDIT_TASK_SLICE_ALIAS } from 'store/editTask/types';
 import {
-  changeEditTaskStatusAction,
   deleteTaskMemberAction,
   deleteTaskMemberGroupAction,
   setTaskDescription,
@@ -11,11 +10,17 @@ import {
   setTaskTitle,
 } from 'store/editTask/thunk';
 import { AxiosError } from 'axios';
-import { IResponseTask } from 'store/common/task/types';
+import {
+  ICheckList,
+  ICheckListItem,
+  IResponseTask,
+} from 'store/common/task/types';
 import { fetchTaskAction } from 'store/common/task/thunk';
+import { changeTaskStatusAction } from 'store/tasks/thunk';
 
 const initialState: IEditTaskReducer = {
   modalVisible: false,
+  modalDeleteTaskVisible: false,
   data: null,
   editLoading: {
     task: false,
@@ -24,6 +29,9 @@ const initialState: IEditTaskReducer = {
     members: false,
     status: false,
     membersGroup: false,
+    checkList: false,
+    checkListTitle: false,
+    checkListItem: false,
   },
   selectedMembers: null,
   unselectedMembers: null,
@@ -36,8 +44,12 @@ const initialState: IEditTaskReducer = {
     status: null,
     setMembersGroup: null,
     delMembersGroup: null,
+    checkList: null,
+    checkListTitle: null,
+    checkListItem: null,
   },
 };
+// TODO: Добавить additionalFunctions к editTaskReducer
 
 export const editTaskSlice = createSlice({
   name: EDIT_TASK_SLICE_ALIAS,
@@ -52,6 +64,13 @@ export const editTaskSlice = createSlice({
       state.modalVisible = action.payload;
     },
 
+    setModalDeleteTaskVisible: (
+      state: IEditTaskReducer,
+      action: PayloadAction<boolean>,
+    ) => {
+      state.modalDeleteTaskVisible = action.payload;
+    },
+
     setNewSelectedMembers: (
       state: IEditTaskReducer,
       action: PayloadAction<Array<string>>,
@@ -63,6 +82,48 @@ export const editTaskSlice = createSlice({
       action: PayloadAction<Array<string>>,
     ) => {
       state.unselectedMembers = action.payload;
+    },
+
+    setEditTask: (state, { payload }: PayloadAction<IResponseTask>) => {
+      state.data = payload;
+    },
+
+    addCheckListItemToTask: (
+      state,
+      { payload }: PayloadAction<ICheckListItem>,
+    ) => {
+      state.data?.check_lists[0].items.push(payload);
+    },
+
+    removeCheckListItemFromTask: (
+      state,
+      { payload }: PayloadAction<ICheckListItem>,
+    ) => {
+      state.data!.check_lists[0].items =
+        state.data!.check_lists[0].items.filter(
+          (item) => item.check_list_item_id !== payload.check_list_item_id,
+        );
+    },
+
+    updateCheckListTitle: (state, { payload }: PayloadAction<ICheckList>) => {
+      state.data!.check_lists[0].title = payload.title;
+      state.data!.check_lists[0].updated = payload.updated;
+    },
+
+    updateCheckList: (state, { payload }: PayloadAction<ICheckList>) => {
+      state.data!.check_lists[0] = payload;
+    },
+
+    updateCheckListItem: (
+      state,
+      { payload }: PayloadAction<ICheckListItem>,
+    ) => {
+      const checkListItemIndex: number =
+        state.data!.check_lists[0].items.findIndex(
+          (item) => item.check_list_item_id === payload.check_list_item_id,
+        );
+
+      state.data!.check_lists[0].items[checkListItemIndex] = payload;
     },
   },
   extraReducers: {
@@ -163,22 +224,21 @@ export const editTaskSlice = createSlice({
       state.unselectedMembers = null;
       state.editLoading.members = false;
     },
-    [changeEditTaskStatusAction.pending.type]: (state: IEditTaskReducer) => {
+    [changeTaskStatusAction.pending.type]: (state: IEditTaskReducer) => {
       state.editLoading.status = true;
       state.editError.status = null;
     },
-    [changeEditTaskStatusAction.fulfilled.type]: (
+    [changeTaskStatusAction.fulfilled.type]: (
       state: IEditTaskReducer,
       { payload }: PayloadAction<IResponseTask>,
     ) => {
       state.data = payload;
       state.editLoading.status = false;
     },
-    [changeEditTaskStatusAction.rejected.type]: (
+    [changeTaskStatusAction.rejected.type]: (
       state: IEditTaskReducer,
       { payload }: PayloadAction<AxiosError>,
     ) => {
-      // state.response = null;
       state.editLoading.status = false;
       state.editError.status = payload;
     },
@@ -221,5 +281,13 @@ export const {
   setNewSelectedMembers,
   setUnselectedMembers,
   setModalVisible,
+  setModalDeleteTaskVisible,
+  setEditTask,
+  addCheckListItemToTask,
+  removeCheckListItemFromTask,
+  updateCheckList,
+  updateCheckListTitle,
+  updateCheckListItem,
 } = editTaskSlice.actions;
+
 export default editTaskSlice.reducer;

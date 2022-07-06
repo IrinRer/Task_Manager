@@ -1,44 +1,107 @@
 @import 'src/styles/color-variables.scss';
 @import 'src/styles/font-variables.scss';
 @import 'src/styles/colors';
+@import 'styles/mixins.scss';
 
 .wrapper {
+  display: flex;
+  align-items: center;
   font-size: $font-size-m;
   line-height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
   span {
     font-weight: 300;
     color: $dark-primary;
   }
+  .menuicon {
+    display: inline;
+    font-size: $font-size-s;
+    color: $gray-600;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-30%);
+    right: 0px;
+    z-index: 1;
+  }
+  .menuiconSort {
+    display: inline;
+    font-size: $font-size-s;
+    color: $gray-600;
+    right: 0px;
+    z-index: 1;
+    margin-right: 15px;
+
+    @include media-breakpoint-down($size: xsl) {
+      position: absolute;
+      z-index: 1;
+    }
+  }
+  /* ======= Стили для свернутого селекта начало. Внутри компонента и с модульным стилем */
   .selector {
+    @include media-breakpoint-down($size: xsl) {
+      margin-right: 15px;
+      z-index: 2;
+    }
+
+    :global(.ant-select-selector) {
+      padding-right: 0;
+      align-items: center;
+    }
     :global(.ant-select-selection-item) {
+      width: fit-content;
+      background-color: transparent;
+      padding-right: 14px;
+      z-index: 5;
       font-size: $font-size-m;
       line-height: 24px;
-      // width: 160px;
       text-align: right;
       font-weight: 600;
       color: $text-dark;
-    }
 
-    :global(.ant-select-suffix) {
-      width: 10px;
-      height: 8px;
-      background-image: url('/assets/icons/selectDown.svg');
-      background-position: center top;
-      background-repeat: no-repeat;
-      svg {
+      @include media-breakpoint-down($size: xsl) {
         display: none;
       }
     }
+    // Встроенная иконка выпадения antd
+    :global(.ant-select-arrow) {
+      display: none;
+    }
   }
-  :global(.ant-select-dropdown .ant-select-dropdown-placement-bottomLeft) {
-    width: 260px !important;
-    border-radius: 8px;
-    padding: 28px;
-    margin: 28px;
-    :global(.ant-select-item-option-content) {
-      font-weight: 600;
-      width: 160px;
-      color: red !important;
+  /*======= Стили для свернутого селекта конец */
+}
+/* Глобальные стили .dropdown установлен в ant-select dropdownClassName={styles.dropdown} */
+.dropdown {
+  border-radius: 8px;
+  width: 150px;
+  :global(.ant-select-item) {
+    height: 32px;
+    color: $text-dark;
+    font-weight: 700;
+    font-size: $font-size-m;
+    padding-left: 20px;
+    padding-right: 20px;
+    &:hover {
+      background-color: rgba($blue, 0.05);
+    }
+    &:global(.ant-select-item-option-selected) {
+      background-color: transparent;
+      &:hover {
+        background-color: rgba($blue, 0.05);
+      }
+    }
+    &:global(.ant-select-item-option-active) {
+      background-color: transparent;
+
+      @include media-breakpoint-down($size: xsl) {
+        background-color: rgba($blue, 0.05);
+      }
+
+      &:hover {
+        background-color: rgba($blue, 0.05);
+      }
     }
   }
 }

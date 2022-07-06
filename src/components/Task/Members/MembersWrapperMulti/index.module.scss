@@ -1,3 +1,4 @@
+@import 'src/styles/mixins.scss';
 @import 'src/styles/font-variables';
 @import 'src/styles/colors';
 
@@ -6,12 +7,23 @@
   justify-content: space-between;
   align-items: flex-start;
   font-size: $font-size-m;
-  padding-bottom: 14px;
+  padding-bottom: 16px;
   font-weight: normal;
   text-transform: none;
 
+  @include media-breakpoint-down($size: xs) {
+    flex-direction: column;
+  }
+
   span:first-of-type {
     text-align: left;
+  }
+  .rolename {
+    padding-right: 10px;
+
+    @include media-breakpoint-down($size: xs) {
+      margin-bottom: 11px;
+    }
   }
   .members {
     width: 56%;
@@ -28,8 +40,18 @@
   }
   .expand {
     cursor: pointer;
+    padding-right: 10px;
+
+    @include media-breakpoint-down($size: xs) {
+      margin-bottom: 11px;
+    }
   }
   .expand:hover {
     color: $blue;
+  }
+}
+.infoLine:last-of-type {
+  @include media-breakpoint-down($size: xs) {
+    padding-bottom: 0;
   }
 }

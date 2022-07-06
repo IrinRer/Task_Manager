@@ -1,0 +1,51 @@
+@import 'src/styles/font-variables';
+@import 'src/styles/colors';
+
+.wrapper_doc {
+  max-width: 250px;
+  background: rgba(196, 219, 255, 0.15);
+  border-radius: 8px;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  padding: 10px 10px;
+}
+
+.wrapper_icon {
+  padding: 8px;
+  border-radius: 8px;
+  background-color: rgba($blue-secondary, 0.15);
+}
+
+.wrapper_text {
+  display: flex;
+  max-width: 232px;
+  flex-direction: column;
+
+  .text_name {
+    font-size: $font-size-s;
+    margin: 0;
+    margin-left: 8px;
+    line-height: 16px;
+  }
+
+  .text_size {
+    color: $gray-600;
+    font-size: $font-size-s;
+    margin: 0;
+    margin-left: 8px;
+  }
+}
+
+.not_hover_icon {
+  display: none;
+}
+
+.wrapper_img_hover {
+  background: rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+.img_hover {
+  filter: brightness(50%);
+}

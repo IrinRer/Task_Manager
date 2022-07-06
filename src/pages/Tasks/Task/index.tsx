@@ -12,11 +12,14 @@ import Info from 'components/Task/Info';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { fetchTaskAction } from 'store/common/task/thunk';
+import { setClickedAttachments } from 'store/editTask/attachments/slice';
 import { clearDataTask } from 'store/common/task/slice';
 import Preloader from 'components/Common/Preloader';
 import { ROUTES } from 'constants/routes';
 import { ReactComponent as CloseIcon } from 'assets/icons/close.svg';
 
+import { useWindowSize } from 'customHooks/useWindowSize';
+import { MIN_DESKTOP_WIDTH } from 'constants/common';
 import styles from './index.module.scss';
 
 const Task: React.FC = () => {
@@ -25,6 +28,7 @@ const Task: React.FC = () => {
   const modalVisible = useAppSelector(getModalVisible);
   const errorTask = useAppSelector(getEditTaskError);
   const params = useParams();
+  const size = useWindowSize();
   const taskId = params.id;
 
   useEffect(() => {
@@ -38,6 +42,7 @@ const Task: React.FC = () => {
     dispatch(setModalVisible(false));
     dispatch(clearDataTask());
     dispatch(clearEditDataTask());
+    dispatch(setClickedAttachments(false))
     navigate(ROUTES.tasks.path);
   };
 
@@ -59,12 +64,12 @@ const Task: React.FC = () => {
       confirmLoading={loadingTask}
       onCancel={handleCancel}
       className={styles.task}
-      closeIcon={<CloseIcon />}
+      closeIcon={<CloseIcon id="close" />}
       footer={[]}
     >
       <div className={styles.taskContainer}>
         <Main />
-        <Info />
+        {(size.width || 0) >= MIN_DESKTOP_WIDTH && <Info />}
       </div>
     </Modal>
   ) : null;

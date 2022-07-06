@@ -1,23 +1,30 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { setPage, setSortField, setTasksOnPage } from 'store/tasks/slice';
 import { getViewParameters } from 'store/tasks/selectors';
 import { Col, Pagination, Row } from 'antd';
-import { BlockType, SortField, TTask } from 'constants/types/common';
-import { BlockTitle } from 'constants/common';
-import { TaskContext } from 'constants/taskContext';
+
+import { BlockType, SortField } from 'constants/types/common';
+import { BlockTitle, MIN_DESKTOP_WIDTH_HOMEPAGE } from 'constants/common';
+import { TaskContext } from 'components/Home/taskContext';
+import { useWindowSize } from 'customHooks/useWindowSize';
+import { IResponseTask } from 'store/common/task/types';
+
 import Sorter from './Sorter';
 import Task from './Task';
 import PaginationLabel from './PaginationLabel';
 import { getTasksSelector, getTotalTasksSelector } from './service';
 import styles from './index.module.scss';
+import MobileTask from './MobileTask';
 
 interface IProps {
   blockType: BlockType;
 }
 const Block: React.FC<IProps> = ({ blockType }) => {
   const dispatch = useAppDispatch();
+  const size = useWindowSize();
+  const pageRef = useRef<HTMLDivElement>(null);
   const viewParameters = useAppSelector(getViewParameters);
   const tasks = useAppSelector(getTasksSelector(blockType));
   const tasksTotal = useAppSelector(getTotalTasksSelector(blockType));
@@ -26,10 +33,15 @@ const Block: React.FC<IProps> = ({ blockType }) => {
 
   // Если число задач обновилось и страниц стало больше чем хватает задач, уменьшаем число страниц
   useEffect(() => {
-    if (tasksTotal < tasksOnPage * (page - 1)) {
-      const newPage = Math.floor(tasksTotal / tasksOnPage) + 1;
+    if (tasksTotal <= tasksOnPage * (page - 1)) {
+      const newPage = Math.ceil(tasksTotal / tasksOnPage);
       dispatch(setPage({ blockType, page: newPage }));
     }
+    /*     if (pageRef?.current) {
+      pageRef.current.scrollIntoView({
+        block: 'center',
+      });
+    } */
   }, [tasksOnPage, tasksTotal, page, blockType, dispatch]);
 
   // Хэндлеры для изменения параметров отображения - сортировки, страницы и задач на странице
@@ -43,7 +55,7 @@ const Block: React.FC<IProps> = ({ blockType }) => {
   };
 
   const handleTasksOnPageChange = (value: number) => {
-    const newTasksOnPage = Math.min(value, tasksTotal - 1);
+    const newTasksOnPage = Math.min(value, tasksTotal);
     dispatch(setTasksOnPage({ blockType, tasksOnPage: newTasksOnPage }));
     if (newTasksOnPage * page > tasksTotal) {
       const lastPage = Math.ceil(tasksTotal / newTasksOnPage);
@@ -73,37 +85,41 @@ const Block: React.FC<IProps> = ({ blockType }) => {
       {/* Задачи */}
       <Col span={24}>
         {tasks.length > 0 ? (
-          tasks.map((task: TTask) => {
+          tasks.map((task: IResponseTask) => {
             return (
               <TaskContext.Provider key={task.task_id} value={task}>
-                <Task type={blockType} />
+                {(size.width || 0) < MIN_DESKTOP_WIDTH_HOMEPAGE && (
+                  <MobileTask type={blockType} />
+                )}
+                {(size.width || 0) >= MIN_DESKTOP_WIDTH_HOMEPAGE && (
+                  <Task type={blockType} />
+                )}
               </TaskContext.Provider>
             );
           })
         ) : (
-          <p>Нет задач для отображения</p>
+          <p className={styles.emptyTask}>Нет задач для отображения</p>
         )}
       </Col>
 
       {/* Пагинация */}
-      <Col className={styles.pagination} span={24}>
-        {tasksTotal > tasksOnPage && (
-          <>
-            <Pagination
-              total={tasksTotal}
-              current={page}
-              defaultCurrent={1}
-              pageSize={tasksOnPage}
-              defaultPageSize={tasksOnPage}
-              showTotal={paginationTotal}
-              onChange={handlePageChange}
-            />
-            <PaginationLabel
-              pageSize={tasksOnPage}
-              handler={handleTasksOnPageChange}
-            />
-          </>
-        )}
+      <Col ref={pageRef} className={styles.pagination} span={24}>
+        <>
+          <Pagination
+            total={tasksTotal}
+            current={page}
+            defaultCurrent={1}
+            pageSize={tasksOnPage}
+            defaultPageSize={tasksOnPage}
+            showSizeChanger={false}
+            showTotal={paginationTotal}
+            onChange={handlePageChange}
+          />
+          <PaginationLabel
+            pageSize={tasksOnPage}
+            handler={handleTasksOnPageChange}
+          />
+        </>
       </Col>
     </Row>
   );

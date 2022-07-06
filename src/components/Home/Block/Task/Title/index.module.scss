@@ -1,0 +1,28 @@
+@import 'src/styles/color-variables.scss';
+@import 'src/styles/font-variables.scss';
+@import 'styles/mixins.scss';
+
+.wrapper {
+  max-width: 480px;
+  max-height: unset;
+  font-size: $font-size-m;
+  color: $text-dark;
+  font-weight: 600;
+  overflow-wrap: break-word;
+
+  @include media-breakpoint-down($size: xxl) {
+    width: 90%;
+    max-width: unset;
+  }
+
+  a,
+  a:hover {
+    color: $text-dark;
+    background: none;
+  }
+  .done,
+  .done:hover {
+    color: $heading;
+  }
+  cursor: pointer;
+}

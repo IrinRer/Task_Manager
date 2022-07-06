@@ -1,16 +1,19 @@
 @import 'src/styles/font-variables';
+@import 'src/styles/color-variables';
 
 .section {
   font-size: $font-size-l;
-  padding: 25px 0;
   display: flex;
   justify-content: left;
   align-items: flex-start;
 }
-.section span {
-  padding-top: 4px;
-}
+
 .wrapper {
   padding-left: 19px;
   width: 100%;
+}
+.wrapper .title {
+  font-weight: 500;
+  padding: 0;
+  color: $text-title;
 }

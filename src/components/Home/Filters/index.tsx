@@ -10,6 +10,7 @@ import ProgressRadioGroup from './ProgressRadioGroup';
 import PriorityCheckboxGroup from './PriorityCheckboxGroup';
 import SubmitButton from './SubmitButton';
 import ResetButton from './ResetButton';
+import CloseButton from './CloseButton';
 
 const Filters: React.FC = () => {
   return (
@@ -23,6 +24,7 @@ const Filters: React.FC = () => {
       <PriorityCheckboxGroup />
       <SubmitButton />
       <ResetButton />
+      <CloseButton />
     </div>
   );
 };

@@ -1,9 +1,10 @@
+import { ITag } from 'store/common/tags/types';
 import { AxiosError } from 'axios';
+import { TProgress } from 'constants/types/common';
 import { IUser } from 'store/users/types';
+import { IPayloadFile } from 'store/editTask/attachments/types';
 import { IPriority } from '../priorities/types';
-import { IProgress } from '../progresses/types';
 import { IRoles } from '../roles/types';
-import { ITag } from '../tags/types';
 
 export const ONETASK_SLICE_ALIAS = 'onetask';
 
@@ -32,16 +33,20 @@ export interface IResponseTask {
   form_result: null;
   roles: Array<ITaskRoles> | null;
   tags: IResponseTags[];
-  progress: IProgress;
-  check_lists: [];
-  storage_files: [];
+  progress: TProgress;
+  check_lists: Array<ICheckList>;
+  storage_files: Array<IPayloadFile>;
   storage_files_meta: {
     total: number;
   };
   permissions: Array<string>;
 }
 
-interface IResponseTags {
+export interface IResponseTags {
+  task_to_tag_id: string;
+  task: {
+    task_id: string;
+  };
   task_tag: ITag;
 }
 
@@ -52,4 +57,20 @@ export interface ITaskRoles {
   };
   task_role: IRoles;
   assign_user: IUser;
+}
+
+export interface ICheckList {
+  check_list_id: string;
+  title: string;
+  created: string;
+  updated: string;
+  items: Array<ICheckListItem>;
+}
+
+export interface ICheckListItem {
+  check_list_item_id: string;
+  message: string;
+  complete: boolean;
+  created: string;
+  updated: string;
 }

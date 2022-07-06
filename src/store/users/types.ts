@@ -11,8 +11,8 @@ export interface IUsersReducer {
 export interface IUser {
   user_id: string;
   name: string;
-  logo: string;
-  permissions: Array<string>;
+  permissions?: Array<string>;
+  logo?: string;
 }
 
 export interface IPopulatedUser extends IUser {

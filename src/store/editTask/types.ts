@@ -5,6 +5,7 @@ export const EDIT_TASK_SLICE_ALIAS = 'edittask';
 
 export interface IEditTaskReducer {
   modalVisible: boolean;
+  modalDeleteTaskVisible: boolean;
   data: IResponseTask | null;
   editLoading: {
     task: boolean;
@@ -13,6 +14,9 @@ export interface IEditTaskReducer {
     members: boolean;
     status: boolean;
     membersGroup: boolean;
+    checkList: boolean;
+    checkListTitle: boolean;
+    checkListItem: boolean;
   };
   selectedMembers: Array<string> | null;
   unselectedMembers: Array<string> | null;
@@ -25,6 +29,9 @@ export interface IEditTaskReducer {
     status: AxiosError | null;
     setMembersGroup: AxiosError | null;
     delMembersGroup: AxiosError | null;
+    checkList: AxiosError | null;
+    checkListTitle: AxiosError | null;
+    checkListItem: AxiosError | null;
   };
 }
 
@@ -39,4 +46,9 @@ export interface ITaskAssignGroupUser {
   assign_users_ids: Array<string>;
   task_role_id: string;
   watcher_role_id: string;
+}
+
+export interface ICheckListChangeCompleteStatus {
+  check_list_item_id: string;
+  complete: boolean;
 }

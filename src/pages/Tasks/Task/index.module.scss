@@ -1,3 +1,4 @@
+@import 'src/styles/mixins.scss';
 @import 'src/styles/font-variables';
 @import 'src/styles/color-variables';
 @import 'src/components/Common/Spinner/index.module.scss';
@@ -24,6 +25,10 @@
   width: fit-content;
   height: fit-content;
   line-height: 1;
+
+  @include media-breakpoint-down($size: md) {
+    padding-top: 31px;
+  }
 }
 :global(.ant-modal-body) {
   height: 100%;
@@ -34,17 +39,36 @@
   padding: 0;
   margin: 0;
 }
+:global(.ant-popover-arrow) {
+  display: none;
+}
 
 .task {
   top: 0 !important;
   height: 100%;
   padding-bottom: 0 !important;
   width: 1167px !important;
+
+  @include media-breakpoint-down($size: md) {
+    width: 100% !important;
+  }
+
+  @include media-breakpoint-down($size: md) {
+    margin: 0;
+    max-width: 100%;
+  }
+
+  :global(.ant-modal-content),
+  :global(.ant-modal),
+  :global(.ant-modal-body) {
+    border-radius: 16px !important;
+  }
+
   .taskContainer {
     display: flex;
     justify-content: space-between;
     align-items: stretch;
-    height: 100%;
+    height: fit-content;
   }
   .taskInfo {
     width: 40%;

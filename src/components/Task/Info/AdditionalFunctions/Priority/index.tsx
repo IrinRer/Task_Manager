@@ -8,25 +8,23 @@ import { selectPopulatedPriorities } from 'store/common/priorities/selectors';
 import { getTaskId } from 'store/editTask/selectors';
 import { PriorityName } from 'constants/types/common';
 import { STYLES } from 'constants/common';
-import { getMyMaxRoleForTask } from 'store/common/roles/selectors';
-import { getRights } from 'helpers/rights';
+import { getPriorityName } from 'store/editTask/additionalFunctions/priority/selectors';
 import { RIGHTS_NAMES } from 'constants/rights';
+import { useGetRights } from 'customHooks/useGetRights';
+import classnames from 'classnames';
 import styles from './index.module.scss';
 
 const { Text } = Typography;
 const { Option } = Select;
 
-interface IProps {
-  defaultPriority: string | undefined;
-}
-
-const SelectPriority: React.FC<IProps> = ({ defaultPriority }) => {
+const SelectPriority: React.FC = () => {
   const dispatch = useAppDispatch();
   const priorityValue = useAppSelector(selectPopulatedPriorities);
   const taskId = useAppSelector(getTaskId);
   const defaultPriorityName = useAppSelector(getTaskInfoPriorityName);
-  const myMaxRole = useAppSelector(getMyMaxRoleForTask);
-  const isRights = getRights(myMaxRole, RIGHTS_NAMES.editPriority);
+  const isRights = useGetRights(RIGHTS_NAMES.editPriority);
+
+  const priorityAccept = useAppSelector(getPriorityName);
 
   const onChange = (checkedValues: string) => {
     dispatch(
@@ -35,12 +33,12 @@ const SelectPriority: React.FC<IProps> = ({ defaultPriority }) => {
   };
 
   return (
-    <div className={styles.priority}>
+    <div className={classnames(styles.priority, styles.infoLine)}>
       <Text className={styles.text}>Приоритет</Text>
-      {isRights ? (
+      {isRights && (
         <Select
           placeholder="+ Добавить приоритет"
-          defaultValue={defaultPriority}
+          defaultValue={priorityAccept}
           showArrow={false}
           bordered={false}
           allowClear
@@ -56,7 +54,8 @@ const SelectPriority: React.FC<IProps> = ({ defaultPriority }) => {
             );
           })}
         </Select>
-      ) : (
+      )}
+      {!isRights && defaultPriorityName && (
         <div className={styles.noedit}>
           <div
             className={styles[STYLES[PriorityName[defaultPriorityName || '']]]}

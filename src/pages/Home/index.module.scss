@@ -1,18 +1,59 @@
 @import 'src/styles/color-variables.scss';
 @import 'src/styles/font-variables.scss';
 @import 'src/styles/colors';
+@import 'styles/mixins.scss';
 
 :global(.ant-layout).tasks {
-  background-color: $white;
+  background-color: $bg-primary;
   :global(.ant-layout-sider) {
     background-color: transparent;
   }
   :global(.ant-layout-content) {
     border-left: 1px solid $border-primary;
+    background-color: $bg-primary;
+    max-width: 2560px;
   }
 }
 
 .sider {
   padding: 0px;
+  max-width: 250px;
   color: $text-dark;
+  border-bottom: 1px solid $border-primary;
+  border-left: 1px solid $border-primary;
+
+  @include media-breakpoint-down($size: md) {
+    overflow: auto;
+    height: 100vh;
+    position: fixed;
+    z-index: 901;
+  }
+  @include media-breakpoint-only(md) {
+    flex: none !important;
+    max-width: unset !important;
+    min-width: 0 !important;
+    width: unset !important;
+  }
+  @include media-breakpoint-only(lg) {
+    flex: none !important;
+    max-width: unset !important;
+    min-width: 0 !important;
+    width: unset !important;
+  }
+  @include media-breakpoint-only(xl) {
+    flex: none !important;
+    max-width: unset !important;
+    min-width: 0 !important;
+    width: unset !important;
+  }
+}
+.mask {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 900;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.15);
 }

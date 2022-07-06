@@ -3,9 +3,10 @@ import { Button } from 'antd';
 import styles from './index.module.scss';
 
 export const withAdditionalFunctions = <T, P>(
-  BaseComponent: React.FC<P>,
+  BaseComponent: React.FC,
   Icon: React.FC,
   value: T,
+  accepted: T,
 ) => {
   return (props: P) => {
     const [isClick, setClick] = useState(false);
@@ -16,8 +17,8 @@ export const withAdditionalFunctions = <T, P>(
 
     return (
       <>
-        {isClick || value[0] ? (
-          <BaseComponent {...props} />
+        {isClick || value[0] || accepted[0] ? (
+          <BaseComponent />
         ) : (
           <Button
             icon={<Icon />}

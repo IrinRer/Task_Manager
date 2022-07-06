@@ -3,8 +3,8 @@ import classnames from 'classnames';
 import { Button, Col, Row } from 'antd';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { getOnlyMyTasksFlag } from 'store/tasks/selectors';
-import { showOnlyMyTasks, showAllTasks } from 'store/tasks/slice';
+import { getIsShowFilter, getOnlyMyTasksFlag } from 'store/tasks/selectors';
+import { showOnlyMyTasks, showAllTasks, toggleFilter } from 'store/tasks/slice';
 import clockIcon from 'assets/icons/clock.svg';
 import personIcon from 'assets/icons/person.svg';
 import { getCurrentUser } from 'store/users/selectors';
@@ -14,9 +14,17 @@ import { generatePath, useNavigate } from 'react-router-dom';
 import { getNewTaskId, getNewTaskSuccess } from 'store/createTask/selectors';
 import { resetNewTaskSuccess } from 'store/createTask/slice';
 import { CaretDownOutlined } from '@ant-design/icons';
+import { useGetRights } from 'customHooks/useGetRights';
+import { RIGHTS_NAMES } from 'constants/rights';
+import { useWindowSize } from 'customHooks/useWindowSize';
+import { MIN_DESKTOP_WIDTH } from 'constants/common';
+import { ReactComponent as FilterIcon } from 'assets/icons/filter.svg';
+import { filtersCleared } from 'store/filters/slice';
+import { fetchTasksAction } from 'store/tasks/thunk';
 import AddNewTask from './AddNewTask';
 import UserMenu from './UserMenu';
 import styles from './index.module.scss';
+import Notifier from './Notifier';
 
 const tasksButtonClass = (flag: boolean): string => {
   return flag ? styles.inactive : styles.active;
@@ -24,13 +32,18 @@ const tasksButtonClass = (flag: boolean): string => {
 
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
+  const size = useWindowSize();
   const onlyMyTasks = useAppSelector(getOnlyMyTasksFlag);
+  const isShowFilter = useAppSelector(getIsShowFilter);
+
   // Получаем пользователя для отображения данных - аватара и тд
   const user = useAppSelector(getCurrentUser);
 
   const newTaskSuccess = useAppSelector(getNewTaskSuccess);
   const newTaskId = useAppSelector(getNewTaskId);
   const navigate = useNavigate();
+
+  const isRights = useGetRights(RIGHTS_NAMES.createTask);
 
   useEffect(() => {
     if (newTaskSuccess) {
@@ -47,12 +60,29 @@ const Header: React.FC = () => {
 
   const handleOnlyMyTasksClick = () => dispatch(showOnlyMyTasks());
 
+  const handleFilterClick = () => {
+    if (isShowFilter) {
+      dispatch(filtersCleared());
+      dispatch(fetchTasksAction());
+    }
+    dispatch(toggleFilter());
+  };
+
+  useEffect(() => {
+    if (isShowFilter) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'visible';
+    }
+  }, [isShowFilter]);
+
   return (
     <>
       <Row className={styles.titleRow}>
         <h1>Задачи</h1>
 
         <div className={styles.user}>
+          <Notifier />
           <UserAvatar user={user} />
           <UserMenu />
           <CaretDownOutlined className={styles.menuicon} />
@@ -62,6 +92,15 @@ const Header: React.FC = () => {
       {/* Кнопки все задачи - мои задачи */}
       <Row className={styles.buttonsRow} justify="space-between">
         <div className={styles.buttons}>
+          {(size.width || 0) < MIN_DESKTOP_WIDTH && (
+            <Button
+              type={isShowFilter ? 'default' : 'text'}
+              className={classnames(styles.filter, 'trigger')}
+              onClick={handleFilterClick}
+            >
+              <FilterIcon />
+            </Button>
+          )}
           <Button
             type={onlyMyTasks ? 'text' : 'default'}
             className={allTasksButtonStyle}
@@ -84,7 +123,7 @@ const Header: React.FC = () => {
 
         {/* Кнопка создания новой задачи */}
         <Col className={styles.newtask} span={4}>
-          <AddNewTask />
+          {isRights && <AddNewTask />}
         </Col>
       </Row>
     </>

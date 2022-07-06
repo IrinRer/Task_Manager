@@ -31,12 +31,28 @@
 }
 
 @mixin media-breakpoint-down($size) {
-  @if $size == sm {
+  @if $size == xs {
+    @media (max-width: 359.98px) {
+      @content;
+    }
+  } @else if $size == xsm {
+    @media (max-width: 380px) {
+      @content;
+    }
+  } @else if $size == xsl {
+    @media (max-width: 440px) {
+      @content;
+    }
+  } @else if $size == sm {
     @media (max-width: 575.98px) {
       @content;
     }
   } @else if $size == md {
     @media (max-width: 767.98px) {
+      @content;
+    }
+  } @else if $size == mdl {
+    @media (max-width: 890px) {
       @content;
     }
   } @else if $size == lg {
@@ -47,16 +63,33 @@
     @media (max-width: 1199.98px) {
       @content;
     }
-  } @else if $size == xs {
-    @media (max-width: 359.98px) {
-      @content;
-    }
   } @else if($size == xxl) {
     @media (max-width: 1400px) {
       @content;
     }
+  } @else if($size == xxxl) {
+    @media (max-width: 1500px) {
+      @content;
+    }
   }
 }
+
+@mixin media-breakpoint-history($size) {
+  @if $size == md {
+    @media (min-width: 750) {
+      @content;
+    }
+  } @else if $size == mdl {
+    @media (max-width: 1000px) {
+      @content;
+    }
+  } @else if $size == sm {
+    @media (max-width: 749px) {
+      @content;
+    }
+  }
+}
+
 // Кнопка статуса. цвет в зависимости от статуса.
 @mixin status-element($color) {
   border: 1px solid $color;

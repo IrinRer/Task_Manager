@@ -1,0 +1,131 @@
+@import 'src/styles/font-variables';
+@import 'src/styles/colors';
+
+.scroll {
+  overflow: auto; 
+  max-height: 300px;
+}
+
+
+
+.col {
+  margin-top: 40px;
+
+  ::-webkit-scrollbar {
+    width: 13px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: $gray-200;
+    border-radius: 16px 16px 16px 16px;
+    width: 13px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 16px 16px 16px 16px;
+    background-color: $gray-300;
+  }
+
+  .btnAttachment {
+    width: 32px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    display: inline-flex;
+    align-content: center;
+    justify-content: center;
+    border-radius: 8px;
+    margin-left: 10px;
+    margin-top: 5px;
+    border: none;
+    background-color: $gray-200;
+
+    &:hover {
+      background-color: $gray-200;
+      border: none;
+    }
+
+    :global(.anticon-plus) {
+      font-size: $font-size-l !important;
+    }
+  }
+}
+
+.text {
+  font-size: $font-size-l;
+  color: #171725;
+}
+
+:global(.ant-upload.ant-upload-drag).upload {
+  max-width: 232px;
+  background: none;
+  height: auto;
+  border-radius: 8px;
+  border: 1px dashed $gray-500;
+
+  :global(.ant-upload-drag-container) {
+    display: flex;
+    color: $gray-500;
+    font-size: $font-size-m;
+  }
+
+  &:hover {
+    background-color: $gray-200;
+    border: 1px dashed $gray-500;
+
+    .btnAttachment {
+      background-color: white;
+    }
+  }
+}
+
+:global(.ant-upload.ant-upload-drag.ant-upload-drag-hover).upload {
+  background-color: $gray-200;
+  border: 1px dashed $gray-500;
+
+  .btnAttachment {
+    background-color: white;
+  }
+}
+
+.col {
+  :global(.ant-upload-list) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+
+  :global(.ant-upload-list-item) {
+    border-radius: 8px;
+    max-width: 260px;
+    margin-right: 20px;
+  }
+
+  :global(.ant-upload-list-text-container) {
+    max-width: 260px;
+    margin-top: 10px;
+    margin-right: 20px;
+  }
+
+  :global(.anticon-paper-clip).PaperClipOutlined {
+    color: $gray-500;
+    margin-right: 19px;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .wrapperFlex {
+    display: flex;
+  }
+}
+
+.wrapper_all_file {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+}

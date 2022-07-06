@@ -9,6 +9,13 @@ import {
   getTaskResponsibleID,
   getTaskWatchersID,
 } from 'store/editTask/selectors';
+import {
+  getTaskAuthorIDParams,
+  getTaskImplementersIDParams,
+  getTaskResponsibleIDParams,
+  getTaskWatchersIDParams,
+} from 'store/tasks/selectors';
+import { IResponseTask } from '../task/types';
 import { IRoles } from './types';
 
 function isAuthorFromRoles(element: IRoles): boolean {
@@ -50,11 +57,22 @@ export const getRolesLoading = (state: RootState) => state.common.roles.loading;
 export const getRolesError = (state: RootState) => state.common.roles.error;
 
 export const getMyRolesForTask = createSelector(
-  getTaskAuthorID,
-  getTaskImplementersID,
-  getTaskResponsibleID,
-  getTaskWatchersID,
-  getVerifyIdUser,
+  [
+    (state: RootState, task?: IResponseTask) =>
+      task ? getTaskAuthorIDParams(state, task) : getTaskAuthorID(state),
+    (state: RootState, task?: IResponseTask) =>
+      task
+        ? getTaskImplementersIDParams(state, task)
+        : getTaskImplementersID(state),
+    (state: RootState, task?: IResponseTask) =>
+      task
+        ? getTaskResponsibleIDParams(state, task)
+        : getTaskResponsibleID(state),
+    (state: RootState, task?: IResponseTask) =>
+      task ? getTaskWatchersIDParams(state, task) : getTaskWatchersID(state),
+    getVerifyIdUser,
+  ],
+
   (author, implementers, responsible, watchers, authUserId): string[] => {
     const resultRoles: string[] = [];
     const usersIDwithRolesForTask = [
@@ -74,7 +92,7 @@ export const getMyRolesForTask = createSelector(
 );
 
 export const getMyMaxRoleForTask = createSelector(
-  getMyRolesForTask,
+  (state: RootState, task?: IResponseTask) => getMyRolesForTask(state, task),
   (roles): TRights => {
     if (roles.includes(ROLES.author)) return ROLES.author;
     if (roles.includes(ROLES.responsible)) return ROLES.responsible;

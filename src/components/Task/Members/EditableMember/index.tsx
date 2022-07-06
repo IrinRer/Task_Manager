@@ -7,15 +7,16 @@ import { getTaskId } from 'store/editTask/selectors';
 import useMembersProps from 'components/Task/Info/MembersHook/useMembersProps';
 import { IUser } from 'store/users/types';
 import { ROLES } from 'constants/types/common';
-import { RoleContext } from 'constants/common';
+import { RightsRoleContext } from 'components/Task/context';
 import styles from './index.module.scss';
+import MemberItem from '../MemberItem';
 
 type TProps = {
   user: IUser;
 };
 
 const EditableMember: FC<TProps> = ({ user }) => {
-  const roleName = useContext(RoleContext);
+  const roleName = useContext(RightsRoleContext).role;
   const dispatch = useAppDispatch();
   const taskId = useAppSelector(getTaskId);
 
@@ -45,8 +46,10 @@ const EditableMember: FC<TProps> = ({ user }) => {
   };
   return (
     <div className={styles.editMembers}>
-      <span>{user?.name}</span>
-      <CloseOutlined className={styles.delete} onClick={deleteMember} />
+      <MemberItem obj={user} />
+      <div>
+        <CloseOutlined className={styles.delete} onClick={deleteMember} />
+      </div>
     </div>
   );
 };

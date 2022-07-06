@@ -1,0 +1,38 @@
+.memberItem {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+
+  .noeditMembers {
+    display: inline-block;
+    width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .avatarWrapper {
+    display: inline-block;
+  }
+  :global(.ant-avatar) {
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    margin-right: 8px;
+    vertical-align: sub;
+  }
+}
+.avatarM {
+  :global(.ant-avatar) {
+    width: 18px;
+    height: 18px;
+  }
+}
+.avatarL {
+  :global(.ant-avatar) {
+    width: 24px;
+    height: 24px;
+  }
+  :global(.ant-avatar-string) {
+    line-height: 24px;
+  }
+}

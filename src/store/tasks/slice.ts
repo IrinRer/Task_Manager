@@ -13,16 +13,19 @@ import {
   deleteTaskAction,
   fetchTasksAction,
 } from 'store/tasks/thunk';
-import { SortField, TTask } from 'constants/types/common';
+import { SortField } from 'constants/types/common';
+import { IResponseTask } from 'store/common/task/types';
 
 const TASKS_ON_PAGE_DEFAULT = 3;
 
 const initialState: ITasksReducer = {
   tasks: [],
+  task_id_todelete: null,
   itemsTotal: 0,
   loading: false,
   error: null,
   onlyMyTasks: false,
+  isShowFilter: false,
   viewParameters: {
     in: {
       sortField: SortField.created,
@@ -47,6 +50,9 @@ export const tasksSlice = createSlice({
   name: TASKS_SLICE_ALIAS,
   initialState,
   reducers: {
+    toggleFilter: (state: ITasksReducer) => {
+      state.isShowFilter = !state.isShowFilter;
+    },
     showOnlyMyTasks: (state: ITasksReducer) => {
       state.onlyMyTasks = true;
     },
@@ -76,8 +82,23 @@ export const tasksSlice = createSlice({
       state.viewParameters[action.payload.blockType].tasksOnPage =
         action.payload.tasksOnPage;
     },
-    addTask: (state: ITasksReducer, action: PayloadAction<TTask>) => {
+    addTask: (state: ITasksReducer, action: PayloadAction<IResponseTask>) => {
       state.tasks?.push(action.payload);
+    },
+    setTaskToDelete: (
+      state: ITasksReducer,
+      action: PayloadAction<string | null>,
+    ) => {
+      state.task_id_todelete = action.payload;
+    },
+    changeTaskRoles: (
+      state: ITasksReducer,
+      action: PayloadAction<IResponseTask>,
+    ) => {
+      const taskIndex: number = state.tasks.findIndex(
+        (item) => item.task_id === action.payload.task_id,
+      );
+      state.tasks[taskIndex].roles = action.payload.roles;
     },
   },
   extraReducers: {
@@ -109,11 +130,12 @@ export const tasksSlice = createSlice({
     },
     [changeTaskStatusAction.fulfilled.type]: (
       state: ITasksReducer,
-      { payload }: PayloadAction<TTask>,
+      { payload }: PayloadAction<IResponseTask>,
     ) => {
       state.tasks?.forEach((task) => {
         if (task.task_id === payload.task_id) {
           task.status = payload.status;
+          task.exec_stop = payload.exec_stop;
         }
       });
       state.loading = false;
@@ -131,7 +153,7 @@ export const tasksSlice = createSlice({
     },
     [deleteTaskAction.fulfilled.type]: (
       state: ITasksReducer,
-      { payload }: PayloadAction<TTask>,
+      { payload }: PayloadAction<IResponseTask>,
     ) => {
       state.tasks = state.tasks.filter(
         (task) => task.task_id !== payload.task_id,
@@ -157,5 +179,8 @@ export const {
   addTask,
   resetPages,
   resetTasks,
+  setTaskToDelete,
+  toggleFilter,
+  changeTaskRoles,
 } = tasksSlice.actions;
 export default tasksSlice.reducer;

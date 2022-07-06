@@ -8,6 +8,7 @@
     width: fit-content;
     height: 24px;
     display: flex;
+    text-transform: none;
     align-items: center;
     padding-left: 18px;
     padding-right: 12px;
@@ -15,6 +16,7 @@
     font-weight: 500;
     border-radius: 16px;
     margin: 5px;
+    margin-left: 0;
     gap: 5px;
   }
 

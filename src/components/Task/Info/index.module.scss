@@ -1,3 +1,4 @@
+@import 'src/styles/mixins.scss';
 @import 'src/styles/font-variables';
 @import 'src/styles/color-variables';
 
@@ -21,18 +22,45 @@
     font-size: $font-size-m;
     font-weight: bold;
     text-transform: uppercase;
+
+    @include media-breakpoint-down($size: xs) {
+      margin-bottom: 12px;
+    }
   }
   :global(.site-collapse-custom-collapse .ant-collapse-header) {
     padding: 12px 16px 25px;
+
+    @include media-breakpoint-down($size: xsl) {
+      padding: 12px 0 12px;
+    }
   }
   :global(.site-collapse-custom-collapse .ant-collapse-content-box) {
     padding: 12px 12px 12px 39px;
+
+    @include media-breakpoint-down($size: mdl) {
+      padding-left: 20px;
+    }
+    @include media-breakpoint-down($size: md) {
+      padding-left: 48px;
+    }
+    @include media-breakpoint-down($size: xsl) {
+      padding-left: 30px;
+    }
+    @include media-breakpoint-down($size: xs) {
+      padding-bottom: 0 !important;
+    }
   }
   :global(.ant-select) {
     width: 100%;
     border: none;
     background: none;
     font-size: $font-size-m;
+  }
+  @include media-breakpoint-down($size: md) {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 0;
   }
 }
 .taskInfoWrapper {
@@ -47,4 +75,24 @@
   top: 0;
   right: 0;
   height: 100%;
+  @include media-breakpoint-down($size: md) {
+    display: none;
+  }
+}
+
+.wrapper {
+  max-width: 400px;
+}
+.wrapper > button {
+  position: absolute;
+  bottom: -5px;
+  margin-top: 10px;
+
+  &:last-child {
+    left: 120px;
+  }
+
+  &:nth-child(2) {
+    left: 80px;
+  }
 }

@@ -1,6 +1,14 @@
+@import 'styles/mixins.scss';
 @import 'src/styles/color-variables.scss';
 @import 'src/styles/font-variables.scss';
 @import 'src/styles/colors';
+
+.buttonsRow {
+  @include media-breakpoint-down($size: xl) {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+}
 
 .titleRow,
 .buttonsRow {
@@ -36,6 +44,15 @@
   .buttons {
     display: flex;
     flex-direction: row;
+
+    @include media-breakpoint-down($size: xl) {
+      margin-bottom: 20px;
+    }
+
+    @include media-breakpoint-down($size: xsm) {
+      flex-direction: column;
+    }
+
     :global(.ant-btn) {
       border-radius: 8px;
       height: 36px;
@@ -57,12 +74,35 @@
         background-color: $white;
         cursor: default;
       }
+      @include media-breakpoint-down($size: xsm) {
+        margin-bottom: 10px;
+      }
+    }
+
+    .filter {
+      border: 1px solid $gray-200;
+      border-radius: 8px;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: $white;
+      margin-right: 20px;
+      padding: 0;
     }
   }
 
   :global(.ant-col).newtask {
     display: flex;
     justify-content: flex-end;
+
+    @include media-breakpoint-down($size: xl) {
+      justify-content: flex-start;
+      min-height: unset;
+      max-width: 100%;
+      width: 100%;
+    }
   }
 }
 

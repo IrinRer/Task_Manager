@@ -1,0 +1,91 @@
+@import 'src/styles/color-variables';
+@import 'src/styles/colors';
+@import 'src/styles/font-variables';
+@import 'src/styles/global';
+
+:global(.commonNotice .ant-btn).cancelBtn {
+  background-color: unset;
+  color: $button-main;
+  font-size: $font-size-m !important;
+  border: none;
+  text-transform: uppercase;
+  top: 29px;
+  position: absolute;
+  right: 70px;
+}
+
+:global(.commonNotice .ant-btn).cancelBtn :focus,
+:global(.commonNotice .ant-btn).cancelBtn :hover,
+:global(.commonNotice .ant-btn).cancelBtn :active,
+:global(.commonNotice .ant-btn-link):focus,
+:global(.commonNotice .ant-btn-link):hover,
+:global(.commonNotice .ant-btn-link):active {
+  background-color: unset !important;
+  color: $button-main !important;
+}
+
+:global(.commonNotice .ant-btn).cancelBtn span {
+  padding-top: 0;
+}
+
+:global(.commonNotice.ant-notification-notice) {
+  padding: 28px 24px 24px;
+  min-width: 360px;
+  width: max-content;
+  height: 80px;
+}
+
+@keyframes progress {
+  from {
+    transform: translateX(0) scaleX(1);
+  }
+  to {
+    transform: translateX(-100%) scaleX(0);
+  }
+}
+
+:global(.commonNotice.ant-notification-notice):before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-top: 4px solid $button-main;
+  content: '';
+  width: 100%;
+  animation: progress $TIME_SHOW_NOTICE_IN_SECONDS linear;
+  animation-fill-mode: forwards;
+}
+
+:global(.commonNotice .ant-notification-notice-message) {
+  color: $text-title !important;
+  margin-left: 38px !important;
+  font-size: $font-size-l !important;
+  margin-bottom: 0 !important;
+}
+
+:global(.commonNotice .ant-notification-notice-close-x) svg path {
+  fill: $dark-primary;
+}
+:global(.commonNotice .ant-notification-notice-close-x):hover svg path {
+  fill: $heading;
+}
+:global(.commonNotice .ant-notification-notice-close-x) {
+  font-size: $font-size-m;
+  width: fit-content;
+  height: fit-content;
+  line-height: 1;
+}
+:global(.commonNotice .ant-notification-notice-close) {
+  top: 16px;
+  right: 16px;
+}
+
+:global(.commonNotice .ant-notification-notice-icon) svg path {
+  width: 16px;
+  height: 16px;
+}
+
+:global(.iconDeleteNotice .ant-notification-notice-icon) svg path {
+  width: 16px;
+  height: 16px;
+  fill: $red;
+}

@@ -1,7 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { notification } from 'antd';
+import { TAG_SLICE_ALIAS } from 'store/editTask/additionalFunctions/tag/types';
+import { api } from 'network';
 import { COMMON_TAGS_SLICE_ALIAS } from './types';
-import { api } from '../../../network';
 
 export const fetchTagsAction = createAsyncThunk(
   `${COMMON_TAGS_SLICE_ALIAS}/fetchTags`,
@@ -20,3 +21,17 @@ export const fetchTagsAction = createAsyncThunk(
     }
   },
 );
+
+export const deleteTagAction = createAsyncThunk(
+  `${TAG_SLICE_ALIAS}/delete`,
+  async (tagId: string | undefined, { rejectWithValue }) => {
+    try {
+      const response = await api().delete(`/api/v1.0/task/tags/${tagId}`);
+      return response.data.data;
+    } catch (error) {
+      notification.error({ message: 'Произошла ошибка удаления!' });
+      return rejectWithValue(error.message);
+    }
+  },
+);
+

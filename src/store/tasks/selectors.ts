@@ -3,14 +3,21 @@ import { RootState } from 'store';
 import { BlockType } from 'constants/types/common';
 import { getVerifyIdUser } from 'store/auth/verify/selectors';
 import {
+  getUsersIdFromRoles,
+  isAuthor,
+  isImplementer,
+  isResponsible,
+  isWatcher,
+} from 'store/common/task/selectors';
+import { IResponseTask } from 'store/common/task/types';
+import {
   blockTasksTotal,
   getMyTasks,
   getTasksSortedPaginated,
 } from './service';
 
 export const selectTasks = (state: RootState) => state.tasks.tasks;
-export const getTaskById = (state: RootState, id: string) =>
-  state.tasks.tasks.find((task) => task.task_id === id);
+
 export const selectTasksLoading = (state: RootState) => state.tasks.loading;
 export const selectTasksError = (state: RootState) => state.tasks.error;
 export const selectTasksTotalCount = (state: RootState) =>
@@ -18,6 +25,11 @@ export const selectTasksTotalCount = (state: RootState) =>
 export const getOnlyMyTasksFlag = (state: RootState) => state.tasks.onlyMyTasks;
 export const getViewParameters = (state: RootState) =>
   state.tasks.viewParameters;
+
+export const getTaskToDelete = (state: RootState) =>
+  state.tasks.task_id_todelete;
+
+export const getIsShowFilter = (state: RootState) => state.tasks.isShowFilter;
 
 // Возвращает либо все задачи либо мои задачи в зависимости от флага tasks.onlyMyTasks
 export const getTasksToShow = createSelector(
@@ -59,4 +71,53 @@ export const getDoneTasksSortedPaginated = createSelector(
   getViewParameters,
   (tasks, viewParameters) =>
     getTasksSortedPaginated(tasks, viewParameters, BlockType.done),
+);
+
+export const getTaskById = createSelector(
+  [selectTasks, (_, taskId: string) => taskId],
+  (tasks, taskId: string) => tasks.find((task) => task.task_id === taskId),
+);
+
+export const getTaskWatchersIDParams = createSelector(
+  [
+    (state: RootState) => state.tasks.tasks,
+    (state, task: IResponseTask | undefined) => task?.roles,
+  ],
+  (items, roles) => getUsersIdFromRoles(roles?.filter(isWatcher)),
+);
+
+export const getTaskImplementersIDParams = createSelector(
+  [
+    (state: RootState) => state.tasks.tasks,
+    (state, task: IResponseTask | undefined) => task?.roles,
+  ],
+  (items, roles) => getUsersIdFromRoles(roles?.filter(isImplementer)),
+);
+
+export const getTaskResponsibleIDParams = createSelector(
+  [
+    (state: RootState) => state.tasks.tasks,
+    (state, task: IResponseTask | undefined) => task?.roles,
+  ],
+  (items, roles) => roles?.find(isResponsible)?.assign_user.user_id,
+);
+
+export const getTaskAuthorIDParams = createSelector(
+  [
+    (state: RootState) => state.tasks.tasks,
+    (state, task: IResponseTask | undefined) => task?.roles,
+  ],
+  (items, roles) => roles?.find(isAuthor)?.assign_user.user_id,
+);
+
+export const isVerifyUserWatcherParams = createSelector(
+  [
+    (state: RootState) => state.tasks.tasks,
+    (state, task: IResponseTask | undefined) => task?.roles,
+    getVerifyIdUser,
+  ],
+  (items, roles, authUserId) =>
+    getUsersIdFromRoles(roles?.filter(isWatcher)).find(
+      (id) => id === authUserId,
+    ) !== undefined,
 );

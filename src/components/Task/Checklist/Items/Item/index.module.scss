@@ -1,0 +1,41 @@
+@import 'src/styles/color-variables.scss';
+@import 'src/styles/font-variables.scss';
+
+.checkListItem {
+  display: flex;
+  padding-bottom: 16px;
+  align-items: center;
+  transition: padding-bottom 0.2s ease-out;
+
+  &DraggedOver {
+    padding-bottom: 70px;
+  }
+}
+
+.checkbox {
+  :global {
+    height: 20px;
+    margin-right: 18px;
+
+    .ant-checkbox {
+      top: 0;
+    }
+
+    .ant-checkbox-inner {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+.checkBoxText {
+  font-weight: 400;
+  font-size: $font-size-l;
+  line-height: $line-height-l;
+  color: $text-title;
+  margin: 0 auto 0 0;
+
+  &Completed {
+    text-decoration: line-through;
+  }
+}
