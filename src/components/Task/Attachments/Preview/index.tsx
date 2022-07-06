@@ -49,8 +49,12 @@ const Preview: FC<IProps> = ({ previewVisible, setPreviewVisible }) => {
   };
 
   const handleCancel = () => {
-    setPreviewVisible(false);
+    setVisibleModalDelete(false);
   };
+
+  const handleCancelPreview = () => {
+    setPreviewVisible(false)
+  }
 
   const onDelete = () => {
     if (imgRecieved[index].name) {
@@ -89,7 +93,7 @@ const Preview: FC<IProps> = ({ previewVisible, setPreviewVisible }) => {
           />
         }
         footer={null}
-        onCancel={handleCancel}
+        onCancel={handleCancelPreview}
         className={styles.modal}
       >
         <ImgView />

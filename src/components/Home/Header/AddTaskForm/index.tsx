@@ -17,7 +17,6 @@ const AddTaskForm: React.FC<IProps> = ({ onClose }) => {
   const dispatch = useAppDispatch();
   const statusId = useAppSelector(getCreatedStatusID);
 
-  // заготовка под будущий функционал создания задачи. будет диспатч
   const onAdd = (taskTitle) => {
     dispatch(createTaskAction({ title: taskTitle, task_status_id: statusId }));
     dispatch(cleanAttachments());

@@ -30,14 +30,7 @@ export const attachmentsSlice = createSlice({
       state.isClicked = action.payload;
     },
     
-    cleanAttachments: (state) => {
-      state.dataReceived = [];
-      state.data = [];
-      state.viewFileImg = [];
-      state.file_delete = '';
-      state.initialViewFile = [];
-      state.initialDataFile = [];
-    },
+    cleanAttachments: () => initialState,
 
     setAssignFileToDelete: (state, action: PayloadAction<string | null>) => {
       state.file_delete = action.payload;
