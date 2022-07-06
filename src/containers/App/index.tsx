@@ -4,7 +4,7 @@ import { RELOAD_TASKS_INTERVAL } from 'constants/common';
 import { fetchAllRoles } from 'store/common/roles/thunk';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { getVerifyError } from 'store/auth/verify/selectors';
+import { getVerifyError, getVerifyIdUser } from 'store/auth/verify/selectors';
 import { getToken } from 'helpers/cookies';
 import { fetchVerifyAction } from 'store/auth/verify/thunk';
 import { getAuthError, getVerifyToken } from 'store/auth/token/selectors';
@@ -30,6 +30,8 @@ const App: React.FC = () => {
   const verifyError = useAppSelector(getVerifyError);
   const authError = useAppSelector(getAuthError);
   const isNotificationModalOpen = useAppSelector(getShowNotificationModal);
+  const userId = useAppSelector(getVerifyIdUser);
+
   const error = verifyError || authError;
   const noAuth = error || !token;
 
@@ -74,6 +76,11 @@ const App: React.FC = () => {
     return clearReloadTasksInterval;
     // eslint-disable-next-line
   }, [dispatch, modalVisible, verifyToken]);
+
+  useEffect(() => {
+    dispatch(resetNotifications());
+    dispatch(loadNewNotificationsAction());
+  }, [dispatch, userId]);
 
   const clearReloadTasksInterval = () => {
     if (reloadTasksRef.current) {

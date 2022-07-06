@@ -11,24 +11,16 @@ import { getCurrentUser } from 'store/users/selectors';
 import UserAvatar from 'components/Common/UserAvatar';
 import { ROUTES } from 'constants/routes';
 import { generatePath, useNavigate } from 'react-router-dom';
-import {
-  getNewTaskId,
-  getNewTaskSuccess,
-  getShowTaskCreatedMessage,
-} from 'store/createTask/selectors';
-import {
-  resetNewTaskSuccess,
-  setShowTaskCreatedMessage,
-} from 'store/createTask/slice';
+import { getNewTaskId, getNewTaskSuccess } from 'store/createTask/selectors';
+import { resetNewTaskSuccess } from 'store/createTask/slice';
 import { CaretDownOutlined } from '@ant-design/icons';
 import { useGetRights } from 'customHooks/useGetRights';
 import { RIGHTS_NAMES } from 'constants/rights';
 import { useWindowSize } from 'customHooks/useWindowSize';
-import { MIN_DESKTOP_WIDTH, TaskMessages } from 'constants/common';
+import { MIN_DESKTOP_WIDTH } from 'constants/common';
 import { ReactComponent as FilterIcon } from 'assets/icons/filter.svg';
 import { filtersCleared } from 'store/filters/slice';
 import { fetchTasksAction } from 'store/tasks/thunk';
-import notice from 'components/Common/Notice';
 import AddNewTask from './AddNewTask';
 import UserMenu from './UserMenu';
 import styles from './index.module.scss';
@@ -43,7 +35,6 @@ const Header: React.FC = () => {
   const size = useWindowSize();
   const onlyMyTasks = useAppSelector(getOnlyMyTasksFlag);
   const isShowFilter = useAppSelector(getIsShowFilter);
-  const showTaskCreatedMessage = useAppSelector(getShowTaskCreatedMessage);
 
   // Получаем пользователя для отображения данных - аватара и тд
   const user = useAppSelector(getCurrentUser);
@@ -53,20 +44,6 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
 
   const isRights = useGetRights(RIGHTS_NAMES.createTask);
-
-  useEffect(() => {
-    if (showTaskCreatedMessage) {
-      notice({
-        text: TaskMessages.created,
-        textButton: '',
-        className: 'iconDeleteNotice',
-        // duration: 0,
-        // icon: <RecycleBinIcon />,
-        handleOk: () => {},
-      });
-      dispatch(setShowTaskCreatedMessage(false));
-    }
-  }, [showTaskCreatedMessage, dispatch]);
 
   useEffect(() => {
     if (newTaskSuccess) {
