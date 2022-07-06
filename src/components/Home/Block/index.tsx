@@ -33,7 +33,7 @@ const Block: React.FC<IProps> = ({ blockType }) => {
 
   // Если число задач обновилось и страниц стало больше чем хватает задач, уменьшаем число страниц
   useEffect(() => {
-    if (tasksTotal < tasksOnPage * (page - 1)) {
+    if (tasksTotal <= tasksOnPage * (page - 1)) {
       const newPage = Math.ceil(tasksTotal / tasksOnPage);
       dispatch(setPage({ blockType, page: newPage }));
     }

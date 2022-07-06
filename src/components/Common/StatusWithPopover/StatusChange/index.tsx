@@ -53,6 +53,7 @@ const StatusChange: React.FC<IProps> = ({ taskId }) => {
     <div className={styles.wrapper}>
       {statuses?.map((status: TStatus) => {
         const current = status.task_status_id === task?.status.task_status_id;
+
         const classNames = classnames(
           styles.button,
           current ? styles.current : '',

@@ -6,7 +6,9 @@ import styles from './index.module.scss';
 const Item = () => {
   return (
     <div className={styles.item}>
-      <Icon />
+      <div>
+        <Icon />
+      </div>
       <Body />
     </div>
   );

@@ -1,5 +1,5 @@
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
-import React, { useEffect } from 'react';
+import React from 'react';
 import notification from 'assets/icons/notification.svg';
 import { loadNewNotificationsAction } from 'store/notifications/thunk';
 import classnames from 'classnames';
@@ -15,13 +15,11 @@ import {
 } from 'store/notifications/slice';
 import { useLocation } from 'react-router-dom';
 import { Spin } from 'antd';
-import { getVerifyIdUser } from 'store/auth/verify/selectors';
 import NotifierModal from './NotifierModal';
 import styles from './index.module.scss';
 
 const Notifier: React.FC = () => {
   const location = useLocation();
-  const userId = useAppSelector(getVerifyIdUser);
 
   const dispatch = useAppDispatch();
   const isNewNotifications = useAppSelector(getIsNewNotifications);
@@ -31,11 +29,6 @@ const Notifier: React.FC = () => {
     styles.notification,
     isNewNotifications && !loading ? styles.new : '',
   );
-
-  useEffect(() => {
-    dispatch(resetNotifications());
-    dispatch(loadNewNotificationsAction());
-  }, [dispatch, userId]);
 
   const handleClick = () => {
     dispatch(setShowNotificationModal(true));
