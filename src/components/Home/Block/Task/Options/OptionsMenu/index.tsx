@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button } from 'antd';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { cloneTaskAction } from 'store/createTask/thunk';
@@ -38,13 +38,16 @@ const OptionsMenu: React.FC<IProps> = ({ setVisibleOptions }) => {
     isVerifyUserWatcherParams(state, task || undefined),
   );
 
+  const [isToggleSubscribe, setIsToggleSubscribe] = useState<boolean>(false);
+
   const changedTask = useAppSelector(getTask);
 
   useEffect(() => {
-    if (changedTask) {
+    if (changedTask && isToggleSubscribe) {
       dispatch(changeTaskRoles(changedTask));
+      setIsToggleSubscribe(false);
     }
-  }, [dispatch, changedTask]);
+  }, [dispatch, changedTask, isToggleSubscribe]);
 
   const handleCloneTask = (): void => {
     if (task) {
@@ -75,6 +78,7 @@ const OptionsMenu: React.FC<IProps> = ({ setVisibleOptions }) => {
           task_role_id: watcherRoleID,
         }),
       );
+      setIsToggleSubscribe(true);
     }
     if (task && verifyUserId && watcherRoleID && isVerifyUserWatcher) {
       dispatch(
@@ -84,6 +88,7 @@ const OptionsMenu: React.FC<IProps> = ({ setVisibleOptions }) => {
           task_role_id: watcherRoleID,
         }),
       );
+      setIsToggleSubscribe(true);
     }
     setVisibleOptions(false);
   };

@@ -8,6 +8,7 @@ import {
   getUsersIdFromRoles,
   isWatcher,
 } from 'store/common/task/selectors';
+import { getVerifyIdUser } from 'store/auth/verify/selectors';
 import { ICheckList } from '../common/task/types';
 import { TProgress } from '../../constants/types/common';
 
@@ -141,4 +142,11 @@ const taskFile = (state: RootState) =>
 
 export const getTaskFileAllType = createSelector(taskFile, (file) =>
   file?.filter(({ type }) => type !== 'image'),
+);
+
+export const getIsVerifyUserWatcher = createSelector(
+  getTaskWatchersID,
+  getVerifyIdUser,
+  (watchersIds, authUserId) =>
+    watchersIds.find((id) => id === authUserId) !== undefined,
 );

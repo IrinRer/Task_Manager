@@ -27,3 +27,9 @@
     }
   }
 }
+
+:global(.ant-btn).trigger[ant-click-animating-without-extra-node='true']::after {
+  border: 0 none;
+  opacity: 0;
+  animation: none 0 ease 0 1 normal;
+}

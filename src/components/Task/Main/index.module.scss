@@ -63,7 +63,7 @@
 
 .options {
   display: flex;
-  column-gap: 22px;
+  column-gap: 21px;
 
   @include media-breakpoint-down($size: md) {
     padding-right: 45px;

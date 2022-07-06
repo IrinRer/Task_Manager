@@ -33,9 +33,19 @@
     right: 0px;
     z-index: 1;
     margin-right: 15px;
+
+    @include media-breakpoint-down($size: xsl) {
+      position: absolute;
+      z-index: 1;
+    }
   }
   /* ======= Стили для свернутого селекта начало. Внутри компонента и с модульным стилем */
   .selector {
+    @include media-breakpoint-down($size: xsl) {
+      margin-right: 15px;
+      z-index: 2;
+    }
+
     :global(.ant-select-selector) {
       padding-right: 0;
       align-items: center;
