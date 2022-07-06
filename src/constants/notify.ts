@@ -24,7 +24,7 @@ export enum Command {
 }
 
 export const NOTIFY_MESSAGE = {
-  [Command.taskClone]: 'скопировала задачу ',
+  [Command.taskClone]: 'скопировал(а) задачу ',
   [Command.taskStatusChange]: 'сменил(а) статус задачи',
   [Command.taskPriorityChange]: 'изменил(а) приоритет задачи',
   [Command.priorityCancel]: 'удалил(а) приоритет',
