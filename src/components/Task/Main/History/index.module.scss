@@ -32,6 +32,8 @@
   span {
     display: flex;
     align-items: center;
+    font-size: $font-size-m;
+    color: $gray-900;
 
     b {
       width: 200px;
@@ -55,6 +57,11 @@
     min-width: 32px;
     margin-right: 5px;
   }
+
+  span {
+    font-size: $font-size-m;
+    color: $gray-900;
+  }
 }
 
 .historyElemAttach {
@@ -73,6 +80,8 @@
 
   span {
     margin-left: 10px;
+    font-size: $font-size-m;
+    color: $gray-900;
   }
 
   .wrapper_date_icon {
@@ -91,6 +100,11 @@
   .spanStatus {
     font-weight: bold;
     text-transform: uppercase;
+  }
+
+  span {
+    font-size: $font-size-m;
+    color: $gray-900;
   }
 }
 
@@ -116,6 +130,15 @@
 
 .btn_not {
   display: none !important;
+}
+
+
+.spanUser {
+  font-size: $font-size-m;
+  color: $gray-900;
+  b {
+    color: $gray-900;
+  }
 }
 
 .wrapper {
@@ -178,6 +201,8 @@
 
 .font_weight {
   font-weight: bold;
+  font-size: $font-size-m;
+  color: $gray-900;
 }
 
 .span_size {
@@ -213,6 +238,7 @@
     color: $gray-700;
     text-decoration: line-through;
     font-size: $font-size-m;
+    color: $gray-900;
   }
 }
 
