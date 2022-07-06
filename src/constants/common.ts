@@ -8,16 +8,16 @@ export const BASE_DATE_FORMAT = 'DD.MM.YYYY' as const;
 export const DATE_FORMAT_UI = 'dd MMM yyyy' as const;
 export const DATE_FORMAT_SERVER = 'yyyy-MM-dd' as const;
 export const DATE_FORMAT_HISTORY = 'dd MMM yyyy, HH:mm' as const;
-export const DATE_TIME_FORMAT = 'dd MMM yyyy h:mm' as const;
+export const DATE_TIME_FORMAT = 'd MMM yyyy h:mm' as const;
 export const DATE_FORMAT = 'dd MMM yyyy' as const;
 
 export const formatRelativeLocale = {
   yesterday: "'вчера в' p",
   today: "'сегодня в' p",
-  tomorrow: DATE_FORMAT_HISTORY,
-  nextWeek: DATE_FORMAT_HISTORY,
-  lastWeek: DATE_FORMAT_HISTORY,
-  other: DATE_FORMAT_HISTORY,
+  tomorrow: DATE_TIME_FORMAT,
+  nextWeek: DATE_TIME_FORMAT,
+  lastWeek: DATE_TIME_FORMAT,
+  other: DATE_TIME_FORMAT,
 };
 export const locale = {
   ...ru,
