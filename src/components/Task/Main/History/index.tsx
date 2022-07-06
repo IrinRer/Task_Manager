@@ -40,6 +40,8 @@ const History = () => {
   const attachments = useAppSelector(getStorageFile);
 
   const [page, setPage] = useState<number>(2);
+  
+  const fieldRef = React.useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (taskId) {
@@ -64,7 +66,8 @@ const History = () => {
     // eslint-disable-next-line
   }, [history]);
 
-  const onLoadMore = () => {
+  const onLoadMore = (e) => {
+    e.preventDefault();
     setPage(page + 1);
 
     if (taskId) {
@@ -77,7 +80,7 @@ const History = () => {
   });
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} ref={fieldRef}>
       <div className={styles.wrapperFlex}>
         <img src={historyIcon} alt="history" className={styles.history_text} />
         <p className={styles.text}>Действия</p>
