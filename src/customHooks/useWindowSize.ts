@@ -13,16 +13,23 @@ export const useWindowSize = (): Size => {
 
   useEffect(() => {
     function handleResize() {
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
+      if (
+        (windowSize.width !== undefined &&
+          Math.abs(windowSize.width - window.innerWidth) > 10) ||
+        windowSize.width === undefined ||
+        windowSize.height === undefined
+      ) {
+        setWindowSize({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        });
+      }
     }
 
     window.addEventListener('resize', handleResize);
     handleResize();
 
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [windowSize.height, windowSize.width]);
   return windowSize;
 };

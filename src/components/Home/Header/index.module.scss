@@ -4,7 +4,7 @@
 @import 'src/styles/colors';
 
 .buttonsRow {
-  @include media-breakpoint-down($size: mdl) {
+  @include media-breakpoint-down($size: xl) {
     flex-direction: column;
     align-items: flex-start !important;
   }
@@ -44,6 +44,10 @@
   .buttons {
     display: flex;
     flex-direction: row;
+
+    @include media-breakpoint-down($size: xl) {
+      margin-bottom: 20px;
+    }
 
     @include media-breakpoint-down($size: xsm) {
       flex-direction: column;
@@ -92,8 +96,12 @@
   :global(.ant-col).newtask {
     display: flex;
     justify-content: flex-end;
-    @include media-breakpoint-down($size: mdl) {
+
+    @include media-breakpoint-down($size: xl) {
       justify-content: flex-start;
+      min-height: unset;
+      max-width: 100%;
+      width: 100%;
     }
   }
 }
