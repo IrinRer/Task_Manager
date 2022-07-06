@@ -28,12 +28,12 @@ const FileImg = () => {
       : undefined;
 
   useEffect(() => {
-    dispatch(
-      setImgRecieved({
-        url: url || valueContext.file.url,
-        name: valueContext.file.name || '',
-      }),
-    );
+      dispatch(
+        setImgRecieved({
+          url: url || valueContext.file.url,
+          name: valueContext.file.name || '',
+        }),
+      );
     // eslint-disable-next-line
   }, [valueContext.file.url]);
 
@@ -66,7 +66,7 @@ const FileImg = () => {
 
   const handleOkDelete = () => {
     setVisibleModalDelete(false);
-    if(valueContext.file.name) {
+    if (valueContext.file.name) {
       dispatch(setAssignFileToDelete(valueContext.file.name));
 
       valueContext.setFile(
@@ -88,7 +88,7 @@ const FileImg = () => {
   };
 
   const onDelete = () => {
-    if(valueContext.file.name) {
+    if (valueContext.file.name) {
       valueContext.onDeleteFile(valueContext.file.name);
     }
   };

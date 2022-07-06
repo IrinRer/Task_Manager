@@ -29,6 +29,15 @@ export const attachmentsSlice = createSlice({
     setClickedAttachments: (state, action: PayloadAction<boolean>) => {
       state.isClicked = action.payload;
     },
+    
+    cleanAttachments: (state) => {
+      state.dataReceived = [];
+      state.data = [];
+      state.viewFileImg = [];
+      state.file_delete = '';
+      state.initialViewFile = [];
+      state.initialDataFile = [];
+    },
 
     setAssignFileToDelete: (state, action: PayloadAction<string | null>) => {
       state.file_delete = action.payload;
@@ -44,7 +53,6 @@ export const attachmentsSlice = createSlice({
         state.dataReceived = state.dataReceived.filter(
           (item) => item.name_original !== action.payload,
         );
-
       } else {
         state.viewFileImg = state.initialViewFile;
         state.dataReceived = state.initialDataFile;
@@ -118,15 +126,15 @@ export const attachmentsSlice = createSlice({
       state,
       { payload }: PayloadAction<{ name: string; url: string }>,
     ) => {
-      const arr = state.viewFileImg.concat(payload);
-      state.viewFileImg = arr.filter(
-        (item, i) => arr.findIndex((a) => a.name === item.name) === i,
-      );
-      state.loading = false;
+        const arr = state.viewFileImg.concat(payload);
+        state.viewFileImg = arr.filter(
+          (item, i) => arr.findIndex((a) => a.name === item.name) === i,
+        );
+        state.loading = false;
 
-      state.initialViewFile = arr.filter(
-        (item, i) => arr.findIndex((a) => a.name === item.name) === i,
-      );
+        state.initialViewFile = arr.filter(
+          (item, i) => arr.findIndex((a) => a.name === item.name) === i,
+        );
     },
 
     [viewFile.rejected.type]: (
@@ -139,6 +147,6 @@ export const attachmentsSlice = createSlice({
   },
 });
 
-export const { setClickedAttachments, setAssignFileToDelete } =
+export const { setClickedAttachments, setAssignFileToDelete, cleanAttachments } =
   attachmentsSlice.actions;
 export default attachmentsSlice.reducer;

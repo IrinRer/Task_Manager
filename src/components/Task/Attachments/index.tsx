@@ -42,14 +42,14 @@ const Attachments = () => {
   const isRights = useGetRights(RIGHTS_NAMES.editAttached);
 
   useEffect(() => {
-    taskFileImg?.forEach(({ storage_file_id, name_original }) =>
-      dispatch(
-        viewFile({
-          fileId: storage_file_id,
-          name: name_original,
-        }),
-      ),
-    );
+      taskFileImg?.forEach(({ storage_file_id, name_original }) =>
+        dispatch(
+          viewFile({
+            fileId: storage_file_id,
+            name: name_original,
+          }),
+        ),
+      );
     // eslint-disable-next-line
   }, [dispatch]);
 
@@ -146,7 +146,6 @@ const Attachments = () => {
 
     setPreviewVisible(true);
     dispatch(setImgRecieved({ url: file.url, name: file.name }));
-    dispatch(setImgRecieved(file));
     dispatch(setPreviewTitleRender(file.name));
   };
 
