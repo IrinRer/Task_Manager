@@ -109,3 +109,15 @@ export const getTaskAuthorIDParams = createSelector(
   ],
   (items, roles) => roles?.find(isAuthor)?.assign_user.user_id,
 );
+
+export const isVerifyUserWatcherParams = createSelector(
+  [
+    (state: RootState) => state.tasks.tasks,
+    (state, task: IResponseTask | undefined) => task?.roles,
+    getVerifyIdUser,
+  ],
+  (items, roles, authUserId) =>
+    getUsersIdFromRoles(roles?.filter(isWatcher)).find(
+      (id) => id === authUserId,
+    ) !== undefined,
+);

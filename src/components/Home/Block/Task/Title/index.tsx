@@ -17,7 +17,7 @@ const Title: React.FC = () => {
   );
   return (
     <div className={styles.wrapper}>
-      <Link className={classNames} target="_blank" to={path}>
+      <Link className={classNames} to={path}>
         {task?.title ? shortTitle(task.title, TITLE_LENGTH) : ''}
       </Link>
     </div>
