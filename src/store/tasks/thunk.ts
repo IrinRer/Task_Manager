@@ -44,7 +44,7 @@ export const fetchTasksAction = createAsyncThunk(
           per_page: total,
         },
       });
-
+      
       dispatch(fetchStatusCounters());
 
       dispatch(filtersSyncState());

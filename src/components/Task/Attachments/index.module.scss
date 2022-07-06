@@ -2,6 +2,15 @@
 @import 'src/styles/colors';
 
 .scroll {
+  overflow: auto; 
+  max-height: 300px;
+}
+
+
+
+.col {
+  margin-top: 40px;
+
   ::-webkit-scrollbar {
     width: 13px;
   }
@@ -16,12 +25,6 @@
     border-radius: 16px 16px 16px 16px;
     background-color: $gray-300;
   }
-}
-
-.col {
-  margin-top: 40px;
-  overflow: auto; 
-  max-height: 300px;
 
   .btnAttachment {
     width: 32px;

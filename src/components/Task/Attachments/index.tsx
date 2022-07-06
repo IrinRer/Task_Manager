@@ -42,14 +42,14 @@ const Attachments = () => {
   const isRights = useGetRights(RIGHTS_NAMES.editAttached);
 
   useEffect(() => {
-      taskFileImg?.forEach(({ storage_file_id, name_original }) =>
-        dispatch(
-          viewFile({
-            fileId: storage_file_id,
-            name: name_original,
-          }),
-        ),
-      );
+    taskFileImg?.forEach(({ storage_file_id, name_original }) =>
+      dispatch(
+        viewFile({
+          fileId: storage_file_id,
+          name: name_original,
+        }),
+      ),
+    );
     // eslint-disable-next-line
   }, [dispatch]);
 
@@ -156,12 +156,12 @@ const Attachments = () => {
       setFile={setFile}
       fileList={fileList}
     >
-      <div className={styles.scroll}>
-        <Col className={styles.col}>
-          <div className={styles.wrapperFlex}>
-            <PaperClipOutlined className={styles.PaperClipOutlined} />
-            <p className={styles.text}>Вложения</p>
-          </div>
+      <Col className={styles.col}>
+        <div className={styles.wrapperFlex}>
+          <PaperClipOutlined className={styles.PaperClipOutlined} />
+          <p className={styles.text}>Вложения</p>
+        </div>
+        <div className={styles.scroll}>
           {isRights && (
             <Upload.Dragger
               className={styles.upload}
@@ -188,8 +188,8 @@ const Attachments = () => {
             previewVisible={previewVisible}
             setPreviewVisible={setPreviewVisible}
           />
-        </Col>
-      </div>
+        </div>
+      </Col>
     </ContextWrapperAttachments>
   );
 };
