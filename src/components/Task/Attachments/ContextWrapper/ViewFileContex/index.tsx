@@ -11,8 +11,10 @@ interface IProps extends IViewFileContext {
 
 const ContextWrapperViewFile: React.FC<IProps> = ({
   file,
+  fileList,
   onDeleteFile,
   onDownload,
+  setFile,
   preview,
   progress,
   children,
@@ -21,8 +23,10 @@ const ContextWrapperViewFile: React.FC<IProps> = ({
     <ViewFileContext.Provider
       value={useViewFileContextValue({
         file,
+        fileList,
         onDeleteFile,
         onDownload,
+        setFile,
         preview,
         progress,
       })}

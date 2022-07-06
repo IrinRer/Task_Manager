@@ -53,7 +53,7 @@ const Attachments = () => {
     // eslint-disable-next-line
   }, [dispatch]);
 
-  const [fileList, setFile] = useState<Array<UploadFile>>([]);
+  const [fileList, setFile] = useState<Array<any>>([]);
   const [progress, setProgress] = useState(0);
   const [previewVisible, setPreviewVisible] = useState(false);
 
@@ -71,7 +71,6 @@ const Attachments = () => {
 
   const onDeleteFile = (nameFile: string) => {
     const index = determineIndex(nameFile);
-    setFile(fileList?.filter((item) => item.name !== nameFile));
     dispatch(
       deleteFile({
         fileId: allFileId[index].storageId,
@@ -130,6 +129,8 @@ const Attachments = () => {
         progress={progress}
         onDeleteFile={onDeleteFile}
         onDownload={onDownload}
+        setFile={setFile}
+        fileList={fileList}
         preview={actions.preview}
       >
         <ItemRender />
@@ -153,39 +154,43 @@ const Attachments = () => {
     <ContextWrapperAttachments
       onDeleteFile={onDeleteFile}
       onDownload={onDownload}
+      setFile={setFile}
+      fileList={fileList}
     >
-      <Col className={styles.col}>
-        <div className={styles.wrapperFlex}>
-          <PaperClipOutlined className={styles.PaperClipOutlined} />
-          <p className={styles.text}>Вложения</p>
-        </div>
-        {isRights && (
-          <Upload.Dragger
-            className={styles.upload}
-            fileList={fileList}
-            accept={ACCEPT_FORMAT}
-            itemRender={itemListRender}
-            beforeUpload={beforeUpload}
-            customRequest={handleSubmit}
-            onChange={handleUpload}
-            onPreview={handlePreview}
-          >
-            <Button className={styles.btnAttachment}>
-              <PlusOutlined />
-            </Button>
-            Перетащите сюда или загрузите файл
-          </Upload.Dragger>
-        )}
+      <div className={styles.scroll}>
+        <Col className={styles.col}>
+          <div className={styles.wrapperFlex}>
+            <PaperClipOutlined className={styles.PaperClipOutlined} />
+            <p className={styles.text}>Вложения</p>
+          </div>
+          {isRights && (
+            <Upload.Dragger
+              className={styles.upload}
+              fileList={fileList}
+              accept={ACCEPT_FORMAT}
+              itemRender={itemListRender}
+              beforeUpload={beforeUpload}
+              customRequest={handleSubmit}
+              onChange={handleUpload}
+              onPreview={handlePreview}
+            >
+              <Button className={styles.btnAttachment}>
+                <PlusOutlined />
+              </Button>
+              Перетащите сюда или загрузите файл
+            </Upload.Dragger>
+          )}
 
-        <div className={styles.wrapper_all_file}>
-          <ViewFileImg />
-          <ViewFileAllType />
-        </div>
-        <Preview
-          previewVisible={previewVisible}
-          setPreviewVisible={setPreviewVisible}
-        />
-      </Col>
+          <div className={styles.wrapper_all_file}>
+            <ViewFileImg />
+            <ViewFileAllType />
+          </div>
+          <Preview
+            previewVisible={previewVisible}
+            setPreviewVisible={setPreviewVisible}
+          />
+        </Col>
+      </div>
     </ContextWrapperAttachments>
   );
 };

@@ -18,7 +18,7 @@ export const withAdditionalFunctions = <T, P>(
     return (
       <>
         {isClick || value[0] || accepted[0] ? (
-          <BaseComponent  />
+          <BaseComponent />
         ) : (
           <Button
             icon={<Icon />}

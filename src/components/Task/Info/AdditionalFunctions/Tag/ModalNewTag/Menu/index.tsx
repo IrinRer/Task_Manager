@@ -5,7 +5,6 @@ import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { selectPopulatedTags } from 'store/common/tags/selectors';
 import { assignTagAction } from 'store/editTask/additionalFunctions/tag/thunk';
-import { setIsModalVisibleMain } from 'store/editTask/additionalFunctions/tag/modalVisible/slice';
 import { getTaskId } from 'store/editTask/selectors';
 import { IPopulatedTag } from 'store/common/tags/types';
 import styles from './index.module.scss';
@@ -22,7 +21,6 @@ const MenuTag: FC<IProps> = ({ onClickDelete, onClickEdit }) => {
   const taskId = useAppSelector(getTaskId);
 
   const onSelect = (item: IPopulatedTag) => {
-    setIsModalVisibleMain(true);
     if (item.task_tag_id && taskId) {
       dispatch(
         assignTagAction({

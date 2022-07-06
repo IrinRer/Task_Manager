@@ -1,5 +1,6 @@
 @import 'src/styles/color-variables';
 @import 'src/styles/colors';
+@import 'src/styles/mixins';
 
 .img {
   border-radius: 16px;
@@ -36,12 +37,14 @@
   }
 }
 
-@media screen and (max-width: 700px) {
-  .icon_left {
+.icon_right {
+  @include media-breakpoint-down($size: md) {
     display: none !important;
   }
+}
 
-  .icon_right {
+.icon_left {
+  @include media-breakpoint-down($size: md) {
     display: none !important;
   }
 }
@@ -56,7 +59,6 @@
     margin-left: 6%;
     margin-right: 6%;
   }
-
 
   :global(.ant-btn) {
     border-radius: 8px;
