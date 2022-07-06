@@ -58,20 +58,24 @@ const Body = () => {
 
   return (
     <div className={classNames} onClick={openTask}>
-      <header>
-        <Title />
-      </header>
-      <main>
-        <Avatar src={notification.history_command.user.logo} />
-        <div className={styles.info}>
-          <Name />
-          <Message />
-        </div>
-      </main>
-      <footer>
-        {notification.viewed && <ReadIcon />}
-        <DateCreated />
-      </footer>
+      <div className={styles.container}>
+        <header>
+          <Title />
+        </header>
+        <main>
+          <div className={styles.avatar}>
+            <Avatar src={notification.history_command.user.logo} />
+          </div>
+          <div className={styles.info}>
+            <Name />
+            <Message />
+          </div>
+        </main>
+        <footer>
+          {notification.viewed && <ReadIcon />}
+          <DateCreated />
+        </footer>
+      </div>
     </div>
   );
 };
