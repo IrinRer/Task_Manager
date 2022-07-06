@@ -23,8 +23,8 @@ const ChecklistTitle: FC<IProps> = ({ item }) => {
       text={HISTORY_COMMAND.сhangeTitleChecklist}
     >
       <div className={styles.history}>
+      <UserAvatar user={item.user} />
         {component}
-        <UserAvatar user={item.user} />
       </div>
     </ContextWrapperHistory>
   );
