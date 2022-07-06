@@ -77,6 +77,7 @@ const App: React.FC = () => {
     // eslint-disable-next-line
   }, [dispatch, modalVisible, verifyToken]);
 
+  // При смене пользователя перезагружаем уведомления
   useEffect(() => {
     dispatch(resetNotifications());
     dispatch(loadNewNotificationsAction());
