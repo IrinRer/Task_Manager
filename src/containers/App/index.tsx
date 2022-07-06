@@ -4,7 +4,7 @@ import { RELOAD_TASKS_INTERVAL } from 'constants/common';
 import { fetchAllRoles } from 'store/common/roles/thunk';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
-import { getVerifyError } from 'store/auth/verify/selectors';
+import { getVerifyError, getVerifyIdUser } from 'store/auth/verify/selectors';
 import { getToken } from 'helpers/cookies';
 import { fetchVerifyAction } from 'store/auth/verify/thunk';
 import { getAuthError, getVerifyToken } from 'store/auth/token/selectors';
@@ -17,6 +17,9 @@ import { fetchTagsAction } from 'store/common/tags/thunk';
 import { fetchTasksAction } from 'store/tasks/thunk';
 import { fetchPrioritiesAction } from 'store/common/priorities/thunk';
 import { fetchStatusesAction } from 'store/common/statuses/thunk';
+import { resetNotifications } from 'store/notifications/slice';
+import { loadNewNotificationsAction } from 'store/notifications/thunk';
+import { getShowNotificationModal } from 'store/notifications/selectors';
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -26,6 +29,9 @@ const App: React.FC = () => {
   const modalVisible = useAppSelector(getModalVisible);
   const verifyError = useAppSelector(getVerifyError);
   const authError = useAppSelector(getAuthError);
+  const isNotificationModalOpen = useAppSelector(getShowNotificationModal);
+  const userId = useAppSelector(getVerifyIdUser);
+
   const error = verifyError || authError;
   const noAuth = error || !token;
 
@@ -61,10 +67,21 @@ const App: React.FC = () => {
     clearReloadTasksInterval();
     reloadTasksRef.current = setInterval(() => {
       dispatch(fetchTasksAction());
+      if (!isNotificationModalOpen) {
+        dispatch(resetNotifications());
+        dispatch(loadNewNotificationsAction());
+      }
     }, RELOAD_TASKS_INTERVAL);
 
     return clearReloadTasksInterval;
+    // eslint-disable-next-line
   }, [dispatch, modalVisible, verifyToken]);
+
+  // При смене пользователя перезагружаем уведомления
+  useEffect(() => {
+    dispatch(resetNotifications());
+    dispatch(loadNewNotificationsAction());
+  }, [dispatch, userId]);
 
   const clearReloadTasksInterval = () => {
     if (reloadTasksRef.current) {

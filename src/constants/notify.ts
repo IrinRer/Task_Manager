@@ -1,4 +1,5 @@
 export enum Command {
+  taskClone = 'Дублирование задачи',
   taskStatusChange = 'Смена статуса',
   taskPriorityChange = 'Смена приоритета',
   priorityCancel = 'Отмена приоритета',
@@ -23,6 +24,7 @@ export enum Command {
 }
 
 export const NOTIFY_MESSAGE = {
+  [Command.taskClone]: 'скопировал(а) задачу ',
   [Command.taskStatusChange]: 'сменил(а) статус задачи',
   [Command.taskPriorityChange]: 'изменил(а) приоритет задачи',
   [Command.priorityCancel]: 'удалил(а) приоритет',

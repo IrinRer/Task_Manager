@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Input, notification } from 'antd';
+import { cleanAttachments } from 'store/editTask/attachments/slice';
 import { useAppDispatch } from 'customHooks/redux/useAppDispatch';
 import { useAppSelector } from 'customHooks/redux/useAppSelector';
 import { getCreatedStatusID } from 'store/common/statuses/selectors';
@@ -16,9 +17,9 @@ const AddTaskForm: React.FC<IProps> = ({ onClose }) => {
   const dispatch = useAppDispatch();
   const statusId = useAppSelector(getCreatedStatusID);
 
-  // заготовка под будущий функционал создания задачи. будет диспатч
   const onAdd = (taskTitle) => {
     dispatch(createTaskAction({ title: taskTitle, task_status_id: statusId }));
+    dispatch(cleanAttachments());
   };
 
   const handleSave = (): void => {

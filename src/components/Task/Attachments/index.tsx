@@ -146,7 +146,6 @@ const Attachments = () => {
 
     setPreviewVisible(true);
     dispatch(setImgRecieved({ url: file.url, name: file.name }));
-    dispatch(setImgRecieved(file));
     dispatch(setPreviewTitleRender(file.name));
   };
 
@@ -157,12 +156,12 @@ const Attachments = () => {
       setFile={setFile}
       fileList={fileList}
     >
-      <div className={styles.scroll}>
-        <Col className={styles.col}>
-          <div className={styles.wrapperFlex}>
-            <PaperClipOutlined className={styles.PaperClipOutlined} />
-            <p className={styles.text}>Вложения</p>
-          </div>
+      <Col className={styles.col}>
+        <div className={styles.wrapperFlex}>
+          <PaperClipOutlined className={styles.PaperClipOutlined} />
+          <p className={styles.text}>Вложения</p>
+        </div>
+        <div className={styles.scroll}>
           {isRights && (
             <Upload.Dragger
               className={styles.upload}
@@ -189,8 +188,8 @@ const Attachments = () => {
             previewVisible={previewVisible}
             setPreviewVisible={setPreviewVisible}
           />
-        </Col>
-      </div>
+        </div>
+      </Col>
     </ContextWrapperAttachments>
   );
 };

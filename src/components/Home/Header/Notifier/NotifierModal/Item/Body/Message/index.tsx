@@ -17,6 +17,7 @@ const Message = () => {
   if (!notification) return null;
 
   switch (notification.history_command.command_name) {
+    case Command.taskClone:
     case Command.descriptionEdit:
     case Command.taskCheckListUnassign:
     case Command.taskStorageFileUnassign:
