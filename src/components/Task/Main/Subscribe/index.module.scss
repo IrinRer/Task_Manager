@@ -1,0 +1,39 @@
+@import 'src/styles/mixins.scss';
+@import 'src/styles/font-variables';
+@import 'src/styles/color-variables';
+@import 'src/styles/colors';
+
+.buttonSubscribe {
+  border: none;
+  margin-bottom: 3px;
+  background: none;
+  box-shadow: none;
+  transition: none;
+
+  svg {
+    width: 23px;
+    height: 23px;
+    cursor: pointer;
+  }
+  svg path {
+    fill: $dark-primary;
+  }
+}
+
+:global(.ant-btn).buttonSubscribe[ant-click-animating-without-extra-node='true']::after {
+  border: 0 none;
+  opacity: 0;
+  animation: none 0 ease 0 1 normal;
+}
+
+.disabled {
+  svg path {
+    fill: $gray-400;
+  }
+}
+
+.active {
+  svg path {
+    fill: $blue;
+  }
+}

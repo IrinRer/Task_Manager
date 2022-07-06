@@ -35,7 +35,7 @@ export const RIGHTS: Record<RIGHTS_NAMES, Array<TRights>> = {
   /* any - любой авторизованный пользователь, может быть без роли для конкретной задачи */
 
   /* отслеживание задачи (через кнопку в виде глаза) */
-  subscription: [ROLES.any],
+  subscription: [ROLES.author, ROLES.responsible],
 
   /* право на отписку от задачи (через кнопку в виде глаза); */
   unsubscribe: [ROLES.watcher],

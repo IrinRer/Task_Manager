@@ -10,6 +10,8 @@ import {
 } from 'store/editTask/attachments/selectors';
 import Attachments from 'components/Task/Attachments';
 import { MIN_DESKTOP_WIDTH } from 'constants/common';
+import { useGetRights } from 'customHooks/useGetRights';
+import { RIGHTS_NAMES } from 'constants/rights';
 import styles from './index.module.scss';
 import History from './History';
 import InputWrapper from './InputWrapper';
@@ -19,12 +21,15 @@ import Title from './Title';
 import Checklist from '../Checklist';
 import Actions from '../Actions';
 import Info from '../Info';
+import Subscribe from './Subscribe';
 
 const Main: React.FC = () => {
   const isCheckListLoading = useAppSelector(isDeleteCheckListLoading);
   const isClickedAttachmentsBtn = useAppSelector(isClickedAttachments);
   const attachments = useAppSelector(getFileName);
   const isAttachments = isClickedAttachmentsBtn || attachments.length;
+  const isRightsSubscribeTask = useGetRights(RIGHTS_NAMES.subscription);
+  const isRightsUnsubscribeTask = useGetRights(RIGHTS_NAMES.unsubscribe);
   const size = useWindowSize();
 
   return (
@@ -34,6 +39,9 @@ const Main: React.FC = () => {
           {(size.width || 0) >= MIN_DESKTOP_WIDTH && <Title />}
           <div className={styles.options}>
             <Actions />
+            {(isRightsSubscribeTask || isRightsUnsubscribeTask) && (
+              <Subscribe />
+            )}
             <Options />
           </div>
         </div>
