@@ -19,6 +19,7 @@ import { fetchPrioritiesAction } from 'store/common/priorities/thunk';
 import { fetchStatusesAction } from 'store/common/statuses/thunk';
 import { resetNotifications } from 'store/notifications/slice';
 import { loadNewNotificationsAction } from 'store/notifications/thunk';
+import { getShowNotificationModal } from 'store/notifications/selectors';
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -28,6 +29,7 @@ const App: React.FC = () => {
   const modalVisible = useAppSelector(getModalVisible);
   const verifyError = useAppSelector(getVerifyError);
   const authError = useAppSelector(getAuthError);
+  const isNotificationModalOpen = useAppSelector(getShowNotificationModal);
   const error = verifyError || authError;
   const noAuth = error || !token;
 
@@ -63,11 +65,14 @@ const App: React.FC = () => {
     clearReloadTasksInterval();
     reloadTasksRef.current = setInterval(() => {
       dispatch(fetchTasksAction());
-      dispatch(resetNotifications());
-      dispatch(loadNewNotificationsAction());
+      if (!isNotificationModalOpen) {
+        dispatch(resetNotifications());
+        dispatch(loadNewNotificationsAction());
+      }
     }, RELOAD_TASKS_INTERVAL);
 
     return clearReloadTasksInterval;
+    // eslint-disable-next-line
   }, [dispatch, modalVisible, verifyToken]);
 
   const clearReloadTasksInterval = () => {
